@@ -52,6 +52,6 @@ jobs:
           context: .
           # Don't push draft pull requests
           push: ${{ github.event.pull_request.draft == false && (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'main') }}
-          tags: ghcr.io/project-accessibility/web-portal:${GITHUB_HEAD_REF-${GITHUB_REF##*/}}
+          tags: ghcr.io/project-accessibility/web-portal:${{GITHUB_HEAD_REF-${GITHUB_REF##*/}}}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
