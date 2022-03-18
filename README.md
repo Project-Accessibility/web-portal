@@ -8,7 +8,7 @@
 
 ## Requirements
 
-- Node V16.13.0 or later
+- Node v16.13.0 or later
 - NPM v8.5.4 or later
 - Yarn v1.22.17 or later
 - PHP 8.1 or later
