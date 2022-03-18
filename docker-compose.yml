@@ -3,7 +3,7 @@ version: '3'
 services:
     laravel:
         build:
-            context: ./Docker
+            context: ./
             dockerfile: Dockerfile
         extra_hosts:
             - 'host.docker.internal:host-gateway'
