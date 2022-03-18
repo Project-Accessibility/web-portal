@@ -18,10 +18,10 @@ jobs:
         shell: bash
         run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
 
-      - name: Replace main Branch Names with latest
-        if: env.BRANCH_NAME == 'main'
+      - name: Get branch name (pull request)
+        if: github.event_name == 'pull_request'
         shell: bash
-        run: echo "BRANCH_NAME=latest" >> $GITHUB_ENV
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
       - name: Check value of env.BRANCH_NAME
         shell: bash
@@ -52,6 +52,6 @@ jobs:
           context: .
           # Don't push draft pull requests
           push: ${{ github.event.pull_request.draft == false && (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'main') }}
-          tags: ghcr.io/project-accessibility/web-portal:${{GITHUB_HEAD_REF-${GITHUB_REF##*/}}}
+          tags: ghcr.io/project-accessibility/web-portal:${{env.BRANCH_NAME}}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
