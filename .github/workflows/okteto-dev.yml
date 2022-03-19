@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+    - develop
+
+name: Okteto Dev Deployment
+
+jobs:
+  devflow:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+
+    - name: context
+      uses: okteto/context@latest
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+
+    - name: "Activate Namespace"
+      uses: okteto/namespace@latest
+      with:
+        name: dev-accessibility-gewoonjaap
+
+    - name: "Trigger the pipeline"
+      uses: okteto/pipeline@latest
+      with:
+        name: dev-accessibility
+        timeout: 8m
+        skipIfExists: false
