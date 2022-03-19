@@ -13,6 +13,12 @@ services:
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            DB_HOST: 'mysql'
+            DB_PORT: '${FORWARD_DB_PORT:-3306}'
+            DB_DATABASE: '${DB_DATABASE}'
+            DB_USERNAME: '${DB_USERNAME}'
+            DB_PASSWORD: '${DB_PASSWORD}'
+            REDIS_HOST: 'redis'
         volumes:
             - '.:/var/www/html'
         networks:
@@ -27,7 +33,7 @@ services:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ROOT_HOST: "%"
+            MYSQL_ROOT_HOST: "%"W
             MYSQL_DATABASE: '${DB_DATABASE}'
             MYSQL_USER: '${DB_USERNAME}'
             MYSQL_PASSWORD: '${DB_PASSWORD}'
