@@ -34,36 +34,30 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Questionnaire extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    public $table = 'questionnaires';
+  public $table = 'questionnaires';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'research_id',
-        'title',
-        'description',
-        'instructions',
-        'open',
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = ['research_id', 'title', 'description', 'instructions', 'open'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'open' => 'boolean',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array
+   */
+  protected $casts = [
+    'open' => 'boolean',
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
+  ];
 
-    public function research(): BelongsTo
-    {
-        return $this->belongsTo(Research::class);
-    }
+  public function research(): BelongsTo
+  {
+    return $this->belongsTo(Research::class);
+  }
 }

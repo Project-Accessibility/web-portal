@@ -28,31 +28,27 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Geofence extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    public $table = 'geofences';
+  public $table = 'geofences';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'longitude',
-        'latitude',
-        'radius',
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = ['longitude', 'latitude', 'radius'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'longitude' => 'float',
-        'latitude' => 'float',
-        'radius' => 'float',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array
+   */
+  protected $casts = [
+    'longitude' => 'float',
+    'latitude' => 'float',
+    'radius' => 'float',
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
+  ];
 }

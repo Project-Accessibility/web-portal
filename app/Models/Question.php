@@ -33,38 +33,34 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Question extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    public $table = 'questions';
+  public $table = 'questions';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'section_id',
-        'title',
-        'question',
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = ['section_id', 'title', 'question'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array
+   */
+  protected $casts = [
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
+  ];
 
-    public function section(): BelongsTo
-    {
-        return $this->belongsTo(Section::class);
-    }
+  public function section(): BelongsTo
+  {
+    return $this->belongsTo(Section::class);
+  }
 
-    public function questionOptions(): HasMany
-    {
-        return $this->hasMany(QuestionOption::class);
-    }
+  public function questionOptions(): HasMany
+  {
+    return $this->hasMany(QuestionOption::class);
+  }
 }

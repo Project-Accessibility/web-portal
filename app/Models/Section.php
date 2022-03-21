@@ -39,45 +39,39 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Section extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    public $table = 'sections';
+  public $table = 'sections';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'questionnaire_id',
-        'geofence_id',
-        'title',
-        'description',
-        'location',
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = ['questionnaire_id', 'geofence_id', 'title', 'description', 'location'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array
+   */
+  protected $casts = [
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
+  ];
 
-    public function questionnaire(): BelongsTo
-    {
-        return $this->belongsTo(Questionnaire::class);
-    }
+  public function questionnaire(): BelongsTo
+  {
+    return $this->belongsTo(Questionnaire::class);
+  }
 
-    public function geofence(): HasOne|null
-    {
-        return $this->hasOne(Geofence::class);
-    }
+  public function geofence(): HasOne|null
+  {
+    return $this->hasOne(Geofence::class);
+  }
 
-    public function questions(): HasMany
-    {
-        return $this->hasMany(Question::class);
-    }
+  public function questions(): HasMany
+  {
+    return $this->hasMany(Question::class);
+  }
 }
