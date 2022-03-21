@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Questionnaire;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -18,6 +19,7 @@ class ParticipantFactory extends Factory
     public function definition()
     {
         return [
+            'questionnaire_id' => Questionnaire::factory(),
             'code' =>  Str::random(4)
         ];
     }

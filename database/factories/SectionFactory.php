@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Geofence;
+use App\Models\Questionnaire;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +19,8 @@ class SectionFactory extends Factory
     public function definition()
     {
         return [
+            'questionnaire_id' => Questionnaire::factory(),
+            'geofence_id' => Geofence::factory(),
             'title' => $this->faker->streetName,
             'description' => $this->faker->paragraph(),
             'location' => $this->faker->address

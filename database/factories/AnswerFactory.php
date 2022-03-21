@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Participant;
+use App\Models\QuestionOption;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class AnswerFactory extends Factory
     public function definition()
     {
         return [
-            'answer' => (object)[]
+            'participant_id' => Participant::factory(),
+            'question_option_id' => QuestionOption::factory(),
+            'answer' => json_encode([])
         ];
     }
 }

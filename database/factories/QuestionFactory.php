@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Section;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +18,7 @@ class QuestionFactory extends Factory
     public function definition()
     {
         return [
+            'section_id' => Section::factory(),
             'title' => $this->faker->title,
             'question' => $this->faker->title
         ];

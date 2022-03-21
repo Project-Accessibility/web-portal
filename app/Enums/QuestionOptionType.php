@@ -2,13 +2,13 @@
 
 namespace App\Enums;
 
-enum QuestionOptionType
+enum QuestionOptionType: string
 {
-  case OPEN;
-  case IMAGE;
-  case VIDEO;
-  case VOICE;
-  case MULTIPLE_CHOICE;
-  case DATE;
-  case DATETIME;
+  case OPEN = "OPEN";
+  case IMAGE = "IMAGE";
+  case VIDEO = "VIDEO";
+  case VOICE = "VOICE";
+  case MULTIPLE_CHOICE = "MULTIPLE_CHOICE";
+  case DATE = "DATE";
+  case DATETIME = "DATETIME";
 }

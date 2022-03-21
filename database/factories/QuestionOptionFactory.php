@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\QuestionOptionType;
+use App\Models\Question;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,9 +19,11 @@ class QuestionOptionFactory extends Factory
     public function definition()
     {
         $types = QuestionOptionType::cases();
+        $type = $types[$this->faker->numberBetween(0, count($types)-1)];
         return [
-            'type' => $types[$this->faker->numberBetween(0, count($types)-1)],
-            'extra_data' => (object)[]
+            'question_id' => Question::factory(),
+            'type' => $type,
+            'extra_data' => []
         ];
     }
 }
