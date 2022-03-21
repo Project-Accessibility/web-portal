@@ -23,7 +23,10 @@ RUN apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-CMD php artisan queue:work \ 
-  & php artisan serve --host=0.0.0.0 --port=8080
+
+
+CMD php artisan queue:work \
+  & php artisan serve --host=0.0.0.0 --port=8080 \
+  & php artisan migrate
 
 EXPOSE 8080
