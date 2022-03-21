@@ -45,23 +45,13 @@ class Answer extends Model
     ];
 
     /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'answer' => AsArrayObject::class,
-        'created_at' => 'datetime:Y-m-d H:i:s',
-        'updated_at' => 'datetime:Y-m-d H:i:s',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [
-
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function participant(): object

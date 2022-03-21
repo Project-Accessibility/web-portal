@@ -47,22 +47,13 @@ class Question extends Model
     ];
 
     /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [
-
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function section(): object
