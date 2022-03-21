@@ -21,3 +21,4 @@ jobs:
         name: pr-${{ github.event.number }}-gewoonjaap
         scope: personal
         timeout: 15m
+        variables: DB_DATABASE=accessibility_dashboard
