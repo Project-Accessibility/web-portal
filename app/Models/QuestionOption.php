@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\QuestionOptionType;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,28 +33,29 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class QuestionOption extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  /* @var string */
-  public $table = 'question_options';
+    /* @var string */
+    public $table = 'question_options';
 
-  /* @var array */
-  protected $fillable = ['question_id', 'type', 'extra_data'];
+    /* @var array */
+    protected $fillable = ['question_id', 'type', 'extra_data'];
 
-  /* @var array */
-  protected $casts = [
-    'extra_data' => AsArrayObject::class,
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-  ];
+    /* @var array */
+    protected $casts = [
+        'type' => QuestionOptionType::class,
+        'extra_data' => AsArrayObject::class,
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
-  public function question(): BelongsTo
-  {
-    return $this->belongsTo(Question::class);
-  }
+    public function question(): BelongsTo
+    {
+        return $this->belongsTo(Question::class);
+    }
 
-  public function answers(): HasMany
-  {
-    return $this->hasMany(Answer::class)->first();
-  }
+    public function answers(): HasMany
+    {
+        return $this->hasMany(Answer::class)->first();
+    }
 }

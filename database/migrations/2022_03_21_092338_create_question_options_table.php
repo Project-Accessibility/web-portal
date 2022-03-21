@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('question_options', function (Blueprint $table) {
             $table->id();
             $table->foreignId('question_id');
-            $table->string('type');
+            $table->enum('type', ["Open", "Image", "Video", "Voice", "MultipleChoice", "Date", "DateTime"]);
             $table->json('extra_data');
 
             $table->foreign('question_id')->references('id')->on('questions')->cascadeOnDelete()->cascadeOnUpdate();
