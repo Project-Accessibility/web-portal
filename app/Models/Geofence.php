@@ -30,20 +30,13 @@ class Geofence extends Model
 {
   use HasFactory;
 
+  /* @var string */
   public $table = 'geofences';
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $fillable = ['longitude', 'latitude', 'radius'];
 
-  /**
-   * The attributes that should be cast to native types.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $casts = [
     'longitude' => 'float',
     'latitude' => 'float',

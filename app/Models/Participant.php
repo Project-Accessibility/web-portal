@@ -36,20 +36,13 @@ class Participant extends Model
 {
   use HasFactory;
 
+  /* @var string */
   public $table = 'participants';
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $fillable = ['questionnaire_id', 'code', 'finished'];
 
-  /**
-   * The attributes that should be cast to native types.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $casts = [
     'open' => 'boolean',
     'created_at' => 'datetime',

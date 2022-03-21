@@ -35,20 +35,13 @@ class Question extends Model
 {
   use HasFactory;
 
+  /* @var string */
   public $table = 'questions';
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $fillable = ['section_id', 'title', 'question'];
 
-  /**
-   * The attributes that should be cast to native types.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $casts = [
     'created_at' => 'datetime',
     'updated_at' => 'datetime',
