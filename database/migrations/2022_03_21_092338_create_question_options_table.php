@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('question_id');
             $table->string('type');
-            $table->text('extra_data');
+            $table->json('extra_data');
 
             $table->foreign('question_id')->references('id')->on('questions')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
