@@ -1,6 +1,12 @@
 # Project Accessibility Web Portal
 
-[![DeepScan grade](https://deepscan.io/api/teams/17161/projects/20524/branches/560690/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=17161&pid=20524&bid=560690)
+[![DeepScan grade](https://deepscan.io/api/teams/17161/projects/20524/branches/562465/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=17161&pid=20524&bid=562465)
+
+[![Laravel Tests](https://github.com/Project-Accessibility/web-portal/workflows/Laravel/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
+[![Prettier](https://github.com/Project-Accessibility/web-portal/workflows/Prettier/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
+
+[![Okteto Dev](https://github.com/Project-Accessibility/web-portal/workflows/okteto-dev.yml/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
+[![Okteto Acc](https://github.com/Project-Accessibility/web-portal/workflows/okteto-acc.yml/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
 
 - [Project Accessibility Web Portal](#project-accessibility-web-portal)
   - [Requirements](#requirements)
@@ -8,7 +14,7 @@
 
 ## Requirements
 
-- Node V16.13.0 or later
+- Node v16.13.0 or later
 - NPM v8.5.4 or later
 - Yarn v1.22.17 or later
 - PHP 8.1 or later
