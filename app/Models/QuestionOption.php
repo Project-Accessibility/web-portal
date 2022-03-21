@@ -34,20 +34,13 @@ class QuestionOption extends Model
 {
   use HasFactory;
 
+  /* @var string */
   public $table = 'question_options';
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $fillable = ['question_id', 'type', 'extra_data'];
 
-  /**
-   * The attributes that should be cast to native types.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $casts = [
     'extra_data' => AsArrayObject::class,
     'created_at' => 'datetime',

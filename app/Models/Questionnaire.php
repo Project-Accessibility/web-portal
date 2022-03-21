@@ -36,20 +36,13 @@ class Questionnaire extends Model
 {
   use HasFactory;
 
+  /* @var string */
   public $table = 'questionnaires';
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $fillable = ['research_id', 'title', 'description', 'instructions', 'open'];
 
-  /**
-   * The attributes that should be cast to native types.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $casts = [
     'open' => 'boolean',
     'created_at' => 'datetime',

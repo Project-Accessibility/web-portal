@@ -41,20 +41,13 @@ class Section extends Model
 {
   use HasFactory;
 
+  /* @var string */
   public $table = 'sections';
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $fillable = ['questionnaire_id', 'geofence_id', 'title', 'description', 'location'];
 
-  /**
-   * The attributes that should be cast to native types.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $casts = [
     'created_at' => 'datetime',
     'updated_at' => 'datetime',

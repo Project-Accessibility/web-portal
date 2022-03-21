@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,20 +33,13 @@ class Answer extends Model
 {
   use HasFactory;
 
+  /* @var string */
   public $table = 'answers';
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $fillable = ['participant_id', 'question_option_id', 'answer'];
 
-  /**
-   * The attributes that should be cast to native types.
-   *
-   * @var array
-   */
+  /* @var array */
   protected $casts = [
     'created_at' => 'datetime',
     'updated_at' => 'datetime',
