@@ -25,6 +25,8 @@ services:
             - mysql
             - redis
             - selenium
+        networks:
+            - sail
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -42,6 +44,8 @@ services:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+        networks:
+            - sail
     redis:
         image: 'redis:alpine'
         ports:
@@ -52,10 +56,17 @@ services:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
             timeout: 5s
+        networks:
+            - sail
     selenium:
         image: 'selenium/standalone-chrome'
         volumes:
-            - '/dev/shm:/dev/shm'
+            - '/dev/shm:/dev/shm'       
+        networks:
+            - sail
+networks:
+    sail:
+        driver: bridge
 volumes:
     sail-mysql:
         driver: local
