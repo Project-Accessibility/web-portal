@@ -1,18 +1,14 @@
 <?php
 
-
 namespace App\Enums;
 
-
-use Illuminate\Validation\Rules\Enum;
-
-class QuestionOptionType extends Enum
+enum QuestionOptionType
 {
-    const OPEN = "Open";
-    const IMAGE = "Image";
-    const VIDEO = "Video";
-    const VOICE = "Voice";
-    const MULTIPLE_CHOICE = "MultipleChoice";
-    const DATE = "Date";
-    const DATETIME = "DateTime";
+  case OPEN;
+  case IMAGE;
+  case VIDEO;
+  case VOICE;
+  case MULTIPLE_CHOICE;
+  case DATE;
+  case DATETIME;
 }
