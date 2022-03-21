@@ -6,6 +6,7 @@ use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Answer
@@ -54,13 +55,13 @@ class Answer extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function participant(): object
+    public function participant(): BelongsTo
     {
-        return $this->belongsTo(Participant::class)->first();
+        return $this->belongsTo(Participant::class);
     }
 
-    public function questionOption(): object
+    public function questionOption(): BelongsTo
     {
-        return $this->belongsTo(QuestionOption::class)->first();
+        return $this->belongsTo(QuestionOption::class);
     }
 }

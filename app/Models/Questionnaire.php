@@ -5,6 +5,7 @@ namespace App\Models;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Questionnaire
@@ -60,8 +61,8 @@ class Questionnaire extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function research(): object
+    public function research(): BelongsTo
     {
-        return $this->belongsTo(Research::class)->first();
+        return $this->belongsTo(Research::class);
     }
 }

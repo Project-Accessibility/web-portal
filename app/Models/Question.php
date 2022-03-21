@@ -5,6 +5,7 @@ namespace App\Models;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -56,9 +57,9 @@ class Question extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function section(): object
+    public function section(): BelongsTo
     {
-        return $this->belongsTo(Section::class)->first();
+        return $this->belongsTo(Section::class);
     }
 
     public function questionOptions(): HasMany
