@@ -52,7 +52,8 @@ class Question extends Model
      * @var array
      */
     protected $hidden = [
-
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**

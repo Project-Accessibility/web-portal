@@ -58,6 +58,10 @@ class Geofence extends Model
      * @var array
      */
     protected $casts = [
-
+        'longitude' => 'float',
+        'latitude' => 'float',
+        'radius' => 'double',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 }

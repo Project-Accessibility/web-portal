@@ -67,7 +67,8 @@ class Section extends Model
      * @var array
      */
     protected $casts = [
-
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function questionnaire(): object

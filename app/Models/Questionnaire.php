@@ -55,7 +55,9 @@ class Questionnaire extends Model
      * @var array
      */
     protected $hidden = [
-
+        'open' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -59,7 +60,9 @@ class QuestionOption extends Model
      * @var array
      */
     protected $casts = [
-
+        'extra_data' => AsArrayObject::class,
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function question(): object
