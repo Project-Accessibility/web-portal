@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->float("longitude");
             $table->float("latitude");
-            $table->double("radius");
+            $table->float("radius");
             $table->timestamps();
         });
     }

@@ -51,7 +51,7 @@ class Geofence extends Model
     protected $casts = [
         'longitude' => 'float',
         'latitude' => 'float',
-        'radius' => 'double',
+        'radius' => 'float',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
