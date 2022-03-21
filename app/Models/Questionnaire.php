@@ -40,7 +40,13 @@ class Questionnaire extends Model
   public $table = 'questionnaires';
 
   /* @var array */
-  protected $fillable = ['research_id', 'title', 'description', 'instructions', 'open'];
+  protected $fillable = [
+    'research_id',
+    'title',
+    'description',
+    'instructions',
+    'open',
+  ];
 
   /* @var array */
   protected $casts = [

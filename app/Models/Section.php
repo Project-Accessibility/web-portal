@@ -45,7 +45,13 @@ class Section extends Model
   public $table = 'sections';
 
   /* @var array */
-  protected $fillable = ['questionnaire_id', 'geofence_id', 'title', 'description', 'location'];
+  protected $fillable = [
+    'questionnaire_id',
+    'geofence_id',
+    'title',
+    'description',
+    'location',
+  ];
 
   /* @var array */
   protected $casts = [
