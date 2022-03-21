@@ -16,13 +16,11 @@ services:
             DB_HOST: 'mysql'
             DB_PORT: '${FORWARD_DB_PORT:-3306}'
             DB_DATABASE: '${DB_DATABASE:-accessibility_dashboard}'
-            DB_USERNAME: '${DB_USERNAME:-root}'
-            DB_PASSWORD: '${DB_PASSWORD:-root}'
+            DB_USERNAME: '${DB_USERNAME:-admin}'
+            DB_PASSWORD: '${DB_PASSWORD:-admin}'
             REDIS_HOST: 'redis'
         volumes:
             - '.:/var/www/html'
-        networks:
-            - sail
         depends_on:
             - mysql
             - redis
@@ -32,28 +30,25 @@ services:
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-root}'
+            MYSQL_ROOT_PASSWORD: 'root'
             MYSQL_ROOT_HOST: "%"
             MYSQL_DATABASE: '${DB_DATABASE:-accessibility_dashboard}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_USER: '${DB_USERNAME:-admin}'
+            MYSQL_PASSWORD: '${DB_PASSWORD:-admin}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'sail-mysql:/var/lib/mysql'
-        networks:
-            - sail
+            - './mysql-data:/var/lib/mysql'
         healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
-            retries: 3
-            timeout: 5s
+            test: ["CMD", "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASE;\""]
+            interval: 10s
+            timeout: 2s
+            retries: 10
     redis:
         image: 'redis:alpine'
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
             - 'sail-redis:/data'
-        networks:
-            - sail
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
@@ -62,11 +57,6 @@ services:
         image: 'selenium/standalone-chrome'
         volumes:
             - '/dev/shm:/dev/shm'
-        networks:
-            - sail
-networks:
-    sail:
-        driver: bridge
 volumes:
     sail-mysql:
         driver: local
