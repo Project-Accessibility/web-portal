@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereResearchId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereUpdatedAt($value)
+ * @property-read \App\Models\Research $research
  */
 class Questionnaire extends Model
 {

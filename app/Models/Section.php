@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Section
@@ -33,6 +34,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereUpdatedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Question[] $questions
  * @property-read int|null $questions_count
+ * @property-read \App\Models\Geofence|null $geofence
+ * @property-read \App\Models\Questionnaire $questionnaire
  */
 class Section extends Model
 {
@@ -68,9 +71,9 @@ class Section extends Model
         return $this->belongsTo(Questionnaire::class);
     }
 
-    public function geofence(): BelongsTo | null
+    public function geofence(): HasOne|null
     {
-        return $this->belongsTo(Geofence::class);
+        return $this->hasOne(Geofence::class);
     }
 
     public function questions(): HasMany

@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Builder|Participant whereFinished($value)
  * @method static Builder|Participant whereQuestionnaireId($value)
  * @method static Builder|Participant whereUpdatedAt($value)
+ * @property-read \App\Models\Questionnaire $questionnaire
  */
 class Participant extends Model
 {

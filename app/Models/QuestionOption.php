@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption whereQuestionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption whereUpdatedAt($value)
+ * @property-read \App\Models\Question $question
  */
 class QuestionOption extends Model
 {

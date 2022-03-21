@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Answer whereParticipantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Answer whereQuestionOptionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Answer whereUpdatedAt($value)
+ * @property-read \App\Models\Participant $participant
+ * @property-read \App\Models\QuestionOption $questionOption
  */
 class Answer extends Model
 {
