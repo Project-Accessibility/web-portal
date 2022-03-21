@@ -39,10 +39,9 @@ services:
         volumes:
             - './mysql-data:/var/lib/mysql'
         healthcheck:
-            test: ["CMD", "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASE;\""]
-            interval: 10s
-            timeout: 2s
-            retries: 10
+            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+            retries: 3
+            timeout: 5s
     redis:
         image: 'redis:alpine'
         ports:
