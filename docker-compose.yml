@@ -16,8 +16,8 @@ services:
             DB_HOST: 'mysql'
             DB_PORT: '${FORWARD_DB_PORT:-3306}'
             DB_DATABASE: '${DB_DATABASE:-accessibility_dashboard}'
-            DB_USERNAME: '${DB_USERNAME}'
-            DB_PASSWORD: '${DB_PASSWORD}'
+            DB_USERNAME: '${DB_USERNAME:-root}'
+            DB_PASSWORD: '${DB_PASSWORD:-root}'
             REDIS_HOST: 'redis'
         volumes:
             - '.:/var/www/html'
@@ -32,7 +32,7 @@ services:
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-root}'
             MYSQL_ROOT_HOST: "%"
             MYSQL_DATABASE: '${DB_DATABASE:-accessibility_dashboard}'
             MYSQL_USER: '${DB_USERNAME}'
