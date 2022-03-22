@@ -24,7 +24,6 @@ services:
         depends_on:
             - mysql
             - redis
-            - selenium
         networks:
             - sail
     mysql:
@@ -56,12 +55,6 @@ services:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
             timeout: 5s
-        networks:
-            - sail
-    selenium:
-        image: 'selenium/standalone-chrome'
-        volumes:
-            - '/dev/shm:/dev/shm'       
         networks:
             - sail
 networks:
