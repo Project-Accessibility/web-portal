@@ -19,6 +19,11 @@ jobs:
       with:
         name: pr-${{ github.event.number }}-gewoonjaap
 
+      # Wait 30 seconds, to make sure the preview is destroyed. Kinda hacky lol
+    - name: Sleep for 30 seconds
+      run: sleep 30s
+      shell: bash
+
     - name: Deploy preview environment
       uses: okteto/deploy-preview@latest
       env:
