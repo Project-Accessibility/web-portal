@@ -44,7 +44,7 @@ class Participant extends Model
 
   /* @var array */
   protected $casts = [
-    'open' => 'boolean',
+    'finished' => 'boolean',
     'created_at' => 'datetime',
     'updated_at' => 'datetime',
   ];
