@@ -25,6 +25,7 @@ jobs:
     - name: "Trigger the pipeline"
       uses: okteto/pipeline@latest
       with:
+        namespace: acc-accessibility-gewoonjaap
         name: acc-accessibility
         timeout: 8m
         skipIfExists: false

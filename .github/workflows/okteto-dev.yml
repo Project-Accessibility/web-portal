@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - develop
+    - fix/SOF-286-OktetoDeploy
 
 name: Okteto Dev Deployment
 
@@ -25,6 +25,7 @@ jobs:
     - name: "Trigger the pipeline"
       uses: okteto/pipeline@latest
       with:
+        namespace: dev-accessibility-gewoonjaap
         name: dev-accessibility
         timeout: 8m
         skipIfExists: false
