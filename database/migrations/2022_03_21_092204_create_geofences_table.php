@@ -6,18 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('geofences', function (Blueprint $table) {
             $table->id();
             $table->float("longitude");
             $table->float("latitude");
-            $table->double("radius");
+            $table->float("radius");
             $table->timestamps();
         });
     }

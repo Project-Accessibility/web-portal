@@ -1,25 +1,27 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production",
-        "format": "npx prettier --write \"**/*.{js,json,less,css,md,html,php}\"",
-        "format:check": "npx prettier --loglevel debug --check \"**/*.{js,json,less,css,md,html,php}\""
-    },
-    "devDependencies": {
-        "@prettier/plugin-php": "^0.18.3",
-        "axios": "^0.25",
-        "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "postcss": "^8.1.14",
-        "resolve-url-loader": "5.0.0",
-        "sass": "^1.49.9",
-        "sass-loader": "12.1.0",
-        "prettier": "^2.6.0"
-    }
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production",
+    "format": "npx prettier --write \"**/*.{js,json,less,css,md,html,php}\"",
+    "format:check": "npx prettier --loglevel debug --check \"**/*.{js,json,less,css,md,html,php}\"",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.18.3",
+    "axios": "^0.25",
+    "husky": "^7.0.4",
+    "laravel-mix": "^6.0.6",
+    "lodash": "^4.17.19",
+    "postcss": "^8.1.14",
+    "resolve-url-loader": "5.0.0",
+    "sass": "^1.49.9",
+    "sass-loader": "12.1.0",
+    "prettier": "^2.6.0"
+  }
 }

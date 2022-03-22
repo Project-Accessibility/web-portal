@@ -34,39 +34,28 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class Participant extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    public $table = 'participants';
+  /* @var string */
+  public $table = 'participants';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'questionnaire_id',
-        'code',
-        'finished',
-    ];
+  /* @var array */
+  protected $fillable = ['questionnaire_id', 'code', 'finished'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'open' => 'boolean',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+  /* @var array */
+  protected $casts = [
+    'finished' => 'boolean',
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
+  ];
 
-    public function questionnaire(): BelongsTo
-    {
-        return $this->belongsTo(Questionnaire::class);
-    }
+  public function questionnaire(): BelongsTo
+  {
+    return $this->belongsTo(Questionnaire::class);
+  }
 
-    public function answers(): HasMany
-    {
-        return $this->hasMany(Answer::class);
-    }
+  public function answers(): HasMany
+  {
+    return $this->hasMany(Answer::class);
+  }
 }

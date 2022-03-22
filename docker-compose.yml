@@ -15,53 +15,53 @@ services:
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
             DB_HOST: 'mysql'
             DB_PORT: '${FORWARD_DB_PORT:-3306}'
-            DB_DATABASE: '${DB_DATABASE}'
-            DB_USERNAME: '${DB_USERNAME}'
-            DB_PASSWORD: '${DB_PASSWORD}'
+            DB_DATABASE: '${DB_DATABASE:-accessibility_dashboard}'
+            DB_USERNAME: '${DB_USERNAME:-admin}'
+            DB_PASSWORD: '${DB_PASSWORD:-admin}'
             REDIS_HOST: 'redis'
         volumes:
             - '.:/var/www/html'
-        networks:
-            - sail
         depends_on:
             - mysql
             - redis
             - selenium
+        networks:
+            - sail
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_PASSWORD: 'root'
             MYSQL_ROOT_HOST: "%"
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_DATABASE: '${DB_DATABASE:-accessibility_dashboard}'
+            MYSQL_USER: '${DB_USERNAME:-admin}'
+            MYSQL_PASSWORD: '${DB_PASSWORD:-admin}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'sail-mysql:/var/lib/mysql'
-        networks:
-            - sail
+            - './mysql-data:/var/lib/mysql'
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+        networks:
+            - sail
     redis:
         image: 'redis:alpine'
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
             - 'sail-redis:/data'
-        networks:
-            - sail
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
             timeout: 5s
+        networks:
+            - sail
     selenium:
         image: 'selenium/standalone-chrome'
         volumes:
-            - '/dev/shm:/dev/shm'
+            - '/dev/shm:/dev/shm'       
         networks:
             - sail
 networks:

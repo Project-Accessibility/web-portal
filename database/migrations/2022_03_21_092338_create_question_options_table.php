@@ -6,17 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('question_options', function (Blueprint $table) {
             $table->id();
             $table->foreignId('question_id');
-            $table->string('type');
+            $table->enum('type', ["OPEN", "IMAGE", "VIDEO", "VOICE", "MULTIPLE_CHOICE", "DATE", "DATETIME"]);
             $table->json('extra_data');
 
             $table->foreign('question_id')->references('id')->on('questions')->cascadeOnDelete()->cascadeOnUpdate();
