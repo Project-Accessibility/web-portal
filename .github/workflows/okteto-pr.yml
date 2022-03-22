@@ -13,6 +13,7 @@ jobs:
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
 
+      # Delete the Okteto Preview before deploying a new one. Fixes the issue that containers get stuck in progressing
     - name: Delete Preview
       uses: okteto/destroy-preview@latest
       with:

@@ -8,7 +8,6 @@ on:
 
 jobs:
   laravel-tests:
-
     runs-on: ubuntu-latest
     steps:
     - uses: shivammathur/setup-php@2.11.0
