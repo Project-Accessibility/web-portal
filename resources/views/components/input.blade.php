@@ -10,7 +10,8 @@
                placeholder="{{$placeholder}}"/>
         @break
         @case("select")
-        <select class="form-control" id="{{$name}}" title="{{$name}}" name="{{$name}}">
+        <select class="form-control" id="{{$name}}" title="{{$name}}"
+                name="{{$name}}" {{$extraData->multiple?"multiple":""}}>
             @for($index = 0; $index < count($extraData->options); $index++)
                 @if(($index == 0 && empty($value))||$value==$extraData->values[$index])
                     <option selected value="{{$extraData->values[$index]}}">{{$extraData->options[$index]}}</option>
@@ -40,10 +41,10 @@
             <output class="mx-3" name="output-{{$name}}" id="output-{{$name}}">{{$value?$value:0}}</output>
         </div>
         <script>
-            window.addEventListener('load', ()=> {
+            window.addEventListener('load', () => {
                 const input = document.getElementById('{{$name}}');
                 const output = document.getElementById('output-{{$name}}');
-                input.addEventListener('input', ()=> {
+                input.addEventListener('input', () => {
                     output.value = input.value;
                 })
             })
