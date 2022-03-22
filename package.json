@@ -11,7 +11,9 @@
     "format": "npx prettier --write \"**/*.{js,json,less,css,md,html,php}\"",
     "format:check": "npx prettier --loglevel debug --check \"**/*.{js,json,less,css,md,html,php}\""
   },
-  "pre-commit": ["format"],
+  "gitHooks": {
+    "pre-commit": "yarn format"
+  },
   "devDependencies": {
     "@prettier/plugin-php": "^0.18.3",
     "axios": "^0.25",
