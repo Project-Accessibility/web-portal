@@ -23,7 +23,12 @@ RUN apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-CMD php artisan queue:work \ 
+RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
+CMD php artisan migrate \ 
+  & php artisan queue:work \
   & php artisan serve --host=0.0.0.0 --port=8080
 
 EXPOSE 8080
