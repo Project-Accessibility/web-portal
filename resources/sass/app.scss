@@ -1,0 +1,48 @@
+@import "accessibility";
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/root";
+// == Bootstrap changes ==
+// Colors
+$blue:   $accessibility-dark_blue;
+$primary: $blue;
+$green:  $accessibility-green_on_white;
+$red:    $accessibility-red;
+
+$headings-color: $blue;
+$body-color: $accessibility_text;
+
+$link-color: $body-color;
+$btn-link-color: $white;
+
+// Font
+$font-family-base: Muli;
+
+// Main
+$border-width: 0.1rem;
+$border-radius: 0.4rem;
+
+$min-contrast-ratio: 7;
+
+// Form
+$form-label-font-weight: 800;
+$form-label-color: $blue;
+
+$input-color: $accessibility_text;
+
+$input-btn-padding-x: 1rem;
+$input-btn-padding-y: .7rem;
+$input-border-color: $blue;
+
+$input-focus-border-color: $blue;
+$input-focus-box-shadow: none;
+
+$input-group-addon-bg: $blue;
+$input-group-addon-color: $white;
+$input-group-addon-border-color: $blue;
+
+$alert-bg-scale: 0%;
+$alert-color-scale: 0%;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
