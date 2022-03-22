@@ -20,7 +20,7 @@ jobs:
         name: pr-${{ github.event.number }}-gewoonjaap
 
       # Wait 30 seconds, to make sure the preview is destroyed. Kinda hacky lol
-    - name: Sleep for 30 seconds
+    - name: Waiting for preview to be deleted
       run: sleep 30s
       shell: bash
 
