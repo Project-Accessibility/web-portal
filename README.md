@@ -24,6 +24,7 @@
 ## Development
 
 - Run `npm i -g yarn` to install yarn.
+- Run `yarn prepare` to install GitHooks.
 - Run `yarn watch` real-time compiling of CSS/JS files.
 - Run `php artisan serve` to run the application.
 - Run `./vendor/bin/sail up` to run the application in Docker.
