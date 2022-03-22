@@ -18,12 +18,14 @@ class SectionFactory extends Factory
    */
   public function definition()
   {
+    $name = $this->faker->streetName;
     return [
       'questionnaire_id' => Questionnaire::factory(),
       'geofence_id' => Geofence::factory(),
-      'title' => $this->faker->streetName,
+      'title' => $name,
       'description' => $this->faker->paragraph(),
-      'location' => $this->faker->address,
+      'location_description' => $this->faker->address,
+      'teachable_machine_class' => $name,
     ];
   }
 }
