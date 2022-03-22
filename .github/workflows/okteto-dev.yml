@@ -1,12 +1,12 @@
 on:
   push:
     branches:
-    - fix/SOF-286-OktetoDeploy
+    - develop
 
 name: Okteto Dev Deployment
 
 jobs:
-  devflow:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - name: checkout

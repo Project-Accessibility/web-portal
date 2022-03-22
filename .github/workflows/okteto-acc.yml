@@ -6,7 +6,7 @@ on:
 name: Okteto Acc Deployment
 
 jobs:
-  devflow:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
