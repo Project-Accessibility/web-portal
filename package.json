@@ -9,11 +9,13 @@
     "prod": "npm run production",
     "production": "mix --production",
     "format": "npx prettier --write \"**/*.{js,json,less,css,md,html,php}\"",
-    "format:check": "npx prettier --loglevel debug --check \"**/*.{js,json,less,css,md,html,php}\""
+    "format:check": "npx prettier --loglevel debug --check \"**/*.{js,json,less,css,md,html,php}\"",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@prettier/plugin-php": "^0.18.3",
     "axios": "^0.25",
+    "husky": "^7.0.4",
     "laravel-mix": "^6.0.6",
     "lodash": "^4.17.19",
     "postcss": "^8.1.14",
