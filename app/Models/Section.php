@@ -50,7 +50,8 @@ class Section extends Model
     'geofence_id',
     'title',
     'description',
-    'location',
+    'location_description',
+    'teachable_machine_class',
   ];
 
   /* @var array */
