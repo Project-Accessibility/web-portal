@@ -34,29 +34,30 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Questionnaire extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  /* @var string */
-  public $table = 'questionnaires';
+    /* @var string */
+    public $table = 'questionnaires';
 
-  /* @var array */
-  protected $fillable = [
-    'research_id',
-    'title',
-    'description',
-    'instructions',
-    'open',
-  ];
+    /* @var array */
+    protected $fillable = [
+        'research_id',
+        'title',
+        'description',
+        'instructions',
+        'open',
+        'teachable_machine_link'
+    ];
 
-  /* @var array */
-  protected $casts = [
-    'open' => 'boolean',
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-  ];
+    /* @var array */
+    protected $casts = [
+        'open' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
-  public function research(): BelongsTo
-  {
-    return $this->belongsTo(Research::class);
-  }
+    public function research(): BelongsTo
+    {
+        return $this->belongsTo(Research::class);
+    }
 }

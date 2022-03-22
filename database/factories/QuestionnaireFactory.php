@@ -10,17 +10,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class QuestionnaireFactory extends Factory
 {
-  /**
-   * Define the model's default state.
-   *
-   * @return array<string, mixed>
-   */
-  public function definition()
-  {
-    return [
-      'research_id' => Research::factory(),
-      'title' => $this->faker->company(),
-      'description' => $this->faker->paragraph(),
-    ];
-  }
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'research_id' => Research::factory(),
+            'title' => $this->faker->company(),
+            'description' => $this->faker->paragraph(),
+            'teachable_machine_link' => $this->faker->domainName,
+        ];
+    }
 }
