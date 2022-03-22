@@ -33,12 +33,19 @@
 - Run `php artisan key:generate` to generate the application key.
 
 ## Components
+
 ### Input
+
 #### Text
-```<x-input type="text" name="input" placeholder="input"></x-input>```
+
+`<x-input type="text" name="input" placeholder="input"></x-input>`
+
 #### Password
-```<x-input type="password" name="input" placeholder="input"></x-input>```
+
+`<x-input type="password" name="input" placeholder="input"></x-input>`
+
 #### Select
+
 ```
 @php
     $extraData=array(
@@ -51,12 +58,18 @@
 @endphp
 <x-input type="select" name="input" :extraData="$extraData" value="waarde2"></x-input>
 ```
+
 #### Dates
-```<x-input type="date" name="input" value="2021-03-21"></x-input>```
-``` <x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>```
+
+`<x-input type="date" name="input" value="2021-03-21"></x-input>`
+` <x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>`
+
 #### Switch
-```<x-input type="switch" name="input" :value="true"></x-input>```
+
+`<x-input type="switch" name="input" :value="true"></x-input>`
+
 #### Range
+
 ```
 @php
     $extraData=array(
