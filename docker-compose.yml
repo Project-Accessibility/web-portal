@@ -38,7 +38,7 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD:-admin}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - './mysql-data:/var/lib/mysql'
+            - 'sail-mysql:/var/lib/mysql'
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
