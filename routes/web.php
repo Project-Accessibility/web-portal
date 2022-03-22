@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\App;
+use App\Http\Controllers\ResearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,4 +41,14 @@ if (App::environment('testing')) {
 }
 Route::post('/logout', function () {
     return view('welcome');
+});
+
+Route::controller(ResearchController::class)->prefix('/researches')->group(function () {
+    Route::get('/', 'overview');
+    Route::get('/{id}', 'details');
+    Route::get('/create', 'create');
+    Route::get('/{id}/edit', 'edit');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'remove');
 });
