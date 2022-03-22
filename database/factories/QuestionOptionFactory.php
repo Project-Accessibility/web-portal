@@ -11,19 +11,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class QuestionOptionFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
-    {
-        $types = QuestionOptionType::cases();
-        $type = $types[$this->faker->numberBetween(0, count($types)-1)];
-        return [
-            'question_id' => Question::factory(),
-            'type' => $type,
-            'extra_data' => []
-        ];
-    }
+  /**
+   * Define the model's default state.
+   *
+   * @return array<string, mixed>
+   */
+  public function definition()
+  {
+    $types = QuestionOptionType::cases();
+    $type = $types[$this->faker->numberBetween(0, count($types) - 1)];
+    return [
+      'question_id' => Question::factory(),
+      'type' => $type,
+      'extra_data' => [],
+    ];
+  }
 }

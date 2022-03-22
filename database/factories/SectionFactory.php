@@ -11,19 +11,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SectionFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
-    {
-        return [
-            'questionnaire_id' => Questionnaire::factory(),
-            'geofence_id' => Geofence::factory(),
-            'title' => $this->faker->streetName,
-            'description' => $this->faker->paragraph(),
-            'location' => $this->faker->address
-        ];
-    }
+  /**
+   * Define the model's default state.
+   *
+   * @return array<string, mixed>
+   */
+  public function definition()
+  {
+    return [
+      'questionnaire_id' => Questionnaire::factory(),
+      'geofence_id' => Geofence::factory(),
+      'title' => $this->faker->streetName,
+      'description' => $this->faker->paragraph(),
+      'location' => $this->faker->address,
+    ];
+  }
 }

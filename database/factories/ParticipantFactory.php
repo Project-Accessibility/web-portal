@@ -11,16 +11,16 @@ use Illuminate\Support\Str;
  */
 class ParticipantFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
-    {
-        return [
-            'questionnaire_id' => Questionnaire::factory(),
-            'code' =>  Str::random(4)
-        ];
-    }
+  /**
+   * Define the model's default state.
+   *
+   * @return array<string, mixed>
+   */
+  public function definition()
+  {
+    return [
+      'questionnaire_id' => Questionnaire::factory(),
+      'code' => Str::random(4),
+    ];
+  }
 }

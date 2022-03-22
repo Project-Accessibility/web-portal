@@ -10,17 +10,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class QuestionFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
-    {
-        return [
-            'section_id' => Section::factory(),
-            'title' => $this->faker->title,
-            'question' => $this->faker->title
-        ];
-    }
+  /**
+   * Define the model's default state.
+   *
+   * @return array<string, mixed>
+   */
+  public function definition()
+  {
+    return [
+      'section_id' => Section::factory(),
+      'title' => $this->faker->title,
+      'question' => $this->faker->title,
+    ];
+  }
 }
