@@ -41,9 +41,12 @@
 #### Select
 ```
 @php
-    $extraData=(object)array(
-        "options" => array("optie1", "optie2", "optie3"),
-        "values" => array("waarde1", "waarde2", "waarde3")
+    $extraData=array(
+        "multiple" => false
+        "options" => [
+          ['option_1', 'value_1'],
+          ['option_2', 'value_2'],
+        ];
     );
 @endphp
 <x-input type="select" name="input" :extraData="$extraData" value="waarde2"></x-input>
@@ -56,7 +59,7 @@
 #### Range
 ```
 @php
-    $extraData=(object)array(
+    $extraData=array(
         "min" => 0,
         "max" => 5,
         "step" => 0.5

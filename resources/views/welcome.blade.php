@@ -448,7 +448,7 @@
                             reading all of the documentation from beginning to end.
                         </div>
                         @php
-                            $extraData=(object)array(
+                            $extraData=array(
                                 "min" => 0,
                                 "max" => 5,
                                 "step" => 0.5

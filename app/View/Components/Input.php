@@ -38,9 +38,9 @@ class Input extends Component
     /**
      * The extra data
      *
-     * @var object|null
+     * @var array|null
      */
-    public object|null $extraData;
+    public array|null $extraData;
 
     /**
      * Create a new component instance.
@@ -49,9 +49,9 @@ class Input extends Component
      * @param string $name
      * @param mixed $value
      * @param string|null $placeholder
-     * @param object|null $extraData
+     * @param array|null $extraData
      */
-    public function __construct(string $type, string $name, mixed $value = null, string $placeholder = null, object $extraData = null)
+    public function __construct(string $type, string $name, mixed $value = null, string $placeholder = null, array $extraData = null)
     {
         $this->type = $type;
         $this->name = $name;

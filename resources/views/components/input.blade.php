@@ -11,14 +11,14 @@
         @break
         @case("select")
         <select class="form-control" id="{{$name}}" title="{{$name}}"
-                name="{{$name}}" {{$extraData->multiple?"multiple":""}}>
-            @for($index = 0; $index < count($extraData->options); $index++)
-                @if(($index == 0 && empty($value))||$value==$extraData->values[$index])
-                    <option selected value="{{$extraData->values[$index]}}">{{$extraData->options[$index]}}</option>
+                name="{{$name}}" {{$extraData["multiple"]?"multiple":""}}>
+            @foreach($extraData["options"] as $option)
+                @if(($index == 0 && empty($value))||$value==$option[1])
+                    <option selected value="{{$option[1]}}">{{$option[0]}}</option>
                 @else
-                    <option value="{{$extraData->values[$index]}}">{{$extraData->options[$index]}}</option>
+                    <option value="{{$option[1]}}">{{$option[0]}}</option>
                 @endif
-            @endfor
+            @endforeach
         </select>
         @break
         @case("date")
@@ -35,8 +35,8 @@
         @break
         @case("range")
         <div class="d-flex">
-            <input type="range" class="form-range w-75" min="{{$extraData->min}}" max="{{$extraData->max}}"
-                   step="{{$extraData->step}}" id="{{$name}}" title="{{$name}}" name="{{$name}}"
+            <input type="range" class="form-range w-75" min="{{$extraData["min"]}}" max="{{$extraData["max"]}}"
+                   step="{{$extraData["step"]}}" id="{{$name}}" title="{{$name}}" name="{{$name}}"
                    placeholder="{{$placeholder}}" value="{{$value?$value:0}}">
             <output class="mx-3" name="output-{{$name}}" id="output-{{$name}}">{{$value?$value:0}}</output>
         </div>
