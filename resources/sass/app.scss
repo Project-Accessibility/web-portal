@@ -1,48 +1,196 @@
 @import "accessibility";
 @import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
-@import "../../node_modules/bootstrap/scss/mixins";
-@import "../../node_modules/bootstrap/scss/root";
 // == Bootstrap changes ==
 // Colors
-$blue:   $accessibility-dark_blue;
-$primary: $blue;
-$green:  $accessibility-green_on_white;
-$red:    $accessibility-red;
+$blue:     $accessibility-dark_blue;
+$green:    $accessibility_green_on_dark;
+$red:      $accessibility-red;
+$orange:   $accessibility_orange;
+
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+
+$warning: $orange;
+$secondary: $gray-800;
+
+$form-feedback-valid-color: $accessibility_green_on_dark;
+$blockquote-footer-color: $gray-700;
+
+$custom-colors: (
+    "light-blue": $accessibility_blue
+);
 
 $headings-color: $blue;
-$body-color: $accessibility_text;
 
-$link-color: $body-color;
-$btn-link-color: $white;
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+
+$colors: map-merge($colors, $custom-colors);
+
+$link-shade-percentage: 100%;
+
+// Image
+$figure-caption-color: $gray-700;
 
 // Font
 $font-family-base: Muli;
 
 // Main
-$border-width: 0.1rem;
-$border-radius: 0.4rem;
+$border-width: .1rem;
+$border-radius: .4rem;
 
 $min-contrast-ratio: 7;
 
 // Form
+$form-select-box-shadow: none;
 $form-label-font-weight: 800;
-$form-label-color: $blue;
+$form-label-color: $primary;
 
 $input-color: $accessibility_text;
+$form-file-button-color: $white;
+$form-file-button-bg: $secondary;
+
+$form-select-border-color: $primary;
 
 $input-btn-padding-x: 1rem;
 $input-btn-padding-y: .7rem;
 $input-border-color: $blue;
 
-$input-focus-border-color: $blue;
+$input-focus-border-color: $primary;
 $input-focus-box-shadow: none;
 
-$input-group-addon-bg: $blue;
+$input-group-addon-bg: $secondary;
 $input-group-addon-color: $white;
-$input-group-addon-border-color: $blue;
+$input-group-addon-border-color: $secondary;
 
-$alert-bg-scale: 0%;
+$form-text-color: $gray-700;
+
+// Validation
+$form-feedback-margin-top: 0;
+
+// Alerts
+$alert-bg-scale: -80%;
 $alert-color-scale: 0%;
+$alert-border-scale: 0%;
+$alert-border-width: $border-width;
+$alert-link-font-weight: $font-weight-base;
+$btn-close-opacity: 1;
+
+// Lists
+$list-group-item-bg-scale: -80%;
+$list-group-item-color-scale: 0%;
+
+// Badge
+$badge-padding-y: .65em;
+$badge-padding-x: .95em;
+
+// Navbar
+$navbar-dark-color:                 $white;
+$navbar-dark-hover-color:           $white;
+$navbar-dark-active-color:          $white;
+$navbar-dark-disabled-color:        $white;
+
+$navbar-light-color:                $black;
+$navbar-light-hover-color:          $black;
+$navbar-light-active-color:         $black;
+$navbar-light-disabled-color:       $black;
+
+// Breadcrumbs
+$breadcrumb-active-color: $gray-700;
+
+// Code
+$code-color: $white;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
+// Custom CSS
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
+    color: $accessibility_text;
+}
+
+.nav-link {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-bottom: .1rem solid transparent;
+}
+
+.valid-feedback, .invalid-feedback {
+    padding: .2rem .6rem;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+}
+
+.valid-feedback  {
+    background: $form-feedback-valid-color;
+    color: color-contrast($form-feedback-valid-color);
+}
+
+.invalid-feedback {
+    background: $form-feedback-invalid-color;
+    color: color-contrast($form-feedback-invalid-color);
+}
+
+.form-control.is-invalid,
+.form-control.is-valid,
+.form-select.is-invalid,
+.form-select.is-valid{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group-text {
+    z-index: 50;
+}
+
+.input-group-text ~ .form-control.is-invalid ~ .invalid-feedback {
+    padding-top: $border-radius + .2rem;
+    margin-top: -$border-radius;
+}
+
+.form-control.is-valid:focus,
+.form-control.is-invalid:focus,
+.form-select.is-invalid:focus {
+    box-shadow: none;
+}
+
+code {
+    background: $gray-800;
+    padding: .2rem .4rem;
+    border-radius: $border-radius;
+}
+
+@each $color, $value in $theme-colors {
+    .alert-#{$color} .alert-link {
+        color: color-contrast(lighten($value, 80));
+    }
+
+    .navbar.bg-#{$color} .nav-pills > .nav-item > .nav-link {
+        color: color-contrast($value);
+    }
+
+    .navbar.bg-#{$color} .nav-pills > .nav-item > .nav-link.active {
+        background: lighten($value, 20);
+        color: $color;
+    }
+
+    .bg-#{$color} .nav-item:hover > .nav-link {
+        border-bottom: .1rem solid color-contrast($value);
+    }
+
+    .progress-bar.bg-#{$color} {
+        color: color-contrast($value);
+    }
+
+    .card.bg-#{$color} {
+        $card-cap-bg: darken($value, 10);
+    }
+}
+
+
+

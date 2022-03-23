@@ -23,5 +23,8 @@
     "resolve-url-loader": "5.0.0",
     "sass": "^1.49.9",
     "sass-loader": "12.1.0"
+  },
+  "dependencies": {
+    "popper.js": "^1.16.1"
   }
 }

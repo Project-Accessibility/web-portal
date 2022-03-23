@@ -1,261 +1,263 @@
 @extends('layouts.default')
 
 @section('content')
-<header class="bd-header bg-dark p-3 d-flex align-items-stretch border-bottom border-dark">
-    <h1>Stylesheet</h1>
+<header class="bd-header bg-primary p-3 d-flex items-center">
+    <h1 class="text-white">Stylesheet</h1>
 </header>
 <div class="container bg-body">
     <section id="content">
         <article class="my-3" id="typography">
-            <div>
-                <div class="bd-example">
-                    <p class="display-1">Display 1</p>
-                    <p class="display-2">Display 2</p>
-                    <p class="display-3">Display 3</p>
-                    <p class="display-4">Display 4</p>
-                    <p class="display-5">Display 5</p>
-                    <p class="display-6">Display 6</p>
-                </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex gap-2">
+                    <div class="bd-example">
+                        <p class="display-1">Display 1</p>
+                        <p class="display-2">Display 2</p>
+                        <p class="display-3">Display 3</p>
+                        <p class="display-4">Display 4</p>
+                        <p class="display-5">Display 5</p>
+                        <p class="display-6">Display 6</p>
+                    </div>
 
-                <div class="bd-example">
-                    <p class="h1">Heading 1</p>
-                    <p class="h2">Heading 2</p>
-                    <p class="h3">Heading 3</p>
-                    <p class="h4">Heading 4</p>
-                    <p class="h5">Heading 5</p>
-                    <p class="h6">Heading 6</p>
-                </div>
+                    <div class="bd-example">
+                        <p class="h1">Heading 1</p>
+                        <p class="h2">Heading 2</p>
+                        <p class="h3">Heading 3</p>
+                        <p class="h4">Heading 4</p>
+                        <p class="h5">Heading 5</p>
+                        <p class="h6">Heading 6</p>
+                    </div>
 
-                <div class="bd-example">
-                    <p class="lead">
-                        This is a lead paragraph. It stands out from regular paragraphs.
-                    </p>
+                    <div class="bd-example">
+                        <p class="lead">
+                            This is a lead paragraph. It stands out from regular paragraphs.
+                        </p>
+                    </div>
                 </div>
+                <div class="d-flex gap-2">
+                    <div class="bd-example">
+                        <p>You can use the mark tag to <mark>highlight</mark> text.</p>
+                        <p><del>This line of text is meant to be treated as deleted text.</del></p>
+                        <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
+                        <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
+                        <p><u>This line of text will render as underlined.</u></p>
+                        <p><small>This line of text is meant to be treated as fine print.</small></p>
+                        <p><strong>This line rendered as bold text.</strong></p>
+                        <p><em>This line rendered as italicized text.</em></p>
+                    </div>
 
-                <div class="bd-example">
-                    <p>You can use the mark tag to <mark>highlight</mark> text.</p>
-                    <p><del>This line of text is meant to be treated as deleted text.</del></p>
-                    <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
-                    <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
-                    <p><u>This line of text will render as underlined.</u></p>
-                    <p><small>This line of text is meant to be treated as fine print.</small></p>
-                    <p><strong>This line rendered as bold text.</strong></p>
-                    <p><em>This line rendered as italicized text.</em></p>
-                </div>
+                    <div class="bd-example">
+                        <blockquote class="blockquote">
+                            <p>A well-known quote, contained in a blockquote element.</p>
+                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                        </blockquote>
+                    </div>
 
-                <div class="bd-example">
-                    <blockquote class="blockquote">
-                        <p>A well-known quote, contained in a blockquote element.</p>
-                        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                    </blockquote>
-                </div>
+                    <div class="bd-example">
+                        <ul class="list-unstyled">
+                            <li>This is a list.</li>
+                            <li>It appears completely unstyled.</li>
+                            <li>Structurally, it's still a list.</li>
+                            <li>However, this style only applies to immediate child elements.</li>
+                            <li>Nested lists:
+                                <ul>
+                                    <li>are unaffected by this style</li>
+                                    <li>will still show a bullet</li>
+                                    <li>and have appropriate left margin</li>
+                                </ul>
+                            </li>
+                            <li>This may still come in handy in some situations.</li>
+                        </ul>
+                    </div>
 
-                <div class="bd-example">
-                    <ul class="list-unstyled">
-                        <li>This is a list.</li>
-                        <li>It appears completely unstyled.</li>
-                        <li>Structurally, it's still a list.</li>
-                        <li>However, this style only applies to immediate child elements.</li>
-                        <li>Nested lists:
-                            <ul>
-                                <li>are unaffected by this style</li>
-                                <li>will still show a bullet</li>
-                                <li>and have appropriate left margin</li>
-                            </ul>
-                        </li>
-                        <li>This may still come in handy in some situations.</li>
-                    </ul>
-                </div>
-
-                <div class="bd-example">
-                    <ul class="list-inline">
-                        <li class="list-inline-item">This is a list item.</li>
-                        <li class="list-inline-item">And another one.</li>
-                        <li class="list-inline-item">But they're displayed inline.</li>
-                    </ul>
+                    <div class="bd-example">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">This is a list item.</li>
+                            <li class="list-inline-item">And another one.</li>
+                            <li class="list-inline-item">But they're displayed inline.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </article>
         <article class="my-3" id="images">
-            <div>
-                <div class="bd-example">
+            <div class="d-flex gap-2">
+                <div class="bd-example w-100">
                     <svg class="bd-placeholder-img bd-placeholder-img-lg img-fluid" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Responsive image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Responsive image</text></svg>
 
                 </div>
 
                 <div class="bd-example">
                     <svg class="bd-placeholder-img img-thumbnail" width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A generic square placeholder image with a white border around it, making it resemble a photograph taken with an old instant camera: 200x200" preserveAspectRatio="xMidYMid slice" focusable="false"><title>A generic square placeholder image with a white border around it, making it resemble a photograph taken with an old instant camera</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">200x200</text></svg>
-
-                </div>
-            </div>
-        </article>
-        <article class="my-3" id="tables">
-            <div>
-                <div class="bd-example">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
 
-                <div class="bd-example">
-                    <table class="table table-dark table-borderless">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="bd-example">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Class</th>
-                                <th scope="col">Heading</th>
-                                <th scope="col">Heading</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">Default</th>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-
-                            <tr class="table-primary">
-                                <th scope="row">Primary</th>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-                            <tr class="table-secondary">
-                                <th scope="row">Secondary</th>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-                            <tr class="table-success">
-                                <th scope="row">Success</th>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-                            <tr class="table-danger">
-                                <th scope="row">Danger</th>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-                            <tr class="table-warning">
-                                <th scope="row">Warning</th>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-                            <tr class="table-info">
-                                <th scope="row">Info</th>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-                            <tr class="table-light">
-                                <th scope="row">Light</th>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-                            <tr class="table-dark">
-                                <th scope="row">Dark</th>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="bd-example">
-                    <table class="table table-sm table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </article>
-        <article class="my-3" id="figures">
-            <div>
                 <div class="bd-example">
                     <figure class="figure">
                         <svg class="bd-placeholder-img figure-img img-fluid rounded" width="400" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 400x300" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">400x300</text></svg>
 
                         <figcaption class="figure-caption">A caption for the above image.</figcaption>
                     </figure>
+                </div>
+            </div>
+        </article>
+        <article class="my-3" id="tables">
+            <div class="d-flex flex-column">
+                <div class="d-flex gap-2">
+                    <div class="bd-example w-100">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First</th>
+                                    <th scope="col">Last</th>
+                                    <th scope="col">Handle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="bd-example w-100">
+                        <table class="table table-dark table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First</th>
+                                    <th scope="col">Last</th>
+                                    <th scope="col">Handle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <div class="w-100">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Class</th>
+                                    <th scope="col">Heading</th>
+                                    <th scope="col">Heading</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Default</th>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                </tr>
+
+                                <tr class="table-primary">
+                                    <th scope="row">Primary</th>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                </tr>
+                                <tr class="table-secondary">
+                                    <th scope="row">Secondary</th>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                </tr>
+                                <tr class="table-success">
+                                    <th scope="row">Success</th>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                </tr>
+                                <tr class="table-danger">
+                                    <th scope="row">Danger</th>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <th scope="row">Warning</th>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                </tr>
+                                <tr class="table-info">
+                                    <th scope="row">Info</th>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                </tr>
+                                <tr class="table-light">
+                                    <th scope="row">Light</th>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th scope="row">Dark</th>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="bd-example w-100">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First</th>
+                                    <th scope="col">Last</th>
+                                    <th scope="col">Handle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td colspan="2">Larry the Bird</td>
+                                    <td>@twitter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </article>
@@ -585,10 +587,6 @@
                         A simple info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <div class="alert alert-light alert-dismissible fade show" role="alert">
-                        A simple light alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
                     <div class="alert alert-dark alert-dismissible fade show" role="alert">
                         A simple dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -610,11 +608,10 @@
                 <div class="bd-example">
                     <p class="h1">Example heading <span class="badge bg-primary">New</span></p>
                     <p class="h2">Example heading <span class="badge bg-secondary">New</span></p>
-                    <p class="h3">Example heading <span class="badge bg-success">New</span></p>
+                    <p class="h3">Example heading <span class="badge bg-success text-black">New</span></p>
                     <p class="h4">Example heading <span class="badge bg-danger">New</span></p>
-                    <p class="h5">Example heading <span class="badge bg-warning text-dark">New</span></p>
-                    <p class="h6">Example heading <span class="badge bg-info text-dark">New</span></p>
-                    <p class="h6">Example heading <span class="badge bg-light text-dark">New</span></p>
+                    <p class="h5">Example heading <span class="badge bg-warning text-black">New</span></p>
+                    <p class="h6">Example heading <span class="badge bg-info text-black">New</span></p>
                     <p class="h6">Example heading <span class="badge bg-dark">New</span></p>
                 </div>
 
@@ -622,21 +619,15 @@
 
                     <span class="badge rounded-pill bg-primary">Primary</span>
                     <span class="badge rounded-pill bg-secondary">Secondary</span>
-                    <span class="badge rounded-pill bg-success">Success</span>
+                    <span class="badge rounded-pill bg-success text-black">Success</span>
                     <span class="badge rounded-pill bg-danger">Danger</span>
-                    <span class="badge rounded-pill bg-warning text-dark">Warning</span>
-                    <span class="badge rounded-pill bg-info text-dark">Info</span>
-                    <span class="badge rounded-pill bg-light text-dark">Light</span>
+                    <span class="badge rounded-pill bg-warning text-black">Warning</span>
+                    <span class="badge rounded-pill bg-info text-black">Info</span>
                     <span class="badge rounded-pill bg-dark">Dark</span>
                 </div>
             </div>
         </article>
         <article class="my-3" id="breadcrumb">
-            <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
-                <h3>Breadcrumb</h3>
-                <a class="d-flex align-items-center" href="/docs/5.0/components/breadcrumb/">Documentation</a>
-            </div>
-
             <div>
                 <div class="bd-example">
                     <nav aria-label="breadcrumb">
@@ -651,7 +642,7 @@
         </article>
         <article class="my-3" id="buttons">
             <div>
-                <div class="bd-example">
+                <div class="d-grid gap-2 d-md-flex">
 
                     <button type="button" class="btn btn-primary">Primary</button>
                     <button type="button" class="btn btn-secondary">Secondary</button>
@@ -659,22 +650,9 @@
                     <button type="button" class="btn btn-danger">Danger</button>
                     <button type="button" class="btn btn-warning">Warning</button>
                     <button type="button" class="btn btn-info">Info</button>
-                    <button type="button" class="btn btn-light">Light</button>
                     <button type="button" class="btn btn-dark">Dark</button>
 
                     <button type="button" class="btn btn-link">Link</button>
-                </div>
-
-                <div class="bd-example">
-
-                    <button type="button" class="btn btn-outline-primary">Primary</button>
-                    <button type="button" class="btn btn-outline-secondary">Secondary</button>
-                    <button type="button" class="btn btn-outline-success">Success</button>
-                    <button type="button" class="btn btn-outline-danger">Danger</button>
-                    <button type="button" class="btn btn-outline-warning">Warning</button>
-                    <button type="button" class="btn btn-outline-info">Info</button>
-                    <button type="button" class="btn btn-outline-light">Light</button>
-                    <button type="button" class="btn btn-outline-dark">Dark</button>
                 </div>
 
                 <div class="bd-example">
@@ -731,7 +709,7 @@
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                     <a href="#" class="btn btn-primary">Go somewhere</a>
                                 </div>
-                                <div class="card-footer text-muted">
+                                <div class="card-footer">
                                     2 days ago
                                 </div>
                             </div>
@@ -1109,45 +1087,6 @@
         <article class="my-3" id="navbar">
             <div>
                 <div class="bd-example">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <div class="container-fluid">
-                            <a class="navbar-brand" href="#">
-                                <img src="{{ asset('storage/icons/transparent/icon_transparent.png') }}" height="30" class="d-inline-block align-top" alt="Bootstrap" loading="lazy">
-                            </a>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Link</a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dropdown
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                                    </li>
-                                </ul>
-                                <form class="d-flex">
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                    <button class="btn btn-outline-dark" type="submit">Search</button>
-                                </form>
-                            </div>
-                        </div>
-                    </nav>
-
                     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mt-5">
                         <div class="container-fluid">
                             <a class="navbar-brand" href="#">
@@ -1274,10 +1213,10 @@
                         <div class="progress-bar bg-success w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                     </div>
                     <div class="progress mb-3">
-                        <div class="progress-bar bg-info text-dark w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                        <div class="progress-bar bg-info w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
                     </div>
                     <div class="progress mb-3">
-                        <div class="progress-bar bg-warning text-dark w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+                        <div class="progress-bar bg-warning w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
                     </div>
                     <div class="progress">
                         <div class="progress-bar bg-danger w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
@@ -1295,7 +1234,7 @@
         <article class="my-3" id="scrollspy">
             <div>
                 <div class="bd-example">
-                    <nav id="navbar-example2" class="navbar navbar-light bg-light px-3">
+                    <nav id="navbar-example2" class="navbar navbar-light bg-success px-3">
                         <a class="navbar-brand" href="#">Navbar</a>
                         <ul class="nav nav-pills">
                             <li class="nav-item">
@@ -1352,10 +1291,7 @@
                     <div class="spinner-border text-info" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
-                    <div class="spinner-border text-light" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <div class="spinner-border text-dark" role="status">
+                    <div class="spinner-border text-black" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
@@ -1383,26 +1319,8 @@
                     <div class="spinner-grow text-light" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
-                    <div class="spinner-grow text-dark" role="status">
+                    <div class="spinner-grow text-black" role="status">
                         <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
-        </article>
-        <article class="my-3" id="toasts">
-            <div>
-                <div class="bd-example bg-dark p-5 align-items-center">
-                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-header">
-                            <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#007aff"/></svg>
-
-                            <strong class="me-auto">Bootstrap</strong>
-                            <small class="text-muted">11 mins ago</small>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                        <div class="toast-body">
-                            Hello, world! This is a toast message.
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1415,6 +1333,80 @@
                     <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">Tooltip on bottom</button>
                     <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on start">Tooltip on start</button>
                     <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">Tooltip with HTML</button>
+                </div>
+            </div>
+        </article>
+        <article class="my-3" id="toasts">
+            <div>
+                <div class="bd-example bg-primary p-3 align-items-center">
+                    <div class="mb-3 d-grid gap-2">
+                        <h3 class="text-white">Examples with dark background</h3>
+                        <hr class="bg-light border-2 border-top border-light">
+                        <div class="alert alert-light alert-dismissible fade show" role="alert">
+                            A simple light alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <p class="h6 text-white">Example heading <span class="badge bg-light text-black">New</span></p>
+                        <div>
+                            <span class="badge rounded-pill bg-light text-black">Light</span>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-light">Light</button>
+                        </div>
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="#">
+                                    <img src="{{ asset('storage/icons/transparent/icon_transparent.png') }}" height="30" class="d-inline-block align-top" alt="Bootstrap" loading="lazy">
+                                </a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Link</a>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Dropdown
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                                        </li>
+                                    </ul>
+                                    <form class="d-flex">
+                                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                        <button class="btn btn-outline-dark" type="submit">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#007aff"/></svg>
+
+                            <strong class="me-auto">Bootstrap</strong>
+                            <small class="text-muted">11 mins ago</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            Hello, world! This is a toast message.
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>
