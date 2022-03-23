@@ -13,6 +13,17 @@ jobs:
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
 
+      # Delete the Okteto Preview before deploying a new one. Fixes the issue that containers get stuck in progressing
+    - name: Delete Preview
+      uses: okteto/destroy-preview@latest
+      with:
+        name: pr-${{ github.event.number }}-gewoonjaap
+
+      # Wait 30 seconds, to make sure the preview is destroyed. Kinda hacky lol
+    - name: Waiting for preview to be deleted
+      run: sleep 30s
+      shell: bash
+
     - name: Deploy preview environment
       uses: okteto/deploy-preview@latest
       env:
