@@ -5,8 +5,8 @@
 [![Laravel Tests](https://github.com/Project-Accessibility/web-portal/workflows/Laravel/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
 [![Prettier](https://github.com/Project-Accessibility/web-portal/workflows/Prettier/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
 
-[![Okteto Dev](https://github.com/Project-Accessibility/web-portal/workflows/okteto-dev.yml/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
-[![Okteto Acc](https://github.com/Project-Accessibility/web-portal/workflows/okteto-acc.yml/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
+[![Okteto Dev](https://github.com/Project-Accessibility/web-portal/workflows/Okteto%20Dev%20Deployment/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
+[![Okteto Acc](https://github.com/Project-Accessibility/web-portal/workflows/Okteto%20Acc%20Deployment/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
 
 - [Project Accessibility Web Portal](#project-accessibility-web-portal)
   - [Requirements](#requirements)

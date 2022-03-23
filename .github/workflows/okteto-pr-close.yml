@@ -6,7 +6,7 @@ on:
       - closed
 
 jobs:
-  build:
+  destroy-preview:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
