@@ -1,31 +1,77 @@
 @import "accessibility";
 @import "../../node_modules/bootstrap/scss/functions";
 // == Bootstrap changes ==
+
+// These colors are not in use and are deleted from Bootstrap
+@import "./exclude/exclude-colors";
+
 // Colors
-$blue:     $accessibility-dark_blue;
-$green:    $accessibility_green_on_dark;
-$red:      $accessibility-red;
-$orange:   $accessibility_orange;
+$blue-light: $accessibility-blue-light;
+$blue:       $accessibility-blue;
+$blue-dark:  $accessibility-blue-dark;
+$red:        $accessibility-red;
+$orange:     $accessibility-orange;
+$green:      $accessibility-green;
+$teal:       $accessibility-teal-on-dark;
+$teal-dark:  $accessibility-teal-on-light;
+$gray:       #626264;
+$gray-dark:  #27272b;
+$black:      #000;
+$white:      #fff;
 
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
+$primary:   $blue-dark;
+$secondary: $teal-dark;
+$success:   $green;
+$danger:    $red;
+$light:     $white;
+$dark:      $black;
 
-$warning: $orange;
-$secondary: $gray-800;
-
-$form-feedback-valid-color: $accessibility_green_on_dark;
-$blockquote-footer-color: $gray-700;
+$color-contrast-dark: $blue-dark;
 
 $custom-colors: (
-    "light-blue": $accessibility_blue
+    "blue-light": $blue-light,
+    "blue-dark": $blue-dark,
+    "teal-dark": $teal-dark,
+    "gray": $gray,
+    "gray-dark": $gray-dark,
+    "black": $black,
+    "white": $white,
 );
 
-$headings-color: $blue;
-
 @import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/utilities";
 @import "../../node_modules/bootstrap/scss/mixins";
+@import "./exclude/exclude-maps.scss";
 
 $colors: map-merge($colors, $custom-colors);
+
+$utilities: (
+    "background-color": (
+        property: background-color,
+        class: bg,
+        values: map-merge(
+                $colors,
+                (
+                    "body": $body-bg,
+                    "transparent": transparent
+                )
+        )
+    ),
+    "color": (
+        property: color,
+        class: text,
+        values: map-merge(
+                $colors,
+                (
+                    "body": $body-color,
+                    "muted": $text-muted,
+                    "black-50": rgba($black, .5),
+                    "white-50": rgba($white, .5),
+                    "reset": inherit,
+                )
+        )
+    ),
+);
 
 $link-shade-percentage: 100%;
 
@@ -36,7 +82,7 @@ $figure-caption-color: $gray-700;
 $font-family-base: Muli;
 
 // Main
-$border-width: .1rem;
+$border-width: .15rem;
 $border-radius: .4rem;
 
 $min-contrast-ratio: 7;
@@ -46,24 +92,34 @@ $form-select-box-shadow: none;
 $form-label-font-weight: 800;
 $form-label-color: $primary;
 
-$input-color: $accessibility_text;
+$input-color: $accessibility-text;
+
 $form-file-button-color: $white;
-$form-file-button-bg: $secondary;
+$form-file-button-bg: $primary;
+$form-file-button-hover-bg: lighten($primary, 10);
 
 $form-select-border-color: $primary;
 
+$btn-disabled-opacity: 100%;
+$form-check-input-disabled-opacity: 100%;
+
 $input-btn-padding-x: 1rem;
 $input-btn-padding-y: .7rem;
-$input-border-color: $blue;
+$input-border-color: $primary;
+$input-border-width: $border-width;
+
+$form-select-border-width: $border-width;
+$form-select-box-shadow: none;
+$form-select-focus-box-shadow: none;
 
 $input-focus-border-color: $primary;
 $input-focus-box-shadow: none;
 
-$input-group-addon-bg: $secondary;
+$input-group-addon-bg: $primary;
 $input-group-addon-color: $white;
-$input-group-addon-border-color: $secondary;
+$input-group-addon-border-color: $primary;
 
-$form-text-color: $gray-700;
+$form-text-color: $gray;
 
 // Validation
 $form-feedback-margin-top: 0;
@@ -110,7 +166,7 @@ $code-color: $white;
 .display-4,
 .display-5,
 .display-6 {
-    color: $accessibility_text;
+    color: $accessibility-text;
 }
 
 .nav-link {
@@ -159,6 +215,31 @@ $code-color: $white;
     box-shadow: none;
 }
 
+.btn:disabled,
+.form-switch:disabled,
+.form-check-input:disabled,
+.form-control:disabled,
+.form-select:disabled
+{
+    background-color: $gray-dark;
+    color: $white;
+    text-decoration: line-through;
+    border: $border-width solid $gray-dark;
+}
+
+.form-control:disabled::placeholder {
+    color: $white;
+    text-decoration: line-through;
+}
+
+.form-control:disabled::-webkit-file-upload-button {
+    background: $gray-dark !important;
+}
+
+.form-check-input:disabled ~ .form-check-label {
+    text-decoration: line-through;
+}
+
 code {
     background: $gray-800;
     padding: .2rem .4rem;
@@ -166,6 +247,11 @@ code {
 }
 
 @each $color, $value in $theme-colors {
+    .bg-#{$color} {
+        background-color: $value;
+        color: color-contrast($value);
+    }
+
     .alert-#{$color} .alert-link {
         color: color-contrast(lighten($value, 80));
     }
@@ -181,14 +267,6 @@ code {
 
     .bg-#{$color} .nav-item:hover > .nav-link {
         border-bottom: .1rem solid color-contrast($value);
-    }
-
-    .progress-bar.bg-#{$color} {
-        color: color-contrast($value);
-    }
-
-    .card.bg-#{$color} {
-        $card-cap-bg: darken($value, 10);
     }
 }
 
