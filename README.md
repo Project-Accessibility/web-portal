@@ -31,3 +31,52 @@
 - Run `php artisan migrate` to run the database migrations.
 - Run `php artisan db:seed` to run the database seeders.
 - Run `php artisan key:generate` to generate the application key.
+
+## Components
+
+### Input
+
+#### Text
+
+`<x-input type="text" name="input" placeholder="input"></x-input>`
+
+#### Password
+
+`<x-input type="password" name="input" placeholder="input"></x-input>`
+
+#### Select
+
+```
+@php
+    $extraData=array(
+        'multiple' => false
+        'options' => [
+          ['option_1', 'value_1'],
+          ['option_2', 'value_2'],
+        ];
+    );
+@endphp
+<x-input type="select" name="input" :extraData="$extraData" value="waarde2"></x-input>
+```
+
+#### Dates
+
+`<x-input type="date" name="input" value="2021-03-21"></x-input>`
+` <x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>`
+
+#### Switch
+
+`<x-input type="switch" name="input" :value="true"></x-input>`
+
+#### Range
+
+```
+@php
+    $extraData=array(
+        'min' => 0,
+        'max' => 5,
+        'step' => 0.5
+    );
+@endphp
+<x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
+```
