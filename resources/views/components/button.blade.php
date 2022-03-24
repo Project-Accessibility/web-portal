@@ -1,13 +1,13 @@
 @if($link)
     <a href="{{$link}}"
     @switch($type)
-        @case("primary")
+        @case('primary')
             {{ $attributes->merge(['class' => 'btn btn-primary']) }}
         @break
-        @case("secondary")
+        @case('secondary')
             {{ $attributes->merge(['class' => 'btn btn-secondary']) }}
         @break
-        @case("remove")
+        @case('remove')
             {{ $attributes->merge(['class' => 'btn btn-danger']) }}
         @break
         @endswitch
