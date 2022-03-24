@@ -47,7 +47,6 @@
 #### Select
 
 ```
-@php
     $extraData=array(
         'multiple' => false
         'options' => [
@@ -71,7 +70,6 @@
 #### Range
 
 ```
-@php
     $extraData=array(
         'min' => 0,
         'max' => 5,
@@ -80,3 +78,11 @@
 @endphp
 <x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
 ```
+
+### Buttons
+
+Verschillende types zijn: primary, seocndary en remove.\
+Je kan of een submit knop maken, je hoeft dan alleen het type mee te geven.\
+`<x-button class="mx-4" type="primary">Press me</x-button>`\
+Of je kan een link ervan maken en dan moet je nog de link meegeven.\
+` <x-button class="mx-4" type="primary" link="https://www.google.com">Press me</x-button>`

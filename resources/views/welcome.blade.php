@@ -459,6 +459,7 @@
                             <input type="checkbox" class="custom-control-input" id="customSwitch1">
                             <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
                         </div>
+                        <x-button class="mx-4" type="primary" link="https://www.google.com">Press me</x-button>
                     </div>
                 </div>
 
