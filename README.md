@@ -49,8 +49,8 @@
 ```
 @php
     $extraData=array(
-        "multiple" => false
-        "options" => [
+        'multiple' => false
+        'options' => [
           ['option_1', 'value_1'],
           ['option_2', 'value_2'],
         ];
@@ -73,9 +73,9 @@
 ```
 @php
     $extraData=array(
-        "min" => 0,
-        "max" => 5,
-        "step" => 0.5
+        'min' => 0,
+        'max' => 5,
+        'step' => 0.5
     );
 @endphp
 <x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>

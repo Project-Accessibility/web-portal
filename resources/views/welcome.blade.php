@@ -449,9 +449,9 @@
                         </div>
                         @php
                             $extraData=array(
-                                "min" => 0,
-                                "max" => 5,
-                                "step" => 0.5
+                                'min' => 0,
+                                'max' => 5,
+                                'step' => 0.5
                             );
                         @endphp
                         <x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
