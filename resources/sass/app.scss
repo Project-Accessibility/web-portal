@@ -20,7 +20,7 @@ $black:      #000;
 $white:      #fff;
 
 $primary:   $blue-dark;
-$secondary: $teal-dark;
+$secondary: $teal;
 $success:   $green;
 $danger:    $red;
 $light:     $white;
@@ -73,6 +73,8 @@ $utilities: (
     ),
 );
 
+$headings-color: $primary;
+
 $link-shade-percentage: 100%;
 
 // Image
@@ -119,7 +121,7 @@ $input-group-addon-bg: $primary;
 $input-group-addon-color: $white;
 $input-group-addon-border-color: $primary;
 
-$form-text-color: $gray;
+$form-text-color: $black;
 
 // Validation
 $form-feedback-margin-top: 0;
@@ -156,6 +158,9 @@ $breadcrumb-active-color: $gray-700;
 
 // Code
 $code-color: $white;
+
+// Progress
+$progress-height: 1.5rem;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
@@ -219,25 +224,36 @@ $code-color: $white;
 .form-switch:disabled,
 .form-check-input:disabled,
 .form-control:disabled,
-.form-select:disabled
-{
-    background-color: $gray-dark;
-    color: $white;
-    text-decoration: line-through;
-    border: $border-width solid $gray-dark;
+.form-select:disabled {
+    background-color: lighten($gray, 50);
+    color: lighten($gray, 20);
+}
+.form-switch:disabled,
+.form-check-input:disabled,
+.form-control:disabled,
+.form-select:disabled {
+    border-color: lighten($gray, 10);
+    background-image: url('../bootstrap_icons/x-circle-gray-light.svg');
+    background-repeat: no-repeat;
+    background-position: calc(170% - 1rem);
+    background-size: 60% 60%;
 }
 
 .form-control:disabled::placeholder {
-    color: $white;
-    text-decoration: line-through;
+    color: lighten($gray, 20);
 }
 
 .form-control:disabled::-webkit-file-upload-button {
-    background: $gray-dark !important;
+    background-color: lighten($gray, 50);
+    border-right: $border-width solid lighten($gray, 50);
+    color: lighten($gray, 20);
 }
 
 .form-check-input:disabled ~ .form-check-label {
-    text-decoration: line-through;
+    background-image: url('../bootstrap_icons/x-circle.svg');
+    background-repeat: no-repeat;
+    background-position: right 45%;
+    padding-right: 1.2rem;
 }
 
 code {
@@ -269,6 +285,3 @@ code {
         border-bottom: .1rem solid color-contrast($value);
     }
 }
-
-
-
