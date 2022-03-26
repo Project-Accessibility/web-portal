@@ -43,8 +43,8 @@ popoverTriggerList.map(function (popoverTriggerEl) {
 });
 
 document.querySelectorAll('.toast').forEach(function (toastNode) {
-    const toast = new bootstrap.Toast(toastNode, {
-        autohide: false,
-    });
-    toast.show();
+  const toast = new bootstrap.Toast(toastNode, {
+    autohide: false,
+  });
+  toast.show();
 });
