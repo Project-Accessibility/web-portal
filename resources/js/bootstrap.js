@@ -28,14 +28,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: true
 // });
 
-var tooltipTriggerList = [].slice.call(
+const tooltipTriggerList = [].slice.call(
   document.querySelectorAll('[data-bs-toggle="tooltip"]')
 );
 tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl);
 });
 
-var popoverTriggerList = [].slice.call(
+const popoverTriggerList = [].slice.call(
   document.querySelectorAll('[data-bs-toggle="popover"]')
 );
 popoverTriggerList.map(function (popoverTriggerEl) {
@@ -43,8 +43,8 @@ popoverTriggerList.map(function (popoverTriggerEl) {
 });
 
 document.querySelectorAll('.toast').forEach(function (toastNode) {
-  var toast = new bootstrap.Toast(toastNode, {
-    autohide: false,
-  });
-  toast.show();
+    const toast = new bootstrap.Toast(toastNode, {
+        autohide: false,
+    });
+    toast.show();
 });
