@@ -20,7 +20,7 @@ services:
             DB_PASSWORD: '${DB_PASSWORD:-admin}'
             REDIS_HOST: 'redis'
         volumes:
-            - '.:/var/www/html'
+            - '.:/app'
         depends_on:
             - mysql
             - redis
