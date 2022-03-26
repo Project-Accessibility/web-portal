@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/stylesheet', function () {
-   return view('stylesheet');
+  return view('stylesheet');
 });

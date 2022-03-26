@@ -1,7 +1,5 @@
-window._ = require("lodash");
-import bootstrap from "bootstrap/dist/js/bootstrap.bundle"
-
-
+window._ = require('lodash');
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -30,20 +28,23 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: true
 // });
 
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipTriggerList = [].slice.call(
+  document.querySelectorAll('[data-bs-toggle="tooltip"]')
+);
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+  return new bootstrap.Tooltip(tooltipTriggerEl);
+});
 
-var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverTriggerList = [].slice.call(
+  document.querySelectorAll('[data-bs-toggle="popover"]')
+);
 var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl)
-})
+  return new bootstrap.Popover(popoverTriggerEl);
+});
 
-document.querySelectorAll('.toast')
-    .forEach(function (toastNode) {
-        var toast = new bootstrap.Toast(toastNode, {
-            autohide: false
-        })
-        toast.show()
-    })
+document.querySelectorAll('.toast').forEach(function (toastNode) {
+  var toast = new bootstrap.Toast(toastNode, {
+    autohide: false,
+  });
+  toast.show();
+});
