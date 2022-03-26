@@ -5,8 +5,8 @@
 [![Laravel Tests](https://github.com/Project-Accessibility/web-portal/workflows/Laravel/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
 [![Prettier](https://github.com/Project-Accessibility/web-portal/workflows/Prettier/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
 
-[![Okteto Dev](https://github.com/Project-Accessibility/web-portal/workflows/okteto-dev.yml/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
-[![Okteto Acc](https://github.com/Project-Accessibility/web-portal/workflows/okteto-acc.yml/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
+[![Okteto Dev](https://github.com/Project-Accessibility/web-portal/workflows/Okteto%20Dev%20Deployment/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
+[![Okteto Acc](https://github.com/Project-Accessibility/web-portal/workflows/Okteto%20Acc%20Deployment/badge.svg)](https://github.com/Project-Accessibility/web-portal/actions/)
 
 - [Project Accessibility Web Portal](#project-accessibility-web-portal)
   - [Requirements](#requirements)
@@ -24,9 +24,65 @@
 ## Development
 
 - Run `npm i -g yarn` to install yarn.
+- Run `yarn prepare` to install GitHooks.
 - Run `yarn watch` real-time compiling of CSS/JS files.
 - Run `php artisan serve` to run the application.
 - Run `./vendor/bin/sail up` to run the application in Docker.
 - Run `php artisan migrate` to run the database migrations.
 - Run `php artisan db:seed` to run the database seeders.
 - Run `php artisan key:generate` to generate the application key.
+
+## Components
+
+### Input
+
+#### Text
+
+`<x-input type="text" name="input" placeholder="input"></x-input>`
+
+#### Password
+
+`<x-input type="password" name="input" placeholder="input"></x-input>`
+
+#### Select
+
+```
+    $extraData=array(
+        'multiple' => false
+        'options' => [
+          ['option_1', 'value_1'],
+          ['option_2', 'value_2'],
+        ];
+    );
+@endphp
+<x-input type="select" name="input" :extraData="$extraData" value="waarde2"></x-input>
+```
+
+#### Dates
+
+`<x-input type="date" name="input" value="2021-03-21"></x-input>`
+` <x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>`
+
+#### Switch
+
+`<x-input type="switch" name="input" :value="true"></x-input>`
+
+#### Range
+
+```
+    $extraData=array(
+        'min' => 0,
+        'max' => 5,
+        'step' => 0.5
+    );
+@endphp
+<x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
+```
+
+### Buttons
+
+Verschillende types zijn: primary, seocndary en remove.\
+Je kan of een submit knop maken, je hoeft dan alleen het type mee te geven.\
+`<x-button class="mx-4" type="primary">Press me</x-button>`\
+Of je kan een link ervan maken en dan moet je nog de link meegeven.\
+` <x-button class="mx-4" type="primary" link="https://www.google.com">Press me</x-button>`
