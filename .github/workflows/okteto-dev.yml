@@ -27,5 +27,6 @@ jobs:
       with:
         namespace: dev-accessibility-gewoonjaap
         name: dev-accessibility
+        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing
         timeout: 8m
         skipIfExists: false

@@ -27,5 +27,6 @@ jobs:
       with:
         namespace: acc-accessibility-gewoonjaap
         name: acc-accessibility
+        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing
         timeout: 8m
         skipIfExists: false
