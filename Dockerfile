@@ -25,7 +25,7 @@ RUN apt-get -y autoremove \
 
 RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh
 
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["sh", "./docker-entrypoint.sh"]
 
 CMD php artisan migrate \ 
   & php artisan queue:work \
