@@ -27,10 +27,9 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot()
   {
-    if(config('APP_ENV') !== 'local') {
-        URL::forceScheme('https');
+    if (config('APP_ENV') !== 'local') {
+      URL::forceScheme('https');
     }
-
 
     Blade::component('button', Button::class);
     Blade::component('input', Input::class);
