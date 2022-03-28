@@ -38,7 +38,15 @@
 
 #### Text
 
-`<x-input type="text" name="input" placeholder="input"></x-input>`
+```
+@php
+$extraData=array(
+'before' => '$',
+'after' => '.00'
+);
+@endphp
+<x-input type="text" name="input" placeholder="input" :extraData="$extraData"></x-input>
+```
 
 #### Password
 
@@ -80,7 +88,16 @@
 @endphp
 <x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
 ```
+#### File
 
+```
+@php
+$extraData=array(
+    'multiple' => false,
+);
+@endphp
+<x-input type="file" name="input" :extraData="$extraData"></x-input>
+```
 ### Buttons
 
 Verschillende types zijn: primary, seocndary en remove.\

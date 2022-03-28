@@ -2,16 +2,29 @@
     <label for="{{$name}}" class="form-label">{{strtoupper(substr($name, 0, 1)) . substr($name, 1)}}</label>
     @switch($type)
         @case('text')
-        <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-               placeholder="{{$placeholder}}" value="{{$value}}"/>
+        @if($extraData['before'] || $extraData['after'])
+            <div class="input-group">
+                @if($extraData['before'])
+                    <span class="input-group-text">{{$extraData['before']}}</span>
+                @endif
+                <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
+                       placeholder="{{$placeholder}}" value="{{$value}}"/>
+                @if($extraData['after'])
+                        <span class="input-group-text">{{$extraData['after']}}</span>
+                @endif
+            </div>
+        @else
+            <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
+                   placeholder="{{$placeholder}}" value="{{$value}}"/>
+        @endif
         @break
         @case('password')
         <input class="form-control" type="password" id="{{$name}}" title="{{$name}}" name="{{$name}}"
                placeholder="{{$placeholder}}"/>
         @break
         @case('select')
-        <select class="form-control" id="{{$name}}" title="{{$name}}"
-                name="{{$name}}" {{$extraData['multiple']?'multiple':''}}>
+        <select class="form-select" id="{{$name}}" title="{{$name}}"
+                name="{{$name}}{{$extraData['multiple']?'[]':''}}" {{$extraData['multiple']?'multiple':''}}>
             @foreach($extraData['options'] as $option)
                 @if(($loop->index == 0 && empty($value))||$value==$option[1])
                     <option selected value="{{$option[1]}}">{{$option[0]}}</option>
@@ -49,6 +62,12 @@
                 })
             })
         </script>
+        @break
+        @case('file')
+        <input id="{{$name}}" title="{{$name}}" name="{{$name}}{{$extraData['multiple']?'[]':''}}" type="file"
+               class="file" {{$extraData['multiple']?'multiple':''}}
+               data-show-upload="false" data-show-caption="true" data-msg-placeholder="{{$placeholder}}"
+               value="{{$value}}">
         @break
     @endswitch
 </div>
