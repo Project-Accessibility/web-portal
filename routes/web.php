@@ -38,3 +38,6 @@ if (App::environment('testing')) {
         ->name('fake.route.with.two.params')
         ->defaults('display', 'test view name');
 }
+Route::post('/logout', function () {
+    return view('welcome');
+});
