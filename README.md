@@ -341,3 +341,20 @@ Route::get('/users/{id}', function () {
 Dan wordt de naam van je breadcrumb het {id} (bijvoorbeeld: `1`)
 
 De rest is magie 🤯
+
+### Tabs
+Geef een lijst met tabs mee aan het component en de tab die actief is. Geef de sections dezelfde naam als de namen in de meegegeven lijst. Het component zorgt er met javascript voor dat de juiste section wordt getoond.
+```angular2html
+@extends('layouts.app')
+@section('content')
+    <h1>Welcome to this page</h1>
+    <x-tabs :tabs="['Details', 'Vragenlijsten']" :currentTab="'Details'">
+        @section('Details')
+            Details
+        @endsection
+        @section('Vragenlijsten')
+            Vragenlijsten
+        @endsection
+    </x-tabs>
+@endsection
+```

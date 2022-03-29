@@ -8,4 +8,13 @@
             <x-button class="mx-4" type="" link="{{ route('stylesheet') }}">Stylesheet is hier te vinden.</x-button>
         </div>
     </div>
+    <h1>Welcome to this page</h1>
+    <x-tabs :tabs="['Details', 'Vragenlijsten']" :currentTab="'Details'">
+        @section('Details')
+            Details
+        @endsection
+        @section('Vragenlijsten')
+            Vragenlijsten
+        @endsection
+    </x-tabs>
 @endsection

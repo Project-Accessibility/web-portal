@@ -9,6 +9,7 @@ use App\View\Components\Table\Header;
 use App\View\Components\Table\Row;
 use App\View\Components\Table\Table;
 use App\View\Components\NavBar;
+use App\View\Components\Tabs;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -24,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
-
+    
     /**
      * Bootstrap any application services.
      *
@@ -39,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Blade::component('nav-bar', NavBar::class);
+        Blade::component('tabs', Tabs::class);
         Blade::component('button', Button::class);
         Blade::component('input', Input::class);
         Blade::component('breadcrumb', Breadcrumb::class);
