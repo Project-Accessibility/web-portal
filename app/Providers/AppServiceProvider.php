@@ -13,34 +13,34 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-  /**
-   * Register any application services.
-   *
-   * @return void
-   */
-  public function register()
-  {
-    //
-  }
-
-  /**
-   * Bootstrap any application services.
-   *
-   * @return void
-   */
-  public function boot()
-  {
-    if (config('app.env') !== 'local') {
-      URL::forceScheme('https');
-    } else {
-      URL::forceScheme('http');
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
     }
 
-    Blade::component('button', Button::class);
-    Blade::component('input', Input::class);
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
+        } else {
+            URL::forceScheme('http');
+        }
 
-    Blade::component('table', Table::class);
-    Blade::component('table-header', Header::class);
-    Blade::component('table-row', Row::class);
-  }
+        Blade::component('button', Button::class);
+        Blade::component('input', Input::class);
+
+        Blade::component('table', Table::class);
+        Blade::component('table-header', Header::class);
+        Blade::component('table-row', Row::class);
+    }
 }
