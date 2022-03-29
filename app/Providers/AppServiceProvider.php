@@ -31,15 +31,15 @@ class AppServiceProvider extends ServiceProvider
   public function boot()
   {
     if (config('app.env') !== 'local') {
-        URL::forceScheme('https');
+      URL::forceScheme('https');
     } else {
-        URL::forceScheme('http');
+      URL::forceScheme('http');
     }
 
     Blade::component('button', Button::class);
     Blade::component('input', Input::class);
 
-      Blade::component('table', Table::class);
+    Blade::component('table', Table::class);
     Blade::component('table-header', Header::class);
     Blade::component('table-row', Row::class);
   }

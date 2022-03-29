@@ -8,49 +8,52 @@ use Illuminate\View\Component;
 
 class Row extends Component
 {
-    public Collection $rowItems;
-    public ?Collection $tableLinks;
+  public Collection $rowItems;
+  public ?Collection $tableLinks;
 
-    public function __construct(array $item, array $keys = [], Collection $tableLinks = null)
-    {
-        if(! $this->everyArrayItemIsString($keys)) {
-            return;
-        }
-
-        $this->rowItems = $this->getRowItems($item, $keys);
-        $this->tableLinks = $this->mapToLinks($item, $tableLinks);
+  public function __construct(
+    array $item,
+    array $keys = [],
+    Collection $tableLinks = null,
+  ) {
+    if (!$this->everyArrayItemIsString($keys)) {
+      return;
     }
 
-    private function everyArrayItemIsString($array): bool
-    {
-        return collect($array)->every(fn ($value) =>
-            gettype($value) == 'string'
-        );
-    }
+    $this->rowItems = $this->getRowItems($item, $keys);
+    $this->tableLinks = $this->mapToLinks($item, $tableLinks);
+  }
 
-    private function getRowItems(array $item, array $keys): Collection
-    {
-        return collect($keys)->map(function (string $key) use ($item) {
-            $keysArray = explode('.', $key);
-            $rowItem = $item[$keysArray[0]];
+  private function everyArrayItemIsString($array): bool
+  {
+    return collect($array)->every(fn($value) => gettype($value) == 'string');
+  }
 
-            for($index = 1; $index < count($keysArray); $index++) {
-                $rowItem = $item[$keysArray[$index]];
-            }
+  private function getRowItems(array $item, array $keys): Collection
+  {
+    return collect($keys)->map(function (string $key) use ($item) {
+      $keysArray = explode('.', $key);
+      $rowItem = $item[$keysArray[0]];
 
-            return $rowItem;
-        });
-    }
+      for ($index = 1; $index < count($keysArray); $index++) {
+        $rowItem = $item[$keysArray[$index]];
+      }
 
-    private function mapToLinks(array $item, Collection $tableLinks): Collection
-    {
-        return $tableLinks->mapWithKeys(function (TableLink $tableLink) use ($item) {
-            return $tableLink->getUrlWithName($item);
-        });
-    }
+      return $rowItem;
+    });
+  }
 
-    public function render()
-    {
-        return view('components.table.row');
-    }
+  private function mapToLinks(array $item, Collection $tableLinks): Collection
+  {
+    return $tableLinks->mapWithKeys(function (TableLink $tableLink) use (
+      $item,
+    ) {
+      return $tableLink->getUrlWithName($item);
+    });
+  }
+
+  public function render()
+  {
+    return view('components.table.row');
+  }
 }
