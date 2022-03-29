@@ -635,13 +635,7 @@
                         <h3>Breadcrumb</h3>
                         <div>
                             <div class="bd-example">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                        <li class="breadcrumb-item"><a href="#">Over ons</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Data</li>
-                                    </ol>
-                                </nav>
+                                <x-breadcrumb />
                             </div>
                         </div>
                     </article>

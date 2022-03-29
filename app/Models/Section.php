@@ -39,39 +39,39 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Section extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  /* @var string */
-  public $table = 'sections';
+    /* @var string */
+    public $table = 'sections';
 
-  /* @var array */
-  protected $fillable = [
-    'questionnaire_id',
-    'geofence_id',
-    'title',
-    'description',
-    'location_description',
-    'teachable_machine_class',
-  ];
+    /* @var array */
+    protected $fillable = [
+        'questionnaire_id',
+        'geofence_id',
+        'title',
+        'description',
+        'location_description',
+        'teachable_machine_class',
+    ];
 
-  /* @var array */
-  protected $casts = [
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-  ];
+    /* @var array */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
-  public function questionnaire(): BelongsTo
-  {
-    return $this->belongsTo(Questionnaire::class);
-  }
+    public function questionnaire(): BelongsTo
+    {
+        return $this->belongsTo(Questionnaire::class);
+    }
 
-  public function geofence(): HasOne|null
-  {
-    return $this->hasOne(Geofence::class);
-  }
+    public function geofence(): HasOne|null
+    {
+        return $this->hasOne(Geofence::class);
+    }
 
-  public function questions(): HasMany
-  {
-    return $this->hasMany(Question::class);
-  }
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class);
+    }
 }

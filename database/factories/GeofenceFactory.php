@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class GeofenceFactory extends Factory
 {
-  /**
-   * Define the model's default state.
-   *
-   * @return array<string, mixed>
-   */
-  public function definition()
-  {
-    return [
-      'longitude' => $this->faker->longitude,
-      'latitude' => $this->faker->latitude,
-      'radius' => $this->faker->numberBetween(10, 50),
-    ];
-  }
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'longitude' => $this->faker->longitude,
+            'latitude' => $this->faker->latitude,
+            'radius' => $this->faker->numberBetween(10, 50),
+        ];
+    }
 }

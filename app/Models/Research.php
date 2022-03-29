@@ -31,27 +31,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Research extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  /* @var string */
-  public $table = 'researches';
+    /* @var string */
+    public $table = 'researches';
 
-  /* @var array */
-  protected $fillable = ['title', 'description'];
+    /* @var array */
+    protected $fillable = ['title', 'description'];
 
-  /* @var array */
-  protected $casts = [
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-  ];
+    /* @var array */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
-  public function participants(): HasMany
-  {
-    return $this->hasMany(Participant::class);
-  }
+    public function participants(): HasMany
+    {
+        return $this->hasMany(Participant::class);
+    }
 
-  public function questionnaires(): HasMany
-  {
-    return $this->hasMany(Questionnaire::class);
-  }
+    public function questionnaires(): HasMany
+    {
+        return $this->hasMany(Questionnaire::class);
+    }
 }
