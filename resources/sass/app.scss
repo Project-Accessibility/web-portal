@@ -1,0 +1,287 @@
+@import "accessibility";
+@import "../../node_modules/bootstrap/scss/functions";
+// == Bootstrap changes ==
+
+// These colors are not in use and are deleted from Bootstrap
+@import "./exclude/exclude-colors";
+
+// Colors
+$blue-light: $accessibility-blue-light;
+$blue:       $accessibility-blue;
+$blue-dark:  $accessibility-blue-dark;
+$red:        $accessibility-red;
+$orange:     $accessibility-orange;
+$green:      $accessibility-green;
+$teal:       $accessibility-teal-on-dark;
+$teal-dark:  $accessibility-teal-on-light;
+$gray:       #626264;
+$gray-dark:  #27272b;
+$black:      #000;
+$white:      #fff;
+
+$primary:   $blue-dark;
+$secondary: $teal;
+$success:   $green;
+$danger:    $red;
+$light:     $white;
+$dark:      $black;
+
+$color-contrast-dark: $blue-dark;
+
+$custom-colors: (
+    "blue-light": $blue-light,
+    "blue-dark": $blue-dark,
+    "teal-dark": $teal-dark,
+    "gray": $gray,
+    "gray-dark": $gray-dark,
+    "black": $black,
+    "white": $white,
+);
+
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/utilities";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "./exclude/exclude-maps.scss";
+
+$colors: map-merge($colors, $custom-colors);
+
+$utilities: (
+    "background-color": (
+        property: background-color,
+        class: bg,
+        values: map-merge(
+                $colors,
+                (
+                    "body": $body-bg,
+                    "transparent": transparent
+                )
+        )
+    ),
+    "color": (
+        property: color,
+        class: text,
+        values: map-merge(
+                $colors,
+                (
+                    "body": $body-color,
+                    "muted": $text-muted,
+                    "black-50": rgba($black, .5),
+                    "white-50": rgba($white, .5),
+                    "reset": inherit,
+                )
+        )
+    ),
+);
+
+$headings-color: $primary;
+
+$link-shade-percentage: 100%;
+
+// Image
+$figure-caption-color: $gray-700;
+
+// Font
+$font-family-base: Muli;
+
+// Main
+$border-width: .15rem;
+$border-radius: .4rem;
+
+$min-contrast-ratio: 7;
+
+// Form
+$form-select-box-shadow: none;
+$form-label-font-weight: 800;
+$form-label-color: $primary;
+
+$input-color: $accessibility-text;
+
+$form-file-button-color: $white;
+$form-file-button-bg: $primary;
+$form-file-button-hover-bg: lighten($primary, 10);
+
+$form-select-border-color: $primary;
+
+$btn-disabled-opacity: 100%;
+$form-check-input-disabled-opacity: 100%;
+
+$input-btn-padding-x: 1rem;
+$input-btn-padding-y: .7rem;
+$input-border-color: $primary;
+$input-border-width: $border-width;
+
+$form-select-border-width: $border-width;
+$form-select-box-shadow: none;
+$form-select-focus-box-shadow: none;
+
+$input-focus-border-color: $primary;
+$input-focus-box-shadow: none;
+
+$input-group-addon-bg: $primary;
+$input-group-addon-color: $white;
+$input-group-addon-border-color: $primary;
+
+$form-text-color: $black;
+
+// Validation
+$form-feedback-margin-top: 0;
+
+// Alerts
+$alert-bg-scale: -80%;
+$alert-color-scale: 0%;
+$alert-border-scale: 0%;
+$alert-border-width: $border-width;
+$alert-link-font-weight: $font-weight-base;
+$btn-close-opacity: 1;
+
+// Lists
+$list-group-item-bg-scale: -80%;
+$list-group-item-color-scale: 0%;
+
+// Badge
+$badge-padding-y: .65em;
+$badge-padding-x: .95em;
+
+// Navbar
+$navbar-dark-color:                 $white;
+$navbar-dark-hover-color:           $white;
+$navbar-dark-active-color:          $white;
+$navbar-dark-disabled-color:        $white;
+
+$navbar-light-color:                $black;
+$navbar-light-hover-color:          $black;
+$navbar-light-active-color:         $black;
+$navbar-light-disabled-color:       $black;
+
+// Breadcrumbs
+$breadcrumb-active-color: $gray-700;
+
+// Code
+$code-color: $white;
+
+// Progress
+$progress-height: 1.5rem;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// Custom CSS
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
+    color: $accessibility-text;
+}
+
+.nav-link {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-bottom: .1rem solid transparent;
+}
+
+.valid-feedback, .invalid-feedback {
+    padding: .2rem .6rem;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+}
+
+.valid-feedback  {
+    background: $form-feedback-valid-color;
+    color: color-contrast($form-feedback-valid-color);
+}
+
+.invalid-feedback {
+    background: $form-feedback-invalid-color;
+    color: color-contrast($form-feedback-invalid-color);
+}
+
+.form-control.is-invalid,
+.form-control.is-valid,
+.form-select.is-invalid,
+.form-select.is-valid{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group-text {
+    z-index: 50;
+}
+
+.input-group-text ~ .form-control.is-invalid ~ .invalid-feedback {
+    padding-top: $border-radius + .2rem;
+    margin-top: -$border-radius;
+}
+
+.form-control.is-valid:focus,
+.form-control.is-invalid:focus,
+.form-select.is-invalid:focus {
+    box-shadow: none;
+}
+
+.btn:disabled,
+.form-switch:disabled,
+.form-check-input:disabled,
+.form-control:disabled,
+.form-select:disabled {
+    background-color: lighten($gray, 50);
+    color: lighten($gray, 20);
+}
+.form-switch:disabled,
+.form-check-input:disabled,
+.form-control:disabled,
+.form-select:disabled {
+    border-color: lighten($gray, 10);
+    background-image: url('../bootstrap_icons/x-circle-gray-light.svg');
+    background-repeat: no-repeat;
+    background-position: calc(170% - 1rem);
+    background-size: 60% 60%;
+}
+
+.form-control:disabled::placeholder {
+    color: lighten($gray, 20);
+}
+
+.form-control:disabled::-webkit-file-upload-button {
+    background-color: lighten($gray, 50);
+    border-right: $border-width solid lighten($gray, 50);
+    color: lighten($gray, 20);
+}
+
+.form-check-input:disabled ~ .form-check-label {
+    background-image: url('../bootstrap_icons/x-circle.svg');
+    background-repeat: no-repeat;
+    background-position: right 45%;
+    padding-right: 1.2rem;
+}
+
+code {
+    background: $gray-800;
+    padding: .2rem .4rem;
+    border-radius: $border-radius;
+}
+
+@each $color, $value in $theme-colors {
+    .bg-#{$color} {
+        background-color: $value;
+        color: color-contrast($value);
+    }
+
+    .alert-#{$color} .alert-link {
+        color: color-contrast(lighten($value, 80));
+    }
+
+    .navbar.bg-#{$color} .nav-pills > .nav-item > .nav-link {
+        color: color-contrast($value);
+    }
+
+    .navbar.bg-#{$color} .nav-pills > .nav-item > .nav-link.active {
+        background: lighten($value, 20);
+        color: $color;
+    }
+
+    .bg-#{$color} .nav-item:hover > .nav-link {
+        border-bottom: .1rem solid color-contrast($value);
+    }
+}
