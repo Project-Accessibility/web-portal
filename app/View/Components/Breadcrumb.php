@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\Routing\Route;
 use Illuminate\View\Component;
+use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Breadcrumb extends Component
@@ -12,7 +13,7 @@ class Breadcrumb extends Component
 
     public function __construct()
     {
-        $url = parse_url(url()->current());
+      $url = parse_url(url()->current());
         $schemeHost = $url['scheme'] . '://' . $url['host'];
 
         $pathSplit = array_values(array_filter(explode('/', $url['path'])));
@@ -22,7 +23,7 @@ class Breadcrumb extends Component
             'url' => $schemeHost . '/',
         ];
 
-        foreach ($pathSplit as $key => $path) {
+        foreach ($pathSplit as $path) {
             $fullPath = end($this->paths)['url'] . $path . '/';
             if ($route = $this->getRoute($fullPath)) {
                 $view = $this->getView($route) ?? $path;
@@ -50,7 +51,7 @@ class Breadcrumb extends Component
         return $route->defaults['view'] ?? null;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('components.breadcrumb');
     }
