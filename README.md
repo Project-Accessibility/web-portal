@@ -302,4 +302,18 @@ Route::get('/', function () {
 })->name('welcome')->defaults('view', 'home');
 ```
 
+Mocht je geen specifieke naam willen voor je route
+(omdat er bijv een ID in zit verwerkt)
+dan hoef je bovenstaande code niet te gebruiken.
+
+Voorbeeld:<br>
+
+```
+Route::get('/users/{id}', function () {
+  return view('users.details');
+})->name('users.details');
+```
+
+Dan wordt de naam van je breadcrumb het id (bijvoorbeeld: `1`)
+
 De rest is magie 🤯
