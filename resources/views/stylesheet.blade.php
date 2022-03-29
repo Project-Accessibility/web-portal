@@ -10,6 +10,28 @@
     <div class="container bg-white p-3">
         <section id="content">
             <h2>Content</h2>
+                @php
+                    $item_one = [
+                        'id' => 1,
+                        'name' => 'test',
+                        'age' => 28,
+                    ];
+
+                    $item_two = [
+                        'id' => 2,
+                        'name' => 'test_two',
+                        'age' => 33,
+                    ];
+                    $items = [$item_one, $item_two];
+
+                    $tableLinks = collect([
+                        new \App\Utils\TableLink('Welcome', 'welcome'),
+                        new \App\Utils\TableLink('Stylesheet', 'stylesheet')
+                    ]);
+                @endphp
+
+            <x-table :headers="['id','naam','leeftijd']" :items="$items" :keys="['id','name','age']" :tableLinks="$tableLinks"/>
+
             <div class="row gx-2 mb-5">
                 <div class="col-sm-6">
                     <article id="colors">
@@ -359,20 +381,26 @@
                             <div class="bd-example">
                                 <form>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                        <i class="bi bi-x-circle"></i>
-                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                        <x-input type="text" name="Normaal invoerveld" placeholder="input"></x-input>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="disabledSelect" class="form-label">Select menu</label>
-                                        <select id="disabledSelect" class="form-select">
-                                            <option>Select</option>
-                                        </select>
+                                        @php
+                                        $extraData = [
+                                            'multiple' => false,
+                                            'options' => [
+                                                ['option_1', 'value_1'],
+                                                ['option_2', 'value_2'],
+                                            ],
+                                        ];
+                                        @endphp
+                                        <x-input type="select" name="Selectie" :extraData="$extraData" value="value_2"></x-input>
                                     </div>
                                     <div class="mb-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <x-input type="date" name="Datum" value="2021-03-21"></x-input> <x-input type="datetime" name="Datum & tijd" value="2021-03-21T08:00"></x-input>
                                     </div>
                                     <fieldset class="mb-3">
                                         <legend>Radios buttons</legend>
@@ -389,15 +417,20 @@
                                         <label class="form-label" for="customFile">Upload</label>
                                         <input type="file" class="form-control" id="customFile">
                                     </div>
-                                    <div class="mb-3 form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                                    <div class="mb-3">
+                                        <x-input type="switch" name="Switch" :value="true"></x-input>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="customRange3" class="form-label">Example range</label>
-                                        <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3">
+                                        @php
+                                        $extraData= [
+                                            'min' => 0,
+                                            'max' => 5,
+                                            'step' => 0.5
+                                        ];
+                                        @endphp
+                                        <x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <x-button type="primary">Submit</x-button>
                                 </form>
                             </div>
                         </div>
@@ -411,48 +444,56 @@
                                 <form>
                                     <fieldset disabled aria-label="Disabled fieldset example">
                                         <div class="mb-3">
-                                            <label for="disabledTextInput" class="form-label">Disabled input</label>
-                                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
-                                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                            <x-input type="text" name="Normaal invoerveld" placeholder="input"></x-input>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="disabledSelect" class="form-label">Disabled select menu</label>
-                                            <select id="disabledSelect" class="form-select">
-                                                <option>Disabled select</option>
-                                            </select>
+                                            @php
+                                                $extraData = [
+                                                    'multiple' => false,
+                                                    'options' => [
+                                                        ['option_1', 'value_1'],
+                                                        ['option_2', 'value_2'],
+                                                    ],
+                                                ];
+                                            @endphp
+                                            <x-input type="select" name="Selectie" :extraData="$extraData" value="value_2"></x-input>
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
                                         </div>
                                         <div class="mb-3">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" disabled>
-                                                <label class="form-check-label" for="disabledFieldsetCheck">
-                                                    Can't check this
-                                                </label>
-                                            </div>
+                                            <x-input type="date" name="Datum" value="2021-03-21"></x-input> <x-input type="datetime" name="Datum & tijd" value="2021-03-21T08:00"></x-input>
                                         </div>
                                         <fieldset class="mb-3">
-                                            <legend>Disabled radios buttons</legend>
+                                            <legend>Radios buttons</legend>
                                             <div class="form-check">
-                                                <input type="radio" name="radios" class="form-check-input" id="disabledRadio1" disabled>
-                                                <label class="form-check-label" for="disabledRadio1">Disabled radio</label>
+                                                <input type="radio" name="radios" class="form-check-input" id="exampleRadio1">
+                                                <label class="form-check-label" for="exampleRadio1">Default radio</label>
                                             </div>
                                             <div class="mb-3 form-check">
-                                                <input type="radio" name="radios" class="form-check-input" id="disabledRadio2" disabled>
-                                                <label class="form-check-label" for="disabledRadio2">Another radio</label>
+                                                <input type="radio" name="radios" class="form-check-input" id="exampleRadio2">
+                                                <label class="form-check-label" for="exampleRadio2">Another radio</label>
                                             </div>
                                         </fieldset>
                                         <div class="mb-3">
-                                            <label class="form-label" for="disabledCustomFile">Upload</label>
-                                            <input type="file" class="form-control" id="disabledCustomFile" disabled>
-                                        </div>
-                                        <div class="mb-3 form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="disabledSwitchCheckChecked" checked disabled>
-                                            <label class="form-check-label" for="disabledSwitchCheckChecked">Disabled checked switch checkbox input</label>
+                                            <label class="form-label" for="customFile">Upload</label>
+                                            <input type="file" class="form-control" id="customFile">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="disabledRange" class="form-label">Disabled range</label>
-                                            <input type="range" class="form-range" min="0" max="5" step="0.5" id="disabledRange">
+                                            <x-input type="switch" name="Switch" :value="true"></x-input>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <div class="mb-3">
+                                            @php
+                                                $extraData= [
+                                                    'min' => 0,
+                                                    'max' => 5,
+                                                    'step' => 0.5
+                                                ];
+                                            @endphp
+                                            <x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
+                                        </div>
+                                        <x-button type="primary">Submit</x-button>
                                     </fieldset>
                                 </form>
                             </div>
@@ -622,14 +663,12 @@
                     <article id="buttons">
                         <h3>Buttons</h3>
                         <div>
-                            <div class="d-flex flex-wrap gap-2">
-                                <button type="button" class="btn btn-primary">Primary</button>
-                                <button type="button" class="btn btn-secondary">Secondary</button>
-                                <button type="button" class="btn btn-success">Success</button>
-                                <button type="button" class="btn btn-danger">Danger</button>
-                                <button type="button" class="btn btn-dark">Dark</button>
+                            <div class="d-flex flex-wrap gap-2 align-items-center">
+                                <x-button type="primary">Primary</x-button>
+                                <x-button type="secondary">Secondary</x-button>
+                                <x-button type="remove">Verwijderen</x-button>
 
-                                <button type="button" class="btn btn-link">Link</button>
+                                <x-button type="" link="test.com">Link</x-button>
 
                                 <div class="btn-group w-100 align-items-center justify-content-between flex-wrap">
                                     <div class="dropdown">
