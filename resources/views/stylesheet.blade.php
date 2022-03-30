@@ -373,12 +373,13 @@
                     <h2>Tabellen</h2>
                     <div class="w-100">
                         @php
+                            $headers = ['id','naam','leeftijd'];
+
                             $item_one = [
                                 'id' => 1,
                                 'name' => 'test',
                                 'age' => 28,
                             ];
-
                             $item_two = [
                                 'id' => 2,
                                 'name' => 'test twee',
@@ -386,13 +387,17 @@
                             ];
                             $items = [$item_one, $item_two];
 
+                            $keys = ['id','name','age'];
+
                             $tableLinks = collect([
-                                new \App\Utils\TableLink('Welcome', 'welcome'),
-                                new \App\Utils\TableLink('Stylesheet', 'stylesheet')
+                                new \App\Utils\TableLink('welcome'),
+                                new \App\Utils\TableLink('stylesheet')
                             ]);
+
+                            $rowLink = new \App\Utils\TableLink('welcome');
                         @endphp
 
-                        <x-table :headers="['id','naam','leeftijd']" :items="$items" :keys="['id','name','age']" :tableLinks="$tableLinks"/>
+                        <x-table :headers="$headers" :items="$items" :keys="$keys" :rowLink="$rowLink" :tableLinks="$tableLinks"/>
 
                     </div>
                 </article>

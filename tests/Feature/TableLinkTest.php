@@ -24,12 +24,10 @@ class TableLinkTest extends Testcase
         ]);
 
         $tableLink = new TableLink(
-            'TEST_NAME',
             'fake.route.with.two.params',
             $tableLinkParameters,
         );
 
-        $this->assertTrue($tableLink->name === 'TEST_NAME');
         $this->assertTrue($tableLink->route === 'fake.route.with.two.params');
         $this->assertTrue(
             $tableLink->parameters->toArray() === [
@@ -42,7 +40,7 @@ class TableLinkTest extends Testcase
     /** @test */
     public function it_can_create_a_url_without_keys()
     {
-        $tableLink = new TableLink('TEST_NAME', 'fake.route.without.params');
+        $tableLink = new TableLink('fake.route.without.params');
 
         $url = $tableLink->createUrl();
 
@@ -59,7 +57,6 @@ class TableLinkTest extends Testcase
         $tableLinkParameters = collect([$tableLinkParameter_one]);
 
         $tableLink = new TableLink(
-            'TEST_NAME',
             'fake.route.with.one.param',
             $tableLinkParameters,
         );
@@ -79,7 +76,6 @@ class TableLinkTest extends Testcase
         $tableLinkParameters = collect([$tableLinkParameter_one]);
 
         $tableLink = new TableLink(
-            'TEST_NAME',
             'fake.route.with.one.param',
             $tableLinkParameters,
         );
@@ -109,7 +105,6 @@ class TableLinkTest extends Testcase
         ]);
 
         $tableLink = new TableLink(
-            'TEST_NAME',
             'fake.route.with.two.params',
             $tableLinkParameters,
         );
@@ -138,7 +133,6 @@ class TableLinkTest extends Testcase
         ]);
 
         $tableLink = new TableLink(
-            'TEST_NAME',
             'fake.route.with.two.params',
             $tableLinkParameters,
         );
@@ -171,7 +165,6 @@ class TableLinkTest extends Testcase
         ]);
 
         $tableLink = new TableLink(
-            'TEST_NAME',
             'fake.route.with.two.params',
             $tableLinkParameters,
         );
@@ -194,6 +187,30 @@ class TableLinkTest extends Testcase
             routeParameter: 'fake_param_one',
             routeValue: 'zyx',
         );
+
+        $tableLinkParameters = collect([$tableLinkParameter_one]);
+
+        $tableLink = new TableLink(
+            'fake.route.with.one.param',
+            $tableLinkParameters,
+        );
+
+        $urlWithName = $tableLink->getUrlWithName();
+        $this->assertTrue(
+            $urlWithName === [
+                'fake.route.with.one.param' =>
+                    URL::current() . '/fake-route/zyx',
+            ],
+        );
+    }
+
+    /** @test */
+    public function it_gets_the_view_with_link()
+    {
+        $tableLinkParameter_one = new TableLinkParameter(
+            routeParameter: 'fake_param_one',
+            routeValue: 'zyx',
+        );
         $tableLinkParameter_two = new TableLinkParameter(
             routeParameter: 'fake_param_two',
             routeValue: 'fed',
@@ -204,7 +221,6 @@ class TableLinkTest extends Testcase
         ]);
 
         $tableLink = new TableLink(
-            'TEST_NAME',
             'fake.route.with.two.params',
             $tableLinkParameters,
         );
@@ -212,7 +228,8 @@ class TableLinkTest extends Testcase
         $urlWithName = $tableLink->getUrlWithName();
         $this->assertTrue(
             $urlWithName === [
-                'TEST_NAME' => URL::current() . '/fake-route/zyx/more-fake/fed',
+                'test view name' =>
+                    URL::current() . '/fake-route/zyx/more-fake/fed',
             ],
         );
     }

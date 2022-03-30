@@ -2,20 +2,16 @@
 
 namespace App\Utils;
 
+use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
 
 class TableLink
 {
-    public string $name;
     public string $route;
     public ?Collection $parameters;
 
-    public function __construct(
-        string $name,
-        string $route,
-        Collection $parameters = null,
-    ) {
-        $this->name = $name;
+    public function __construct(string $route, Collection $parameters = null)
+    {
         $this->route = $route;
         $this->parameters = $parameters;
     }
@@ -40,7 +36,7 @@ class TableLink
             } else {
                 $tempRouteKeys = $this->parameters->mapWithKeys(function (
                     TableLinkParameter $tableLinkParameter,
-                ) use ($item) {
+                ) {
                     return [
                         $tableLinkParameter->routeParameter =>
                             $tableLinkParameter->routeValue,
@@ -59,8 +55,18 @@ class TableLink
         );
     }
 
+    private function getRoute(): Route
+    {
+        return app('router')
+            ->getRoutes()
+            ->getByName($this->route);
+    }
+
     public function getUrlWithName(array $item = null): array
     {
-        return [$this->name => $this->createUrl($item)];
+        $route = $this->getRoute();
+        $url = $this->createUrl($item);
+
+        return [$route->defaults['display'] ?? $route->getName() => $url];
     }
 }
