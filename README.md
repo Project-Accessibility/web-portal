@@ -289,3 +289,38 @@ De rowlink is een `TableLink` en deze kan je ook als `TableLink` meegeven.
 
 Voorbeeld:
 `$rowLink = new TableLink('welcome');`
+
+<br><br><br>
+
+### Breadcrumbs
+
+Een breadcrumb instellen is heel simpel.
+
+Voeg deze code toe aan de view:<br>
+`<x-breadcrumb />`
+
+Om een naam te geven aan een url voeg je deze code toe aan je route:<br>
+`->defaults('display', 'home')`<br>
+Dan zie je route er bijvoorbeeld als volgt uit:<br>
+
+```
+Route::get('/', function () {
+  return view('welcome');
+})->name('welcome')->defaults('display', 'home');
+```
+
+Mocht je geen specifieke naam willen voor je route
+(omdat er bijv een ID in zit verwerkt)
+dan hoef je bovenstaande code niet te gebruiken.
+
+Voorbeeld:<br>
+
+```
+Route::get('/users/{id}', function () {
+  return view('users.details');
+})->name('users.details');
+```
+
+Dan wordt de naam van je breadcrumb het {id} (bijvoorbeeld: `1`)
+
+De rest is magie 🤯

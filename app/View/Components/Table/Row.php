@@ -23,6 +23,7 @@ class Row extends Component
         }
 
         $this->rowItems = $this->getRowItems($item, $keys);
+
         $this->rowLink = $rowLink ? $this->mapToLinks($item, $rowLink) : null;
         $this->tableLinks = $tableLinks
             ? $this->mapToLinks($item, $tableLinks)

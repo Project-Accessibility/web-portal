@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Components\Breadcrumb;
 use App\View\Components\Button;
 use App\View\Components\Input;
 use App\View\Components\Table\Header;
@@ -38,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::component('button', Button::class);
         Blade::component('input', Input::class);
+        Blade::component('breadcrumb', Breadcrumb::class);
 
         Blade::component('table', Table::class);
         Blade::component('table-header', Header::class);
