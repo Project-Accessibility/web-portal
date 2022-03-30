@@ -9,11 +9,13 @@ use Illuminate\View\Component;
 class Row extends Component
 {
     public Collection $rowItems;
+    public ?string $rowLink;
     public ?Collection $tableLinks;
 
     public function __construct(
         array $item,
-        array $keys = [],
+        array $keys,
+        TableLink $rowLink = null,
         Collection $tableLinks = null,
     ) {
         if (!$this->everyArrayItemIsString($keys)) {
@@ -21,7 +23,10 @@ class Row extends Component
         }
 
         $this->rowItems = $this->getRowItems($item, $keys);
-        $this->tableLinks = $this->mapToLinks($item, $tableLinks);
+        $this->rowLink = $rowLink ? $this->mapToLinks($item, $rowLink) : null;
+        $this->tableLinks = $tableLinks
+            ? $this->mapToLinks($item, $tableLinks)
+            : null;
     }
 
     private function everyArrayItemIsString($array): bool
@@ -45,13 +50,19 @@ class Row extends Component
         });
     }
 
-    private function mapToLinks(array $item, Collection $tableLinks): Collection
-    {
-        return $tableLinks->mapWithKeys(function (TableLink $tableLink) use (
-            $item,
-        ) {
-            return $tableLink->getUrlWithName($item);
-        });
+    private function mapToLinks(
+        array $item,
+        TableLink|Collection $tableLinks,
+    ): string|Collection {
+        if (get_class($tableLinks) === TableLink::class) {
+            return $tableLinks->createUrl($item);
+        } else {
+            return $tableLinks->mapWithKeys(function (
+                TableLink $tableLink,
+            ) use ($item) {
+                return $tableLink->getUrlWithName($item);
+            });
+        }
     }
 
     public function render()

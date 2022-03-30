@@ -92,7 +92,7 @@ Of je kan een link ervan maken en dan moet je nog de link meegeven.\
 ### Table
 
 Dit component kan je gebruiken voor een tabel:<br>
-`<x-table :headers="$headers" :items="$items" :keys="$keys" :tableLinks="$tableLinks"/>`
+`<x-table :headers="$headers" :items="$items" :keys="$keys" :rowLink="$rowLink" :tableLinks="$tableLinks"/>`
 
 #### Headers
 
@@ -178,12 +178,17 @@ $tableLinks = collect($tableLink_one, $tableLink_two);
 #### Simpele `TableLink`
 
 De link van naar een pagina wordt gemaakt op basis van de Laravel `Route::class`.
+De naam in de link wordt gemaakt op basis van een `defaults` variable `view` bij de route.
 
-Stel je route ziet er als volgt uit:<br>
+Om een naam te geven aan een url voeg je deze code toe aan je route:<br>
+`->defaults('view', 'home')`<br>
+
+Dan ziet je route er bijvoorbeeld als volgt uit:<br>
 
 ```
-Route::get('/fake-route')
-->name('fake.route.without.params');
+Route::get('/', function () {
+  return view('welcome');
+})->name('welcome')->defaults('view', 'home');
 ```
 
 Dan ziet een `TableLink` er als volgt uit:
@@ -191,10 +196,7 @@ Dan ziet een `TableLink` er als volgt uit:
 ```
 use App\Utils\TableLink;
 
-$tableLink = new TableLink(
-    name: 'Deze naam komt in de knop te staan',
-    route: 'link.naar.pagina`
-)
+$tableLink = new TableLink('welcome`)
 ```
 
 <br><br>
@@ -207,7 +209,7 @@ Stel je route ziet er als volgt uit:<br>
 
 ```
 Route::get('/fake-route/{fake_param_one}')
-->name('fake.route.with.one.param');
+->name('fake.route.with.one.param')->defaults('display', 'fake');
 ```
 
 dan ziet je `TableLinkParameter` er zo uit:
@@ -230,11 +232,9 @@ $tableLinkParameters = collect([
 ]):
 
 $tableLink = new TableLink(
-    name: 'Deze naam komt in de knop te staan',
-
-    route: 'fake.route.with.one.param`,
-    parameters: $tableLinkParameters
-)
+    'fake.route.with.one.param`,
+    $tableLinkParameters
+);
 ```
 
 <br><br>
@@ -276,9 +276,16 @@ $tableLinkParameters = collect([
 ]):
 
 $tableLink = new TableLink(
-    name: 'Deze naam komt in de knop te staan',
-
-    route: 'fake.route.with.one.param`,
-    parameters: $tableLinkParameters
+    'fake.route.with.one.param`,
+    $tableLinkParameters
 )
 ```
+
+<br><br>
+
+#### Rowlink (wanneer je op de tabelrij drukt)
+
+De rowlink is een `TableLink` en deze kan je ook als `TableLink` meegeven.
+
+Voorbeeld:
+`$rowLink = new TableLink('welcome');`

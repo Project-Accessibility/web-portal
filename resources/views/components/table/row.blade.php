@@ -1,4 +1,4 @@
-<tr>
+<tr @if($rowLink) class="clickable-row" data-href="{{ $rowLink }}" @endif>
     @foreach($rowItems as $rowItem)
         <td>
             <span>{{ $rowItem }}</span>

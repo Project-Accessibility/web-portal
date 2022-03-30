@@ -16,21 +16,25 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome');
+})
+    ->name('welcome')
+    ->defaults('display', 'home');
 
 Route::get('/stylesheet', function () {
     return view('stylesheet');
-})->name('stylesheet');
+})
+    ->name('stylesheet')
+    ->defaults('display', 'stylesheet');
 
 // Routes for testing the table links
 if (App::environment('testing')) {
     Route::get('/fake-route')->name('fake.route.without.params');
 
-    Route::get('/fake-route/{fake_param_one}')->name(
+    Route::get('/fake-route/{fake_param_one?}')->name(
         'fake.route.with.one.param',
     );
 
-    Route::get('/fake-route/{fake_param_one}/more-fake/{fake_param_two}')->name(
-        'fake.route.with.two.params',
-    );
+    Route::get('/fake-route/{fake_param_one}/more-fake/{fake_param_two}')
+        ->name('fake.route.with.two.params')
+        ->defaults('display', 'test view name');
 }
