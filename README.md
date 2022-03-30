@@ -178,17 +178,17 @@ $tableLinks = collect($tableLink_one, $tableLink_two);
 #### Simpele `TableLink`
 
 De link van naar een pagina wordt gemaakt op basis van de Laravel `Route::class`.
-De naam in de link wordt gemaakt op basis van een `defaults` variable `view` bij de route.
+De naam in de link wordt gemaakt op basis van een `defaults` variable `display` bij de route.
 
 Om een naam te geven aan een url voeg je deze code toe aan je route:<br>
-`->defaults('view', 'home')`<br>
+`->defaults('display', 'home')`<br>
 
 Dan ziet je route er bijvoorbeeld als volgt uit:<br>
 
 ```
 Route::get('/', function () {
   return view('welcome');
-})->name('welcome')->defaults('view', 'home');
+})->name('welcome')->defaults('display', 'home');
 ```
 
 Dan ziet een `TableLink` er als volgt uit:
