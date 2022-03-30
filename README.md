@@ -348,7 +348,7 @@ Geef een lijst met tabs mee aan het component en de tab die actief is. Geef de s
 @extends('layouts.app')
 @section('content')
     <h1>Welcome to this page</h1>
-    <x-tabs :tabs="['Details', 'Vragenlijsten']" :currentTab="'Details'">
+    <x-tabs :tabs="['Details', 'Vragenlijsten']">
         @section('Details')
             Details
         @endsection

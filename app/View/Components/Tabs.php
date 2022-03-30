@@ -16,21 +16,13 @@ class Tabs extends Component
     public array $tabs;
 
     /**
-     * The current tab.
-     *
-     * @var string
-     */
-    public string $currentTab;
-
-    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($tabs, $currentTab)
+    public function __construct($tabs)
     {
         $this->tabs=$tabs;
-        $this->currentTab=$currentTab;
     }
 
     /**
