@@ -15,7 +15,7 @@ class Breadcrumb extends Component
     {
         $url = parse_url(url()->current());
         $schemeHost = $url['scheme'] . '://' . $url['host'];
-
+        
         $pathSplit = array_values(array_filter(explode('/', $url['path'])));
 
         $this->paths[] = [
