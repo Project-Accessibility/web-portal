@@ -188,7 +188,7 @@ Dan ziet je route er bijvoorbeeld als volgt uit:<br>
 ```
 Route::get('/', function () {
   return view('welcome');
-})->name('welcome')->defaults('view', 'home');
+})->name('welcome')->defaults('display', 'home');
 ```
 
 Dan ziet een `TableLink` er als volgt uit:
@@ -300,13 +300,13 @@ Voeg deze code toe aan de view:<br>
 `<x-breadcrumb />`
 
 Om een naam te geven aan een url voeg je deze code toe aan je route:<br>
-`->defaults('view', 'home')`<br>
+`->defaults('display', 'home')`<br>
 Dan zie je route er bijvoorbeeld als volgt uit:<br>
 
 ```
 Route::get('/', function () {
   return view('welcome');
-})->name('welcome')->defaults('view', 'home');
+})->name('welcome')->defaults('display', 'home');
 ```
 
 Mocht je geen specifieke naam willen voor je route
@@ -321,6 +321,6 @@ Route::get('/users/{id}', function () {
 })->name('users.details');
 ```
 
-Dan wordt de naam van je breadcrumb het id (bijvoorbeeld: `1`)
+Dan wordt de naam van je breadcrumb het {id} (bijvoorbeeld: `1`)
 
 De rest is magie 🤯

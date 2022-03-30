@@ -19,16 +19,16 @@ class Breadcrumb extends Component
         $pathSplit = array_values(array_filter(explode('/', $url['path'])));
 
         $this->paths[] = [
-            'view' => 'home',
+            'display' => 'home',
             'url' => $schemeHost . '/',
         ];
 
         foreach ($pathSplit as $path) {
             $fullPath = end($this->paths)['url'] . $path . '/';
             if ($route = $this->getRoute($fullPath)) {
-                $view = $this->getView($route) ?? $path;
+                $view = $this->getDisplay($route) ?? $path;
                 $this->paths[] = [
-                    'view' => $view,
+                    'display' => $view,
                     'url' => $fullPath,
                 ];
             }
@@ -46,9 +46,9 @@ class Breadcrumb extends Component
         }
     }
 
-    private function getView(Route $route): ?string
+    private function getDisplay(Route $route): ?string
     {
-        return $route->defaults['view'] ?? null;
+        return $route->defaults['display'] ?? null;
     }
 
     public function render(): View
