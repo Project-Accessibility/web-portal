@@ -57,11 +57,11 @@ $extraData=array(
 ```
 @php
     $extraData=array(
-        'multiple' => false
+        'multiple' => false,
         'options' => [
           ['option_1', 'value_1'],
           ['option_2', 'value_2'],
-        ];
+        ]
     );
 @endphp
 <x-input type="select" name="input" :extraData="$extraData" value="waarde2"></x-input>
@@ -69,8 +69,12 @@ $extraData=array(
 
 #### Dates
 
-`<x-input type="date" name="input" value="2021-03-21"></x-input>`
-` <x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>`
+```
+<x-input type="date" name="input" value="2021-03-21"></x-input>
+```
+```
+<x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>
+```
 
 #### Switch
 
