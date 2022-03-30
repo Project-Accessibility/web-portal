@@ -28,20 +28,20 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Geofence extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  /* @var string */
-  public $table = 'geofences';
+    /* @var string */
+    public $table = 'geofences';
 
-  /* @var array */
-  protected $fillable = ['longitude', 'latitude', 'radius'];
+    /* @var array */
+    protected $fillable = ['longitude', 'latitude', 'radius'];
 
-  /* @var array */
-  protected $casts = [
-    'longitude' => 'float',
-    'latitude' => 'float',
-    'radius' => 'float',
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-  ];
+    /* @var array */
+    protected $casts = [
+        'longitude' => 'float',
+        'latitude' => 'float',
+        'radius' => 'float',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

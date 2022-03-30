@@ -31,27 +31,27 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Answer extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  /* @var string */
-  public $table = 'answers';
+    /* @var string */
+    public $table = 'answers';
 
-  /* @var array */
-  protected $fillable = ['participant_id', 'question_option_id', 'answer'];
+    /* @var array */
+    protected $fillable = ['participant_id', 'question_option_id', 'answer'];
 
-  /* @var array */
-  protected $casts = [
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-  ];
+    /* @var array */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
-  public function participant(): BelongsTo
-  {
-    return $this->belongsTo(Participant::class);
-  }
+    public function participant(): BelongsTo
+    {
+        return $this->belongsTo(Participant::class);
+    }
 
-  public function questionOption(): BelongsTo
-  {
-    return $this->belongsTo(QuestionOption::class);
-  }
+    public function questionOption(): BelongsTo
+    {
+        return $this->belongsTo(QuestionOption::class);
+    }
 }

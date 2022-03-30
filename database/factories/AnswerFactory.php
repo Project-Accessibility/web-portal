@@ -11,17 +11,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AnswerFactory extends Factory
 {
-  /**
-   * Define the model's default state.
-   *
-   * @return array<string, mixed>
-   */
-  public function definition()
-  {
-    return [
-      'participant_id' => Participant::factory(),
-      'question_option_id' => QuestionOption::factory(),
-      'answer' => json_encode([]),
-    ];
-  }
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'participant_id' => Participant::factory(),
+            'question_option_id' => QuestionOption::factory(),
+            'answer' => json_encode([]),
+        ];
+    }
 }

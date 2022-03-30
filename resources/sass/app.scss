@@ -94,7 +94,7 @@ $form-select-box-shadow: none;
 $form-label-font-weight: 800;
 $form-label-color: $primary;
 
-$input-color: $accessibility-text;
+$input-color: $black;
 
 $form-file-button-color: $white;
 $form-file-button-bg: $primary;
@@ -228,6 +228,7 @@ $progress-height: 1.5rem;
     background-color: lighten($gray, 50);
     color: lighten($gray, 20);
 }
+
 .form-switch:disabled,
 .form-check-input:disabled,
 .form-control:disabled,
@@ -260,6 +261,11 @@ code {
     background: $gray-800;
     padding: .2rem .4rem;
     border-radius: $border-radius;
+}
+
+.box {
+    border-radius: $border-radius;
+    margin-top: $spacer * 1.5;
 }
 
 @each $color, $value in $theme-colors {

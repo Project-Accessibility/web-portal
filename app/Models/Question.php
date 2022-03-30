@@ -33,27 +33,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Question extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  /* @var string */
-  public $table = 'questions';
+    /* @var string */
+    public $table = 'questions';
 
-  /* @var array */
-  protected $fillable = ['section_id', 'title', 'question'];
+    /* @var array */
+    protected $fillable = ['section_id', 'title', 'question'];
 
-  /* @var array */
-  protected $casts = [
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-  ];
+    /* @var array */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
-  public function section(): BelongsTo
-  {
-    return $this->belongsTo(Section::class);
-  }
+    public function section(): BelongsTo
+    {
+        return $this->belongsTo(Section::class);
+    }
 
-  public function questionOptions(): HasMany
-  {
-    return $this->hasMany(QuestionOption::class);
-  }
+    public function questionOptions(): HasMany
+    {
+        return $this->hasMany(QuestionOption::class);
+    }
 }

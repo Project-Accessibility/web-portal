@@ -34,28 +34,28 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class Participant extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  /* @var string */
-  public $table = 'participants';
+    /* @var string */
+    public $table = 'participants';
 
-  /* @var array */
-  protected $fillable = ['questionnaire_id', 'code', 'finished'];
+    /* @var array */
+    protected $fillable = ['questionnaire_id', 'code', 'finished'];
 
-  /* @var array */
-  protected $casts = [
-    'finished' => 'boolean',
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-  ];
+    /* @var array */
+    protected $casts = [
+        'finished' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
-  public function questionnaire(): BelongsTo
-  {
-    return $this->belongsTo(Questionnaire::class);
-  }
+    public function questionnaire(): BelongsTo
+    {
+        return $this->belongsTo(Questionnaire::class);
+    }
 
-  public function answers(): HasMany
-  {
-    return $this->hasMany(Answer::class);
-  }
+    public function answers(): HasMany
+    {
+        return $this->hasMany(Answer::class);
+    }
 }

@@ -1,5 +1,5 @@
 <div class="{{$type != "switch" ? "form-group" : "form-check form-switch"}}">
-    <label for="{{$name}}">{{strtoupper(substr($name, 0, 1)) . substr($name, 1)}}</label>
+    <label for="{{$name}}" class="form-label">{{strtoupper(substr($name, 0, 1)) . substr($name, 1)}}</label>
     @switch($type)
         @case('text')
         <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
@@ -13,7 +13,7 @@
         <select class="form-control" id="{{$name}}" title="{{$name}}"
                 name="{{$name}}" {{$extraData['multiple']?'multiple':''}}>
             @foreach($extraData['options'] as $option)
-                @if(($index == 0 && empty($value))||$value==$option[1])
+                @if(($loop->index == 0 && empty($value))||$value==$option[1])
                     <option selected value="{{$option[1]}}">{{$option[0]}}</option>
                 @else
                     <option value="{{$option[1]}}">{{$option[0]}}</option>

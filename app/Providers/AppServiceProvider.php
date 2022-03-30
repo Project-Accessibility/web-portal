@@ -4,34 +4,43 @@ namespace App\Providers;
 
 use App\View\Components\Button;
 use App\View\Components\Input;
+use App\View\Components\Table\Header;
+use App\View\Components\Table\Row;
+use App\View\Components\Table\Table;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-  /**
-   * Register any application services.
-   *
-   * @return void
-   */
-  public function register()
-  {
-    //
-  }
-
-  /**
-   * Bootstrap any application services.
-   *
-   * @return void
-   */
-  public function boot()
-  {
-    if (config('APP_ENV') !== 'local') {
-      URL::forceScheme('https');
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
     }
 
-    Blade::component('button', Button::class);
-    Blade::component('input', Input::class);
-  }
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
+        } else {
+            URL::forceScheme('http');
+        }
+
+        Blade::component('button', Button::class);
+        Blade::component('input', Input::class);
+
+        Blade::component('table', Table::class);
+        Blade::component('table-header', Header::class);
+        Blade::component('table-row', Row::class);
+    }
 }
