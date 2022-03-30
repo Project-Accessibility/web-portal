@@ -205,7 +205,7 @@ class TableLinkTest extends Testcase
     }
 
     /** @test */
-    public function it_gets_the_view_with_link()
+    public function it_gets_the_display_with_link()
     {
         $tableLinkParameter_one = new TableLinkParameter(
             routeParameter: 'fake_param_one',
@@ -231,16 +231,6 @@ class TableLinkTest extends Testcase
                 'test view name' =>
                     URL::current() . '/fake-route/zyx/more-fake/fed',
             ],
-        );
-    }
-
-    /** @test */
-    public function test()
-    {
-        dd(
-            app('router')
-                ->getRoutes()
-                ->match(app('request')->create('/fake-route/{fake_param_one}')),
         );
     }
 }
