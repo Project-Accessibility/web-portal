@@ -205,7 +205,7 @@ class TableLinkTest extends Testcase
     }
 
     /** @test */
-    public function it_gets_the_view_with_link()
+    public function it_gets_the_display_with_link()
     {
         $tableLinkParameter_one = new TableLinkParameter(
             routeParameter: 'fake_param_one',
