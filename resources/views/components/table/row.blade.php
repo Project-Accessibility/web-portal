@@ -6,8 +6,8 @@
     @endforeach
     @if(count($tableLinks) > 0)
         <td>
-            @foreach($tableLinks as $name => $link)
-                <x-button type="primary" :link="$link">{{ $name }}</x-button>
+            @foreach($tableLinks as $display => $link)
+                <x-button type="primary" :link="$link">{{ ucfirst($display) }}</x-button>
             @endforeach
         </td>
     @endif
