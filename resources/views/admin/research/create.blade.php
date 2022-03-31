@@ -2,13 +2,14 @@
 
 @section('content')
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <strong>Er waren wat problemen met uw data</strong><br><br>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     <form method="POST" action="{{route('researches.store')}}">
@@ -19,22 +20,6 @@
             <x-input type="text" label="Titel" name="title" placeholder="Titel van het onderzoek"></x-input>
             <x-input type="textarea" label="Omschrijving" name="description"
                      placeholder="Een kleine omschrijving van het onderzoek" :extraData="['rows'=>8]"></x-input>
-            <select class="selectpicker">
-                <option>Mustard</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-            </select>
-            @php
-                $extraData=array(
-                    'multiple' => true,
-                    'options' => [
-                      ['option_1', 'value_1'],
-                      ['option_2', 'value_2'],
-                      ['option_3', 'value_3'],
-                    ]
-                );
-            @endphp
-            <x-input label="test" type="select" name="selectList" :extraData="$extraData" :value="['value_1', 'value_3']"></x-input>
             <x-button class="float-end mt-2" type="secondary">Toevoegen</x-button>
         </div>
     </form>
