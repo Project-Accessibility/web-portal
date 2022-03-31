@@ -65,8 +65,8 @@
         <div class="d-flex">
             <input type="range" class="form-range w-75" min="{{$extraData['min']}}" max="{{$extraData['max']}}"
                    step="{{$extraData['step']}}" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{(old($name) ? old($name) : $valueb) ?? 0}}">
-            <output class="mx-3" name="output-{{$name}}" id="output-{{$name}}">{{(old($name) ? old($name) : $valueb) ?? 0}}</output>
+                   placeholder="{{$placeholder}}" value="{{(old($name) ? old($name) : $value) ?? 0}}">
+            <output class="mx-3" name="output-{{$name}}" id="output-{{$name}}">{{(old($name) ? old($name) : $value) ?? 0}}</output>
         </div>
         <script>
             window.addEventListener('load', () => {
