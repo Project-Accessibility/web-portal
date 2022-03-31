@@ -14,13 +14,15 @@ class Tabs extends Component
 
     public function __construct(string $title, array $tabs)
     {
-        if(count($tabs) < 0) {
-            throw new Exception("There needs to be at least 1 tab given to the tabs component");
+        if (count($tabs) < 0) {
+            throw new Exception(
+                'There needs to be at least 1 tab given to the tabs component',
+            );
         }
 
         $this->title = $title;
         $this->tabs = $tabs;
-        $this->currentTab = request()->query("tab") ?? $tabs[0];
+        $this->currentTab = request()->query('tab') ?? $tabs[0];
     }
 
     public function render(): View

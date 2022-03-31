@@ -11,24 +11,30 @@ window.onload = () => {
 
     document.querySelectorAll('span[data-bs-toggle="tab"]').forEach(tab => {
         tab.addEventListener('show.bs.tab', function (event) {
-            let query = event.target.dataset.bsTarget.substring(1)
-            let currentUrl = window.location.href
+            let query = event.target.dataset.bsTarget.substring(1);
+            let currentUrl = window.location.href;
 
-            const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-            });
+            const params = new Proxy(
+                new URLSearchParams(window.location.search),
+                {
+                    get: (searchParams, prop) => searchParams.get(prop),
+                }
+            );
 
-            let tabQuery = params.tab
+            let tabQuery = params.tab;
 
             let nextUrl;
-            if(currentUrl.indexOf('?tab=') > -1) {
-                nextUrl = currentUrl.replace('?tab=' + tabQuery, '?tab=' + query)
+            if (currentUrl.indexOf('?tab=') > -1) {
+                nextUrl = currentUrl.replace(
+                    '?tab=' + tabQuery,
+                    '?tab=' + query
+                );
             } else {
-                console.log('not included yet')
-                nextUrl = currentUrl + '?tab=' + query
+                console.log('not included yet');
+                nextUrl = currentUrl + '?tab=' + query;
             }
 
             window.history.pushState('', '', nextUrl);
-        })
+        });
     });
 };

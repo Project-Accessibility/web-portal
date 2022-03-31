@@ -62,7 +62,7 @@ class ResearchController extends Controller
         )->with('success', 'Het onderzoek is aangepast!');
     }
 
-    public function details(Request $request, Research $research,): View
+    public function details(Request $request, Research $research): View
     {
         return view('admin.research.details', [
             'research' => $research,
