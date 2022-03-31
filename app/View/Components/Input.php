@@ -16,6 +16,13 @@ class Input extends Component
     public string $type;
 
     /**
+     * The label
+     *
+     * @var string
+     */
+    public string $label;
+
+    /**
      * The name
      *
      * @var string
@@ -53,12 +60,14 @@ class Input extends Component
      */
     public function __construct(
         string $type,
+        string $label,
         string $name,
         mixed $value = null,
         string $placeholder = null,
         array $extraData = null,
     ) {
         $this->type = $type;
+        $this->label = $label;
         $this->name = $name;
         $this->value = $value;
         $this->placeholder = $placeholder;

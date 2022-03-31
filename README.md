@@ -45,7 +45,12 @@ $extraData=array(
 'after' => '.00'
 );
 @endphp
-<x-input type="text" name="input" placeholder="input" :extraData="$extraData"></x-input>
+<x-input type="text" label="input" name="input" placeholder="input" :extraData="$extraData"></x-input>
+```
+
+#### TextArea
+```
+<x-input type="textarea" label="input" name="input" placeholder="input" :extraData="['rows'=>8]"></x-input>
 ```
 
 #### Password

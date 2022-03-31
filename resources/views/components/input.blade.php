@@ -1,5 +1,5 @@
 <div class="{{$type != "switch" ? "form-group" : "form-check form-switch"}}">
-    <label for="{{$name}}" class="form-label">{{strtoupper(substr($name, 0, 1)) . substr($name, 1)}}</label>
+    <label for="{{$name}}" class="form-label">{{strtoupper(substr($label, 0, 1)) . substr($label, 1)}}</label>
     @switch($type)
         @case('text')
         @if(isset($extraData['before']) || isset($extraData['after']))
@@ -17,6 +17,10 @@
             <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
                    placeholder="{{$placeholder}}" value="{{$value}}"/>
         @endif
+        @break
+        @case('textarea')
+            <textarea class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
+                   placeholder="{{$placeholder}}" rows="{{$extraData['rows']}}">{{$value}}</textarea>
         @break
         @case('password')
         <input class="form-control" type="password" id="{{$name}}" title="{{$name}}" name="{{$name}}"
