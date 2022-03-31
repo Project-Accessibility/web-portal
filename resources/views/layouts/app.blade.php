@@ -7,7 +7,7 @@
 <div id="app">
     <x-nav-bar/>
 
-    <main class="container w-container rounded mt-4">
+    <main class="container rounded mt-4">
         @if (session()->has('success') || !empty($success))
             <div class="container">
                 <div class="row justify-content-center">
@@ -20,9 +20,7 @@
         <div class="row justify-content-center">
             <div class="card">
                 <div class="card-body">
-                    @if(isset(parse_url(url()->current())['path']))
-                        <x-breadcrumb />
-                    @endif
+                    <x-breadcrumb />
                     @yield('content')
                 </div>
             </div>

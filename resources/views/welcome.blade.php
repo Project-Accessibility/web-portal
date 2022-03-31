@@ -11,15 +11,15 @@
                     'multiple' => false,
                 );
             @endphp
-            <x-input type="file" name="image" :extraData="$extraData"></x-input>
+            <x-input label="test" type="file" name="image" :extraData="$extraData"></x-input>
             @php
                 $extraData=array(
                 'before' => '$',
                 'after' => '.00'
                 );
             @endphp
-            <x-input type="text" name="text" placeholder="input" :extraData="$extraData"></x-input>
-            <x-input type="password" name="password" placeholder="input"></x-input>
+            <x-input label="test" type="text" name="text" placeholder="input" :extraData="$extraData"></x-input>
+            <x-input label="test" type="password" name="password" placeholder="input"></x-input>
             @php
                 $extraData=array(
                     'multiple' => false,
@@ -29,9 +29,9 @@
                     ]
                 );
             @endphp
-            <x-input type="select" name="selectList" :extraData="$extraData" value="waarde2"></x-input>
-            <x-input type="date" name="datum" value="2021-03-21"></x-input>
-            <x-input type="switch" name="switch" :value="true"></x-input>
+            <x-input label="test" type="select" name="selectList" :extraData="$extraData" value="waarde2"></x-input>
+            <x-input label="test" type="date" name="datum" value="2021-03-21"></x-input>
+            <x-input label="test" type="switch" name="switch" :value="true"></x-input>
             @php
                 $extraData=array(
                     'min' => 0,
@@ -39,17 +39,8 @@
                     'step' => 0.5
                 );
             @endphp
-            <x-input type="range" name="range" :extraData="$extraData" :value="1.5"></x-input>
+            <x-input label="test" type="range" name="range" :extraData="$extraData" :value="1.5"></x-input>
 
-        @endsection
-        @section('Vragenlijsten')
-            Vragenlijsten
-        @endsection
-    </x-tabs>
-    <h1>Welcome to this page</h1>
-    <x-tabs :tabs="['Details', 'Vragenlijsten']" :currentTab="'Details'">
-        @section('Details')
-            Details
         @endsection
         @section('Vragenlijsten')
             Vragenlijsten

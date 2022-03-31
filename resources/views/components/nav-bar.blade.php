@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm justify-content-center">
-    <div class="container w-container">
+    <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             Accessibility
         </a>
