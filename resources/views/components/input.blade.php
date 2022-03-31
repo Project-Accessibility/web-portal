@@ -1,5 +1,10 @@
 <div class="{{$type != "switch" ? "form-group" : "form-check form-switch"}}">
-    <label for="{{$name}}" class="form-label">{{strtoupper(substr($label, 0, 1)) . substr($label, 1)}}</label>
+    <label for="{{$name}}" class="form-label">
+        {{ ucfirst($label) }}
+        @if($required)
+            <span class="text-red ml-1">*</span>
+        @endif
+    </label>
     @switch($type)
         @case('text')
         @if(isset($extraData['before']) || isset($extraData['after']))

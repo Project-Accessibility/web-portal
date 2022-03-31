@@ -62,19 +62,8 @@ class ResearchController extends Controller
         )->with('success', 'Het onderzoek is aangepast!');
     }
 
-    public function details(
-        Request $request,
-        Research $research,
-    ): View|RedirectResponse {
-        if (!$request->has('tab')) {
-            return redirect(
-                route('researches.details', [
-                    'research' => $research,
-                    'tab' => 'Details',
-                ]),
-            );
-        }
-
+    public function details(Request $request, Research $research): View
+    {
         return view('admin.research.details', [
             'research' => $research,
         ]);

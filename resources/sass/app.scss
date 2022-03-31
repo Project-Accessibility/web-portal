@@ -147,11 +147,15 @@ $navbar-dark-color:                 $white;
 $navbar-dark-hover-color:           $white;
 $navbar-dark-active-color:          $white;
 $navbar-dark-disabled-color:        $white;
+$navbar-dark-toggler-border-color:  $white;
 
 $navbar-light-color:                $black;
 $navbar-light-hover-color:          $black;
 $navbar-light-active-color:         $black;
 $navbar-light-disabled-color:       $black;
+$navbar-light-toggler-border-color: $black;
+
+$navbar-padding-y: 0px;
 
 // Breadcrumbs
 $breadcrumb-active-color: $gray-700;
@@ -174,11 +178,18 @@ $progress-height: 1.5rem;
     color: $accessibility-text;
 }
 
-.nav-link {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+.navbar-nav > .nav-item > .nav-link {
     border-bottom: .1rem solid transparent;
+    padding: 1rem;
+}
+
+.navbar-nav > .nav-item > .nav-link:hover {
+    border-color: $white;
+}
+
+.dropdown-menu {
+    top: 100% !important;
+    box-shadow: .1rem .1rem 5px rgba($black, .5);
 }
 
 .valid-feedback, .invalid-feedback {
@@ -195,6 +206,10 @@ $progress-height: 1.5rem;
 .invalid-feedback {
     background: $form-feedback-invalid-color;
     color: color-contrast($form-feedback-invalid-color);
+}
+
+.form-group {
+    margin-bottom: 0.5rem!important;
 }
 
 .form-control.is-invalid,
@@ -293,81 +308,36 @@ code {
     .bg-#{$color} .nav-item:hover > .nav-link {
         border-bottom: .1rem solid color-contrast($value);
     }
+
+    .bg-#{$color}.dropdown-menu > li > a:hover {
+        background-color: darken($value, 10);
+    }
+}
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
 }
 
-/*                                             Other styling                                                            */
+.nav-tabs .nav-link {
+    cursor: pointer;
+    border: none;
+}
+
+.nav-tabs .nav-link:hover {
+    border: none;
+}
+
+.nav-tabs .nav-link.active {
+    border: 2px solid;
+    border-color: $black $black $white $black;
+    cursor: default;
+}
+
+.nav-tabs {
+    border-color: $black;
+    border-width: 2px;
+}
 
 body {
-    background-color: $blue-light
+    background-color: $blue-light;
 }
 
-.w-container {
-    width: 50%;
-}
-
-/* Alignment */
-.ml-auto {
-    margin-left: auto !important;
-}
-
-/* Titles */
-.title{
-    display: inline !important;
-}
-
-/* Button */
-.primary-button-align{
-    display: inline !important;
-    float: right !important;
-    margin-top: 0.3em;
-}
-
-/* Forms */
-.form-group {
-    margin-bottom: 0.5em!important;
-}
-
-/* Navigation */
-/* Navbar */
-.navbar {
-    background-color: $blue-dark !important;
-    color: white !important;
-}
-
-.navbar-brand {
-    color: white !important;
-}
-
-.nav-link {
-    color: white !important;
-    margin: 0 5px;
-    border-bottom: transparent 3px solid;
-}
-
-.dropdown-menu {
-    background-color: $blue-dark !important;
-}
-
-.dropdown-item {
-    color: white !important;
-    background-color: $blue-dark !important;
-}
-
-.active-menu {
-    border-bottom: white 3px solid;
-    font-weight: bold;
-}
-
-.navbar-toggler {
-    color: white !important;
-    border-color: white !important;
-}
-
-.navbar-toggler-icon {
-    filter: brightness(0) saturate(100%) invert(100%) sepia(5%) saturate(7455%) hue-rotate(276deg) brightness(123%) contrast(93%);
-}
-
-/* Tabs */
-.nav-tabs .nav-link{
-    color: $black !important;
-}

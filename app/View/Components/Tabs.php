@@ -8,29 +8,24 @@ use Illuminate\View\Component;
 
 class Tabs extends Component
 {
-    /**
-     * All tab options.
-     *
-     * @var array
-     */
+    public string $title;
     public array $tabs;
+    public ?string $currentTab;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct($tabs)
+    public function __construct(string $title, array $tabs)
     {
+        if (count($tabs) < 0) {
+            throw new Exception(
+                'There needs to be at least 1 tab given to the tabs component',
+            );
+        }
+
+        $this->title = $title;
         $this->tabs = $tabs;
+        $this->currentTab = request()->query('tab') ?? $tabs[0];
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return View|Closure|string
-     */
-    public function render(): View|string|Closure
+    public function render(): View
     {
         return view('components.tabs');
     }
