@@ -36,14 +36,14 @@
             <x-input label="Wachtwoord" type="password" name="password" placeholder="input"></x-input>
             @php
                 $extraData=array(
-                    'multiple' => false,
+                    'multiple' => true,
                     'options' => [
                       ['option_1', 'value_1'],
                       ['option_2', 'value_2'],
                     ]
                 );
             @endphp
-            <x-input label="Lijst" type="select" name="selectList" :extraData="$extraData" value="waarde2"></x-input>
+            <x-input label="Lijst" type="select" name="selectList" :extraData="$extraData" :value="['value_2']"></x-input>
             <x-input label="Datum" type="date" name="datum" value="2021-03-21"></x-input>
             <x-input label="Instelling 1" type="switch" name="switch" :value="true"></x-input>
             @php

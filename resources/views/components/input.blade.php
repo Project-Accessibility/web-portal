@@ -56,7 +56,7 @@
         @break
         @case('select')
         <div class="@error($name) is-invalid @enderror">
-            <select class="selectpicker" id="{{$name}}" title="{{$name}}"
+            <select class="selectpicker form-control" id="{{$name}}" title="{{$name}}"
                     name="{{$name}}{{$extraData['multiple']?'[]':''}}" {{$extraData['multiple']?'multiple':''}}>
                 @foreach($extraData['options'] as $option)
                     @php
