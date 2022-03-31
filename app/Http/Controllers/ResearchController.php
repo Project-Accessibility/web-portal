@@ -18,6 +18,7 @@ class ResearchController extends Controller
     public function overview(): View
     {
         $researches = Research::all()->toArray();
+
         return view('admin.research.overview', [
             "researches" => $researches
         ]);
