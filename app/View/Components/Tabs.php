@@ -22,7 +22,7 @@ class Tabs extends Component
      */
     public function __construct($tabs)
     {
-        $this->tabs=$tabs;
+        $this->tabs = $tabs;
     }
 
     /**
