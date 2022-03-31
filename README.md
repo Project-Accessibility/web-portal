@@ -72,6 +72,7 @@ $extraData=array(
 ```
 <x-input type="date" name="input" value="2021-03-21"></x-input>
 ```
+
 ```
 <x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>
 ```
@@ -92,6 +93,7 @@ $extraData=array(
 @endphp
 <x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
 ```
+
 #### File
 
 ```
@@ -102,6 +104,7 @@ $extraData=array(
 @endphp
 <x-input type="file" name="input" :extraData="$extraData"></x-input>
 ```
+
 ### Buttons
 
 Verschillende types zijn: primary, seocndary en remove.\
@@ -347,7 +350,9 @@ Dan wordt de naam van je breadcrumb het {id} (bijvoorbeeld: `1`)
 De rest is magie 🤯
 
 ### Tabs
+
 Geef een lijst met tabs mee aan het component en de tab die actief is. Geef de sections dezelfde naam als de namen in de meegegeven lijst. Het component zorgt er met javascript voor dat de juiste section wordt getoond.
+
 ```angular2html
 @extends('layouts.app')
 @section('content')

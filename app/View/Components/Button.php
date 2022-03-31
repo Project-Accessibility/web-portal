@@ -23,16 +23,18 @@ class Button extends Component
      */
     public string|null $link;
 
-  /**
-   * Create a new component instance.
-   * @param string $type
-   * @param string|null $link
-   */
-  public function __construct(string $type = 'primary', string|null $link = null)
-  {
-    $this->type = $type;
-    $this->link = $link;
-  }
+    /**
+     * Create a new component instance.
+     * @param string $type
+     * @param string|null $link
+     */
+    public function __construct(
+        string $type = 'primary',
+        string|null $link = null,
+    ) {
+        $this->type = $type;
+        $this->link = $link;
+    }
 
     /**
      * Get the view / contents that represent the component.

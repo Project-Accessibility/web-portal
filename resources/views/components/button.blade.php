@@ -34,6 +34,6 @@
             @break
         @endswitch
     >
-        {{$slot}}
+        <span class="text-nowrap">{{$slot}}</span>
     </button>
 @endif

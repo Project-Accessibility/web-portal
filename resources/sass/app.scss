@@ -324,7 +324,7 @@ body {
 
 /* Forms */
 .form-group {
-    margin-top: 0.5em!important;
+    margin-bottom: 0.5em!important;
 }
 
 /* Navigation */
@@ -369,30 +369,5 @@ body {
 
 /* Tabs */
 .nav-tabs .nav-link{
-    color: black!important;
-}
-
-// Tablet
-@media (min-width: 768px) and (max-width: 991.98px) {
-    .w-container {
-        width: 75%;
-    }
-}
-
-//mobile
-@media (max-width: 575.98px) {
-    .w-container {
-        width: 75%;
-    }
-    .active-menu {
-        border-bottom: transparent 3px solid;
-    }
-    .title{
-        display: block;
-    }
-    .primary-button-align{
-        display: block!important;
-        float: none!important;
-        margin: 0.5em 0;
-    }
+    color: $black !important;
 }
