@@ -2,8 +2,8 @@
 
 @section('content')
     <h1 class="title">Onderzoeken</h1>
-    <x-button class="primary-button-align" type="secondary" link="{{ route('stylesheet') }}">Stylesheet</x-button>
-    <x-tabs :tabs="['Tests', 'Vragenlijsten']" :currentTab="'Details'">
+    <x-button type="secondary" link="{{ route('stylesheet') }}">Stylesheet</x-button>
+    <x-tabs title="tabTitle" :tabs="['Tests', 'Vragenlijsten']" :currentTab="'Details'">
         @section('Tests')
             Tests
             @php
