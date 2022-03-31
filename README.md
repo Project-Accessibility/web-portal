@@ -57,14 +57,15 @@ $extraData=array(
 ```
 @php
     $extraData=array(
-        'multiple' => false,
+        'multiple' => true,
         'options' => [
           ['option_1', 'value_1'],
           ['option_2', 'value_2'],
+          ['option_3', 'value_3'],
         ]
     );
 @endphp
-<x-input type="select" name="input" :extraData="$extraData" value="waarde2"></x-input>
+<x-input label="test" type="select" name="selectList" :extraData="$extraData" :value="['value_1', 'value_3']"></x-input>
 ```
 
 #### Dates

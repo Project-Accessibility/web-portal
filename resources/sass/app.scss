@@ -341,3 +341,7 @@ body {
     background-color: $blue-light;
 }
 
+.bootstrap-select > .dropdown-menu{
+    inset: unset!important;
+}
+

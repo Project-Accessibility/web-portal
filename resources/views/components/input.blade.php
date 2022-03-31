@@ -13,54 +13,60 @@
                     <span class="input-group-text">{{$extraData['before']}}</span>
                 @endif
                 <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                       placeholder="{{$placeholder}}" value="{{$value}}"/>
+                       placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
                 @if(isset($extraData['after']))
                         <span class="input-group-text">{{$extraData['after']}}</span>
                 @endif
             </div>
         @else
             <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{$value}}"/>
+                   placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
         @endif
         @break
         @case('textarea')
             <textarea class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                   placeholder="{{$placeholder}}" rows="{{$extraData['rows']}}">{{$value}}</textarea>
+                   placeholder="{{$placeholder}}" rows="{{$extraData['rows']}}">{{old($name) ? old($name) : $value}}</textarea>
         @break
         @case('password')
         <input class="form-control" type="password" id="{{$name}}" title="{{$name}}" name="{{$name}}"
                placeholder="{{$placeholder}}"/>
         @break
         @case('select')
-        <select class="form-select" id="{{$name}}" title="{{$name}}"
+        <div>
+            <select class="selectpicker" id="{{$name}}" title="{{$name}}"
                 name="{{$name}}{{$extraData['multiple']?'[]':''}}" {{$extraData['multiple']?'multiple':''}}>
-            @foreach($extraData['options'] as $option)
-                @if(($loop->index == 0 && empty($value))||$value==$option[1])
-                    <option selected value="{{$option[1]}}">{{$option[0]}}</option>
-                @else
-                    <option value="{{$option[1]}}">{{$option[0]}}</option>
-                @endif
-            @endforeach
-        </select>
+                @foreach($extraData['options'] as $option)
+                    @php
+                        $value = old($name) ? old($name) : $value;
+                        $isSelected = ($loop->index == 0 && ($value == null || $value == [])) || (!empty($value) && ($extraData['multiple'] ? in_array($option[1],$value) : ($value)==$option[1]))
+                    @endphp
+                    @if($isSelected)
+                        <option selected value="{{$option[1]}}">{{$option[0]}}</option>
+                    @else
+                        <option value="{{$option[1]}}">{{$option[0]}}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
         @break
         @case('date')
         <input class="form-control" type="date" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-               value="{{$value}}"/>
+               value="{{old($name) ? old($name) : $value}}"/>
         @break
         @case('datetime')
         <input class="form-control" type="datetime-local" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-               value="{{$value}}"/>
+               value="{{old($name) ? old($name) : $value}}"/>
         @break
         @case('switch')
         <input type="checkbox" class="form-check-input" id="{{$name}}" title="{{$name}}"
-               name="{{$name}}" {{$value ? 'checked': ''}}/>
+               name="{{$name}}" {{old($name) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}}/>
         @break
         @case('range')
         <div class="d-flex">
             <input type="range" class="form-range w-75" min="{{$extraData['min']}}" max="{{$extraData['max']}}"
                    step="{{$extraData['step']}}" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{$value?$value:0}}">
-            <output class="mx-3" name="output-{{$name}}" id="output-{{$name}}">{{$value?$value:0}}</output>
+                   placeholder="{{$placeholder}}" value="{{(old($name) ? old($name) : $valueb) ?? 0}}">
+            <output class="mx-3" name="output-{{$name}}" id="output-{{$name}}">{{(old($name) ? old($name) : $valueb) ?? 0}}</output>
         </div>
         <script>
             window.addEventListener('load', () => {
@@ -76,7 +82,7 @@
         <input id="{{$name}}" title="{{$name}}" name="{{$name}}{{$extraData['multiple']?'[]':''}}" type="file"
                class="file" {{$extraData['multiple']?'multiple':''}}
                data-show-upload="false" data-show-caption="true" data-msg-placeholder="{{$placeholder}}"
-               value="{{$value}}">
+               value="{{old($name) ? old($name) : $value}}">
         @break
     @endswitch
 </div>
