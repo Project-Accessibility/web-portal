@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Requests\TestInputsRequest;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\ResearchController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,19 @@ Route::get('/stylesheet', function () {
 })
     ->name('stylesheet')
     ->defaults('display', 'stylesheet');
+
+Route::get('/inputs', function () {
+    return view('inputs');
+})
+    ->name('inputs')
+    ->defaults('display', 'inputs');
+
+Route::post('/inputs', function (TestInputsRequest $request) {
+    $request->validated();
+    return view('inputs')->with('success', 'Alle inputs zijn correct');
+})
+    ->name('inputs.store')
+    ->defaults('display', 'inputs');
 
 // Routes for testing the table links
 if (App::environment('testing')) {

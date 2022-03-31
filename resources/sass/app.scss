@@ -343,5 +343,53 @@ body {
 
 .bootstrap-select > .dropdown-menu{
     inset: unset!important;
+    transform: none!important;
 }
 
+/* validation messages */
+
+.is-invalid{
+    .input-group-text{
+        border-color: $red;
+        background-color: $red;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+    input{
+        border-color: $red;
+    }
+    .file-input{
+        border-color: $red;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        .file-caption{
+            .input-group{
+                .btn-file{
+                    background-color: $red;
+                    border-color: $red;
+                    border-bottom-right-radius: 0 !important;
+                }
+                .file-caption-name{
+                    border-bottom-left-radius: 0 !important;
+                }
+            }
+        }
+    }
+}
+
+.highlight-error{
+    border: $border-width solid $red !important;
+    border-top-left-radius: $border-radius !important;
+    border-top-right-radius: $border-radius !important;
+    margin: 0 !important;
+    padding: 0.375rem 0.75rem;
+}
+
+.highlight-error > .form-check-input {
+    margin-left: 0;
+}
+
+/* Icons */
+.bi-x-lg::before {
+    content: "\f5ee";
+}
