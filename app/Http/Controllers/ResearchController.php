@@ -7,7 +7,9 @@ use App\Models\Research;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Symfony\Component\Console\Input\Input;
 
 class ResearchController extends Controller
@@ -15,75 +17,74 @@ class ResearchController extends Controller
 
     public function overview(): View
     {
-        $researches = Research::all();
-        return view('research.overview', [
+        $researches = Research::all()->toArray();
+        return view('admin.research.overview', [
             "researches" => $researches
         ]);
     }
 
     public function create(): View
     {
-        return view('research.create');
+        return view('admin.research.create');
     }
 
-    public function store(StoreResearchRequest $request): View
+    public function store(StoreResearchRequest $request): Application|RedirectResponse|Redirector
     {
-        $data = $request->validated();
-        Research::create([
-            $data
-        ]);
-        return view('research.overview')->with('success', "Het onderzoek is aangemaakt!");
+        $request->validated();
+        Research::create($request->all());
+        return redirect(route('researches'))->with('success', "Het onderzoek is aangemaakt!");
     }
 
     public function edit($id): View
     {
-        $research = Research::whereId($id);
+        $research = Research::whereId($id)->first();
         if ($research === null) {
             abort(404, 'Research with that ID does not exist');
         }
-        return view('research.edit', [
+        return view('admin.research.edit', [
             "research" => $research
         ]);
     }
 
-    public function update(StoreResearchRequest $request, $id): View
+    public function update(StoreResearchRequest $request, $id): Application|RedirectResponse|Redirector
     {
-        $data = $request->validated();
-        $research = Research::whereId($id);
+        $request->validated();
+        $research = Research::whereId($id)->first();
         if ($research === null) {
             abort(404, 'Research with that ID does not exist');
         }
-        $research->update($data);
-        return view('research.details', [
-            "research" => $research,
-            "tab" => "details"
-        ]);
+        $research->update($request->all());
+        return redirect(route('researches.details', [
+            "id" => $research->id,
+            "tab" => "Details"
+        ]))->with('success', "Het onderzoek is aangepast!");
     }
 
-    public function details(Request $request, $id): View
+    public function details(Request $request, $id): View|Factory|Redirector|RedirectResponse|Application
     {
-        $research = Research::whereId($id);
+        if(!$request->has('tab')){
+            return redirect(route('researches.details', [
+                "id" => $id,
+                "tab" => "Details"
+            ]));
+        }
+        $research = Research::whereId($id)->first();
         if ($research === null) {
             abort(404, 'Research with that ID does not exist');
         }
-        $tab = $request->query("tab");
-        return view('research.details', [
-            "research" => $research,
-            "tab" => $tab
+        return view('admin.research.details', [
+            "research" => $research
         ]);
     }
 
-    public function remove($id): View
+    public function remove($id): Application|RedirectResponse|Redirector
     {
-        $research = Research::whereId($id);
+        $research = Research::whereId($id)->first();
         if ($research === null) {
             abort(404, 'Research with that ID does not exist');
         }
         $research->delete();
-        $researches = Research::all();
-        return view('admin.research.overview', [
-            "researches" => $researches
-        ])->with('success', "Het onderzoek is verwijderd!");
+        return redirect(route('researches'))->with('success', "Het onderzoek is verwijderd!");
     }
 
     public function archive($id)

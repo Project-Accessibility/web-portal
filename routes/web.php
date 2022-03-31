@@ -44,11 +44,33 @@ Route::post('/logout', function () {
 });
 
 Route::controller(ResearchController::class)->prefix('/researches')->group(function () {
-    Route::get('/', 'overview');
-    Route::get('/{id}', 'details');
-    Route::get('/create', 'create');
-    Route::get('/{id}/edit', 'edit');
-    Route::post('/', 'store');
-    Route::put('/{id}', 'update');
-    Route::delete('/{id}', 'remove');
+    Route::get('/', 'overview')
+        ->name('researches')
+        ->defaults('display', 'Onderzoeken');
+    Route::get('/create', 'create')
+        ->name('researches.create')
+        ->defaults('display', 'Aanmaken');
+    Route::get('/{id}', 'details')
+        ->name('researches.details')
+        ->defaults('display', 'Details');
+    Route::get('/{id}/edit', 'edit')
+        ->name('researches.edit')
+        ->defaults('display', 'Aanpassen');
+    Route::post('/', 'store')->name('researches.store');
+    Route::put('/{id}', 'update')->name('researches.update');
+    Route::delete('/{id}', 'remove')->name('researches.remove');
+
+    Route::get('/{id}/questionnaires', 'overview')
+        ->name('researches.questionnaires')
+        ->defaults('display', 'Vragenlijsten');
+    //Route::controller(QuestionnaireController::class)->prefix('/questionnaires')->group(function () {
+//    Route::get('/', 'overview')->name('researches');
+//    Route::get('/{id}', 'details')->name('researches.details');
+//    Route::get('/create', 'create')->name('researches.create');
+//    Route::get('/{id}/edit', 'edit')->name('researches.edit');
+//    Route::post('/', 'store')->name('researches.store');
+//    Route::put('/{id}', 'update')->name('researches.update');
+//    Route::delete('/{id}', 'remove')->name('researches.remove');
+//});
 });
+
