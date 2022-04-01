@@ -342,13 +342,9 @@ body {
 }
 
 /* Select input */
-.bootstrap-select > .dropdown-menu{
+.bootstrap-select > .dropdown-menu {
     inset: unset!important;
     transform: none!important;
-}
-
-.bootstrap-select.form-control{
-    border: 0.15rem solid $blue-dark!important;
 }
 
 /* validation messages */
