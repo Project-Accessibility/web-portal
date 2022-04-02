@@ -30,16 +30,18 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (Throwable $exception, Request $request) {
-           if(! $request->is('api/*')) {
-               return;
-           }
+            if (!$request->is('api/*')) {
+                return;
+            }
 
-           return $this->handleApiException($request, $exception);
+            return $this->handleApiException($request, $exception);
         });
     }
 
-    private function handleApiException(Request $request, Throwable $exception): JsonResponse
-    {
+    private function handleApiException(
+        Request $request,
+        Throwable $exception,
+    ): JsonResponse {
         if ($exception instanceof HttpResponseException) {
             $exception = $exception->getResponse();
         }
@@ -49,20 +51,29 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof ValidationException) {
-            $exception = $this->convertValidationExceptionToResponse($exception, $request);
+            $exception = $this->convertValidationExceptionToResponse(
+                $exception,
+                $request,
+            );
         }
 
         if ($exception instanceof NotFoundHttpException) {
             $notFoundException = $exception->getPrevious();
 
-            if($notFoundException) {
+            if ($notFoundException) {
                 $modelName = explode('\\', $notFoundException->getModel());
                 $ids = $notFoundException->getIds();
 
-                $dutchModelName = $this->getDutchDisplayNameForModel(end($modelName)) ?? 'model';
+                $dutchModelName =
+                    $this->getDutchDisplayNameForModel(end($modelName)) ??
+                    'model';
                 $id = $ids[0] ?? -1;
 
-                $exception = new NotFoundHttpException(ucfirst($dutchModelName) . ($id == -1 ? null: ' '. $id) . ' is niet gevonden.');
+                $exception = new NotFoundHttpException(
+                    ucfirst($dutchModelName) .
+                        ($id == -1 ? null : ' ' . $id) .
+                        ' is niet gevonden.',
+                );
             }
         }
 
@@ -73,7 +84,7 @@ class Handler extends ExceptionHandler
     {
         if (method_exists($exception, 'getStatusCode')) {
             $statusCode = $exception->getStatusCode();
-        } else if (method_exists($exception, 'getCode')) {
+        } elseif (method_exists($exception, 'getCode')) {
             $statusCode = $exception->getCode();
         } else {
             $statusCode = 500;

@@ -13,7 +13,7 @@ class ApiController extends BaseController
     public function get(string $modelClassName): JsonResponse
     {
         $fullClassName = $this->getFullClassName($modelClassName);
-        $collection = call_user_func($fullClassName .'::all');
+        $collection = call_user_func($fullClassName . '::all');
 
         return $this->getDataResponse($collection);
     }
@@ -21,7 +21,7 @@ class ApiController extends BaseController
     public function find(string $modelClassName, int $id): JsonResponse
     {
         $fullClassName = $this->getFullClassName($modelClassName);
-        $collection = call_user_func($fullClassName .'::findOrFail', $id);
+        $collection = call_user_func($fullClassName . '::findOrFail', $id);
 
         return $this->getDataResponse($collection);
     }
@@ -32,17 +32,18 @@ class ApiController extends BaseController
         $fullModelClassName = 'App\\Models\\' . $modelName;
 
         abort_if(
-            ! class_exists($fullModelClassName),
+            !class_exists($fullModelClassName),
             404,
-            'Geen model gevonden voor ' . $modelName
+            'Geen model gevonden voor ' . $modelName,
         );
 
         return $fullModelClassName;
     }
 
-    private function getDataResponse($data): JsonResponse {
+    private function getDataResponse($data): JsonResponse
+    {
         return response()->json([
-           'data' => $data,
+            'data' => $data,
         ]);
     }
 }

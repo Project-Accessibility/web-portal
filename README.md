@@ -36,32 +36,26 @@
 
 ### Request
 
-
-Voor een request moet je het volgende instellen<br> 
+Voor een request moet je het volgende instellen<br>
 De header bevat de volgende onderdelen:
-- `Content-Type` is `application/json`
-- `X-API-Key` moet de API key bevatten.
+
+-   `Content-Type` is `application/json`
+-   `X-API-Key` moet de API key bevatten.
 
 De url naar de API is als volgt opgebouwd
 
 ### Response
+
 Elke response wordt teruggeven in een `json` formaat.
 
 ### Get
+
 Bij een goede `get` response wordt de volgende json teruggeven:
-``
-{
-    "data": array|object
-}
-``
+`{ "data": array|object }`
 Of het een `array` of `object` is hangt af van de request
 
 Bij een foutieve response wordt de volgende json teruggeven:
-``
-{
-    "message": "Geen model gevonden voor researcht"
-}
-``
+`{ "message": "Geen model gevonden voor researcht" }`
 Als `debug` aan staat (env variable) voor het dashboard dan wordt ook de stacktrace meegegeven waar de fout zich heeft voortgedaan.
 
 ## Components
