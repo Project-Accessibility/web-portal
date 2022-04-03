@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use ArgumentCountError;
+use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
@@ -84,19 +87,22 @@ class Handler extends ExceptionHandler
     {
         if (method_exists($exception, 'getStatusCode')) {
             $statusCode = $exception->getStatusCode();
-        } elseif (method_exists($exception, 'getCode')) {
-            $statusCode = $exception->getCode();
         } else {
             $statusCode = 500;
         }
 
         $response = [];
 
-        $response['message'] = $exception->getMessage();
+        $response['message'] =
+            $statusCode === 500 && config('app.debug')
+                ? $exception->getMessage()
+                : 'Er is iets mis gegaan met het ophalen van de data.';
 
         if (config('app.debug')) {
             $response['trace'] = $exception->getTrace();
             $response['code'] = $exception->getCode();
+        } else {
+            report($exception);
         }
 
         return response()->json($response, $statusCode);

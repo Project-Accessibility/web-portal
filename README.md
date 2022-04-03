@@ -34,7 +34,19 @@
 
 ## Api
 
+### Routes
+
+De API bestaat uit 2 routes
+
+-   `/api/{modelName}`
+-   `/api/{modelName}/id`
+
+De eerste route krijg je van een bepaald model (lijst ervan staat hieronder) een collectie aan die models terug.<br>
+De tweede route krijg je één model terug op basis van het `id`.
+
 ### Request
+
+### Header
 
 Voor een request moet je het volgende instellen<br>
 De header bevat de volgende onderdelen:
@@ -42,7 +54,18 @@ De header bevat de volgende onderdelen:
 -   `Content-Type` is `application/json`
 -   `X-API-Key` moet de API key bevatten.
 
-De url naar de API is als volgt opgebouwd
+### Body
+
+In de body kan `functions` meegeven. Dit zijn de `Laravel Eloquent` methodes.<br>
+Je kan hierbij denken aan `with` of `where`.
+
+De body wordt meegeven als een `JSON`.
+
+De body kan er als volgt uitzien:
+`{ "functions": [ {"with": "questionnaires"} {"where": ['id', '!=', '3']} ] }`
+De `functions` array bestaat uit objecten met daarin als `key` de `functienaam` en als `value` de parameters.<br>
+Mocht een functie uit geen enkele parameter bestaan dan wordt `null` verwacht.
+Mocht een functie uit één of meerdere parameters bestaan dan kan dit doormiddel van een array worden meegegeven.
 
 ### Response
 
@@ -55,8 +78,21 @@ Bij een goede `get` response wordt de volgende json teruggeven:
 Of het een `array` of `object` is hangt af van de request
 
 Bij een foutieve response wordt de volgende json teruggeven:
-`{ "message": "Geen model gevonden voor researcht" }`
+`{ "message": string }`
 Als `debug` aan staat (env variable) voor het dashboard dan wordt ook de stacktrace meegegeven waar de fout zich heeft voortgedaan.
+
+### Lijsten
+
+### Modellen
+
+-   Answer
+-   Geofence
+-   Participant
+-   Question
+-   Questionaire
+-   QuestionOption
+-   Research
+-   Section
 
 ## Components
 

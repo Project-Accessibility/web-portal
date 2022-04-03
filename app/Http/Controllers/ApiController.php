@@ -2,27 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as DatabaseCollection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
-use Symfony\Component\ErrorHandler\Error\ClassNotFoundError;
 
 class ApiController extends BaseController
 {
-    public function get(string $modelClassName): JsonResponse
+    public function get(Request $request, string $modelClassName): JsonResponse
     {
         $fullClassName = $this->getFullClassName($modelClassName);
-        $collection = call_user_func($fullClassName . '::all');
 
+        $functions = $this->prepareFunctions(
+            $fullClassName,
+            $request->get('functions'),
+        );
+        $functions['get'] = null;
+        $collection = $this->callFunctions($fullClassName, $functions);
         return $this->getDataResponse($collection);
     }
 
-    public function find(string $modelClassName, int $id): JsonResponse
-    {
+    public function find(
+        Request $request,
+        string $modelClassName,
+        int $id,
+    ): JsonResponse {
         $fullClassName = $this->getFullClassName($modelClassName);
-        $collection = call_user_func($fullClassName . '::findOrFail', $id);
 
+        $functions = $this->prepareFunctions(
+            $fullClassName,
+            $request->get('functions'),
+        );
+        $functions['findOrFail'] = [$id];
+
+        $collection = $this->callFunctions($fullClassName, $functions);
         return $this->getDataResponse($collection);
     }
 
@@ -45,5 +61,54 @@ class ApiController extends BaseController
         return response()->json([
             'data' => $data,
         ]);
+    }
+
+    private function callFunctions(
+        string $fullClassName,
+        array $functions,
+    ): DatabaseCollection|Model|null {
+        $returnValue = $fullClassName;
+        foreach ($functions as $function => $parameters) {
+            $returnValue =
+                $returnValue === $fullClassName
+                    ? ($parameters
+                        ? $returnValue::$function(...$parameters)
+                        : $returnValue::$function())
+                    : ($parameters
+                        ? $returnValue->$function(...$parameters)
+                        : $returnValue->$function());
+        }
+
+        return $returnValue;
+    }
+
+    private function prepareFunctions(
+        string $fullClassName,
+        ?array $functions,
+    ): array {
+        if (!$functions || count($functions) === 0) {
+            return [];
+        }
+
+        $functions = array_merge(...array_values($functions));
+
+        return collect($functions)
+            ->mapWithKeys(function ($value, $key) use ($fullClassName) {
+                abort_if(
+                    !method_exists($fullClassName, $key) &&
+                        !method_exists(Builder::class, $key),
+                    406,
+                    'fuctie: ' . $key . ' bestaat niet voor deze API services',
+                );
+
+                return [
+                    $key => $value
+                        ? (gettype($value) === 'array'
+                            ? $value
+                            : [$value])
+                        : null,
+                ];
+            })
+            ->toArray();
     }
 }

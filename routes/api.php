@@ -20,5 +20,12 @@ Route::get('/ping', function () {
 
 Route::middleware('api')->group(function () {
     Route::get('/{modelClassName}', [ApiController::class, 'get']);
-    Route::get('/{modelClassName}/{id}', [ApiController::class, 'find']);
+    Route::get('/{modelClassName}/{id}', [ApiController::class, 'find'])->where(
+        'id',
+        '[0-9]+',
+    );
+});
+
+Route::fallback(function () {
+    abort(404, 'pad niet gevonden');
 });
