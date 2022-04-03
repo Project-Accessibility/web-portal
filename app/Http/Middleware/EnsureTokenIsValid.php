@@ -12,21 +12,21 @@ class EnsureTokenIsValid
     public function handle(Request $request, Closure $next): JsonResponse
     {
         abort_if(
-            !$request->header('X-API-Key'),
+            !$request->header('X-API-KEY'),
             406,
-            'De request bevat geen header X-API-Key.',
+            'De request bevat geen header X-API-KEY.',
         );
 
         abort_if(
-            gettype($request->header('X-API-Key')) !== 'string',
+            gettype($request->header('X-API-KEY')) !== 'string',
             406,
-            'De header X-API-Key is geen string.',
+            'De header X-API-KEY is geen string.',
         );
 
         abort_if(
-            $request->header('X-API-Key') !== Env::get('API_KEY'),
+            $request->header('X-API-KEY') !== Env::get('API_KEY'),
             403,
-            'De API key is niet valide.',
+            'De API KEY is niet valide.',
         );
 
         return $next($request);
