@@ -52,6 +52,7 @@ Voor een request moet je het volgende instellen<br>
 De header bevat de volgende onderdelen:
 
 -   `Content-Type` is `application/json`
+-   `Accept` is `application/json`
 -   `X-API-Key` moet de API key bevatten.
 
 ### Body
