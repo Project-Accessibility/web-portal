@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Api\QuestionController;
+use App\Http\Controllers\Api\QuestionnaireController;
+use App\Http\Middleware\AcceptsJson;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,18 +17,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/ping', function () {
-    return response()->json('pong');
-});
+Route::middleware('acceptJson')->group(function () {
+    Route::get('/ping', function () {
+        return response()->json('pong');
+    });
 
-Route::middleware('api')->group(function () {
-    Route::get('/{modelClassName}', [ApiController::class, 'get']);
-    Route::get('/{modelClassName}/{id}', [ApiController::class, 'find'])->where(
-        'id',
-        '[0-9]+',
-    );
-});
+    Route::middleware('api')->group(function () {
+        Route::get('/questionnaires/getByCodes', [
+            QuestionnaireController::class,
+            'getByUserCodes',
+        ]);
 
-Route::fallback(function () {
-    abort(404, 'pad niet gevonden');
+        Route::get('/questionnaires/{code}', [
+            QuestionnaireController::class,
+            'get',
+        ]);
+        Route::get('/questions/{id}', [QuestionController::class, 'get']);
+    });
 });

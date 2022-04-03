@@ -2,10 +2,7 @@
 
 namespace App\Exceptions;
 
-use ArgumentCountError;
-use Exception;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
@@ -33,7 +30,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (Throwable $exception, Request $request) {
-            if (!$request->is('api/*')) {
+            if (!$request->acceptsJson()) {
                 return;
             }
 
@@ -77,6 +74,10 @@ class Handler extends ExceptionHandler
                         ($id == -1 ? null : ' ' . $id) .
                         ' is niet gevonden.',
                 );
+            } else {
+                $exception = new NotFoundHttpException(
+                    'Het pad is niet gevonden.',
+                );
             }
         }
 
@@ -94,7 +95,7 @@ class Handler extends ExceptionHandler
         $response = [];
 
         $response['message'] =
-            $statusCode === 500 && config('app.debug')
+            $statusCode !== 500 || config('app.debug')
                 ? $exception->getMessage()
                 : 'Er is iets mis gegaan met het ophalen van de data.';
 
@@ -111,7 +112,13 @@ class Handler extends ExceptionHandler
     private function getDutchDisplayNameForModel(string $model): ?string
     {
         return match (strtolower($model)) {
+            'answer' => 'antwoord',
+            'geofence' => 'geofence',
+            'participant' => 'participant',
+            'question' => 'vraag',
+            'questionOption' => 'vraag mogelijkheid',
             'research' => 'onderzoek',
+            'section' => 'sectie',
             default => null
         };
     }

@@ -22,6 +22,7 @@ class QuestionnaireFactory extends Factory
             'title' => $this->faker->company(),
             'description' => $this->faker->paragraph(),
             'teachable_machine_link' => $this->faker->domainName,
+            'open' => $this->faker->boolean,
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AcceptsJson;
+use App\Http\Middleware\EnsureHeaderHasKeys;
 use App\Http\Middleware\EnsureTokenIsValid;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -45,6 +47,7 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             EnsureTokenIsValid::class,
+            EnsureHeaderHasKeys::class,
         ],
     ];
 
@@ -67,5 +70,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'acceptJson' => AcceptsJson::class,
     ];
 }
