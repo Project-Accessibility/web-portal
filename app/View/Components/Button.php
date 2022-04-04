@@ -28,8 +28,10 @@ class Button extends Component
      * @param string $type
      * @param string|null $link
      */
-    public function __construct(string $type, string|null $link = null)
-    {
+    public function __construct(
+        string $type = 'primary',
+        string|null $link = null,
+    ) {
         $this->type = $type;
         $this->link = $link;
     }

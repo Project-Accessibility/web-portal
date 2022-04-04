@@ -38,7 +38,15 @@
 
 #### Text
 
-`<x-input type="text" name="input" placeholder="input"></x-input>`
+```
+@php
+$extraData=array(
+'before' => '$',
+'after' => '.00'
+);
+@endphp
+<x-input type="text" name="input" placeholder="input" :extraData="$extraData"></x-input>
+```
 
 #### Password
 
@@ -49,20 +57,26 @@
 ```
 @php
     $extraData=array(
-        'multiple' => false
+        'multiple' => true,
         'options' => [
           ['option_1', 'value_1'],
           ['option_2', 'value_2'],
-        ];
+          ['option_3', 'value_3'],
+        ]
     );
 @endphp
-<x-input type="select" name="input" :extraData="$extraData" value="waarde2"></x-input>
+<x-input label="test" type="select" name="selectList" :extraData="$extraData" :value="['value_1', 'value_3']"></x-input>
 ```
 
 #### Dates
 
-`<x-input type="date" name="input" value="2021-03-21"></x-input>`
-` <x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>`
+```
+<x-input type="date" name="input" value="2021-03-21"></x-input>
+```
+
+```
+<x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>
+```
 
 #### Switch
 
@@ -79,6 +93,17 @@
     );
 @endphp
 <x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
+```
+
+#### File
+
+```
+@php
+$extraData=array(
+    'multiple' => false,
+);
+@endphp
+<x-input type="file" name="input" :extraData="$extraData"></x-input>
 ```
 
 ### Buttons
@@ -324,3 +349,22 @@ Route::get('/users/{id}', function () {
 Dan wordt de naam van je breadcrumb het {id} (bijvoorbeeld: `1`)
 
 De rest is magie 🤯
+
+### Tabs
+
+Geef een lijst met tabs mee aan het component en de tab die actief is. Geef de sections dezelfde naam als de namen in de meegegeven lijst. Het component zorgt er met javascript voor dat de juiste section wordt getoond.
+
+```angular2html
+@extends('layouts.app')
+@section('content')
+    <h1>Welcome to this page</h1>
+    <x-tabs :tabs="['Details', 'Vragenlijsten']">
+        @section('Details')
+            Details
+        @endsection
+        @section('Vragenlijsten')
+            Vragenlijsten
+        @endsection
+    </x-tabs>
+@endsection
+```

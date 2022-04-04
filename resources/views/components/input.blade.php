@@ -1,44 +1,98 @@
-<div class="{{$type != "switch" ? "form-group" : "form-check form-switch"}}">
-    <label for="{{$name}}" class="form-label">{{strtoupper(substr($name, 0, 1)) . substr($name, 1)}}</label>
+<div
+    class="{{$type != 'switch' ? 'form-group' : 'form-check form-switch'}}@error($name) {{$type == 'switch' ? 'is-invalid highlight-error': ''}} @enderror">
+    <label for="{{$name}}" class="form-label">
+        {{ ucfirst($label) }}
+        @if($required)
+            <span class="text-red ml-1">*</span>
+        @endif
+    </label>
     @switch($type)
         @case('text')
-        <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-               placeholder="{{$placeholder}}" value="{{$value}}"/>
+        @if(isset($extraData['before']) || isset($extraData['after']))
+            <div class="input-group @error($name) is-invalid @enderror">
+                @if(isset($extraData['before']))
+                    <span class="input-group-text">{{$extraData['before']}}</span>
+                @endif
+                <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
+                       placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+                @if(isset($extraData['after']))
+                    <span class="input-group-text">{{$extraData['after']}}</span>
+                @endif
+            </div>
+        @else
+            <input class="form-control @error($name) is-invalid @enderror" type="text" id="{{$name}}" title="{{$name}}"
+                   name="{{$name}}"
+                   placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+        @endif
+        @break
+        @case('number')
+        @if(isset($extraData['before']) || isset($extraData['after']))
+            <div class="input-group @error($name) is-invalid @enderror">
+                @if(isset($extraData['before']))
+                    <span class="input-group-text">{{$extraData['before']}}</span>
+                @endif
+                <input class="form-control" type="number" id="{{$name}}" title="{{$name}}" name="{{$name}}"
+                       placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+                @if(isset($extraData['after']))
+                    <span class="input-group-text">{{$extraData['after']}}</span>
+                @endif
+            </div>
+        @else
+            <input class="form-control @error($name) is-invalid @enderror" type="number" id="{{$name}}"
+                   title="{{$name}}" name="{{$name}}"
+                   placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+        @endif
+        @break
+        @case('textarea')
+        <textarea class="form-control @error($name) is-invalid @enderror" type="text" id="{{$name}}" title="{{$name}}"
+                  name="{{$name}}"
+                  placeholder="{{$placeholder}}"
+                  rows="{{$extraData['rows']}}">{{old($name) ? old($name) : $value}}</textarea>
         @break
         @case('password')
-        <input class="form-control" type="password" id="{{$name}}" title="{{$name}}" name="{{$name}}"
+        <input class="form-control @error($name) is-invalid @enderror" type="password" id="{{$name}}" title="{{$name}}"
+               name="{{$name}}"
                placeholder="{{$placeholder}}"/>
         @break
         @case('select')
-        <select class="form-control" id="{{$name}}" title="{{$name}}"
-                name="{{$name}}" {{$extraData['multiple']?'multiple':''}}>
-            @foreach($extraData['options'] as $option)
-                @if(($loop->index == 0 && empty($value))||$value==$option[1])
-                    <option selected value="{{$option[1]}}">{{$option[0]}}</option>
-                @else
-                    <option value="{{$option[1]}}">{{$option[0]}}</option>
-                @endif
-            @endforeach
-        </select>
+        <div class="@error($name) is-invalid @enderror">
+            <select class="selectpicker form-control" id="{{$name}}" title="{{$name}}"
+                    name="{{$name}}{{$extraData['multiple']?'[]':''}}" {{$extraData['multiple']?'multiple':''}}>
+                @foreach($extraData['options'] as $option)
+                    @php
+                        $value = old($name) ? old($name) : $value;
+                        $isSelected = ($loop->index == 0 && ($value == null || $value == [])) || (!empty($value) && ($extraData['multiple'] ? in_array($option[1],$value) : ($value)==$option[1]))
+                    @endphp
+                    @if($isSelected)
+                        <option selected value="{{$option[1]}}">{{$option[0]}}</option>
+                    @else
+                        <option value="{{$option[1]}}">{{$option[0]}}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
         @break
         @case('date')
-        <input class="form-control" type="date" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-               value="{{$value}}"/>
+        <input class="form-control @error($name) is-invalid @enderror" type="date" id="{{$name}}" title="{{$name}}"
+               name="{{$name}}"
+               value="{{old($name) ? old($name) : $value}}"/>
         @break
         @case('datetime')
-        <input class="form-control" type="datetime-local" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-               value="{{$value}}"/>
+        <input class="form-control @error($name) is-invalid @enderror" type="datetime-local" id="{{$name}}"
+               title="{{$name}}" name="{{$name}}"
+               value="{{old($name) ? old($name) : $value}}"/>
         @break
         @case('switch')
         <input type="checkbox" class="form-check-input" id="{{$name}}" title="{{$name}}"
-               name="{{$name}}" {{$value ? 'checked': ''}}/>
+               name="{{$name}}" {{old($name) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}}/>
         @break
         @case('range')
-        <div class="d-flex">
+        <div class="d-flex @error($name) is-invalid highlight-error @enderror">
             <input type="range" class="form-range w-75" min="{{$extraData['min']}}" max="{{$extraData['max']}}"
                    step="{{$extraData['step']}}" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{$value?$value:0}}">
-            <output class="mx-3" name="output-{{$name}}" id="output-{{$name}}">{{$value?$value:0}}</output>
+                   placeholder="{{$placeholder}}" value="{{(old($name)!=null ? old($name) : $value) ?? 0}}">
+            <output class="mx-3" name="output-{{$name}}"
+                    id="output-{{$name}}">{{(old($name)!=null ? old($name) : $value) ?? 0}}</output>
         </div>
         <script>
             window.addEventListener('load', () => {
@@ -50,5 +104,23 @@
             })
         </script>
         @break
+        @case('file')
+        <div class="@error($name) is-invalid @enderror">
+            <input id="{{$name}}" title="{{$name}}" name="{{$name}}{{$extraData['multiple']?'[]':''}}" type="file"
+                   class="file" {{$extraData['multiple']?'multiple':''}}
+                   data-show-upload="false" data-show-caption="true" data-msg-placeholder="{{$placeholder}}"
+                   value="{{old($name) ? old($name) : $value}}">
+        </div>
+        @break
     @endswitch
+    @if($type != 'switch' )
+        @error($name)
+        <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    @endif
 </div>
+@if($type == 'switch' )
+    @error($name)
+    <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+@endif

@@ -10,6 +10,9 @@
         @case('remove')
             {{ $attributes->merge(['class' => 'btn btn-danger']) }}
         @break
+        @default
+            {{ $attributes->merge(['class' => 'btn btn-primary']) }}
+        @break
         @endswitch
     >
         {{$slot}}
@@ -26,8 +29,11 @@
             @case("remove")
             {{ $attributes->merge(['class' => 'btn btn-danger']) }}
             @break
+            @default
+            {{ $attributes->merge(['class' => 'btn btn-primary']) }}
+            @break
         @endswitch
     >
-        {{$slot}}
+        <span class="text-nowrap">{{$slot}}</span>
     </button>
 @endif

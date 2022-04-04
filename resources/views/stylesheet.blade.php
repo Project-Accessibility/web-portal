@@ -413,41 +413,29 @@
                         <div>
                             <div class="bd-example">
                                 <form>
-                                    <div class="mb-3">
-                                        <x-input type="text" name="Normaal invoerveld" placeholder="input"></x-input>
-                                    </div>
-                                    <div class="mb-3">
+                                        <x-input label="test" type="text" name="Normaal invoerveld" placeholder="input"></x-input>
                                         @php
-                                        $extraData = [
-                                            'multiple' => false,
-                                            'options' => [
-                                                ['option_1', 'value_1'],
-                                                ['option_2', 'value_2'],
-                                            ],
-                                        ];
+                                            $extraData = [
+                                                'multiple' => false,
+                                                'options' => [
+                                                    ['option_1', 'value_1'],
+                                                    ['option_2', 'value_2'],
+                                                ],
+                                            ];
                                         @endphp
-                                        <x-input type="select" name="Selectie" :extraData="$extraData" value="value_2"></x-input>
-                                    </div>
-                                    <div class="mb-3">
-                                        <x-input type="date" name="Datum" value="2021-03-21"></x-input> <x-input type="datetime" name="Datum & tijd" value="2021-03-21T08:00"></x-input>
-                                    </div>
-                                    <div class="mb-3">
+                                        <x-input label="test" type="select" name="Selectie" :extraData="$extraData" value="value_2"></x-input>
+                                        <x-input label="test" type="date" name="Datum" value="2021-03-21"></x-input> <x-input label="test" type="datetime" name="Datum & tijd" value="2021-03-21T08:00"></x-input>
                                         <label class="form-label" for="customFile">Upload</label>
                                         <input type="file" class="form-control" id="customFile">
-                                    </div>
-                                    <div class="mb-3">
-                                        <x-input type="switch" name="Switch" :value="true"></x-input>
-                                    </div>
-                                    <div class="mb-3">
+                                        <x-input label="test" type="switch" name="Switch" :value="true"></x-input>
                                         @php
-                                        $extraData= [
-                                            'min' => 0,
-                                            'max' => 5,
-                                            'step' => 0.5
-                                        ];
+                                            $extraData= [
+                                                'min' => 0,
+                                                'max' => 5,
+                                                'step' => 0.5
+                                            ];
                                         @endphp
-                                        <x-input type="range" name="slider" :extraData="$extraData" :value="1.5"></x-input>
-                                    </div>
+                                        <x-input label="test" type="range" name="slider" :extraData="$extraData" :value="1.5"></x-input>
                                     <x-button type="primary">Submit</x-button>
                                 </form>
                             </div>
@@ -461,41 +449,29 @@
                             <div class="bd-example">
                                 <form>
                                     <fieldset disabled aria-label="Disabled fieldset example">
-                                        <div class="mb-3">
-                                            <x-input type="text" name="Normaal invoerveld" placeholder="input"></x-input>
-                                        </div>
-                                        <div class="mb-3">
-                                            @php
-                                                $extraData = [
-                                                    'multiple' => false,
-                                                    'options' => [
-                                                        ['option_1', 'value_1'],
-                                                        ['option_2', 'value_2'],
-                                                    ],
-                                                ];
-                                            @endphp
-                                            <x-input type="select" name="Selectie" :extraData="$extraData" value="value_2"></x-input>
-                                        </div>
-                                        <div class="mb-3">
-                                            <x-input type="date" name="Datum" value="2021-03-21"></x-input> <x-input type="datetime" name="Datum & tijd" value="2021-03-21T08:00"></x-input>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="customFile">Upload</label>
-                                            <input type="file" class="form-control" id="customFile">
-                                        </div>
-                                        <div class="mb-3">
-                                            <x-input type="switch" name="Switch" :value="true"></x-input>
-                                        </div>
-                                        <div class="mb-3">
-                                            @php
-                                                $extraData= [
-                                                    'min' => 0,
-                                                    'max' => 5,
-                                                    'step' => 0.5
-                                                ];
-                                            @endphp
-                                            <x-input type="range" name="slider" :extraData="$extraData" :value="1.5"></x-input>
-                                        </div>
+                                        <x-input label="test" type="text" name="Normaal invoerveld" placeholder="input"></x-input>
+                                        @php
+                                            $extraData = [
+                                                'multiple' => false,
+                                                'options' => [
+                                                    ['option_1', 'value_1'],
+                                                    ['option_2', 'value_2'],
+                                                ],
+                                            ];
+                                        @endphp
+                                        <x-input label="test" type="select" name="Selectie" :extraData="$extraData" value="value_2"></x-input>
+                                        <x-input label="test" type="date" name="Datum" value="2021-03-21"></x-input> <x-input label="test" type="datetime" name="Datum & tijd" value="2021-03-21T08:00"></x-input>
+                                        <label class="form-label" for="customFile">Upload</label>
+                                        <input type="file" class="form-control" id="customFile">
+                                        <x-input label="test" type="switch" name="Switch" :value="true"></x-input>
+                                        @php
+                                            $extraData= [
+                                                'min' => 0,
+                                                'max' => 5,
+                                                'step' => 0.5
+                                            ];
+                                        @endphp
+                                        <x-input label="test" type="range" name="slider" :extraData="$extraData" :value="1.5"></x-input>
                                         <x-button type="primary">Submit</x-button>
                                     </fieldset>
                                 </form>

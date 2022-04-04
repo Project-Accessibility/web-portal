@@ -147,11 +147,15 @@ $navbar-dark-color:                 $white;
 $navbar-dark-hover-color:           $white;
 $navbar-dark-active-color:          $white;
 $navbar-dark-disabled-color:        $white;
+$navbar-dark-toggler-border-color:  $white;
 
 $navbar-light-color:                $black;
 $navbar-light-hover-color:          $black;
 $navbar-light-active-color:         $black;
 $navbar-light-disabled-color:       $black;
+$navbar-light-toggler-border-color: $black;
+
+$navbar-padding-y: 0px;
 
 // Breadcrumbs
 $breadcrumb-active-color: $gray-700;
@@ -174,11 +178,18 @@ $progress-height: 1.5rem;
     color: $accessibility-text;
 }
 
-.nav-link {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+.navbar-nav > .nav-item > .nav-link {
     border-bottom: .1rem solid transparent;
+    padding: 1rem;
+}
+
+.navbar-nav > .nav-item > .nav-link:hover {
+    border-color: $white;
+}
+
+.dropdown-menu {
+    top: 100% !important;
+    box-shadow: .1rem .1rem 5px rgba($black, .5);
 }
 
 .valid-feedback, .invalid-feedback {
@@ -195,6 +206,10 @@ $progress-height: 1.5rem;
 .invalid-feedback {
     background: $form-feedback-invalid-color;
     color: color-contrast($form-feedback-invalid-color);
+}
+
+.form-group {
+    margin-bottom: 0.5rem!important;
 }
 
 .form-control.is-invalid,
@@ -238,6 +253,9 @@ $progress-height: 1.5rem;
     background-repeat: no-repeat;
     background-position: calc(170% - 1rem);
     background-size: 60% 60%;
+}
+textarea:disabled{
+    background-image: none!important;
 }
 
 .form-control:disabled::placeholder {
@@ -290,4 +308,102 @@ code {
     .bg-#{$color} .nav-item:hover > .nav-link {
         border-bottom: .1rem solid color-contrast($value);
     }
+
+    .bg-#{$color}.dropdown-menu > li > a:hover {
+        background-color: darken($value, 10);
+    }
+}
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
+}
+
+.nav-tabs .nav-link {
+    cursor: pointer;
+    border: none;
+}
+
+.nav-tabs .nav-link:hover {
+    border: none;
+}
+
+.nav-tabs .nav-link.active {
+    border: 2px solid;
+    border-color: $black $black $white $black;
+    cursor: default;
+}
+
+.nav-tabs {
+    border-color: $black;
+    border-width: 2px;
+}
+
+body {
+    background-color: $blue-light;
+}
+
+/* Select input */
+.bootstrap-select {
+    .dropdown-menu {
+        inset: unset!important;
+        transform: none!important;
+    }
+
+    .dropdown-toggle{
+        border: $border-width solid $blue-dark !important;
+        border-radius: $border-radius;
+    }
+}
+
+/* validation messages */
+
+.is-invalid{
+    .input-group-text{
+        border-color: $red;
+        background-color: $red;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+    input{
+        border-color: $red;
+    }
+    .file-input{
+        border-color: $red;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        .file-caption{
+            .input-group{
+                .btn-file{
+                    background-color: $red;
+                    border-color: $red;
+                    border-bottom-right-radius: 0 !important;
+                }
+                .file-caption-name{
+                    border-bottom-left-radius: 0 !important;
+                }
+            }
+        }
+    }
+    .bootstrap-select{
+        .dropdown-toggle{
+            border: $border-width solid $red !important;
+            border-radius: $border-radius $border-radius 0 0 !important;
+        }
+    }
+}
+
+.highlight-error{
+    border: $border-width solid $red !important;
+    border-top-left-radius: $border-radius !important;
+    border-top-right-radius: $border-radius !important;
+    margin: 0 !important;
+    padding: 0.375rem 0.75rem;
+}
+
+.highlight-error > .form-check-input {
+    margin-left: 0;
+}
+
+/* Icons */
+.bi-x-lg::before {
+    content: "\f5ee";
 }

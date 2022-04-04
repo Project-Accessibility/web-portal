@@ -16,6 +16,13 @@ class Input extends Component
     public string $type;
 
     /**
+     * The label
+     *
+     * @var string
+     */
+    public string $label;
+
+    /**
      * The name
      *
      * @var string
@@ -26,21 +33,23 @@ class Input extends Component
      * The value
      *
      */
-    public $value;
+    public mixed $value;
 
     /**
      * The placeholder
      *
      * @var string|null
      */
-    public string|null $placeholder;
+    public ?string $placeholder;
 
     /**
      * The extra data
      *
      * @var array|null
      */
-    public array|null $extraData;
+    public ?array $extraData;
+
+    public ?string $required;
 
     /**
      * Create a new component instance.
@@ -53,24 +62,23 @@ class Input extends Component
      */
     public function __construct(
         string $type,
+        string $label,
         string $name,
         mixed $value = null,
         string $placeholder = null,
         array $extraData = null,
+        bool $required = true,
     ) {
         $this->type = $type;
+        $this->label = $label;
         $this->name = $name;
         $this->value = $value;
         $this->placeholder = $placeholder;
         $this->extraData = $extraData;
+        $this->required = $required;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return View|Closure|string
-     */
-    public function render(): View|string|Closure
+    public function render(): View
     {
         return view('components.input');
     }

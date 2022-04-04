@@ -1,7 +1,9 @@
 <tr @if($rowLink) class="clickable-row" data-href="{{ $rowLink }}" @endif>
     @foreach($rowItems as $rowItem)
         <td>
-            <span>{{ $rowItem }}</span>
+            <span>{{
+                strlen($rowItem) > 100 ? substr($rowItem, 0, 100) . '...' : $rowItem
+            }}</span>
         </td>
     @endforeach
     @if(count($tableLinks) > 0)
