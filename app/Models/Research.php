@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Research whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Research whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Research whereUpdatedAt($value)
+ * @method static create(array $array)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Participant[] $participants
  * @property-read int|null $participants_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Questionnaire[] $questionnaires

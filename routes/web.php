@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Requests\TestInputsRequest;
 use Illuminate\Support\Facades\App;
+use App\Http\Controllers\ResearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +28,19 @@ Route::get('/stylesheet', function () {
     ->name('stylesheet')
     ->defaults('display', 'stylesheet');
 
+Route::get('/inputs', function () {
+    return view('inputs');
+})
+    ->name('inputs')
+    ->defaults('display', 'inputs');
+
+Route::post('/inputs', function (TestInputsRequest $request) {
+    $request->validated();
+    return view('inputs')->with('success', 'Alle inputs zijn correct');
+})
+    ->name('inputs.store')
+    ->defaults('display', 'inputs');
+
 // Routes for testing the table links
 if (App::environment('testing')) {
     Route::get('/fake-route')->name('fake.route.without.params');
@@ -38,3 +53,44 @@ if (App::environment('testing')) {
         ->name('fake.route.with.two.params')
         ->defaults('display', 'test view name');
 }
+Route::post('/logout', function () {
+    return view('welcome');
+});
+
+Route::controller(ResearchController::class)
+    ->prefix('/researches')
+    ->group(function () {
+        Route::get('/', 'overview')
+            ->name('researches')
+            ->defaults('display', 'Onderzoeken');
+        Route::get('/create', 'create')
+            ->name('researches.create')
+            ->defaults('display', 'Aanmaken');
+        Route::get('/{research}', 'details')->name('researches.details');
+        Route::get('/{research}/edit', 'edit')
+            ->name('researches.edit')
+            ->defaults('display', 'Aanpassen');
+        Route::post('/', 'store')->name('researches.store');
+        Route::put('/{research}', 'update')->name('researches.update');
+        Route::delete('/{research}', 'remove')->name('researches.remove');
+
+        Route::get('/{research}/questionnaires', function (
+            \App\Models\Research $research,
+        ) {
+            return redirect()->route('researches.details', [
+                $research,
+                'tab' => 'Vragenlijsten',
+            ]);
+        })
+            ->name('researches.questionnaires')
+            ->defaults('display', 'Vragenlijsten');
+        //Route::controller(QuestionnaireController::class)->prefix('/questionnaires')->group(function () {
+        //    Route::get('/', 'overview')->name('researches');
+        //    Route::get('/{id}', 'details')->name('researches.details');
+        //    Route::get('/create', 'create')->name('researches.create');
+        //    Route::get('/{id}/edit', 'edit')->name('researches.edit');
+        //    Route::post('/', 'store')->name('researches.store');
+        //    Route::put('/{id}', 'update')->name('researches.update');
+        //    Route::delete('/{id}', 'remove')->name('researches.remove');
+        //});
+    });
