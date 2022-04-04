@@ -342,9 +342,16 @@ body {
 }
 
 /* Select input */
-.bootstrap-select > .dropdown-menu {
-    inset: unset!important;
-    transform: none!important;
+.bootstrap-select {
+    .dropdown-menu {
+        inset: unset!important;
+        transform: none!important;
+    }
+
+    .dropdown-toggle{
+        border: $border-width solid $blue-dark !important;
+        border-radius: $border-radius;
+    }
 }
 
 /* validation messages */
@@ -374,6 +381,12 @@ body {
                     border-bottom-left-radius: 0 !important;
                 }
             }
+        }
+    }
+    .bootstrap-select{
+        .dropdown-toggle{
+            border: $border-width solid $red !important;
+            border-radius: $border-radius $border-radius 0 0 !important;
         }
     }
 }
