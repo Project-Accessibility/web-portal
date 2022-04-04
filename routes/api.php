@@ -28,7 +28,7 @@ Route::get('/questionnaires/getByCodes', [
     'getByUserCodes',
 ]);
 
-Route::get('        ', [QuestionnaireController::class, 'get']);
+Route::get('/questionnaires/{code}', [QuestionnaireController::class, 'get']);
 Route::post('/questionnaires/{questionnaire}', [
     QuestionnaireController::class,
     'submit',
