@@ -36,17 +36,26 @@
 
 ### Routes
 
-De API bestaat uit 2 routes
+De api's zijn te bereiken via `/api`.<br>
+De API bestaat uit de volgende routes.
 
--   `/api/{modelName}`
--   `/api/{modelName}/id`
+<details>
+    <summary>Alle API routes</summary>
 
-De eerste route krijg je van een bepaald model (lijst ervan staat hieronder) een collectie aan die models terug.<br>
-De tweede route krijg je één model terug op basis van het `id`.
+    | Route                           | Methode | Query                                 | Response                                                                                 |
+    |---------------------------------|---------|---------------------------------------|------------------------------------------------------------------------------------------|
+    | /ping                           | GET     |                                       | Pong                                                                                     |
+    | /questionnaires/getByCodes      | GET     |                                       | Array van vragenlijsten welke zijn gekoppeld aan de codes.                               |
+    | /questionnaires/{code}          | GET     | code: code van de participant         | Een vragenlijst met daarbij de onderdelen en vragen.                                     |
+    | /questionnaires/{questionnaire} | POST    | questionnaire: id van een vragenlijst | 406 - Not implemented                                                                    |
+    | /questions/{question}/{code}    | GET     | question: het ID van de vragenlijst   | Een vraag met daarbij de antwoordmogelijkheden en gegeven antwoorden door de participant |
+    |                                 |         | code: code van de participant         |                                                                                          |
+    | /questions/{question}/{code}    | POST    | question: het ID van de generalist    | 406 - Not implemented.                                                                   |
+    |                                 |         | code: code van de participant         |                                                                                          |
+
+</details>
 
 ### Request
-
-### Header
 
 Voor een request moet je het volgende instellen<br>
 De header bevat de volgende onderdelen:
@@ -57,43 +66,137 @@ De header bevat de volgende onderdelen:
 
 ### Body
 
-In de body kan `functions` meegeven. Dit zijn de `Laravel Eloquent` methodes.<br>
-Je kan hierbij denken aan `with` of `where`.
-
-De body wordt meegeven als een `JSON`.
-
+Voor de `/questionnaires/getByCodes` moet je een body meegeven.<br>
 De body kan er als volgt uitzien:
-`{ "functions": [ {"with": "questionnaires"} {"where": ['id', '!=', '3']} ] }`
-De `functions` array bestaat uit objecten met daarin als `key` de `functienaam` en als `value` de parameters.<br>
-Mocht een functie uit geen enkele parameter bestaan dan wordt `null` verwacht.
-Mocht een functie uit één of meerdere parameters bestaan dan kan dit doormiddel van een array worden meegegeven.
+
+```
+{
+    "codes": [
+        "011362e4db517e348c713870f0270c04",
+        "031ff84c2be935fb1d9cc6cfd9805ced",
+    ]
+}
+```
 
 ### Response
 
 Elke response wordt teruggeven in een `json` formaat.
 
-### Get
+<details>
+    <summary>GET: /ping</summary>
+    "pong"
+</details>
 
-Bij een goede `get` response wordt de volgende json teruggeven:
-`{ "data": array|object }`
-Of het een `array` of `object` is hangt af van de request
+<details>
+    <summary>GET: /questionnaires/getByCodes</summary>
 
-Bij een foutieve response wordt de volgende json teruggeven:
-`{ "message": string }`
-Als `debug` aan staat (env variable) voor het dashboard dan wordt ook de stacktrace meegegeven waar de fout zich heeft voortgedaan.
+    [
+        {
+            "id": 1,
+            "research_id": 1,
+            "title": "Torp-Moen",
+            "description": "Aut odit itaque adipisci at. At in tenetur tempora natus labore rem. Necessitatibus odio quae et quod.",
+            "instructions": null,
+            "open": true,
+            "teachable_machine_link": "howell.info",
+            "created_at": "2022-04-03T19:17:30.000000Z",
+            "updated_at": "2022-04-03T19:17:30.000000Z"
+        }
+    ]
 
-### Lijsten
+</details>
 
-### Modellen
+<details>
+    <summary>GET: /questionnaires/{code}</summary>
 
--   Answer
--   Geofence
--   Participant
--   Question
--   Questionaire
--   QuestionOption
--   Research
--   Section
+    {
+        "id": 1,
+        "research_id": 1,
+        "title": "Torp-Moen",
+        "description": "Aut odit itaque adipisci at. At in tenetur tempora natus labore rem. Necessitatibus odio quae et quod.",
+        "instructions": null,
+        "open": true,
+        "teachable_machine_link": "howell.info",
+        "created_at": "2022-04-03T19:17:30.000000Z",
+        "updated_at": "2022-04-03T19:17:30.000000Z",
+        "sections": [
+            {
+                "id": 1,
+                "questionnaire_id": 1,
+                "geofence_id": 1,
+                "title": "Korey Vista",
+                "description": "Earum vitae dolore aut. Ipsum officiis sit qui sed. Mollitia consequuntur recusandae temporibus quo qui quas tempore. Qui molestiae voluptatem veritatis ipsum placeat ea quisquam.",
+                "location_description": "8929 Gutkowski Corners\nAngelaport, NJ 06587",
+                "teachable_machine_class": "Korey Vista",
+                "created_at": "2022-04-03T19:17:30.000000Z",
+                "updated_at": "2022-04-03T19:17:30.000000Z",
+                "questions": [
+                    {
+                        "id": 1,
+                        "section_id": 1,
+                        "title": "Mr.",
+                        "question": "Prof.",
+                        "created_at": "2022-04-03T19:17:30.000000Z",
+                        "updated_at": "2022-04-03T19:17:30.000000Z"
+                    }
+                ]
+            }
+        ]
+    }
+
+</details>
+
+<details>
+    <summary>POST: /questionnaires/{questionnaire}</summary>
+
+    {
+        "message": "Deze functie werkt nog niet."
+    }
+
+</details>
+
+<details>
+    <summary>GET: /questions/{question}/{code}</summary>
+
+    {
+        "id": 1,
+        "section_id": 1,
+        "title": "Mr.",
+        "question": "Prof.",
+        "created_at": "2022-04-03T19:17:30.000000Z",
+        "updated_at": "2022-04-03T19:17:30.000000Z",
+        "options": [
+            {
+                "id": 2,
+                "question_id": 1,
+                "type": "DATE",
+                "extra_data": [],
+                "created_at": "2022-04-03T19:17:30.000000Z",
+                "updated_at": "2022-04-03T19:17:30.000000Z",
+                "answers": [
+                    {
+                        "id": 7,
+                        "participant_id": 1,
+                        "question_option_id": 2,
+                        "answer": "[]",
+                        "created_at": "2022-04-03T19:17:30.000000Z",
+                        "updated_at": "2022-04-03T19:17:30.000000Z"
+                    }
+                ]
+            }
+        ]
+    }
+
+</details>
+
+<details>
+    <summary>POST: /questions/{question}/{code}</summary>
+
+    {
+        "message": "Deze functie werkt nog niet"
+    }
+
+</details>
 
 ## Components
 

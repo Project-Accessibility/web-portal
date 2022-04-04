@@ -15,8 +15,8 @@ class AcceptsJson
                 ['message' => 'Geen header met accept: application/json.'],
                 404,
             );
-        } else {
-            return $next($request);
         }
+
+        return $next($request);
     }
 }

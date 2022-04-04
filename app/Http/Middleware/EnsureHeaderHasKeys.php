@@ -17,12 +17,6 @@ class EnsureHeaderHasKeys
             'De \'Content-Type\' is niet \'application/json\'.',
         );
 
-        abort_if(
-            count($request->getAcceptableContentTypes()) !== 1,
-            Response::HTTP_NOT_ACCEPTABLE,
-            'Er is maar één (1) \'Accept\' methode mogelijk.',
-        );
-
         return $next($request);
     }
 }

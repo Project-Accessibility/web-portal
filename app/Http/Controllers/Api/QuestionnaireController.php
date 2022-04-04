@@ -38,7 +38,7 @@ class QuestionnaireController extends Controller
 
     public function get(string $code): ?Model
     {
-        return Questionnaire::with(['sections.questions.options'])
+        return Questionnaire::with(['sections.questions'])
             ->where('open', true)
             ->whereHas('participants', function (Builder $participant) use (
                 $code,
@@ -46,5 +46,10 @@ class QuestionnaireController extends Controller
                 $participant->whereCode($code);
             })
             ->firstOrFail();
+    }
+
+    public function submit(Questionnaire $questionnaire): Model
+    {
+        abort(Response::HTTP_NOT_IMPLEMENTED, 'Deze functie werkt nog niet.');
     }
 }
