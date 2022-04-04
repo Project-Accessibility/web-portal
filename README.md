@@ -47,10 +47,10 @@ De API bestaat uit de volgende routes.
     | /ping                           | GET     |                                       | Pong                                                                                     |
     | /questionnaires/getByCodes      | GET     |                                       | Array van vragenlijsten welke zijn gekoppeld aan de codes.                               |
     | /questionnaires/{code}          | GET     | code: code van de participant         | Een vragenlijst met daarbij de onderdelen en vragen.                                     |
-    | /questionnaires/{questionnaire} | POST    | questionnaire: id van een vragenlijst | 406 - Not implemented                                                                    |
-    | /questions/{question}/{code}    | GET     | question: het ID van de vragenlijst   | Een vraag met daarbij de antwoordmogelijkheden en gegeven antwoorden door de participant |
+    | /questionnaires/{questionnaire} | POST    | questionnaire: ID van een vragenlijst | 406 - Not implemented                                                                    |
+    | /questions/{question}/{code}    | GET     | question: ID van de vraag             | Een vraag met daarbij de antwoordmogelijkheden en gegeven antwoorden door de participant |
     |                                 |         | code: code van de participant         |                                                                                          |
-    | /questions/{question}/{code}    | POST    | question: het ID van de generalist    | 406 - Not implemented.                                                                   |
+    | /questions/{question}/{code}    | POST    | question: ID van de vraag             | 406 - Not implemented.                                                                   |
     |                                 |         | code: code van de participant         |                                                                                          |
 
 </details>
