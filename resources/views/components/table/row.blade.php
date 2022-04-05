@@ -8,7 +8,7 @@
     @endforeach
     @if(count($tableLinks) > 0)
         <td class="align-middle">
-            <div class="d-flex gap-2">
+            <div class="d-flex flex-lg-nowrap flex-wrap gap-2">
                 @foreach($tableLinks as $display => $link)
                     <x-button type="primary" :link="$link">{{ ucfirst($display) }}</x-button>
                 @endforeach

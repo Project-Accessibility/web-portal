@@ -15,15 +15,6 @@ use Symfony\Component\Console\Input\Input;
 
 class QuestionnaireController extends Controller
 {
-    public function overview(): View
-    {
-        $researches = Questionnaire::all()->toArray();
-
-        return view('admin.research.overview', [
-            'researches' => $researches,
-        ]);
-    }
-
     public function create(int $researchId): View
     {
         return view('admin.questionnaire.create', compact('researchId'));
@@ -85,8 +76,8 @@ class QuestionnaireController extends Controller
         $questionnaire->delete();
 
         return redirect(
-            route('researches.questionnaires', [$researchId, $questionnaire]),
-        )->with('success', 'De vraag is verwijderd!');
+            route('researches.details', [$researchId, $questionnaire, 'tab' => 'Vragenlijsten']),
+        )->with('success', 'De vragenlijst is verwijderd!');
     }
 
     public function archive(Research $research)
