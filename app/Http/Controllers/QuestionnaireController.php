@@ -63,11 +63,12 @@ class QuestionnaireController extends Controller
         )->with('success', 'Het onderzoek is aangepast!');
     }
 
-    public function details(Request $request, int $researchId, Questionnaire $questionnaire): View
-    {
-        return view('admin.questionnaire.details', compact(
-            'questionnaire'
-        ));
+    public function details(
+        Request $request,
+        int $researchId,
+        Questionnaire $questionnaire,
+    ): View {
+        return view('admin.questionnaire.details', compact('questionnaire'));
     }
 
     public function remove(

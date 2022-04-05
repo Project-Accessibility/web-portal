@@ -66,23 +66,35 @@ class ResearchController extends Controller
     {
         $questionnaires = $research->questionnaires->toArray();
 
-        $questionnaireHeaders = ['ID','Titel','Omschrijving'];
+        $questionnaireHeaders = ['ID', 'Titel', 'Omschrijving'];
 
-        $questionnaireKeys = ['id','title','description'];
+        $questionnaireKeys = ['id', 'title', 'description'];
 
         $questionnaireRowLinkParameters = collect([
-            new \App\Utils\TableLinkParameter(routeParameter: 'questionnaire', itemIndex: 'id'),
-            new \App\Utils\TableLinkParameter(routeParameter: 'research', routeValue: $research->id),
+            new \App\Utils\TableLinkParameter(
+                routeParameter: 'questionnaire',
+                itemIndex: 'id',
+            ),
+            new \App\Utils\TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $research->id,
+            ),
         ]);
-        $questionnaireRowLink = new \App\Utils\TableLink('questionnaires.details', $questionnaireRowLinkParameters);
+        $questionnaireRowLink = new \App\Utils\TableLink(
+            'questionnaires.details',
+            $questionnaireRowLinkParameters,
+        );
 
-        return view('admin.research.details', compact(
-            'research',
-            'questionnaires',
-            'questionnaireHeaders',
-            'questionnaireKeys',
-            'questionnaireRowLink',
-        ));
+        return view(
+            'admin.research.details',
+            compact(
+                'research',
+                'questionnaires',
+                'questionnaireHeaders',
+                'questionnaireKeys',
+                'questionnaireRowLink',
+            ),
+        );
     }
 
     public function remove(

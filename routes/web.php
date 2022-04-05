@@ -76,12 +76,22 @@ Route::scopeBindings()->group(function () {
                 Route::controller(QuestionnaireController::class)
                     ->prefix('/questionnaires')
                     ->group(function () {
-                        Route::get('/create', 'create')->name('questionnaires.create')->allowsTrashedBindings();
-                        Route::get('/{questionnaire:id}', 'details')->name('questionnaires.details');
-                        Route::get('/{questionnaire}/edit', 'edit')->name('questionnaires.edit');
+                        Route::get('/create', 'create')
+                            ->name('questionnaires.create')
+                            ->allowsTrashedBindings();
+                        Route::get('/{questionnaire:id}', 'details')->name(
+                            'questionnaires.details',
+                        );
+                        Route::get('/{questionnaire}/edit', 'edit')->name(
+                            'questionnaires.edit',
+                        );
                         Route::post('/', 'store')->name('questionnaires.store');
-                        Route::put('/{questionnaire}', 'update')->name('questionnaires.update');
-                        Route::delete('/{questionnaire}', 'remove')->name('questionnaires.remove');
+                        Route::put('/{questionnaire}', 'update')->name(
+                            'questionnaires.update',
+                        );
+                        Route::delete('/{questionnaire}', 'remove')->name(
+                            'questionnaires.remove',
+                        );
                         Route::get('/', function (
                             \App\Models\Research $research,
                         ) {
@@ -89,7 +99,9 @@ Route::scopeBindings()->group(function () {
                                 $research->id,
                                 'tab' => 'Vragenlijsten',
                             ]);
-                        })->name('researches.questionnaires')->defaults('display', 'Vragenlijsten');
+                        })
+                            ->name('researches.questionnaires')
+                            ->defaults('display', 'Vragenlijsten');
                     });
             });
 
