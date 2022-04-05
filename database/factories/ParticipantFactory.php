@@ -20,7 +20,7 @@ class ParticipantFactory extends Factory
     {
         return [
             'questionnaire_id' => Questionnaire::factory(),
-            'code' => Str::random(4),
+            'code' => $this->faker->unique()->md5,
         ];
     }
 }
