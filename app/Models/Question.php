@@ -52,7 +52,7 @@ class Question extends Model
         return $this->belongsTo(Section::class);
     }
 
-    public function questionOptions(): HasMany
+    public function options(): HasMany
     {
         return $this->hasMany(QuestionOption::class);
     }
