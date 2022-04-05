@@ -81,41 +81,44 @@ class ResearchController extends Controller
             ),
         ];
 
-        $questionnaireSectionLinkParameters = collect([
-            $questionnaireLinkParameters,
-            new TableLinkParameter(
-                routeParameter: 'tab',
-                routeValue: 'sections',
-            ),
-        ]);
+        $questionnaireSectionLinkParameters = collect(
+            array_merge($questionnaireLinkParameters, [
+                new TableLinkParameter(
+                    routeParameter: 'tab',
+                    routeValue: 'sections',
+                ),
+            ]),
+        );
 
-        $questionnaireResultsLinkParameters = collect([
-            $questionnaireLinkParameters,
-            new TableLinkParameter(
-                routeParameter: 'tab',
-                routeValue: 'results',
-            ),
-        ]);
+        $questionnaireResultsLinkParameters = collect(
+            array_merge($questionnaireLinkParameters, [
+                new TableLinkParameter(
+                    routeParameter: 'tab',
+                    routeValue: 'results',
+                ),
+            ]),
+        );
 
-        $questionnaireParticipantsLinkParameters = collect([
-            $questionnaireLinkParameters,
-            new TableLinkParameter(
-                routeParameter: 'tab',
-                routeValue: 'participants',
-            ),
-        ]);
+        $questionnaireParticipantsLinkParameters = collect(
+            array_merge($questionnaireLinkParameters, [
+                new TableLinkParameter(
+                    routeParameter: 'tab',
+                    routeValue: 'participants',
+                ),
+            ]),
+        );
 
         $questionnaireLinks = collect([
             new TableLink(
-                'questionnaire.details',
+                'questionnaires.sections',
                 $questionnaireSectionLinkParameters,
             ),
             new TableLink(
-                'questionnaire.details',
+                'questionnaires.results',
                 $questionnaireResultsLinkParameters,
             ),
             new TableLink(
-                'questionnaire.details',
+                'questionnaires.participants',
                 $questionnaireParticipantsLinkParameters,
             ),
         ]);

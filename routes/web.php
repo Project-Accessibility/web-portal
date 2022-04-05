@@ -108,7 +108,7 @@ Route::controller(ResearchController::class)
                                 'tab' => 'Resultaten',
                             ]);
                         })
-                            ->name('questionnaires.sections')
+                            ->name('questionnaires.results')
                             ->defaults('display', 'Resultaten');
 
                         Route::get('/participants', function (
@@ -121,7 +121,7 @@ Route::controller(ResearchController::class)
                                 'tab' => 'Participanten',
                             ]);
                         })
-                            ->name('questionnaires.sections')
+                            ->name('questionnaires.participants')
                             ->defaults('display', 'Participanten');
                     });
 
