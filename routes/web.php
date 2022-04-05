@@ -117,6 +117,14 @@ Route::controller(ResearchController::class)
                             ->name('questionnaires.sections')
                             ->defaults('display', 'Onderdelen');
 
+                        Route::controller(QuestionnaireController::class)
+                            ->prefix('/sections')
+                            ->group(function () {
+                                Route::get('/sections', 'overview')
+                                    ->name('questionnaires.sections')
+                                    ->defaults('display', 'Onderdelen');
+                            });
+
                         Route::get('/results', function (
                             Research $research,
                             Questionnaire $questionnaire,

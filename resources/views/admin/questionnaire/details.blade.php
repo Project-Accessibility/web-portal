@@ -54,6 +54,16 @@
             </div>
         @endsection
         @section('Onderdelen')
+                <div class="mt-2">
+                    <div class="row justify-content-end">
+                        <div class="w-auto">
+                            <x-button type="secondary" link="{{ route('sections.create', $questionnaire->id) }}">
+                                Nieuwe Onderdeel
+                            </x-button>
+                        </div>
+                    </div>
+                    <x-table :tableLinks="$sectionLinks" :headers="$sectionHeaders" :items="$sections" :keys="$sectionKeys" :row-link="$sectionRowLink"/>
+                </div>
         @endsection
         @section('Resultaten')
         @endsection
