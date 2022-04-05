@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResearchRequest;
+use App\Models\Questionnaire;
 use App\Models\Research;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -12,20 +13,20 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Symfony\Component\Console\Input\Input;
 
-class ResearchController extends Controller
+class QuestionnaireController extends Controller
 {
     public function overview(): View
     {
-        $researches = Research::all()->toArray();
+        $researches = Questionnaire::all()->toArray();
 
         return view('admin.research.overview', [
             'researches' => $researches,
         ]);
     }
 
-    public function create(): View
+    public function create(int $researchId): View
     {
-        return view('admin.research.create');
+        return view('admin.questionnaire.create');
     }
 
     public function store(
@@ -62,26 +63,10 @@ class ResearchController extends Controller
         )->with('success', 'Het onderzoek is aangepast!');
     }
 
-    public function details(Request $request, Research $research): View
+    public function details(Request $request, int $researchId, Questionnaire $questionnaire): View
     {
-        $questionnaires = $research->questionnaires->toArray();
-
-        $questionnaireHeaders = ['ID','Titel','Omschrijving'];
-
-        $questionnaireKeys = ['id','title','description'];
-
-        $questionnaireRowLinkParameters = collect([
-            new \App\Utils\TableLinkParameter(routeParameter: 'questionnaire', itemIndex: 'id'),
-            new \App\Utils\TableLinkParameter(routeParameter: 'research', routeValue: $research->id),
-        ]);
-        $questionnaireRowLink = new \App\Utils\TableLink('questionnaires.details', $questionnaireRowLinkParameters);
-
-        return view('admin.research.details', compact(
-            'research',
-            'questionnaires',
-            'questionnaireHeaders',
-            'questionnaireKeys',
-            'questionnaireRowLink',
+        return view('admin.questionnaire.details', compact(
+            'questionnaire'
         ));
     }
 
