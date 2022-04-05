@@ -2,6 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AcceptsJson;
+use App\Http\Middleware\EnsureHeaderHasKeys;
+use App\Http\Middleware\EnsureTokenIsValid;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -43,6 +46,9 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            EnsureTokenIsValid::class,
+            EnsureHeaderHasKeys::class,
+            AcceptsJson::class,
         ],
     ];
 

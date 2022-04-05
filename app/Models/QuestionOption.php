@@ -56,6 +56,6 @@ class QuestionOption extends Model
 
     public function answers(): HasMany
     {
-        return $this->hasMany(Answer::class)->first();
+        return $this->hasMany(Answer::class);
     }
 }
