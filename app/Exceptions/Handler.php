@@ -30,7 +30,10 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (Throwable $exception, Request $request) {
-            if (!$request->acceptsJson()) {
+            if (
+                !$request->route() ||
+                $request->route()->getPrefix() !== 'api'
+            ) {
                 return;
             }
 

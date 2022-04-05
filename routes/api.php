@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\QuestionnaireController;
 use App\Http\Middleware\AcceptsJson;
 use App\Http\Middleware\EnsureHeaderHasKeys;
 use App\Http\Middleware\EnsureTokenIsValid;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
@@ -39,3 +40,7 @@ Route::post('/questions/{question}/{code}', [
     QuestionController::class,
     'answer',
 ]);
+
+Route::fallback(function () {
+    abort(Response::HTTP_NOT_FOUND, 'Pad is niet gevonden.');
+});
