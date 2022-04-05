@@ -18,9 +18,9 @@ class Input extends Component
     /**
      * The label
      *
-     * @var string
+     * @var string|null
      */
-    public string $label;
+    public ?string $label;
 
     /**
      * The name
@@ -62,8 +62,8 @@ class Input extends Component
      */
     public function __construct(
         string $type,
-        string $label,
         string $name,
+        string $label = null,
         mixed $value = null,
         string $placeholder = null,
         array $extraData = null,

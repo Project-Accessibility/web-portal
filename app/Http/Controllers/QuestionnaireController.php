@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreResearchRequest;
+use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use Illuminate\Contracts\Foundation\Application;
@@ -26,41 +26,48 @@ class QuestionnaireController extends Controller
 
     public function create(int $researchId): View
     {
-        return view('admin.questionnaire.create');
+        return view('admin.questionnaire.create', compact('researchId'));
     }
 
     public function store(
-        StoreResearchRequest $request,
+        StoreQuestionnaireRequest $request,
+        int $researchId,
     ): Application|RedirectResponse|Redirector {
         $request->validated();
-        Research::create($request->all());
 
-        return redirect(route('researches'))->with(
+        $research = Research::findOrFail($researchId);
+        $research->questionnaires()->create($request->all());
+
+        return redirect(route('researches.questionnaires', $researchId))->with(
             'success',
-            'Het onderzoek is aangemaakt!',
+            'De vragenlijst is aangemaakt!',
         );
     }
 
-    public function edit(Research $research): View
+    public function edit(int $researchId, Questionnaire $questionnaire): View
     {
-        return view('admin.research.edit', [
-            'research' => $research,
-        ]);
+        return view(
+            'admin.questionnaire.edit',
+            compact('questionnaire', 'researchId'),
+        );
     }
 
     public function update(
-        StoreResearchRequest $request,
-        Research $research,
+        StoreQuestionnaireRequest $request,
+        int $researchId,
+        Questionnaire $questionnaire,
     ): RedirectResponse {
         $request->validated();
-        $research->update($request->all());
 
-        return redirect(
-            route('researches.details', [
-                'research' => $research,
+        $questionnaire->update($request->all());
+
+        return redirect()
+            ->route('questionnaires.details', [
+                'research' => $researchId,
+                'questionnaire' => $questionnaire->id,
                 'tab' => 'Details',
-            ]),
-        )->with('success', 'Het onderzoek is aangepast!');
+            ])
+            ->with('success', 'Het onderzoek is aangepast!');
     }
 
     public function details(
@@ -76,7 +83,7 @@ class QuestionnaireController extends Controller
     ): Application|RedirectResponse|Redirector {
         $research->delete();
 
-        return redirect(route('researches'))->with(
+        return redirect(route('questionnaires'))->with(
             'success',
             'Het onderzoek is verwijderd!',
         );

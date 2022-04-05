@@ -83,7 +83,8 @@
                value="{{old($name) ? old($name) : $value}}"/>
         @break
         @case('switch')
-        <input type="checkbox" class="form-check-input" id="{{$name}}" title="{{$name}}"
+        <input type="hidden" value="0" name="{{ $name }}" />
+        <input type="checkbox" value="1" class="form-check-input" id="{{$name}}" title="{{$name}}"
                name="{{$name}}" {{old($name) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}}/>
         @break
         @case('range')

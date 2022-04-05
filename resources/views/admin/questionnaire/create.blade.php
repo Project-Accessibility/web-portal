@@ -12,7 +12,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <form method="POST" action="{{route('questionnaires.store')}}">
+    <form method="POST" action="{{route('questionnaires.store', $researchId)}}">
         @csrf
 
         <h1 class="title">Nieuwe vragenlijst</h1>
@@ -20,10 +20,12 @@
             <x-input type="text" label="Titel" name="title" placeholder="Titel van de vragenlijst"></x-input>
             <x-input type="textarea" label="Omschrijving" name="description"
                      placeholder="Een kleine omschrijving van de vragenlijst" :extraData="['rows'=>8]"></x-input>
-            <x-input type="textarea" label="Instructies" name="description"
+            <x-input type="textarea" label="Instructies" name="instructions"
                      placeholder="De instructies voor de participant in de app" :extraData="['rows'=>8]"></x-input>
-            <x-input label="Onderzoek kan worden gebruikt" type="switch" name="switch" :value="false"></x-input>
-            <x-input type="text" label="Locatie foto's" name="title" placeholder="Link naar de locatie foto's"></x-input>
+            <x-input label="Onderzoek kan worden gebruikt" type="switch" name="open" :value="false"></x-input>
+            <fieldset disabled>
+                <x-input type="text" label="Locatie foto's" name="teachable_machine_link" placeholder="Link naar de locatie foto's"></x-input>
+            </fieldset>
             <x-button class="float-end mt-2" type="secondary">Toevoegen</x-button>
         </div>
     </form>

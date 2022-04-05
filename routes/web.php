@@ -58,62 +58,59 @@ Route::post('/logout', function () {
     return view('welcome');
 });
 
-Route::scopeBindings()->group(function () {
-    Route::controller(ResearchController::class)
-        ->prefix('/researches')
-        ->group(function () {
-            Route::get('/', 'overview')
-                ->name('researches')
-                ->defaults('display', 'Onderzoeken');
+Route::controller(ResearchController::class)
+    ->prefix('/researches')
+    ->group(function () {
+        Route::get('/', 'overview')
+            ->name('researches')
+            ->defaults('display', 'Onderzoeken');
 
-            Route::get('/create', 'create')
-                ->name('researches.create')
-                ->defaults('display', 'Aanmaken');
+        Route::get('/create', 'create')
+            ->name('researches.create')
+            ->defaults('display', 'Aanmaken');
 
-            Route::prefix('/{research}')->group(function () {
-                Route::get('/', 'details')->name('researches.details');
+        Route::prefix('/{research}')->group(function () {
+            Route::get('/', 'details')->name('researches.details');
 
-                Route::controller(QuestionnaireController::class)
-                    ->prefix('/questionnaires')
-                    ->group(function () {
-                        Route::get('/create', 'create')
-                            ->name('questionnaires.create')
-                            ->allowsTrashedBindings();
-                        Route::get('/{questionnaire:id}', 'details')->name(
-                            'questionnaires.details',
-                        );
-                        Route::get('/{questionnaire}/edit', 'edit')->name(
-                            'questionnaires.edit',
-                        );
-                        Route::post('/', 'store')->name('questionnaires.store');
-                        Route::put('/{questionnaire}', 'update')->name(
-                            'questionnaires.update',
-                        );
-                        Route::delete('/{questionnaire}', 'remove')->name(
-                            'questionnaires.remove',
-                        );
-                        Route::get('/', function (
-                            \App\Models\Research $research,
-                        ) {
-                            return redirect()->route('researches.details', [
-                                $research->id,
-                                'tab' => 'Vragenlijsten',
-                            ]);
-                        })
-                            ->name('researches.questionnaires')
-                            ->defaults('display', 'Vragenlijsten');
-                    });
-            });
+            Route::controller(QuestionnaireController::class)
+                ->prefix('/questionnaires')
+                ->group(function () {
+                    Route::get('/create', 'create')
+                        ->name('questionnaires.create')
+                        ->defaults('display', 'Aanmaken');
 
-            Route::get('/{research}/edit', 'edit')
-                ->name('researches.edit')
-                ->defaults('display', 'Aanpassen');
-
-            Route::post('/', 'store')->name('researches.store');
-            Route::put('/{research}', 'update')->name('researches.update');
-            Route::delete('/{research}', 'remove')->name('researches.remove');
+                    Route::get('/{questionnaire:id}', 'details')->name(
+                        'questionnaires.details',
+                    );
+                    Route::get('/{questionnaire}/edit', 'edit')
+                        ->name('questionnaires.edit')
+                        ->defaults('display', 'aanpassen');
+                    Route::post('/', 'store')->name('questionnaires.store');
+                    Route::put('/{questionnaire}', 'update')->name(
+                        'questionnaires.update',
+                    );
+                    Route::delete('/{questionnaire}', 'remove')->name(
+                        'questionnaires.remove',
+                    );
+                    Route::get('/', function (\App\Models\Research $research) {
+                        return redirect()->route('researches.details', [
+                            $research->id,
+                            'tab' => 'Vragenlijsten',
+                        ]);
+                    })
+                        ->name('researches.questionnaires')
+                        ->defaults('display', 'Vragenlijsten');
+                });
         });
-});
+
+        Route::get('/{research}/edit', 'edit')
+            ->name('researches.edit')
+            ->defaults('display', 'Aanpassen');
+
+        Route::post('/', 'store')->name('researches.store');
+        Route::put('/{research}', 'update')->name('researches.update');
+        Route::delete('/{research}', 'remove')->name('researches.remove');
+    });
 
 Route::fallback(function () {
     return redirect()->route('researches');
