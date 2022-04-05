@@ -76,7 +76,11 @@ class QuestionnaireController extends Controller
         $questionnaire->delete();
 
         return redirect(
-            route('researches.details', [$researchId, $questionnaire, 'tab' => 'Vragenlijsten']),
+            route('researches.details', [
+                $researchId,
+                $questionnaire,
+                'tab' => 'Vragenlijsten',
+            ]),
         )->with('success', 'De vragenlijst is verwijderd!');
     }
 
