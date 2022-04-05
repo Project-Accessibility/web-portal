@@ -32,6 +32,172 @@
 -   Run `php artisan db:seed` to run the database seeders.
 -   Run `php artisan key:generate` to generate the application key.
 
+## Api
+
+### Routes
+
+De api's zijn te bereiken via `/api`.<br>
+De API bestaat uit de volgende routes.
+
+<details>
+    <summary>Alle API routes</summary>
+
+    | Route                           | Methode | Query                                 | Response                                                                                 |
+    |---------------------------------|---------|---------------------------------------|------------------------------------------------------------------------------------------|
+    | /ping                           | GET     |                                       | Pong                                                                                     |
+    | /questionnaires/getByCodes      | GET     |                                       | Array van vragenlijsten welke zijn gekoppeld aan de codes.                               |
+    | /questionnaires/{code}          | GET     | code: code van de participant         | Een vragenlijst met daarbij de onderdelen en vragen.                                     |
+    | /questionnaires/{questionnaire} | POST    | questionnaire: ID van een vragenlijst | 406 - Not implemented                                                                    |
+    | /questions/{question}/{code}    | GET     | question: ID van de vraag             | Een vraag met daarbij de antwoordmogelijkheden en gegeven antwoorden door de participant |
+    |                                 |         | code: code van de participant         |                                                                                          |
+    | /questions/{question}/{code}    | POST    | question: ID van de vraag             | 406 - Not implemented.                                                                   |
+    |                                 |         | code: code van de participant         |                                                                                          |
+
+</details>
+
+### Request
+
+Voor een request moet je het volgende instellen<br>
+De header bevat de volgende onderdelen:
+
+-   `Content-Type` is `application/json`
+-   `Accept` is `application/json`
+-   `X-API-Key` moet de API key bevatten.
+
+### Body
+
+Voor de `/questionnaires/getByCodes` moet je een body meegeven.<br>
+De body kan er als volgt uitzien:
+
+```
+{
+    "codes": [
+        "011362e4db517e348c713870f0270c04",
+        "031ff84c2be935fb1d9cc6cfd9805ced",
+    ]
+}
+```
+
+### Response
+
+Elke response wordt teruggeven in een `json` formaat.
+
+<details>
+    <summary>GET: /ping</summary>
+    "pong"
+</details>
+
+<details>
+    <summary>GET: /questionnaires/getByCodes</summary>
+
+    [
+        {
+            "id": 1,
+            "research_id": 1,
+            "title": "Torp-Moen",
+            "description": "Aut odit itaque adipisci at. At in tenetur tempora natus labore rem. Necessitatibus odio quae et quod.",
+            "instructions": null,
+            "open": true,
+            "teachable_machine_link": "howell.info",
+            "created_at": "2022-04-03T19:17:30.000000Z",
+            "updated_at": "2022-04-03T19:17:30.000000Z"
+        }
+    ]
+
+</details>
+
+<details>
+    <summary>GET: /questionnaires/{code}</summary>
+
+    {
+        "id": 1,
+        "research_id": 1,
+        "title": "Torp-Moen",
+        "description": "Aut odit itaque adipisci at. At in tenetur tempora natus labore rem. Necessitatibus odio quae et quod.",
+        "instructions": null,
+        "open": true,
+        "teachable_machine_link": "howell.info",
+        "created_at": "2022-04-03T19:17:30.000000Z",
+        "updated_at": "2022-04-03T19:17:30.000000Z",
+        "sections": [
+            {
+                "id": 1,
+                "questionnaire_id": 1,
+                "geofence_id": 1,
+                "title": "Korey Vista",
+                "description": "Earum vitae dolore aut. Ipsum officiis sit qui sed. Mollitia consequuntur recusandae temporibus quo qui quas tempore. Qui molestiae voluptatem veritatis ipsum placeat ea quisquam.",
+                "location_description": "8929 Gutkowski Corners\nAngelaport, NJ 06587",
+                "teachable_machine_class": "Korey Vista",
+                "created_at": "2022-04-03T19:17:30.000000Z",
+                "updated_at": "2022-04-03T19:17:30.000000Z",
+                "questions": [
+                    {
+                        "id": 1,
+                        "section_id": 1,
+                        "title": "Mr.",
+                        "question": "Prof.",
+                        "created_at": "2022-04-03T19:17:30.000000Z",
+                        "updated_at": "2022-04-03T19:17:30.000000Z"
+                    }
+                ]
+            }
+        ]
+    }
+
+</details>
+
+<details>
+    <summary>POST: /questionnaires/{questionnaire}</summary>
+
+    {
+        "message": "Deze functie werkt nog niet."
+    }
+
+</details>
+
+<details>
+    <summary>GET: /questions/{question}/{code}</summary>
+
+    {
+        "id": 1,
+        "section_id": 1,
+        "title": "Mr.",
+        "question": "Prof.",
+        "created_at": "2022-04-03T19:17:30.000000Z",
+        "updated_at": "2022-04-03T19:17:30.000000Z",
+        "options": [
+            {
+                "id": 2,
+                "question_id": 1,
+                "type": "DATE",
+                "extra_data": [],
+                "created_at": "2022-04-03T19:17:30.000000Z",
+                "updated_at": "2022-04-03T19:17:30.000000Z",
+                "answers": [
+                    {
+                        "id": 7,
+                        "participant_id": 1,
+                        "question_option_id": 2,
+                        "answer": "[]",
+                        "created_at": "2022-04-03T19:17:30.000000Z",
+                        "updated_at": "2022-04-03T19:17:30.000000Z"
+                    }
+                ]
+            }
+        ]
+    }
+
+</details>
+
+<details>
+    <summary>POST: /questions/{question}/{code}</summary>
+
+    {
+        "message": "Deze functie werkt nog niet"
+    }
+
+</details>
+
 ## Components
 
 ### Input

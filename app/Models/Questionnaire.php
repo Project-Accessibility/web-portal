@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\RelationsManager;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Questionnaire
@@ -34,7 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Questionnaire extends Model
 {
-    use HasFactory;
+    use HasFactory, RelationsManager;
 
     /* @var string */
     public $table = 'questionnaires';
@@ -59,5 +61,15 @@ class Questionnaire extends Model
     public function research(): BelongsTo
     {
         return $this->belongsTo(Research::class);
+    }
+
+    public function participants(): HasMany
+    {
+        return $this->hasMany(Participant::class);
+    }
+
+    public function sections(): HasMany
+    {
+        return $this->hasMany(Section::class);
     }
 }
