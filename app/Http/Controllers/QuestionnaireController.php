@@ -67,7 +67,7 @@ class QuestionnaireController extends Controller
                 'questionnaire' => $questionnaire->id,
                 'tab' => 'Details',
             ])
-            ->with('success', 'Het onderzoek is aangepast!');
+            ->with('success', 'De vragenlijst is aangepast!');
     }
 
     public function details(
@@ -79,14 +79,14 @@ class QuestionnaireController extends Controller
     }
 
     public function remove(
-        Research $research,
+        int $researchId,
+        Questionnaire $questionnaire,
     ): Application|RedirectResponse|Redirector {
-        $research->delete();
+        $questionnaire->delete();
 
-        return redirect(route('questionnaires'))->with(
-            'success',
-            'Het onderzoek is verwijderd!',
-        );
+        return redirect(
+            route('researches.questionnaires', [$researchId, $questionnaire]),
+        )->with('success', 'De vraag is verwijderd!');
     }
 
     public function archive(Research $research)

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResearchRequest;
 use App\Models\Research;
+use App\Utils\TableLink;
+use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -68,19 +70,59 @@ class ResearchController extends Controller
 
         $questionnaireKeys = ['id', 'title', 'description'];
 
-        $questionnaireRowLinkParameters = collect([
-            new \App\Utils\TableLinkParameter(
+        $questionnaireLinkParameters = [
+            new TableLinkParameter(
                 routeParameter: 'questionnaire',
                 itemIndex: 'id',
             ),
-            new \App\Utils\TableLinkParameter(
+            new TableLinkParameter(
                 routeParameter: 'research',
                 routeValue: $research->id,
             ),
+        ];
+
+        $questionnaireSectionLinkParameters = collect([
+            $questionnaireLinkParameters,
+            new TableLinkParameter(
+                routeParameter: 'tab',
+                routeValue: 'sections',
+            ),
         ]);
-        $questionnaireRowLink = new \App\Utils\TableLink(
+
+        $questionnaireResultsLinkParameters = collect([
+            $questionnaireLinkParameters,
+            new TableLinkParameter(
+                routeParameter: 'tab',
+                routeValue: 'results',
+            ),
+        ]);
+
+        $questionnaireParticipantsLinkParameters = collect([
+            $questionnaireLinkParameters,
+            new TableLinkParameter(
+                routeParameter: 'tab',
+                routeValue: 'participants',
+            ),
+        ]);
+
+        $questionnaireLinks = collect([
+            new TableLink(
+                'questionnaire.details',
+                $questionnaireSectionLinkParameters,
+            ),
+            new TableLink(
+                'questionnaire.details',
+                $questionnaireResultsLinkParameters,
+            ),
+            new TableLink(
+                'questionnaire.details',
+                $questionnaireParticipantsLinkParameters,
+            ),
+        ]);
+
+        $questionnaireRowLink = new TableLink(
             'questionnaires.details',
-            $questionnaireRowLinkParameters,
+            collect($questionnaireLinkParameters),
         );
 
         return view(
@@ -89,6 +131,7 @@ class ResearchController extends Controller
                 'research',
                 'questionnaires',
                 'questionnaireHeaders',
+                'questionnaireLinks',
                 'questionnaireKeys',
                 'questionnaireRowLink',
             ),

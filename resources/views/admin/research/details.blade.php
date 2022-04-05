@@ -37,7 +37,7 @@
                         </x-button>
                     </div>
                 </div>
-                <x-table :headers="$questionnaireHeaders" :items="$questionnaires" :keys="$questionnaireKeys" :row-link="$questionnaireRowLink"/>
+                <x-table :tableLinks="$questionnaireLinks" :headers="$questionnaireHeaders" :items="$questionnaires" :keys="$questionnaireKeys" :row-link="$questionnaireRowLink"/>
             </div>
         @endsection
     </x-tabs>

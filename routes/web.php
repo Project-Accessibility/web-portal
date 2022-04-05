@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ResearchController;
 use App\Http\Requests\TestInputsRequest;
+use App\Models\Questionnaire;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\QuestionnaireController;
 use Illuminate\Support\Facades\Route;
@@ -79,9 +80,51 @@ Route::controller(ResearchController::class)
                         ->name('questionnaires.create')
                         ->defaults('display', 'Aanmaken');
 
-                    Route::get('/{questionnaire:id}', 'details')->name(
-                        'questionnaires.details',
-                    );
+                    Route::prefix('/{questionnaire}')->group(function () {
+                        Route::get('/', 'details')->name(
+                            'questionnaires.details',
+                        );
+
+                        Route::get('/sections', function (
+                            \App\Models\Research $research,
+                            Questionnaire $questionnaire,
+                        ) {
+                            return redirect()->route('questionnaires.details', [
+                                $research,
+                                $questionnaire,
+                                'tab' => 'Onderdelen',
+                            ]);
+                        })
+                            ->name('questionnaires.sections')
+                            ->defaults('display', 'Onderdelen');
+
+                        Route::get('/results', function (
+                            \App\Models\Research $research,
+                            Questionnaire $questionnaire,
+                        ) {
+                            return redirect()->route('questionnaires.details', [
+                                $research,
+                                $questionnaire,
+                                'tab' => 'Resultaten',
+                            ]);
+                        })
+                            ->name('questionnaires.sections')
+                            ->defaults('display', 'Resultaten');
+
+                        Route::get('/participants', function (
+                            \App\Models\Research $research,
+                            Questionnaire $questionnaire,
+                        ) {
+                            return redirect()->route('questionnaires.details', [
+                                $research,
+                                $questionnaire,
+                                'tab' => 'Participanten',
+                            ]);
+                        })
+                            ->name('questionnaires.sections')
+                            ->defaults('display', 'Participanten');
+                    });
+
                     Route::get('/{questionnaire}/edit', 'edit')
                         ->name('questionnaires.edit')
                         ->defaults('display', 'aanpassen');
