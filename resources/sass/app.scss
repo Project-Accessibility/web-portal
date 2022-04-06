@@ -286,6 +286,22 @@ code {
     margin-top: $spacer * 1.5;
 }
 
+td > .table-row-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+@include media-breakpoint-down(md) {
+    td > .table-row-text {
+        -webkit-line-clamp: var(--truncateLines);
+        line-clamp: var(--truncateLines);;
+    }
+}
+
 @each $color, $value in $theme-colors {
     .bg-#{$color} {
         background-color: $value;
@@ -338,7 +354,9 @@ code {
 }
 
 body {
+    font-family: "Muli", Calibri, Tahoma, sans-serif;
     background-color: $blue-light;
+    line-height: normal;
 }
 
 /* Select input */

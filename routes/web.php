@@ -3,6 +3,7 @@
 use App\Http\Controllers\ResearchController;
 use App\Http\Requests\TestInputsRequest;
 use App\Models\Questionnaire;
+use App\Models\Research;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\QuestionnaireController;
 use Illuminate\Support\Facades\Route;
@@ -86,7 +87,7 @@ Route::controller(ResearchController::class)
                         );
 
                         Route::get('/sections', function (
-                            \App\Models\Research $research,
+                            Research $research,
                             Questionnaire $questionnaire,
                         ) {
                             return redirect()->route('questionnaires.details', [
@@ -99,7 +100,7 @@ Route::controller(ResearchController::class)
                             ->defaults('display', 'Onderdelen');
 
                         Route::get('/results', function (
-                            \App\Models\Research $research,
+                            Research $research,
                             Questionnaire $questionnaire,
                         ) {
                             return redirect()->route('questionnaires.details', [
@@ -112,7 +113,7 @@ Route::controller(ResearchController::class)
                             ->defaults('display', 'Resultaten');
 
                         Route::get('/participants', function (
-                            \App\Models\Research $research,
+                            Research $research,
                             Questionnaire $questionnaire,
                         ) {
                             return redirect()->route('questionnaires.details', [
@@ -128,14 +129,18 @@ Route::controller(ResearchController::class)
                     Route::get('/{questionnaire}/edit', 'edit')
                         ->name('questionnaires.edit')
                         ->defaults('display', 'aanpassen');
+
                     Route::post('/', 'store')->name('questionnaires.store');
+
                     Route::put('/{questionnaire}', 'update')->name(
                         'questionnaires.update',
                     );
+
                     Route::delete('/{questionnaire}', 'remove')->name(
                         'questionnaires.remove',
                     );
-                    Route::get('/', function (\App\Models\Research $research) {
+
+                    Route::get('/', function (Research $research) {
                         return redirect()->route('researches.details', [
                             $research->id,
                             'tab' => 'Vragenlijsten',

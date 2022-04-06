@@ -67,7 +67,7 @@ class Input extends Component
         mixed $value = null,
         string $placeholder = null,
         array $extraData = null,
-        bool $required = true,
+        bool $required = false,
     ) {
         $this->type = $type;
         $this->label = $label;

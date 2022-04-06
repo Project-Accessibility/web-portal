@@ -22,30 +22,28 @@ class QuestionnaireController extends Controller
 
     public function store(
         StoreQuestionnaireRequest $request,
-        int $researchId,
+        Research $research,
     ): Application|RedirectResponse|Redirector {
         $request->validated();
 
-        $research = Research::findOrFail($researchId);
         $research->questionnaires()->create($request->all());
 
-        return redirect(route('researches.questionnaires', $researchId))->with(
-            'success',
-            'De vragenlijst is aangemaakt!',
-        );
+        return redirect(
+            route('researches.questionnaires', $research->id),
+        )->with('success', 'De vragenlijst is aangemaakt!');
     }
 
-    public function edit(int $researchId, Questionnaire $questionnaire): View
+    public function edit(Research $research, Questionnaire $questionnaire): View
     {
         return view(
             'admin.questionnaire.edit',
-            compact('questionnaire', 'researchId'),
+            compact('questionnaire', 'research'),
         );
     }
 
     public function update(
         StoreQuestionnaireRequest $request,
-        int $researchId,
+        Research $research,
         Questionnaire $questionnaire,
     ): RedirectResponse {
         $request->validated();
@@ -54,7 +52,7 @@ class QuestionnaireController extends Controller
 
         return redirect()
             ->route('questionnaires.details', [
-                'research' => $researchId,
+                'research' => $research->id,
                 'questionnaire' => $questionnaire->id,
                 'tab' => 'Details',
             ])
@@ -63,28 +61,31 @@ class QuestionnaireController extends Controller
 
     public function details(
         Request $request,
-        int $researchId,
+        Research $research,
         Questionnaire $questionnaire,
     ): View {
-        return view('admin.questionnaire.details', compact('questionnaire'));
+        return view(
+            'admin.questionnaire.details',
+            compact('research', 'questionnaire'),
+        );
     }
 
     public function remove(
-        int $researchId,
+        Research $research,
         Questionnaire $questionnaire,
     ): Application|RedirectResponse|Redirector {
         $questionnaire->delete();
 
         return redirect(
             route('researches.details', [
-                $researchId,
-                $questionnaire,
+                $research->id,
+                $questionnaire->id,
                 'tab' => 'Vragenlijsten',
             ]),
         )->with('success', 'De vragenlijst is verwijderd!');
     }
 
-    public function archive(Research $research)
+    public function archive(Research $research, Questionnaire $questionnaire)
     {
     }
 
@@ -92,11 +93,11 @@ class QuestionnaireController extends Controller
     {
     }
 
-    public function restore(Research $research)
+    public function restore(Research $research, Questionnaire $questionnaire)
     {
     }
 
-    public function deletes()
+    public function deletes(Research $research)
     {
     }
 }

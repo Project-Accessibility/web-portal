@@ -5,8 +5,8 @@
         @endforeach
         @if($amountOfLinks > 0)
             <th>
-                @if($amountOfLinks == 1) actie
-                @else acties @endif
+                @if($amountOfLinks == 1) Actie
+                @else Acties @endif
             </th>
         @endif
     </tr>

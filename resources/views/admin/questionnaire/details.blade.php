@@ -17,11 +17,11 @@
         </div>
         <div class="col-md-auto d-inline-flex flex-wrap gap-2 gap-sm-1">
             <div>
-                <x-button type="secondary" link="{{ route('questionnaires.edit', [$questionnaire->research_id, $questionnaire->id]) }}">
+                <x-button type="secondary" link="{{ route('questionnaires.edit', [$research->id, $questionnaire->id]) }}">
                     Vragenlijst aanpassen
                 </x-button>
             </div>
-            <form method="POST" action="{{ route('questionnaires.remove', [$questionnaire->research_id, $questionnaire->id]) }}">
+            <form method="POST" action="{{ route('questionnaires.remove', [$research->id, $questionnaire->id]) }}">
                 @csrf
                 @method('DELETE')
                 <x-button type="remove">
