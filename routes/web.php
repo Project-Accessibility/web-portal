@@ -106,19 +106,6 @@ Route::controller(ResearchController::class)
                             'questionnaires.remove',
                         );
 
-                        Route::get('/sections', function (
-                            Research $research,
-                            Questionnaire $questionnaire,
-                        ) {
-                            return redirect()->route('questionnaires.details', [
-                                $research,
-                                $questionnaire,
-                                'tab' => 'Onderdelen',
-                            ]);
-                        })
-                            ->name('questionnaires.sections')
-                            ->defaults('display', 'Onderdelen');
-
                         Route::controller(SectionController::class)
                             ->prefix('/sections')
                             ->group(function () {

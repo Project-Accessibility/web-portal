@@ -123,7 +123,8 @@ class QuestionnaireController extends Controller
     public function remove(
         Research $research,
         Questionnaire $questionnaire,
-    ): Application|RedirectResponse|Redirector {
+    ): Application|RedirectResponse|Redirector
+    {
         $questionnaire->delete();
 
         return redirect(
