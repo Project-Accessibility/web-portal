@@ -85,9 +85,23 @@ Route::controller(ResearchController::class)
                         ->name('questionnaires.create')
                         ->defaults('display', 'Aanmaken');
 
+                    Route::post('/', 'store')->name('questionnaires.store');
+
                     Route::prefix('/{questionnaire}')->group(function () {
                         Route::get('/', 'details')->name(
                             'questionnaires.details',
+                        );
+
+                        Route::get('/edit', 'edit')
+                            ->name('questionnaires.edit')
+                            ->defaults('display', 'aanpassen');
+
+                        Route::put('/', 'update')->name(
+                            'questionnaires.update',
+                        );
+
+                        Route::delete('/', 'remove')->name(
+                            'questionnaires.remove',
                         );
 
                         Route::get('/sections', function (
@@ -129,20 +143,6 @@ Route::controller(ResearchController::class)
                             ->name('questionnaires.participants')
                             ->defaults('display', 'Participanten');
                     });
-
-                    Route::get('/{questionnaire}/edit', 'edit')
-                        ->name('questionnaires.edit')
-                        ->defaults('display', 'aanpassen');
-
-                    Route::post('/', 'store')->name('questionnaires.store');
-
-                    Route::put('/{questionnaire}', 'update')->name(
-                        'questionnaires.update',
-                    );
-
-                    Route::delete('/{questionnaire}', 'remove')->name(
-                        'questionnaires.remove',
-                    );
                 });
         });
 
