@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Questionnaire;
 use App\Models\Research;
+use App\Utils\TableLink;
+use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -72,16 +74,63 @@ class QuestionnaireController extends Controller
         Research $research,
         Questionnaire $questionnaire,
     ): View {
-        return view(
-            'admin.questionnaire.details',
-            compact('research', 'questionnaire'),
+        $sections = $questionnaire->sections->toArray();
+
+        $sectionHeaders = ['ID', 'Titel', 'Omschrijving'];
+
+        $sectionKeys = ['id', 'title', 'description'];
+
+        $sectionLinkParameters = [
+            new TableLinkParameter(
+                routeParameter: 'section',
+                itemIndex: 'id',
+            ),
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                routeValue: $questionnaire->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $questionnaire->research->id,
+            ),
+        ];
+
+        $sectionResultsLinkParameters = collect(
+            array_merge($sectionLinkParameters, [
+//                new TableLinkParameter(
+//                    routeParameter: 'tab',
+//                    routeValue: 'results',
+//                ),
+            ]),
         );
+
+        $sectionLinks = collect([
+//            new TableLink(
+//                'sections.results',
+//                $sectionResultsLinkParameters,
+//            )
+        ]);
+
+        $sectionRowLink = new TableLink(
+            'questionnaires.details',
+            collect($sectionLinkParameters),
+        );
+        return view('admin.questionnaire.details', compact(
+            'research',
+            'questionnaire',
+            'sections',
+            'sectionHeaders',
+            'sectionLinks',
+            'sectionKeys',
+            'sectionRowLink',
+        ));
     }
 
     public function remove(
         Research $research,
         Questionnaire $questionnaire,
-    ): Application|RedirectResponse|Redirector {
+    ): Application|RedirectResponse|Redirector
+    {
         $questionnaire->delete();
 
         return redirect(

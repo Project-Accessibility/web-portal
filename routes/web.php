@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ResearchController;
+use App\Http\Controllers\SectionController;
 use App\Http\Requests\TestInputsRequest;
 use App\Models\Questionnaire;
 use App\Models\Research;
@@ -117,12 +118,21 @@ Route::controller(ResearchController::class)
                             ->name('questionnaires.sections')
                             ->defaults('display', 'Onderdelen');
 
-                        Route::controller(QuestionnaireController::class)
+                        Route::controller(SectionController::class)
                             ->prefix('/sections')
                             ->group(function () {
-                                Route::get('/sections', 'overview')
+                                Route::prefix('/{section}')->group(function () {
+                                    Route::get('/', 'details')->name(
+                                        'sections.details',
+                                    );
+                                });
+                                Route::get('/', 'overview')
                                     ->name('questionnaires.sections')
                                     ->defaults('display', 'Onderdelen');
+                                Route::get('/create', 'create')
+                                    ->name('sections.create')
+                                    ->defaults('display', 'Aanmaken');
+                                Route::post('/', 'store')->name('sections.store');
                             });
 
                         Route::get('/results', function (

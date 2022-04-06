@@ -12,7 +12,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <form method="POST" action="{{route('sections.store', [$questionnaire->research(), $questionnaire])}}">
+    <form method="POST" action="{{route('sections.store', [$research->id, $questionnaire->id])}}">
         @csrf
 
         <h1 class="title">Nieuwe Onderdeel</h1>

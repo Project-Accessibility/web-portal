@@ -57,7 +57,7 @@
                 <div class="mt-2">
                     <div class="row justify-content-end">
                         <div class="w-auto">
-                            <x-button type="secondary" link="{{ route('sections.create', $questionnaire->id) }}">
+                            <x-button type="secondary" link="{{ route('sections.create', [$questionnaire->research->id, $questionnaire->id]) }}">
                                 Nieuwe Onderdeel
                             </x-button>
                         </div>

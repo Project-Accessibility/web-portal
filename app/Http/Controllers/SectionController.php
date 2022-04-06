@@ -4,41 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Questionnaire;
+use App\Models\Research;
 use App\Models\Section;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Redirect;
 
 class SectionController extends Controller
 {
-    public function overview(): View
+    public function overview(Research $research, Questionnaire $questionnaire): RedirectResponse
     {
-        $sections = Section::all()->toArray();
-
-        return view('admin.questionnaire.details', [
-            'sections' => $sections,
-            'tab' => "Onderdelen"
+        return redirect()->route('questionnaires.details', [
+            $research->id,
+            $questionnaire->id,
+            'tab' => 'Onderdelen',
         ]);
     }
 
-    public function create(Questionnaire $questionnaire): View
+    public function create(Research $research, Questionnaire $questionnaire): View
     {
-        return view('admin.section.create', compact($questionnaire));
+        return view('admin.section.create', [
+            "research" => $research,
+            "questionnaire" => $questionnaire
+        ]);
     }
 
     public function store(
         StoreQuestionnaireRequest $request,
+        Research $research,
         Questionnaire $questionnaire,
     ): Application|RedirectResponse|Redirector {
         $request->validated();
 
         $questionnaire->sections()->create($request->all());
 
-        return redirect(route('questionnaires.sections', $questionnaire))->with(
+        return redirect(route('questionnaires.sections', [$research->id, $questionnaire->id]))->with(
             'success',
-            'De vragenlijst is aangemaakt!',
+            'Het onderdeel is aangemaakt!',
         );
     }
 
