@@ -121,11 +121,11 @@ Route::controller(ResearchController::class)
                         Route::controller(SectionController::class)
                             ->prefix('/sections')
                             ->group(function () {
-                                Route::prefix('/{section}')->group(function () {
-                                    Route::get('/', 'details')->name(
-                                        'sections.details',
-                                    );
-                                });
+//                                Route::prefix('/{section}')->group(function () {
+//                                    Route::get('/', 'details')->name(
+//                                        'sections.details',
+//                                    );
+//                                });
                                 Route::get('/', 'overview')
                                     ->name('questionnaires.sections')
                                     ->defaults('display', 'Onderdelen');
