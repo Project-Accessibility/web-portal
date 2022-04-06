@@ -16,7 +16,13 @@ class ResearchController extends Controller
 {
     public function overview(): View
     {
-        dd(env('DB_HOST'), env('DB_PORT'), env('DB_USERNAME'), env('DB_PASSWORD'), env('DB_DATABASE'));
+        dd(
+            env('DB_HOST'),
+            env('DB_PORT'),
+            env('DB_USERNAME'),
+            env('DB_PASSWORD'),
+            env('DB_DATABASE'),
+        );
         $researches = Research::all()->toArray();
 
         return view('admin.research.overview', [

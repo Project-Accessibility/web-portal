@@ -32,4 +32,4 @@ jobs:
         name: pr-${{ github.event.number }}-gewoonjaap
         scope: personal
         timeout: 15m
-        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing,DB_USERNAME=${{ secrets.DB_USERNAME }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_HOST=mysql
+        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing,DB_USERNAME=admin,DB_PASSWORD=admin,DB_HOST=mysql
