@@ -185,7 +185,3 @@ Route::controller(ResearchController::class)
 Route::fallback(function () {
     return redirect()->route('researches');
 });
-Route::get('/location', function () {
-    return view('admin.sections.geofence');
-});
-Route::post('/addGeofence', [\App\Http\Controllers\SectionController::class, 'addGeofence'])->name('geofence.store');

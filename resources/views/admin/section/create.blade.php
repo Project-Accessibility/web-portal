@@ -40,9 +40,8 @@
             <x-button class="float-end" type="secondary">Toevoegen</x-button>
         </div>
     </form>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key={{env("GOOGLE_API_KEY")}}&libraries=&v=weekly"
-        async
-    ></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+    <script>mapboxgl.accessToken = '{{env('MAPBOX_ACCESS_TOKEN')}}';</script>
     <script src="{{ asset('js/location.js') }}"></script>
 @endsection

@@ -124,13 +124,4 @@ class SectionController extends Controller
     public function deletes()
     {
     }
-
-    public function addGeofence(Section $section, Request $request): View
-    {
-        $radius = $request->input('radius');
-
-        return view('admin.section.details', [
-
-        ]);
-    }
 }
