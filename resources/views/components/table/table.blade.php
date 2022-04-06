@@ -7,7 +7,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="{{ count($keys) }}">
+                <td colspan="{{ count($keys) + ($tableLinks->count() > 0 ? 1 : 0)}}">
                     <div class="d-flex justify-content-center">
                         <span class="lead">
                             Er zijn nog geen items.
