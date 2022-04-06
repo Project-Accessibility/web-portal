@@ -32,7 +32,7 @@
         </div>
     </form>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJXWDGn6xOjKEzgoLdVElpbVGcPZcwwtw&callback=initMap&libraries=&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key={{env("GOOGLE_API_KEY")}}&libraries=&v=weekly"
         async
     ></script>
     <script src="{{ asset('js/location.js') }}"></script>
