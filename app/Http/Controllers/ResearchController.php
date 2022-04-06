@@ -22,6 +22,7 @@ class ResearchController extends Controller
             env('DB_USERNAME'),
             env('DB_PASSWORD'),
             env('DB_DATABASE'),
+            env('APP_ENV'),
         );
         $researches = Research::all()->toArray();
 

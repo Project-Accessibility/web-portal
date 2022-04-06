@@ -16,14 +16,8 @@ RUN yarn install
 RUN yarn prod
 RUN rm -rf node_modules/
 
-RUN cp -a .env.example .env
+RUN cp -f .env.example .env
 RUN php artisan key:generate
-
-RUN echo DB_HOST=$DB_HOST >> .env
-RUN echo DB_DATABASE=$DB_DATABASE >> .env
-RUN echo DB_PORT=$DB_PORT >> .env
-RUN echo DB_USERNAME=$DB_USERNAME >> .env
-RUN echo DB_PASSWORD=$DB_PASSWORD >> .env
 
 RUN apt-get -y autoremove \
     && apt-get clean \
