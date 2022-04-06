@@ -12,7 +12,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <form method="POST" action="{{route('questionnaires.store', $researchId)}}">
+    <form method="POST" action="{{route('questionnaires.store', $research->id)}}">
         @csrf
 
         <h1 class="title">Nieuwe vragenlijst</h1>

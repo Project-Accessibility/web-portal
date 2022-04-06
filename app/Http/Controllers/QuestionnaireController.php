@@ -15,9 +15,17 @@ use Symfony\Component\Console\Input\Input;
 
 class QuestionnaireController extends Controller
 {
-    public function create(int $researchId): View
+    public function overview(Research $research)
     {
-        return view('admin.questionnaire.create', compact('researchId'));
+        return redirect()->route('researches.details', [
+            $research->id,
+            'tab' => 'Vragenlijsten',
+        ]);
+    }
+
+    public function create(Research $research): View
+    {
+        return view('admin.questionnaire.create', compact('research'));
     }
 
     public function store(

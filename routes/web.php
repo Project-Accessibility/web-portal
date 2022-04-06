@@ -77,6 +77,10 @@ Route::controller(ResearchController::class)
             Route::controller(QuestionnaireController::class)
                 ->prefix('/questionnaires')
                 ->group(function () {
+                    Route::get('/', 'overview')
+                        ->name('researches.questionnaires')
+                        ->defaults('display', 'Vragenlijsten');
+
                     Route::get('/create', 'create')
                         ->name('questionnaires.create')
                         ->defaults('display', 'Aanmaken');
@@ -139,15 +143,6 @@ Route::controller(ResearchController::class)
                     Route::delete('/{questionnaire}', 'remove')->name(
                         'questionnaires.remove',
                     );
-
-                    Route::get('/', function (Research $research) {
-                        return redirect()->route('researches.details', [
-                            $research->id,
-                            'tab' => 'Vragenlijsten',
-                        ]);
-                    })
-                        ->name('researches.questionnaires')
-                        ->defaults('display', 'Vragenlijsten');
                 });
         });
 
