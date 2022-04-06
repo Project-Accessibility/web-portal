@@ -12,11 +12,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <form method="POST" action="{{route('questionnaires.update', [$section->questionnaire()->research(),$section->questionnaire(), $questionnaire])}}">
+    <form method="POST" action="{{route('sections.update', [$research->id,$questionnaire->id, $section->id])}}">
         @csrf
         @method('PUT')
 
-        <h1 class="title">{{$questionnaire->title}} Aanpassen</h1>
+        <h1 class="title">{{$section->title}} Aanpassen</h1>
         <div class="col-md-6">
             <x-input type="text" label="Titel" name="title" placeholder="Titel van het onderdeel" :value="$section->title"></x-input>
             <x-input required="0" type="textarea" label="Omschrijving" name="description"

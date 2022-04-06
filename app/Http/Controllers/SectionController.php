@@ -9,14 +9,14 @@ use App\Models\Section;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Redirect;
 
 class SectionController extends Controller
 {
-    public function overview(Research $research, Questionnaire $questionnaire): RedirectResponse
-    {
+    public function overview(
+        Research $research,
+        Questionnaire $questionnaire,
+    ): RedirectResponse {
         return redirect()->route('questionnaires.details', [
             $research->id,
             $questionnaire->id,
@@ -24,11 +24,13 @@ class SectionController extends Controller
         ]);
     }
 
-    public function create(Research $research, Questionnaire $questionnaire): View
-    {
+    public function create(
+        Research $research,
+        Questionnaire $questionnaire,
+    ): View {
         return view('admin.section.create', [
-            "research" => $research,
-            "questionnaire" => $questionnaire
+            'research' => $research,
+            'questionnaire' => $questionnaire,
         ]);
     }
 
@@ -41,24 +43,30 @@ class SectionController extends Controller
 
         $questionnaire->sections()->create($request->all());
 
-        return redirect(route('questionnaires.sections', [$research->id, $questionnaire->id]))->with(
-            'success',
-            'Het onderdeel is aangemaakt!',
-        );
+        return redirect(
+            route('questionnaires.sections', [
+                $research->id,
+                $questionnaire->id,
+            ]),
+        )->with('success', 'Het onderdeel is aangemaakt!');
     }
 
-    public function edit(Questionnaire $questionnaire, Section $section): View
-    {
+    public function edit(
+        Research $research,
+        Questionnaire $questionnaire,
+        Section $section,
+    ): View {
         return view(
             'admin.section.edit',
-            compact('section', 'questionnaire'),
+            compact('research', 'questionnaire', 'section'),
         );
     }
 
     public function update(
         StoreQuestionnaireRequest $request,
+        Research $research,
         Questionnaire $questionnaire,
-        Section $section
+        Section $section,
     ): RedirectResponse {
         $request->validated();
 
@@ -66,6 +74,7 @@ class SectionController extends Controller
 
         return redirect()
             ->route('sections.details', [
+                'research' => $research,
                 'questionnaire' => $questionnaire,
                 'section' => $section,
                 'tab' => 'Details',
@@ -74,21 +83,30 @@ class SectionController extends Controller
     }
 
     public function details(
-        Request $request,
+        Research $research,
+        Questionnaire $questionnaire,
         Section $section,
     ): View {
-        return view('admin.sections.details', compact('section'));
+        return view(
+            'admin.section.details',
+            compact('research', 'questionnaire', 'section'),
+        );
     }
 
     public function remove(
+        Research $research,
         Questionnaire $questionnaire,
         Section $section,
     ): Application|RedirectResponse|Redirector {
         $section->delete();
 
         return redirect(
-            route('questionnaires.sections', [$questionnaire, $section]),
-        )->with('success', 'De vraag is verwijderd!');
+            route('questionnaires.details', [
+                $research,
+                $questionnaire,
+                'tab' => 'Onderdelen',
+            ]),
+        )->with('success', 'Het onderdeel is verwijderd!');
     }
 
     public function archive(Section $section)

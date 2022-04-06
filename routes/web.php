@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ResearchController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\SectionController;
 use App\Http\Requests\TestInputsRequest;
 use App\Models\Questionnaire;
@@ -121,18 +122,39 @@ Route::controller(ResearchController::class)
                         Route::controller(SectionController::class)
                             ->prefix('/sections')
                             ->group(function () {
-//                                Route::prefix('/{section}')->group(function () {
-//                                    Route::get('/', 'details')->name(
-//                                        'sections.details',
-//                                    );
-//                                });
                                 Route::get('/', 'overview')
                                     ->name('questionnaires.sections')
                                     ->defaults('display', 'Onderdelen');
                                 Route::get('/create', 'create')
                                     ->name('sections.create')
                                     ->defaults('display', 'Aanmaken');
-                                Route::post('/', 'store')->name('sections.store');
+                                Route::post('/', 'store')->name(
+                                    'sections.store',
+                                );
+                                Route::prefix('/{section}')->group(function () {
+                                    Route::get('/', 'details')->name(
+                                        'sections.details',
+                                    );
+                                    Route::get('/edit', 'edit')
+                                        ->name('sections.edit')
+                                        ->defaults('display', 'aanpassen');
+                                    Route::delete('/', 'remove')->name(
+                                        'sections.remove',
+                                    );
+                                    Route::put('/', 'update')->name(
+                                        'sections.update',
+                                    );
+                                    Route::controller(ResultController::class)
+                                        ->prefix('/results')
+                                        ->group(function () {
+                                            Route::get('/', 'sectionOverview')
+                                                ->name('sections.results')
+                                                ->defaults(
+                                                    'display',
+                                                    'Resultaten',
+                                                );
+                                        });
+                                });
                             });
 
                         Route::get('/results', function (

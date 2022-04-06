@@ -81,10 +81,7 @@ class QuestionnaireController extends Controller
         $sectionKeys = ['id', 'title', 'description'];
 
         $sectionLinkParameters = [
-            new TableLinkParameter(
-                routeParameter: 'section',
-                itemIndex: 'id',
-            ),
+            new TableLinkParameter(routeParameter: 'section', itemIndex: 'id'),
             new TableLinkParameter(
                 routeParameter: 'questionnaire',
                 routeValue: $questionnaire->id,
@@ -97,22 +94,19 @@ class QuestionnaireController extends Controller
 
         $sectionResultsLinkParameters = collect(
             array_merge($sectionLinkParameters, [
-//                new TableLinkParameter(
-//                    routeParameter: 'tab',
-//                    routeValue: 'results',
-//                ),
+                new TableLinkParameter(
+                    routeParameter: 'tab',
+                    routeValue: 'results',
+                ),
             ]),
         );
 
         $sectionLinks = collect([
-//            new TableLink(
-//                'sections.results',
-//                $sectionResultsLinkParameters,
-//            )
+            new TableLink('sections.results', $sectionResultsLinkParameters),
         ]);
 
         $sectionRowLink = new TableLink(
-            'questionnaires.details',
+            'sections.details',
             collect($sectionLinkParameters),
         );
         return view('admin.questionnaire.details', compact(
@@ -129,8 +123,7 @@ class QuestionnaireController extends Controller
     public function remove(
         Research $research,
         Questionnaire $questionnaire,
-    ): Application|RedirectResponse|Redirector
-    {
+    ): Application|RedirectResponse|Redirector {
         $questionnaire->delete();
 
         return redirect(

@@ -10,11 +10,11 @@
         </div>
         <div class="col-md-auto d-inline-flex flex-wrap gap-2 gap-sm-1">
             <div>
-                <x-button type="secondary" link="{{ route('sections.edit', [$section->questionnaire()->research(),$section->questionnaire(), $questionnaire]) }}">
+                <x-button type="secondary" link="{{ route('sections.edit', [$research->id,$questionnaire->id, $section->id]) }}">
                     Onderdeel aanpassen
                 </x-button>
             </div>
-            <form method="POST" action="{{ route('sections.remove', [$section->questionnaireId, $section->id]) }}">
+            <form method="POST" action="{{ route('sections.remove', [$research->id, $questionnaire->id, $section->id]) }}">
                 @csrf
                 @method('DELETE')
                 <x-button type="remove">
