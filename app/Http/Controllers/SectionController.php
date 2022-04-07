@@ -89,6 +89,26 @@ class SectionController extends Controller
         $request->validated();
 
         $section->update($request->all());
+        $radius = $request->input('radius');
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
+        if ($radius && $latitude && $longitude) {
+            $geofence = Geofence::whereId($section->geofence_id)->first();
+            if($geofence){
+                $geofence->radius =$radius;
+                $geofence->latitude =$latitude;
+                $geofence->longitude =$longitude;
+                $geofence->save();
+            }else{
+                $geofence = Geofence::create([
+                    'radius' => $radius,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                ]);
+                $section->geofence_id = $geofence->id;
+                $section->save();
+            }
+        }
 
         return redirect()
             ->route('sections.details', [
