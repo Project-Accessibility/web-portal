@@ -18,8 +18,8 @@
 
         <h1 class="title">{{$questionnaire->title}} Aanpassen</h1>
         <div class="col-md-6">
-            <x-input required type="text" label="Titel" name="title" placeholder="Titel van de vragenlijst" :value="$questionnaire->title"></x-input>
-            <x-input required="0" type="textarea" label="Omschrijving" name="description"
+            <x-input required type="text" label="Titel" name="title" placeholder="Titel van de vragenlijst" :value="$questionnaire->title" required></x-input>
+            <x-input  type="textarea" label="Omschrijving" name="description"
                      placeholder="Een kleine omschrijving van de vragenlijst" :extraData="['rows'=>8]" :value="$questionnaire->description"></x-input>
             <x-input type="textarea" label="Instructies" name="instructions"
                      placeholder="De instructies voor de participant in de app" :extraData="['rows'=>8]" :value="$questionnaire->instructions"></x-input>

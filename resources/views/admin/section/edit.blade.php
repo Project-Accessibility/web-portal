@@ -20,11 +20,11 @@
         <h2>Gegevens</h2>
         <div class="col-md-6">
             <x-input type="text" label="Titel" name="title" placeholder="Titel van het onderdeel"
-                     :value="$section->title"></x-input>
-            <x-input required="0" type="textarea" label="Omschrijving" name="description"
+                     :value="$section->title" required></x-input>
+            <x-input  type="textarea" label="Omschrijving" name="description"
                      placeholder="Een kleine omschrijving van het onderdeel" :extraData="['rows'=>8]"
                      :value="$section->description"></x-input>
-            <x-input required="0" type="textarea" label="Locatie omschrijving" name="location_description"
+            <x-input  type="textarea" label="Locatie omschrijving" name="location_description"
                      placeholder="Een kleine omschrijving van de locatie" :extraData="['rows'=>8]"
                      :value="$section->location_description"></x-input>
         </div>
