@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResearchRequest;
 use App\Models\Research;
+use App\Utils\TableLink;
+use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Symfony\Component\Console\Input\Input;
 
 class ResearchController extends Controller
 {
@@ -64,9 +64,81 @@ class ResearchController extends Controller
 
     public function details(Request $request, Research $research): View
     {
-        return view('admin.research.details', [
-            'research' => $research,
+        $questionnaires = $research->questionnaires->toArray();
+
+        $questionnaireHeaders = ['ID', 'Titel', 'Omschrijving'];
+
+        $questionnaireKeys = ['id', 'title', 'description'];
+
+        $questionnaireLinkParameters = [
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                itemIndex: 'id',
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $research->id,
+            ),
+        ];
+
+        $questionnaireSectionLinkParameters = collect(
+            array_merge($questionnaireLinkParameters, [
+                new TableLinkParameter(
+                    routeParameter: 'tab',
+                    routeValue: 'sections',
+                ),
+            ]),
+        );
+
+        $questionnaireResultsLinkParameters = collect(
+            array_merge($questionnaireLinkParameters, [
+                new TableLinkParameter(
+                    routeParameter: 'tab',
+                    routeValue: 'results',
+                ),
+            ]),
+        );
+
+        $questionnaireParticipantsLinkParameters = collect(
+            array_merge($questionnaireLinkParameters, [
+                new TableLinkParameter(
+                    routeParameter: 'tab',
+                    routeValue: 'participants',
+                ),
+            ]),
+        );
+
+        $questionnaireLinks = collect([
+            new TableLink(
+                'questionnaires.sections',
+                $questionnaireSectionLinkParameters,
+            ),
+            new TableLink(
+                'questionnaires.results',
+                $questionnaireResultsLinkParameters,
+            ),
+            new TableLink(
+                'questionnaires.participants',
+                $questionnaireParticipantsLinkParameters,
+            ),
         ]);
+
+        $questionnaireRowLink = new TableLink(
+            'questionnaires.details',
+            collect($questionnaireLinkParameters),
+        );
+
+        return view(
+            'admin.research.details',
+            compact(
+                'research',
+                'questionnaires',
+                'questionnaireHeaders',
+                'questionnaireLinks',
+                'questionnaireKeys',
+                'questionnaireRowLink',
+            ),
+        );
     }
 
     public function remove(

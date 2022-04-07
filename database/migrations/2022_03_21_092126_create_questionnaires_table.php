@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text("instructions")->nullable();
             $table->boolean("open")->default(false);
 
-            $table->foreign('research_id')->references('id')->on('questionnaires')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('research_id')->references('id')->on('researches')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

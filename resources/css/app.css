@@ -7,3 +7,8 @@
 .clickable-row {
     cursor: pointer;
 }
+
+.smallCell {
+    width: 1px;
+    white-space: nowrap;
+}

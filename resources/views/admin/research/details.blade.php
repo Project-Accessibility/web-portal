@@ -21,7 +21,7 @@
     </div>
     <x-tabs title="researchesDetails" :tabs="['Details', 'Vragenlijsten']" :currentTab="'Details'">
         @section('Details')
-            <div class="col-12 mt-2">
+            <div class="mt-2">
                 <strong>Omschrijving</strong>
                 <div>
                     {{ $research->description }}
@@ -29,7 +29,16 @@
             </div>
         @endsection
         @section('Vragenlijsten')
-            <p>Test</p>
+            <div class="mt-2">
+                <div class="row justify-content-end">
+                    <div class="w-auto">
+                        <x-button type="secondary" link="{{ route('questionnaires.create', $research->id) }}">
+                            Nieuwe vragenlijst
+                        </x-button>
+                    </div>
+                </div>
+                <x-table :tableLinks="$questionnaireLinks" :headers="$questionnaireHeaders" :items="$questionnaires" :keys="$questionnaireKeys" :row-link="$questionnaireRowLink"/>
+            </div>
         @endsection
     </x-tabs>
 @endsection
