@@ -13,14 +13,18 @@ class RadarHandler
      * @param $radius
      * @return array
      */
-    public static function createGeofence($id, $longitude, $latitude, $radius): array
-    {
+    public static function createGeofence(
+        $id,
+        $longitude,
+        $latitude,
+        $radius,
+    ): array {
         $url = env('RADAR_API_URL') . '/geofences';
-        $headers = array(
+        $headers = [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Authorization' => env('RADAR_SECRET'),
-        );
+        ];
         $data = `{"description": ${$id},"type": "circle","coordinates": [${$longitude},${$latitude}],"radius": ${$radius}}`;
 
         $ch = curl_init();
@@ -43,7 +47,13 @@ class RadarHandler
         if ($info['http_code'] == '200') {
             return ['success' => 1, 'data' => $result];
         } else {
-            return ['success' => 0, 'http_status' => $info['http_code'], 'error' => $error, 'response' => $result, 'info' => $info];
+            return [
+                'success' => 0,
+                'http_status' => $info['http_code'],
+                'error' => $error,
+                'response' => $result,
+                'info' => $info,
+            ];
         }
     }
 }

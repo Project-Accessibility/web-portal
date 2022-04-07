@@ -43,20 +43,20 @@ class SectionController extends Controller
         $request->validated();
 
         $section = $questionnaire->sections()->create([
-            'title'=>$request->input('title'),
-            'description'=>$request->input('description'),
-            'location_description'=>$request->input('location_description')
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'location_description' => $request->input('location_description'),
         ]);
         $radius = $request->input('radius');
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
-        if($radius && $latitude && $longitude){
+        if ($radius && $latitude && $longitude) {
             $geofence = Geofence::create([
                 'radius' => $radius,
                 'latitude' => $latitude,
                 'longitude' => $longitude,
             ]);
-            $section->geofence_id=$geofence->id;
+            $section->geofence_id = $geofence->id;
             $section->save();
         }
 

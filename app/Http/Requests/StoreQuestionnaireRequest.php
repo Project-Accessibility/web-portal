@@ -17,7 +17,9 @@ class StoreQuestionnaireRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             if ($this->radius && intval($this->radius) < 10) {
-                $validator->errors()->add('radius', 'Radius moet hoger of gelijk aan 10 zijn.');
+                $validator
+                    ->errors()
+                    ->add('radius', 'Radius moet hoger of gelijk aan 10 zijn.');
             }
         });
     }
