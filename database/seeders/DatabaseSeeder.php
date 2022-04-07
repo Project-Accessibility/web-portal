@@ -34,7 +34,8 @@ class DatabaseSeeder extends Seeder
     {
         $research = Research::factory()->create([
             'title' => 'NEMO onderzoek',
-            'description' => 'Dit is onderzoek is in samenwerking met NEMO om te kijken naar de toegankelijkheid vanaf de website tot en met het bezoek.'
+            'description' =>
+                'Dit is onderzoek is in samenwerking met NEMO om te kijken naar de toegankelijkheid vanaf de website tot en met het bezoek.',
         ]);
 
         $this->createNemoQuestionnaire($research);
@@ -56,15 +57,19 @@ class DatabaseSeeder extends Seeder
         $entrance_section = Section::factory()->create([
             'questionnaire_id' => $questionnaire->id,
             'title' => 'Entree',
-            'description' => 'Benoem zowel je positieve als negatieve ervaringen.',
-            'location_description' => 'Dit is het gedeelte waar je NEMO binnen komt.',
+            'description' =>
+                'Benoem zowel je positieve als negatieve ervaringen.',
+            'location_description' =>
+                'Dit is het gedeelte waar je NEMO binnen komt.',
         ]);
 
         $information_section = Section::factory()->create([
             'questionnaire_id' => $questionnaire->id,
             'title' => 'Kassa/infobalie',
-            'description' => 'Benoem zowel je positieve als negatieve ervaringen.',
-            'location_description' => 'Hier kan je meer informatie vragen en kaartjes kopen.',
+            'description' =>
+                'Benoem zowel je positieve als negatieve ervaringen.',
+            'location_description' =>
+                'Hier kan je meer informatie vragen en kaartjes kopen.',
         ]);
     }
 }
