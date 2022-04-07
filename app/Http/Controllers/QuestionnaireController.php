@@ -109,15 +109,18 @@ class QuestionnaireController extends Controller
             'sections.details',
             collect($sectionLinkParameters),
         );
-        return view('admin.questionnaire.details', compact(
-            'research',
-            'questionnaire',
-            'sections',
-            'sectionHeaders',
-            'sectionLinks',
-            'sectionKeys',
-            'sectionRowLink',
-        ));
+        return view(
+            'admin.questionnaire.details',
+            compact(
+                'research',
+                'questionnaire',
+                'sections',
+                'sectionHeaders',
+                'sectionLinks',
+                'sectionKeys',
+                'sectionRowLink',
+            ),
+        );
     }
 
     public function remove(

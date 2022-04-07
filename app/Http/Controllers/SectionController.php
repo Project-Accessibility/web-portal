@@ -94,12 +94,12 @@ class SectionController extends Controller
         $longitude = $request->input('longitude');
         if ($radius && $latitude && $longitude) {
             $geofence = Geofence::whereId($section->geofence_id)->first();
-            if($geofence){
-                $geofence->radius =$radius;
-                $geofence->latitude =$latitude;
-                $geofence->longitude =$longitude;
+            if ($geofence) {
+                $geofence->radius = $radius;
+                $geofence->latitude = $latitude;
+                $geofence->longitude = $longitude;
                 $geofence->save();
-            }else{
+            } else {
                 $geofence = Geofence::create([
                     'radius' => $radius,
                     'latitude' => $latitude,

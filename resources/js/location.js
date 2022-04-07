@@ -6,8 +6,8 @@ window.addEventListener('load', () => {
     longitudeInput.readOnly = true;
     if (longitudeInput.value && latitudeInput.value && radiusInput.value) {
         const geofenceBox = document.getElementById('geofence-section');
-        if(geofenceBox){
-            geofenceBox.hidden=false;
+        if (geofenceBox) {
+            geofenceBox.hidden = false;
         }
         updateMap(Number(latitudeInput.value), Number(longitudeInput.value));
     }
