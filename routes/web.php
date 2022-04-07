@@ -154,7 +154,3 @@ Route::controller(ResearchController::class)
         Route::put('/{research}', 'update')->name('researches.update');
         Route::delete('/{research}', 'remove')->name('researches.remove');
     });
-
-Route::fallback(function () {
-    return redirect()->route('researches');
-});
