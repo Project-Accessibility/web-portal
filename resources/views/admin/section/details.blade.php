@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="geofence-section" hidden>
                 <h2>Geofence</h2>
                 <input id="radius" value="{{$geofence ? $geofence->radius : 30}}" hidden/>
                 <input id="latitude" value="{{$geofence ? $geofence->latitude : ''}}" hidden/>
