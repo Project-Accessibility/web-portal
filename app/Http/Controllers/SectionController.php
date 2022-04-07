@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionnaireRequest;
+use App\Models\Geofence;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use App\Models\Section;
@@ -41,7 +42,23 @@ class SectionController extends Controller
     ): Application|RedirectResponse|Redirector {
         $request->validated();
 
-        $questionnaire->sections()->create($request->all());
+        $section = $questionnaire->sections()->create([
+            'title'=>$request->input('title'),
+            'description'=>$request->input('description'),
+            'location_description'=>$request->input('location_description')
+        ]);
+        $radius = $request->input('radius');
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
+        if($radius && $latitude && $longitude){
+            $geofence = Geofence::create([
+                'radius' => $radius,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+            ]);
+            $section->geofence_id=$geofence->id;
+            $section->save();
+        }
 
         return redirect(
             route('questionnaires.sections', [
@@ -56,9 +73,10 @@ class SectionController extends Controller
         Questionnaire $questionnaire,
         Section $section,
     ): View {
+        $geofence = Geofence::whereId($section->geofence_id)->first();
         return view(
             'admin.section.edit',
-            compact('research', 'questionnaire', 'section'),
+            compact('research', 'questionnaire', 'section', 'geofence'),
         );
     }
 
@@ -87,9 +105,10 @@ class SectionController extends Controller
         Questionnaire $questionnaire,
         Section $section,
     ): View {
+        $geofence = Geofence::whereId($section->geofence_id)->first();
         return view(
             'admin.section.details',
-            compact('research', 'questionnaire', 'section'),
+            compact('research', 'questionnaire', 'section', 'geofence'),
         );
     }
 
