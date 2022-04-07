@@ -20,6 +20,7 @@ services:
             DB_USERNAME: '${DB_USERNAME:-admin}'
             DB_PASSWORD: '${DB_PASSWORD:-admin}'
             REDIS_HOST: 'redis'
+            MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN:-pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw}'
         volumes:
             - '.:/app'
         depends_on:
