@@ -31,7 +31,7 @@
         <h2>Geofence</h2>
         <div class="row">
             <div class="col-md-6">
-                <x-input type="number" label="Radius" name="radius" placeholder="Voer radius in" :value="$geofence ? $geofence->radius : 30"></x-input>
+                <x-input type="number" label="Radius" name="radius" placeholder="Voer radius in" :value="$geofence ? $geofence->radius : 30" :extraData="['after' => 'm']"></x-input>
                 <x-input type="text" label="Latitude" name="latitude" :value="$geofence ? $geofence->latitude : ''"></x-input>
                 <x-input type="text" label="Longitude" name="longitude" :value="$geofence ? $geofence->longitude : ''"></x-input>
             </div>
