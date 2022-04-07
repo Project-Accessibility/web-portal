@@ -27,6 +27,6 @@ jobs:
       with:
         namespace: acc-accessibility-gewoonjaap
         name: acc-accessibility
-        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing
+        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing,DB_USERNAME=admin,DB_PASSWORD=admin,DB_HOST=mysql
         timeout: 8m
         skipIfExists: false
