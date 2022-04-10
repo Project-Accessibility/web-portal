@@ -12,21 +12,6 @@
                 {{--            @if(Auth::user()->hasRole('admin'))--}}
                 @if(1===1)
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link
-                            @if(Request::route()->getPrefix() == '')
-                                active-menu
-                            @endif
-                                " href="">Link</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link
-                            @if(Request::route()->getPrefix() == 'link')
-                                active-menu
-                            @endif
-                                " href="">Link</a>
-                        </li>
                     </ul>
             @endif
             <!-- Right Side Of Navbar -->
@@ -35,7 +20,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     {{--                        {{ Auth::user()->first_name }}--}}
-                            Milo
+                            Test
                         </a>
                         {{--//@todo: add logout route--}}
                         <ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
