@@ -27,6 +27,8 @@ Route::get('/', function () {
     ->name('welcome')
     ->defaults('display', 'home');
 
+// Preview views
+
 Route::get('/stylesheet', function () {
     return view('stylesheet');
 })
@@ -45,6 +47,12 @@ Route::post('/inputs', function (TestInputsRequest $request) {
 })
     ->name('inputs.store')
     ->defaults('display', 'inputs');
+
+Route::get('/questionTypes', function () {
+    return view('question-types');
+})
+    ->name('questionTypesPreview')
+    ->defaults('display', 'Question types preview');
 
 // Routes for testing the table links
 if (App::environment('testing')) {
