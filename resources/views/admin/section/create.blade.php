@@ -33,7 +33,7 @@
                 <input type="text" name="test" value="{{env('MAPBOX_ACCESS_TOKEN')}}" hidden/>
             </div>
             <div class="col-md-6" style="min-height: 200px;">
-                <div id="map" class="h-100 border border-primary"></div>
+                <div id="map" data-editable="true" class="h-100 border border-primary"></div>
             </div>
         </div>
         <div class="mt-2">

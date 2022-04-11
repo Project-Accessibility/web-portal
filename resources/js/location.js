@@ -33,10 +33,8 @@ window.addEventListener('load', () => {
 
     function updateMap(latitude, longitude) {
         // Variables
+        let coordinates = { lat: latitude, lng: longitude };
         const radius = Number(radiusInput.value);
-        const coordinates = { lat: latitude, lng: longitude };
-        console.log(coordinates);
-        console.log(radius);
 
         // Create the map.
         const map = new mapboxgl.Map({
@@ -45,8 +43,15 @@ window.addEventListener('load', () => {
             center: coordinates,
             zoom: 15,
         });
+
+        // Add full screen, zoom and rotation controls to the map.
+        map.addControl(new mapboxgl.FullscreenControl());
+        map.addControl(new mapboxgl.NavigationControl());
+
         // Create marker
-        new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+        addMarker(map, coordinates, radius);
+
+        // Create circle
         const loadSource = () => {
             if (map.isStyleLoaded()) {
                 addNewSources(map, coordinates, radius);
@@ -56,13 +61,36 @@ window.addEventListener('load', () => {
         map.on('load', loadSource);
     }
 
+    function addMarker(map, coordinates, radius) {
+        const mapDiv = document.getElementById('map');
+        let marker;
+        if (mapDiv.dataset.editable) {
+            marker = new mapboxgl.Marker({
+                draggable: true,
+            })
+                .setLngLat(coordinates)
+                .addTo(map);
+        } else {
+            marker = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+        }
+
+        function onDragEnd() {
+            const lngLat = marker.getLngLat();
+            coordinates = { lat: lngLat.lat, lng: lngLat.lng };
+            addNewSources(map, coordinates, radius);
+            latitudeInput.value = coordinates.lat;
+            longitudeInput.value = coordinates.lng;
+        }
+
+        marker.on('dragend', onDragEnd);
+    }
+
     function addNewSources(map, coordinates, radius) {
         if (map.getSource('polygon')) {
             map.getSource('polygon').setData(
                 createGeoJSONCircle(coordinates, radius).data
             );
         } else {
-            map.addControl(new mapboxgl.FullscreenControl());
             map.addSource('polygon', createGeoJSONCircle(coordinates, radius));
             map.addLayer({
                 id: 'polygon',

@@ -36,7 +36,7 @@
                 <x-input type="text" label="Longitude" name="longitude" :value="$geofence ? $geofence->longitude : ''"></x-input>
             </div>
             <div class="col-md-6" style="min-height: 200px;">
-                <div id="map" class="h-100 border border-primary"></div>
+                <div id="map" data-editable="true" class="h-100 border border-primary"></div>
             </div>
         </div>
         <div class="mt-2">
