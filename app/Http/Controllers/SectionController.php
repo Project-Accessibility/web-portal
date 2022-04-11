@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Handlers\RadarHandler;
+use App\Http\Handlers\TeachableMachineHandler;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Geofence;
 use App\Models\Questionnaire;
@@ -30,10 +31,13 @@ class SectionController extends Controller
         Research $research,
         Questionnaire $questionnaire,
     ): View {
-        //        https://storage.googleapis.com/tm-model/yhj979xY8/metadata.json
+        $classNames = TeachableMachineHandler::getClassNames(
+            'https://storage.googleapis.com/tm-model/yhj979xY8',
+        );
         return view('admin.section.create', [
             'research' => $research,
             'questionnaire' => $questionnaire,
+            'classNames' => $classNames,
         ]);
     }
 
@@ -48,6 +52,9 @@ class SectionController extends Controller
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'location_description' => $request->input('location_description'),
+            'teachable_machine_class' => $request->input(
+                'teachable_machine_class',
+            ),
         ]);
         $radius = $request->input('radius');
         $latitude = $request->input('latitude');
@@ -83,10 +90,19 @@ class SectionController extends Controller
         Questionnaire $questionnaire,
         Section $section,
     ): View {
+        $classNames = TeachableMachineHandler::getClassNames(
+            'https://storage.googleapis.com/tm-model/yhj979xY8',
+        );
         $geofence = Geofence::whereId($section->geofence_id)->first();
         return view(
             'admin.section.edit',
-            compact('research', 'questionnaire', 'section', 'geofence'),
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'geofence',
+                'classNames',
+            ),
         );
     }
 
