@@ -209,7 +209,7 @@ $progress-height: 1.5rem;
 }
 
 .form-group {
-    margin-bottom: 0.5rem!important;
+    margin-bottom: 0.5rem;
 }
 
 .form-control.is-invalid,
@@ -424,4 +424,10 @@ body {
 /* Icons */
 .bi-x-lg::before {
     content: "\f5ee";
+}
+
+/* Links */
+a.deco-none {
+    color:#000000 !important;
+    text-decoration:none;
 }
