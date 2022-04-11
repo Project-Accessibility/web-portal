@@ -27,7 +27,7 @@
             <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Meerkeuze" name="multipleChoice" :value="false"></x-input>
                 <div class="collapse" id="list-configuration">
-                    <hr class="mt-1"/>
+                    <div class="hr"></div>
                     <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
                              :value="false"></x-input>
                     <div class="row">
