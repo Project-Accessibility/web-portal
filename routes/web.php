@@ -55,6 +55,12 @@ Route::get('/questionTypes', function () {
     ->name('questionTypesPreview')
     ->defaults('display', 'Question types preview');
 
+Route::get('/question/create', function () {
+    return view('admin/question/create');
+})
+    ->name('questionTypesPreview')
+    ->defaults('display', 'Question types preview');
+
 // Routes for testing the table links
 if (App::environment('testing')) {
     Route::get('/fake-route')->name('fake.route.without.params');
