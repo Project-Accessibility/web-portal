@@ -33,7 +33,7 @@
                     <div class="row">
                         <x-input class="col mb-0 mt-1" required type="text" name="listInput"
                                  placeholder="Antwoord 1"></x-input>
-                        <div class="col-md-2 mt-1" style="width: 80px!important;">
+                        <div class="col-md-2 mt-1 px-0 me-3" style="width: 40px!important;">
                             <x-button class="fw-bold w-100" type="primary" link="#" id="add-list-item-button">+</x-button>
                         </div>
                         <ul class="list-group list-group-flush px-2" id="list">
