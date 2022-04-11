@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="row mt-2">
-                <strong>Locatie foto's opslag</strong>
+                <strong>Teachable Machine model</strong>
                 <div>
                     <a href="{{ $questionnaire->teachable_machine_link }}">{{ $questionnaire->teachable_machine_link }}</a>
                 </div>

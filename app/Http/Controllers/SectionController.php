@@ -29,6 +29,7 @@ class SectionController extends Controller
         Research $research,
         Questionnaire $questionnaire,
     ): View {
+        //        https://storage.googleapis.com/tm-model/yhj979xY8/metadata.json
         return view('admin.section.create', [
             'research' => $research,
             'questionnaire' => $questionnaire,
