@@ -10,7 +10,7 @@ class StoreSectionRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'radius' => 'min:10'
+            'radius' => 'min:10',
         ];
     }
 

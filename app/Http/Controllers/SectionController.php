@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Handlers\RadarHandler;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Geofence;
 use App\Models\Questionnaire;
@@ -59,6 +60,14 @@ class SectionController extends Controller
             ]);
             $section->geofence_id = $geofence->id;
             $section->save();
+            RadarHandler::saveGeofence(
+                $geofence->id,
+                $section->title,
+                $section->description,
+                $longitude,
+                $latitude,
+                $radius,
+            );
         }
 
         return redirect(
@@ -109,6 +118,14 @@ class SectionController extends Controller
                 $section->geofence_id = $geofence->id;
                 $section->save();
             }
+            RadarHandler::saveGeofence(
+                $geofence->id,
+                $section->title,
+                $section->description,
+                $longitude,
+                $latitude,
+                $radius,
+            );
         }
 
         return redirect()
