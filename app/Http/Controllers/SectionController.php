@@ -77,12 +77,11 @@ class SectionController extends Controller
             );
         }
 
-        return redirect(
-            route('questionnaires.sections', [
-                $research->id,
-                $questionnaire->id,
-            ]),
-        )->with('success', 'Het onderdeel is aangemaakt!');
+        return redirect()->route('questionnaires.details', [
+            $research->id,
+            $questionnaire->id,
+            'tab' => 'Onderdelen',
+        ])->with('success', 'Het onderdeel is aangemaakt!');
     }
 
     public function edit(
