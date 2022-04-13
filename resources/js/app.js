@@ -1,6 +1,10 @@
 require('./bootstrap');
-
 window.onload = () => {
+    // If there is on the initial page load a tab query given, the PHP code will handle this.
+    if (window.location.href.indexOf('?tab=') === -1) {
+        createActiveBreadCrumb();
+    }
+
     var elements = document.getElementsByClassName('clickable-row');
 
     Array.from(elements).forEach(function (element) {
@@ -14,14 +18,7 @@ window.onload = () => {
             let query = event.target.dataset.bsTarget.substring(1);
             let currentUrl = window.location.href;
 
-            const params = new Proxy(
-                new URLSearchParams(window.location.search),
-                {
-                    get: (searchParams, prop) => searchParams.get(prop),
-                }
-            );
-
-            let tabQuery = params.tab;
+            let tabQuery = getTabQuery();
 
             let nextUrl;
             if (currentUrl.indexOf('?tab=') > -1) {
@@ -30,11 +27,63 @@ window.onload = () => {
                     '?tab=' + query
                 );
             } else {
-                console.log('not included yet');
                 nextUrl = currentUrl + '?tab=' + query;
             }
 
-            window.history.pushState('', '', nextUrl);
+            window.history.replaceState('', '', nextUrl);
+
+            createActiveBreadCrumb(query);
         });
     });
 };
+
+function getTabQuery() {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+
+    return params.tab;
+}
+
+function createActiveBreadCrumb(query) {
+    let breadcrumbs = document.getElementById('breadcrumbs');
+    if (breadcrumbs) {
+        // If there is no given query because of the initial page load.
+        if (!query) {
+            let activeTab = document.querySelector(
+                'span#link-Details.nav-link.active'
+            );
+
+            if (!activeTab) {
+                return;
+            }
+
+            query = activeTab.innerText;
+        }
+
+        let tabQuery = getTabQuery();
+
+        let currentUrl = window.location.href;
+        let lastBreadcrumb = breadcrumbs.lastElementChild;
+        let fullClassList = lastBreadcrumb.classList;
+
+        // If there is a query given in the url, there is already a tab breadcrumb.
+        if (tabQuery) {
+            breadcrumbs.removeChild(lastBreadcrumb);
+        } else {
+            lastBreadcrumb.classList.remove('active');
+
+            let link = document.createElement('a');
+            link.setAttribute('href', currentUrl.split('?')[0]);
+            link.innerText = lastBreadcrumb.innerText;
+            lastBreadcrumb.innerText = null;
+            lastBreadcrumb.appendChild(link);
+        }
+
+        let newBreadcrumb = document.createElement('li');
+        newBreadcrumb.classList = fullClassList;
+        newBreadcrumb.innerText = query;
+
+        breadcrumbs.appendChild(newBreadcrumb);
+    }
+}

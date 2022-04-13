@@ -2,6 +2,12 @@
 
 @section('content')
     <h1 class="title">Home pagina</h1>
-    <x-button type="secondary" link="{{ route('stylesheet') }}">Stylesheet</x-button>
-    <x-button type="secondary" link="{{ route('inputs') }}">Inputs testen</x-button>
+    <p>
+        Beste tester,<br>
+        Welkom op de testomgeving van het dashboard van <strong>Stichting Accessibility</strong>.<br>
+        <br>
+        Op dit moment zit er nog geen inlogfunctionaliteit in het dashboard.<br>
+        Daarom kan je via deze pagina navigeren door het dashboard.<br>
+        Om te beginnen <a href="/researches">Klik hier!</a>
+    </p>
 @endsection
