@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ResearchController;
+use App\Http\Controllers\ResultController;
+use App\Http\Controllers\SectionController;
 use App\Http\Requests\TestInputsRequest;
 use App\Models\Questionnaire;
 use App\Models\Research;
@@ -104,18 +106,43 @@ Route::controller(ResearchController::class)
                             'questionnaires.remove',
                         );
 
-                        Route::get('/sections', function (
-                            Research $research,
-                            Questionnaire $questionnaire,
-                        ) {
-                            return redirect()->route('questionnaires.details', [
-                                $research,
-                                $questionnaire,
-                                'tab' => 'Onderdelen',
-                            ]);
-                        })
-                            ->name('questionnaires.sections')
-                            ->defaults('display', 'Onderdelen');
+                        Route::controller(SectionController::class)
+                            ->prefix('/sections')
+                            ->group(function () {
+                                Route::get('/', 'overview')
+                                    ->name('questionnaires.sections')
+                                    ->defaults('display', 'Onderdelen');
+                                Route::get('/create', 'create')
+                                    ->name('sections.create')
+                                    ->defaults('display', 'Aanmaken');
+                                Route::post('/', 'store')->name(
+                                    'sections.store',
+                                );
+                                Route::prefix('/{section}')->group(function () {
+                                    Route::get('/', 'details')->name(
+                                        'sections.details',
+                                    );
+                                    Route::get('/edit', 'edit')
+                                        ->name('sections.edit')
+                                        ->defaults('display', 'aanpassen');
+                                    Route::delete('/', 'remove')->name(
+                                        'sections.remove',
+                                    );
+                                    Route::put('/', 'update')->name(
+                                        'sections.update',
+                                    );
+                                    Route::controller(ResultController::class)
+                                        ->prefix('/results')
+                                        ->group(function () {
+                                            Route::get('/', 'sectionOverview')
+                                                ->name('sections.results')
+                                                ->defaults(
+                                                    'display',
+                                                    'Resultaten',
+                                                );
+                                        });
+                                });
+                            });
 
                         Route::get('/results', function (
                             Research $research,

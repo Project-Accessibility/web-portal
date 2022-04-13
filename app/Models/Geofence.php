@@ -5,6 +5,7 @@ namespace App\Models;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Geofence
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Geofence whereLongitude($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Geofence whereRadius($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Geofence whereUpdatedAt($value)
+ * @method static create(array $array)
  */
 class Geofence extends Model
 {
