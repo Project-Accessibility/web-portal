@@ -14,11 +14,6 @@ use Illuminate\Routing\Redirector;
 
 class ResearchController extends Controller
 {
-    //    public function __construct()
-    //    {
-    //        $this->middleware(['web', 'auth']);
-    //    }
-
     public function overview(): View
     {
         $researches = Research::all()->toArray();
