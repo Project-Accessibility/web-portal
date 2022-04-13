@@ -7,7 +7,7 @@
 <div id="app">
     <x-nav-bar/>
 
-    <main class="container rounded mt-4">
+    <main class="container rounded mb-4 mt-4">
         @if (session()->has('success') || !empty($success))
             <div class="container">
                 <div class="row justify-content-center">
