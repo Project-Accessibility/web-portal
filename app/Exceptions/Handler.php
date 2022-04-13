@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -34,11 +35,20 @@ class Handler extends ExceptionHandler
                 !$request->route() ||
                 $request->route()->getPrefix() !== 'api'
             ) {
-                return;
+                return $this->handleWebException($exception);
             }
 
             return $this->handleApiException($request, $exception);
         });
+    }
+
+    private function handleWebException(Exception $exception)
+    {
+        if ($exception instanceof AuthenticationException) {
+            return response()
+                ->redirectTo('/login')
+                ->with('unauth', 'U moet ingelogd zijn.');
+        }
     }
 
     private function handleApiException(
