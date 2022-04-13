@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Requests\TestInputsRequest;
 use App\Models\Questionnaire;
@@ -140,6 +141,47 @@ Route::controller(ResearchController::class)
                                                     'display',
                                                     'Resultaten',
                                                 );
+                                        });
+                                    Route::controller(QuestionController::class)
+                                        ->prefix('/questions')
+                                        ->group(function () {
+                                            Route::get('/', 'overview')
+                                                ->name('sections.questions')
+                                                ->defaults('display', 'Vragen');
+                                            Route::get('/create', 'create')
+                                                ->name('questions.create')
+                                                ->defaults(
+                                                    'display',
+                                                    'Aanmaken',
+                                                );
+                                            Route::post('/', 'store')->name(
+                                                'questions.store',
+                                            );
+                                            Route::prefix('/{question}')->group(
+                                                function () {
+                                                    Route::get(
+                                                        '/',
+                                                        'details',
+                                                    )->name(
+                                                        'questions.details',
+                                                    );
+                                                    Route::get('/edit', 'edit')
+                                                        ->name('questions.edit')
+                                                        ->defaults(
+                                                            'display',
+                                                            'Aanpassen',
+                                                        );
+
+                                                    Route::delete(
+                                                        '/',
+                                                        'remove',
+                                                    )->name('questions.remove');
+                                                    Route::put(
+                                                        '/',
+                                                        'update',
+                                                    )->name('questions.update');
+                                                },
+                                            );
                                         });
                                 });
                             });
