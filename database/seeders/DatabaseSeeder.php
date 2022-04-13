@@ -22,8 +22,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'info@accessibility.nl',
-            'password' =>
-                '$2y$10$.hq3lePFqgfTr5UBK1kOmecCm2rnC7SAosaVAxQ9qm5OHk/Rmf72e',
+            'password' => Hash::make('admin'),
         ]);
 
         $this->createDemoData();

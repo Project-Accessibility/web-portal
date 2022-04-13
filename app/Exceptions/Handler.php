@@ -45,9 +45,7 @@ class Handler extends ExceptionHandler
     private function handleWebException(Throwable $exception)
     {
         if ($exception instanceof AuthenticationException) {
-            return response()
-                ->redirectTo('/login')
-                ->with('unauth', 'U moet ingelogd zijn.');
+            return redirect()->route('login')->with('unauth', 'U moet ingelogd zijn.');
         }
     }
 
