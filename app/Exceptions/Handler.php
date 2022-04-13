@@ -34,8 +34,6 @@ class Handler extends ExceptionHandler
             if ($request->route() && $request->route()->getPrefix() === 'api') {
                 return $this->handleApiException($request, $exception);
             }
-
-            //            dd($exception);
         });
 
         parent::register();
