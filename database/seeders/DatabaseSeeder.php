@@ -20,60 +20,56 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(3)->create();
 
-        $this->createQuestionnaires();
+        $this->createDemoData();
     }
 
-    private function createQuestionnaires()
+    private function createDemoData()
     {
-        Questionnaire::factory(1)
-            ->create(['open' => true])
-            ->each(function (Questionnaire $questionnaire) {
-                $participant = Participant::factory()->create([
-                    'questionnaire_id' => $questionnaire->id,
-                ]);
+        $this->createNemoResearch();
 
-                $this->createSections($questionnaire, $participant);
-            });
+        // More demo data can be added here.
     }
 
-    private function createSections(
-        Questionnaire $questionnaire,
-        Participant $participant,
-    ) {
-        Section::factory(6)
-            ->create(['questionnaire_id' => $questionnaire->id])
-            ->each(function (Section $section) use ($participant) {
-                $this->createQuestions($section, $participant);
-            });
-    }
-
-    private function createQuestions(Section $section, Participant $participant)
+    private function createNemoResearch()
     {
-        Question::factory(6)
-            ->create(['section_id' => $section->id])
-            ->each(function (Question $question) use ($participant) {
-                $this->createQuestionOptions($question, $participant);
-            });
+        $research = Research::factory()->create([
+            'title' => 'NEMO onderzoek',
+            'description' =>
+                'Dit is onderzoek is in samenwerking met NEMO om te kijken naar de toegankelijkheid vanaf de website tot en met het bezoek.',
+        ]);
+
+        $this->createNemoQuestionnaire($research);
     }
 
-    private function createQuestionOptions(
-        Question $question,
-        Participant $participant,
-    ) {
-        QuestionOption::factory(6)
-            ->create(['question_id' => $question->id])
-            ->each(function (QuestionOption $option) use ($participant) {
-                $this->createAnswers($option, $participant);
-            });
+    private function createNemoQuestionnaire(Research $research)
+    {
+        $questionnaire = Questionnaire::factory()->create([
+            'research_id' => $research->id,
+            'title' => 'Vragenlijst toegankelijkheid',
+            'description' => 'De algemene vragenlijst.',
+        ]);
+
+        $this->createNemoSections($questionnaire);
     }
 
-    private function createAnswers(
-        QuestionOption $questionOption,
-        Participant $participant,
-    ) {
-        Answer::factory(6)->create([
-            'participant_id' => $participant->id,
-            'question_option_id' => $questionOption->id,
+    private function createNemoSections(Questionnaire $questionnaire)
+    {
+        $entrance_section = Section::factory()->create([
+            'questionnaire_id' => $questionnaire->id,
+            'title' => 'Entree',
+            'description' =>
+                'Benoem zowel je positieve als negatieve ervaringen.',
+            'location_description' =>
+                'Dit is het gedeelte waar je NEMO binnen komt.',
+        ]);
+
+        $information_section = Section::factory()->create([
+            'questionnaire_id' => $questionnaire->id,
+            'title' => 'Kassa/infobalie',
+            'description' =>
+                'Benoem zowel je positieve als negatieve ervaringen.',
+            'location_description' =>
+                'Hier kan je meer informatie vragen en kaartjes kopen.',
         ]);
     }
 }

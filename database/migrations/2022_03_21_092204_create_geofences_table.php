@@ -11,8 +11,8 @@ return new class extends Migration
     {
         Schema::create('geofences', function (Blueprint $table) {
             $table->id();
-            $table->float("longitude");
-            $table->float("latitude");
+            $table->float("longitude", 13,7);
+            $table->float("latitude",13,7);
             $table->float("radius");
             $table->timestamps();
         });

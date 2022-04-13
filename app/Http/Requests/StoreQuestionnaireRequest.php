@@ -13,6 +13,17 @@ class StoreQuestionnaireRequest extends FormRequest
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if ($this->radius && intval($this->radius) < 10) {
+                $validator
+                    ->errors()
+                    ->add('radius', 'Radius moet hoger of gelijk aan 10 zijn.');
+            }
+        });
+    }
+
     public function attributes()
     {
         return [
