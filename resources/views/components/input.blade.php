@@ -14,7 +14,7 @@
                     <span class="input-group-text">{{$extraData['before']}}</span>
                 @endif
                 <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                       placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+                       placeholder="{{$placeholder}}" value="{{old($name, $value)}}"/>
                 @if(isset($extraData['after']))
                     <span class="input-group-text">{{$extraData['after']}}</span>
                 @endif
@@ -22,7 +22,7 @@
         @else
             <input class="form-control @error($name) is-invalid @enderror" type="text" id="{{$name}}" title="{{$name}}"
                    name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+                   placeholder="{{$placeholder}}" value="{{old($name, $value)}}"/>
         @endif
         @break
         @case('email')
@@ -50,7 +50,7 @@
                     <span class="input-group-text">{{$extraData['before']}}</span>
                 @endif
                 <input class="form-control" type="number" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                       placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+                       placeholder="{{$placeholder}}" value="{{old($name, $value)}}"/>
                 @if(isset($extraData['after']))
                     <span class="input-group-text">{{$extraData['after']}}</span>
                 @endif
@@ -58,14 +58,14 @@
         @else
             <input class="form-control @error($name) is-invalid @enderror" type="number" id="{{$name}}"
                    title="{{$name}}" name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+                   placeholder="{{$placeholder}}" value="{{old($name, $value)}}"/>
         @endif
         @break
         @case('textarea')
         <textarea class="form-control @error($name) is-invalid @enderror" type="text" id="{{$name}}" title="{{$name}}"
                   name="{{$name}}"
                   placeholder="{{$placeholder}}"
-                  rows="{{$extraData['rows']}}">{{old($name) ? old($name) : $value}}</textarea>
+                  rows="{{$extraData['rows']}}">{{old($name, $value)}}</textarea>
         @break
         @case('password')
         <input class="form-control @error($name) is-invalid @enderror" type="password" id="{{$name}}" title="{{$name}}"
@@ -74,13 +74,17 @@
         @break
         @case('select')
         <div class="@error($name) is-invalid @enderror">
+            @if($extraData['multiple'])
+                <input type="hidden" name="{{$name}}" value=""/>
+            @endif
             <select class="selectpicker form-control" id="{{$name}}" title="{{$name}}"
                     name="{{$name}}{{$extraData['multiple']?'[]':''}}" {{$extraData['multiple']?'multiple':''}}>
                 @foreach($extraData['options'] as $option)
                     @php
-                        $value = old($name) ? old($name) : $value;
-                        $isSelected = ($loop->index == 0 && ($value == null || $value == [])) || (!empty($value) && ($extraData['multiple'] ? in_array($option[1],$value) : ($value)==$option[1]))
+                        $value = $extraData['multiple'] ? (old($name, $value) ? old($name, $value) :  []) : old($name, $value) ?? [];
+                        $isSelected = !empty($value) && ($extraData['multiple'] ? in_array($option[1], $value) : $value==$option[1])
                     @endphp
+
                     @if($isSelected)
                         <option selected value="{{$option[1]}}">{{$option[0]}}</option>
                     @else
@@ -93,15 +97,15 @@
         @case('date')
         <input class="form-control @error($name) is-invalid @enderror" type="date" id="{{$name}}" title="{{$name}}"
                name="{{$name}}"
-               value="{{old($name) ? old($name) : $value}}"/>
+               value="{{old($name, $value)}}"/>
         @break
         @case('datetime')
         <input class="form-control @error($name) is-invalid @enderror" type="datetime-local" id="{{$name}}"
                title="{{$name}}" name="{{$name}}"
-               value="{{old($name) ? old($name) : $value}}"/>
+               value="{{old($name, $value)}}"/>
         @break
         @case('switch')
-        <input type="hidden" value="0" name="{{ $name }}" />
+        <input type="hidden" value="0" name="{{ $name }}"/>
         <input type="checkbox" value="1" class="form-check-input" id="{{$name}}" title="{{$name}}"
                name="{{$name}}" {{old($name) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}}/>
         @break
@@ -109,9 +113,9 @@
         <div class="d-flex @error($name) is-invalid highlight-error @enderror">
             <input type="range" class="form-range w-75" min="{{$extraData['min']}}" max="{{$extraData['max']}}"
                    step="{{$extraData['step']}}" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{(old($name)!=null ? old($name) : $value) ?? 0}}">
+                   placeholder="{{$placeholder}}" value="{{old($name, $value) ?? 0}}">
             <output class="mx-3" name="output-{{$name}}"
-                    id="output-{{$name}}">{{(old($name)!=null ? old($name) : $value) ?? 0}}</output>
+                    id="output-{{$name}}">{{old($name, $value) ?? 0}}</output>
         </div>
         <script>
             window.addEventListener('load', () => {
@@ -128,7 +132,7 @@
             <input id="{{$name}}" title="{{$name}}" name="{{$name}}{{$extraData['multiple']?'[]':''}}" type="file"
                    class="file" {{$extraData['multiple']?'multiple':''}}
                    data-show-upload="false" data-show-caption="true" data-msg-placeholder="{{$placeholder}}"
-                   value="{{old($name) ? old($name) : $value}}">
+                   value="{{old($name, $value)}}">
         </div>
         @break
     @endswitch

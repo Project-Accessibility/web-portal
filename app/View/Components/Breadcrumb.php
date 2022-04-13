@@ -13,7 +13,7 @@ class Breadcrumb extends Component
 
     public function __construct()
     {
-        $url = parse_url(url()->current());
+        $url = parse_url(url()->full());
 
         if (!isset($url['path'])) {
             return;
@@ -39,6 +39,18 @@ class Breadcrumb extends Component
                 $this->paths[] = [
                     'display' => $view,
                     'url' => $fullPath,
+                ];
+            }
+        }
+
+        if (isset($url['query'])) {
+            $query = [];
+            parse_str($url['query'], $query);
+            if (isset($query['tab'])) {
+                $tab = $query['tab'];
+                $this->paths[] = [
+                    'display' => $tab,
+                    'url' => end($this->paths)['url'] . '?tab=' . $tab,
                 ];
             }
         }

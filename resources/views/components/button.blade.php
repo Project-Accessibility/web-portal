@@ -1,4 +1,4 @@
-@if($link)
+@if($link != null)
     <a href="{{$link}}"
     @switch($type)
         @case('primary')

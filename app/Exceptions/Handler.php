@@ -9,6 +9,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Spatie\LaravelIgnition\Exceptions\ViewException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -31,18 +32,17 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (Throwable $exception, Request $request) {
-            if (
-                !$request->route() ||
-                $request->route()->getPrefix() !== 'api'
-            ) {
+            if ($request->route() && $request->route()->getPrefix() === 'api') {
+                return $this->handleApiException($request, $exception);
+            } else {
                 return $this->handleWebException($exception);
             }
-
-            return $this->handleApiException($request, $exception);
         });
+
+        parent::register();
     }
 
-    private function handleWebException(Exception $exception)
+    private function handleWebException(Throwable $exception)
     {
         if ($exception instanceof AuthenticationException) {
             return response()

@@ -47,13 +47,23 @@
                 </div>
             </div>
             <div class="row mt-2">
-                <strong>Locatie foto's opslag</strong>
+                <strong>Teachable Machine model</strong>
                 <div>
                     <a href="{{ $questionnaire->teachable_machine_link }}">{{ $questionnaire->teachable_machine_link }}</a>
                 </div>
             </div>
         @endsection
         @section('Onderdelen')
+                <div class="mt-2">
+                    <div class="row justify-content-end">
+                        <div class="w-auto">
+                            <x-button type="secondary" link="{{ route('sections.create', [$questionnaire->research->id, $questionnaire->id]) }}">
+                                Nieuwe Onderdeel
+                            </x-button>
+                        </div>
+                    </div>
+                    <x-table :tableLinks="$sectionLinks" :headers="$sectionHeaders" :items="$sections" :keys="$sectionKeys" :row-link="$sectionRowLink"/>
+                </div>
         @endsection
         @section('Resultaten')
         @endsection
