@@ -30,7 +30,7 @@ class SelectConfiguration {
         // Add list item listener
         this.addListItemButton.addEventListener('click', (e) => {
             e.preventDefault();
-            if (this.listAnswerInput.value && !values.includes(this.listAnswerInput.value)) {
+            if (this.listAnswerInput.value && !this.values.includes(this.listAnswerInput.value)) {
                 this.values.push(this.listAnswerInput.value);
                 this.addListItem(this.listAnswerInput.value);
             }
@@ -40,6 +40,7 @@ class SelectConfiguration {
     initList() {
         if (window.values) {
             window.values.forEach(value => {
+                this.values.push(value);
                 this.addListItem(value);
             });
         }

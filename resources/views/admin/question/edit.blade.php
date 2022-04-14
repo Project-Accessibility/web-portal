@@ -12,17 +12,19 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <form method="POST" action="">
+    <form method="POST" action="{{route('questions.update', [$research->id,$questionnaire->id, $section->id, $question->id])}}">
         @csrf
 
         <h1 class="title">Nieuwe vraag</h1>
         <div class="col-md-6">
             <h2 class="h2">Gegevens</h2>
-            <x-input type="text" label="Titel" name="title" placeholder="Titel van de vraag" :value="$question->title" required></x-input>
-            <x-input type="text" label="Vraag" name="question" placeholder="De vraag" :value="$question->question" required></x-input>
+            <x-input type="text" label="Titel" name="title" placeholder="Titel van de vraag" :value="$question->title"
+                     required></x-input>
+            <x-input type="text" label="Vraag" name="question" placeholder="De vraag" :value="$question->question"
+                     required></x-input>
             <h2 class="h2">Antwoord mogelijkheden</h2>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Open antwoord" name="openAnswer" :value="true"></x-input>
+                <x-input class="m-0" type="switch" label="Open antwoord" name="openAnswer" :value="false"></x-input>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Meerkeuze" name="multipleChoice"
@@ -48,9 +50,7 @@
                 <x-input class="m-0" type="switch" label="Foto" name="photo" :value="false"></x-input>
             </div>
             <div class="border border-primary p-2">
-                <fieldset disabled="disabled">
-                    <x-input class="m-0" type="switch" label="Spraakopname" name="audio" :value="true"></x-input>
-                </fieldset>
+                <x-input class="m-0" type="switch" label="Spraakopname" name="audio" :value="true"></x-input>
             </div>
             <div class="mt-2">
                 <x-button type="secondary">Aanpassen</x-button>
