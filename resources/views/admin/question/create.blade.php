@@ -48,9 +48,6 @@
             <div class="border border-primary p-2">
                 <x-input class="m-0" type="switch" label="Spraakopname" name="audio" :value="true"></x-input>
             </div>
-            <div class="mt-2">
-                <x-button type="secondary">Toevoegen</x-button>
-            </div>
             <x-button class="float-end mt-2" type="secondary">Toevoegen</x-button>
         </div>
     </form>

@@ -76,9 +76,6 @@
                 <x-input class="m-0" type="switch" label="Spraakopname" name="audio"
                          :value="$audioOption != null"></x-input>
             </div>
-            <div class="mt-2">
-                <x-button type="secondary">Aanpassen</x-button>
-            </div>
             <x-button class="float-end mt-2" type="secondary">Aanpassen</x-button>
         </div>
     </form>
