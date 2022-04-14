@@ -12,8 +12,30 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <form method="POST" action="{{route('questions.update', [$research->id,$questionnaire->id, $section->id, $question->id])}}">
+    @php
+        $multipleChoiceOption = null;
+        $photoOption = null;
+        $audioOption = null;
+        foreach ($question->options as $option){
+            switch ($option->type){
+                case \App\Enums\QuestionOptionType::MULTIPLE_CHOICE:
+                    $multipleChoiceOption = $option;
+                    break;
+                case \App\Enums\QuestionOptionType::IMAGE:
+                    $photoOption = $option;
+                    break;
+                case \App\Enums\QuestionOptionType::VOICE:
+                    $audioOption = $option;
+                    break;
+                default:
+                    break;
+            }
+        }
+    @endphp
+    <form method="POST"
+          action="{{route('questions.update', [$research->id,$questionnaire->id, $section->id, $question->id])}}">
         @csrf
+        @method('PUT')
 
         <h1 class="title">Nieuwe vraag</h1>
         <div class="col-md-6">
@@ -28,12 +50,13 @@
             </div>
             <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Meerkeuze" name="multipleChoice"
-                         :value="$question->options[0]->type == 'multipleChoice'"></x-input>
-                <div class="collapse {{$question->options[0]->type == 'multipleChoice' ? 'show' : ''}}"
-                     id="list-configuration">
+                         :value="$multipleChoiceOption != null"></x-input>
+                <div
+                    class="collapse {{is_string(old('multipleChoice')) ? (old('multipleChoice') ? 'show' : '') : ($multipleChoiceOption != null ? 'show' : '')}}"
+                    id="list-configuration">
                     <div class="hr"></div>
                     <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
-                             :value="$question->options[0]->extra_data->multiple"></x-input>
+                             :value="$multipleChoiceOption != null ? $multipleChoiceOption->extra_data['multiple'] : false"></x-input>
                     <div class="row">
                         <x-input class="col mb-0 mt-1" required type="text" name="listInput"
                                  placeholder="Voer antwoord optie in"></x-input>
@@ -47,10 +70,11 @@
                 </div>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Foto" name="photo" :value="false"></x-input>
+                <x-input class="m-0" type="switch" label="Foto" name="photo" :value="$photoOption != null"></x-input>
             </div>
             <div class="border border-primary p-2">
-                <x-input class="m-0" type="switch" label="Spraakopname" name="audio" :value="true"></x-input>
+                <x-input class="m-0" type="switch" label="Spraakopname" name="audio"
+                         :value="$audioOption != null"></x-input>
             </div>
             <div class="mt-2">
                 <x-button type="secondary">Aanpassen</x-button>
@@ -59,8 +83,12 @@
         </div>
     </form>
     <script>
-        if ({{$question->options[0]->type == 'multipleChoice'}}) {
-            window.values = {!! json_encode($question->options[0]->extra_data->values) !!};
+        if (!{{empty(old('multipleChoice')) ? 1 : 0}}) {
+            if (!{{empty(old('list')) ? 1 : 0}}) {
+                window.values = {!! json_encode(old('list')) !!};
+            }
+        } else if (!{{is_null($multipleChoiceOption) ? 1 : 0}}) {
+            window.values = {!! json_encode($multipleChoiceOption ? $multipleChoiceOption->extra_data['values'] : []) !!};
         }
     </script>
     <script src="{{ asset('js/select.js') }}"></script>

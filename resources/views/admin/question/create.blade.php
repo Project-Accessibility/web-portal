@@ -26,7 +26,7 @@
             </div>
             <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Meerkeuze" name="multipleChoice" :value="false"></x-input>
-                <div class="collapse" id="list-configuration">
+                <div class="collapse {{old('multipleChoice') ? 'show' : ''}}" id="list-configuration">
                     <div class="hr"></div>
                     <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
                              :value="false"></x-input>
@@ -54,5 +54,10 @@
             <x-button class="float-end mt-2" type="secondary">Toevoegen</x-button>
         </div>
     </form>
+    <script>
+        if ({{old('multipleChoice') && old('list')}}) {
+            window.values = {!! json_encode(old('list')) !!};
+        }
+    </script>
     <script src="{{ asset('js/select.js') }}"></script>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\QuestionOptionType;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Models\Question;
@@ -16,10 +17,11 @@ use Illuminate\Routing\Redirector;
 class QuestionController extends Controller
 {
     public function overview(
-        Research $research,
+        Research      $research,
         Questionnaire $questionnaire,
-        Section $section,
-    ): RedirectResponse {
+        Section       $section,
+    ): RedirectResponse
+    {
         return redirect()->route('sections.details', [
             $research->id,
             $questionnaire->id,
@@ -29,10 +31,11 @@ class QuestionController extends Controller
     }
 
     public function create(
-        Research $research,
+        Research      $research,
         Questionnaire $questionnaire,
-        Section $section,
-    ): View {
+        Section       $section,
+    ): View
+    {
         return view('admin.question.create', [
             'research' => $research,
             'questionnaire' => $questionnaire,
@@ -42,13 +45,16 @@ class QuestionController extends Controller
 
     public function store(
         StoreQuestionRequest $request,
-        Research $research,
-        Questionnaire $questionnaire,
-        Section $section,
-    ): Application|RedirectResponse|Redirector {
+        Research             $research,
+        Questionnaire        $questionnaire,
+        Section              $section,
+    ): Application|RedirectResponse|Redirector
+    {
         $request->validated();
+        $data = $request->all();
 
-        $section->questions()->create($request->all());
+        $question = $section->questions()->create($data);
+        $this->storeOptions($question, $data);
 
         return redirect()
             ->route('sections.details', [
@@ -60,12 +66,38 @@ class QuestionController extends Controller
             ->with('success', 'De vraag is aangemaakt!');
     }
 
+    private function storeOptions($question, $data)
+    {
+        if ($data['multipleChoice'] && isset($data['list'])) {
+            $question->options()->create([
+                'type' => QuestionOptionType::MULTIPLE_CHOICE,
+                'extra_data' => [
+                    'multiple' => $data['multipleAnswers'],
+                    'values' => $data['list']
+                ]
+            ]);
+        }
+        if($data['photo']){
+            $question->options()->create([
+                'type' => QuestionOptionType::IMAGE,
+                'extra_data' => []
+            ]);
+        }
+        if($data['audio']){
+            $question->options()->create([
+                'type' => QuestionOptionType::VOICE,
+                'extra_data' => []
+            ]);
+        }
+    }
+
     public function edit(
-        Research $research,
+        Research      $research,
         Questionnaire $questionnaire,
-        Section $section,
-        Question $question,
-    ): View {
+        Section       $section,
+        Question      $question,
+    ): View
+    {
         return view(
             'admin.question.edit',
             compact('research', 'questionnaire', 'section', 'question'),
@@ -73,15 +105,19 @@ class QuestionController extends Controller
     }
 
     public function update(
-        StoreQuestionnaireRequest $request,
-        Research $research,
-        Questionnaire $questionnaire,
-        Section $section,
-        Question $question,
-    ): RedirectResponse {
+        StoreQuestionRequest $request,
+        Research                  $research,
+        Questionnaire             $questionnaire,
+        Section                   $section,
+        Question                  $question,
+    ): RedirectResponse
+    {
         $request->validated();
+        $data = $request->all();
 
-        $question->update($request->all());
+        $question->update($data);
+        $question->options()->delete();
+        $this->storeOptions($question, $data);
 
         return redirect()
             ->route('questions.details', [
@@ -95,11 +131,12 @@ class QuestionController extends Controller
     }
 
     public function details(
-        Research $research,
+        Research      $research,
         Questionnaire $questionnaire,
-        Section $section,
-        Question $question,
-    ): View {
+        Section       $section,
+        Question      $question,
+    ): View
+    {
         return view(
             'admin.question.details',
             compact('research', 'questionnaire', 'section', 'question'),
@@ -107,11 +144,12 @@ class QuestionController extends Controller
     }
 
     public function remove(
-        Research $research,
+        Research      $research,
         Questionnaire $questionnaire,
-        Section $section,
-        Question $question,
-    ): Application|RedirectResponse|Redirector {
+        Section       $section,
+        Question      $question,
+    ): Application|RedirectResponse|Redirector
+    {
         $question->delete();
 
         return redirect(
