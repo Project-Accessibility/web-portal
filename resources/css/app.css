@@ -14,6 +14,5 @@
 }
 
 .dropdown-menu > .nav-item .dropdown-item:hover {
-    background-color: transparent;
-    border-bottom: 2px solid white;
+    background-color: rgba(256, 256, 256, 0.1);
 }
