@@ -22,6 +22,7 @@ services:
             REDIS_HOST: 'redis'
             MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN:-pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw}'
             RADAR_SECRET: '${RADAR_SECRET:-prj_test_sk_ff7db4eafcbaeab87d30a3d1b28ebae427a73372}'
+            RADAR_API_URL: '${RADAR_API_URL:-https://api.radar.io/v1}'
         volumes:
             - '.:/app'
         depends_on:
