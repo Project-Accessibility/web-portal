@@ -27,6 +27,6 @@ jobs:
       with:
         namespace: dev-accessibility-gewoonjaap
         name: dev-accessibility
-        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing,DB_USERNAME=admin,DB_PASSWORD=admin,DB_HOST=mysql
+        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing,DB_USERNAME=admin,DB_PASSWORD=admin,DB_HOST=mysql,MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw,RADAR_SECRET=prj_test_sk_ff7db4eafcbaeab87d30a3d1b28ebae427a73372
         timeout: 8m
         skipIfExists: false
