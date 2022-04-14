@@ -21,8 +21,8 @@ class RadarHandler
         $latitude,
         $radius,
     ): array {
-        $url = env('RADAR_API_URL') . "/geofences/{$tag}/{$id}";
-        $secret = env('RADAR_SECRET');
+        $url = 'https://api.radar.io/v1' . "/geofences/{$tag}/{$id}";
+        $secret = 'prj_test_sk_ff7db4eafcbaeab87d30a3d1b28ebae427a73372';
         $headers = [
             'Accept: application/json',
             'Content-Type: application/x-www-form-urlencoded',
