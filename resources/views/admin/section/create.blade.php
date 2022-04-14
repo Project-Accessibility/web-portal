@@ -31,7 +31,6 @@
                 <x-input type="number" label="Radius" name="radius" placeholder="Voer radius in" value="30" :extraData="['after' => 'm']"></x-input>
                 <x-input type="text" label="Latitude" name="latitude"></x-input>
                 <x-input type="text" label="Longitude" name="longitude"></x-input>
-                <input type="text" name="test" value="{{env('MAPBOX_ACCESS_TOKEN')}}" hidden/>
             </div>
             <div class="col-md-6" style="min-height: 200px;">
                 <div id="map" data-editable="true" class="h-100 border border-primary"></div>
@@ -44,6 +43,6 @@
     </form>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
-    <script>mapboxgl.accessToken = 'pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw';</script>
+    <script>mapboxgl.accessToken = '{{env('MAPBOX_ACCESS_TOKEN')}}';</script>
     <script src="{{ asset('js/location.js') }}"></script>
 @endsection
