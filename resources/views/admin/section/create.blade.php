@@ -31,6 +31,7 @@
                 <x-input type="number" label="Radius" name="radius" placeholder="Voer radius in" value="30" :extraData="['after' => 'm']"></x-input>
                 <x-input type="text" label="Latitude" name="latitude"></x-input>
                 <x-input type="text" label="Longitude" name="longitude"></x-input>
+                <input type="text" name="test" value="{{env('MAPBOX_ACCESS_TOKEN')}}" hidden/>
             </div>
             <div class="col-md-6" style="min-height: 200px;">
                 <div id="map" data-editable="true" class="h-100 border border-primary"></div>
