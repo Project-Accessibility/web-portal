@@ -58,20 +58,20 @@ Route::get('/questionTypes', function () {
 Route::get('/question/create', function () {
     $question = \App\Models\Question::whereId(1)->first();
     $question->options = [
-        (object)[
-            "type"=>'multipleChoice',
-            "extra_data" => (object)[
-                "multiple" => true,
-                "values" => ["Value1", "Value2"]
-            ]
+        (object) [
+            'type' => 'multipleChoice',
+            'extra_data' => (object) [
+                'multiple' => true,
+                'values' => ['Value1', 'Value2'],
+            ],
         ],
-        (object)[
-            "type"=>'photo',
-            "extra_data" => (object)[]
-        ]
+        (object) [
+            'type' => 'photo',
+            'extra_data' => (object) [],
+        ],
     ];
     return view('admin/question/edit', [
-        "question" => $question
+        'question' => $question,
     ]);
 })
     ->name('questionTypesPreview')

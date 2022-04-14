@@ -17,11 +17,10 @@ use Illuminate\Routing\Redirector;
 class QuestionController extends Controller
 {
     public function overview(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-    ): RedirectResponse
-    {
+        Section $section,
+    ): RedirectResponse {
         return redirect()->route('sections.details', [
             $research->id,
             $questionnaire->id,
@@ -31,11 +30,10 @@ class QuestionController extends Controller
     }
 
     public function create(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-    ): View
-    {
+        Section $section,
+    ): View {
         return view('admin.question.create', [
             'research' => $research,
             'questionnaire' => $questionnaire,
@@ -45,11 +43,10 @@ class QuestionController extends Controller
 
     public function store(
         StoreQuestionRequest $request,
-        Research             $research,
-        Questionnaire        $questionnaire,
-        Section              $section,
-    ): Application|RedirectResponse|Redirector
-    {
+        Research $research,
+        Questionnaire $questionnaire,
+        Section $section,
+    ): Application|RedirectResponse|Redirector {
         $request->validated();
         $data = $request->all();
 
@@ -73,31 +70,30 @@ class QuestionController extends Controller
                 'type' => QuestionOptionType::MULTIPLE_CHOICE,
                 'extra_data' => [
                     'multiple' => $data['multipleAnswers'],
-                    'values' => $data['list']
-                ]
+                    'values' => $data['list'],
+                ],
             ]);
         }
-        if($data['photo']){
+        if ($data['photo']) {
             $question->options()->create([
                 'type' => QuestionOptionType::IMAGE,
-                'extra_data' => []
+                'extra_data' => [],
             ]);
         }
-        if($data['audio']){
+        if ($data['audio']) {
             $question->options()->create([
                 'type' => QuestionOptionType::VOICE,
-                'extra_data' => []
+                'extra_data' => [],
             ]);
         }
     }
 
     public function edit(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-        Question      $question,
-    ): View
-    {
+        Section $section,
+        Question $question,
+    ): View {
         return view(
             'admin.question.edit',
             compact('research', 'questionnaire', 'section', 'question'),
@@ -106,12 +102,11 @@ class QuestionController extends Controller
 
     public function update(
         StoreQuestionRequest $request,
-        Research                  $research,
-        Questionnaire             $questionnaire,
-        Section                   $section,
-        Question                  $question,
-    ): RedirectResponse
-    {
+        Research $research,
+        Questionnaire $questionnaire,
+        Section $section,
+        Question $question,
+    ): RedirectResponse {
         $request->validated();
         $data = $request->all();
 
@@ -131,12 +126,11 @@ class QuestionController extends Controller
     }
 
     public function details(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-        Question      $question,
-    ): View
-    {
+        Section $section,
+        Question $question,
+    ): View {
         return view(
             'admin.question.details',
             compact('research', 'questionnaire', 'section', 'question'),
@@ -144,12 +138,11 @@ class QuestionController extends Controller
     }
 
     public function remove(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-        Question      $question,
-    ): Application|RedirectResponse|Redirector
-    {
+        Section $section,
+        Question $question,
+    ): Application|RedirectResponse|Redirector {
         $question->delete();
 
         return redirect(
