@@ -13,12 +13,17 @@ use App\Models\Section;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        User::factory(3)->create();
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'info@accessibility.nl',
+            'password' => Hash::make('admin'),
+        ]);
 
         $this->createDemoData();
     }

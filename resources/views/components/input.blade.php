@@ -25,6 +25,24 @@
                    placeholder="{{$placeholder}}" value="{{old($name, $value)}}"/>
         @endif
         @break
+        @case('email')
+        @if(isset($extraData['before']) || isset($extraData['after']))
+            <div class="input-group @error($name) is-invalid @enderror">
+                @if(isset($extraData['before']))
+                    <span class="input-group-text">{{$extraData['before']}}</span>
+                @endif
+                <input class="form-control" type="email" id="{{$name}}" title="{{$name}}" name="{{$name}}"
+                       placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+                @if(isset($extraData['after']))
+                    <span class="input-group-text">{{$extraData['after']}}</span>
+                @endif
+            </div>
+        @else
+            <input class="form-control @error($name) is-invalid @enderror" type="text" id="{{$name}}" title="{{$name}}"
+                   name="{{$name}}"
+                   placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+        @endif
+        @break
         @case('number')
         @if(isset($extraData['before']) || isset($extraData['after']))
             <div class="input-group @error($name) is-invalid @enderror">

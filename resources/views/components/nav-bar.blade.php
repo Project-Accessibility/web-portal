@@ -7,38 +7,26 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                {{--//@todo: add authorization--}}
-                {{--            @if(Auth::user()->hasRole('admin'))--}}
-                @if(1===1)
-                    <ul class="navbar-nav me-auto">
-                    </ul>
-            @endif
-            <!-- Right Side Of Navbar -->
+            <div class="d-flex justify-content-end w-100">
                 <ul class="navbar-nav">
-                    <!-- Authentication Links -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    {{--                        {{ Auth::user()->first_name }}--}}
-                            Test
+                            {{ Auth::user()->name }}
                         </a>
-                        {{--//@todo: add logout route--}}
                         <ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
                             <li class="nav-item">
-                                <a class="dropdown-item text-white" href=""
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    Uitloggen
-                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <a class="dropdown-item text-white" href=""
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Uitloggen
+                                    </a>
+                                </form>
                             </li>
                         </ul>
-
-{{--                            <form id="logout-form" action="" method="POST"--}}
-{{--                                  class="d-none">--}}
-{{--                                @csrf--}}
-{{--                            </form>--}}
                     </li>
                 </ul>
+            </div>
         </div>
     </div>
 </nav>

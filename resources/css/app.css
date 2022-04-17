@@ -12,3 +12,7 @@
     width: 1px;
     white-space: nowrap;
 }
+
+.dropdown-menu > .nav-item .dropdown-item:hover {
+    background-color: rgba(256, 256, 256, 0.1);
+}
