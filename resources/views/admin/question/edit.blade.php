@@ -13,11 +13,15 @@
         </div>
     @endif
     @php
+        $openAnswerOption= null;
         $multipleChoiceOption = null;
         $photoOption = null;
         $audioOption = null;
         foreach ($question->options as $option){
             switch ($option->type){
+                case \App\Enums\QuestionOptionType::OPEN:
+                    $openOption = $option;
+                break;
                 case \App\Enums\QuestionOptionType::MULTIPLE_CHOICE:
                     $multipleChoiceOption = $option;
                     break;
@@ -46,7 +50,12 @@
                      required></x-input>
             <h2 class="h2">Antwoord mogelijkheden</h2>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Open antwoord" name="openAnswer" :value="false"></x-input>
+                <x-input class="m-0" type="switch" label="Open antwoord" name="open" :value="$openOption != null"></x-input>
+                <div class="collapse {{is_string(old('open')) ? (old('open') ? 'show' : '') : ($openOption != null ? 'show' : '')}}" id="open-configuration">
+                    <div class="hr"></div>
+                    <x-input class="col mb-0 mt-1" label="Placeholder" type="text" name="openPlaceholder"
+                             placeholder="Voer placeholder voor open antwoord in" :value="$openOption ? $openOption->extra_data['placeholder'] : ''"></x-input>
+                </div>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Meerkeuze" name="multipleChoice"
@@ -58,7 +67,7 @@
                     <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
                              :value="$multipleChoiceOption != null ? $multipleChoiceOption->extra_data['multiple'] : false"></x-input>
                     <div class="row">
-                        <x-input class="col mb-0 mt-1" required type="text" name="listInput"
+                        <x-input class="col mb-0 mt-1" type="text" name="listInput"
                                  placeholder="Voer antwoord optie in"></x-input>
                         <div class="col-md-2 mt-1 px-0 me-3" style="width: 40px!important;">
                             <x-button class="fw-bold w-100" type="primary" link="#" id="add-list-item-button">+
@@ -88,5 +97,5 @@
             window.values = {!! json_encode($multipleChoiceOption ? $multipleChoiceOption->extra_data['values'] : []) !!};
         }
     </script>
-    <script src="{{ asset('js/select.js') }}"></script>
+    <script src="{{ asset('js/questionOptions.js') }}"></script>
 @endsection

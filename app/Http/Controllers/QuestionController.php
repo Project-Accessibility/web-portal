@@ -65,6 +65,14 @@ class QuestionController extends Controller
 
     private function storeOptions($question, $data)
     {
+        if ($data['open']) {
+            $question->options()->create([
+                'type' => QuestionOptionType::OPEN,
+                'extra_data' => [
+                    'placeholder' => $data['openPlaceholder']
+                ],
+            ]);
+        }
         if ($data['multipleChoice'] && isset($data['list'])) {
             $question->options()->create([
                 'type' => QuestionOptionType::MULTIPLE_CHOICE,

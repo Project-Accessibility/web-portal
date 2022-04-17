@@ -1,6 +1,28 @@
 window.addEventListener('load', () => {
+    new OpenConfiguration();
     new SelectConfiguration();
 });
+
+
+class OpenConfiguration{
+    openSwitch;
+    openConfigurationBox;
+
+    constructor() {
+        this.openSwitch = document.getElementById('open');
+        this.openConfigurationBox =
+            document.getElementById('open-configuration');
+        this.addListeners();
+    }
+
+    addListeners() {
+        // Add switch listener
+        this.openSwitch.addEventListener('change', () => {
+            // Collapse list configuration box
+            new bootstrap.Collapse(this.openConfigurationBox);
+        });
+    }
+}
 
 class SelectConfiguration {
     values;

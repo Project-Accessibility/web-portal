@@ -22,7 +22,12 @@
             <x-input type="text" label="Vraag" name="question" placeholder="De vraag" required></x-input>
             <h2 class="h2">Antwoord mogelijkheden</h2>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Open antwoord" name="openAnswer" :value="false"></x-input>
+                <x-input class="m-0" type="switch" label="Open antwoord" name="open" :value="false"></x-input>
+                <div class="collapse {{old('open') ? 'show' : ''}}" id="open-configuration">
+                    <div class="hr"></div>
+                    <x-input class="col mb-0 mt-1" label="Placeholder" type="text" name="openPlaceholder"
+                             placeholder="Voer placeholder voor open antwoord in"></x-input>
+                </div>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Meerkeuze" name="multipleChoice" :value="false"></x-input>
@@ -31,7 +36,7 @@
                     <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
                              :value="false"></x-input>
                     <div class="row">
-                        <x-input class="col mb-0 mt-1" required type="text" name="listInput"
+                        <x-input class="col mb-0 mt-1" type="text" name="listInput"
                                  placeholder="Voer antwoord optie in"></x-input>
                         <div class="col-md-2 mt-1 px-0 me-3" style="width: 40px!important;">
                             <x-button class="fw-bold w-100" type="primary" link="#" id="add-list-item-button">+
@@ -52,9 +57,9 @@
         </div>
     </form>
     <script>
-        if ({{old('multipleChoice') && old('list')}}) {
+        if ({{(old('multipleChoice') && old('list')) ? 1 : 0}}) {
             window.values = {!! json_encode(old('list')) !!};
         }
     </script>
-    <script src="{{ asset('js/select.js') }}"></script>
+    <script src="{{ asset('js/questionOptions.js') }}"></script>
 @endsection
