@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Requests\TestInputsRequest;
 use App\Models\Questionnaire;

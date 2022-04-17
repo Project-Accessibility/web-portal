@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreResearchRequest;
+use App\Http\Requests\StoreQuestionRequest;
 use App\Models\Research;
 use App\Utils\TableLink;
 use App\Utils\TableLinkParameter;
@@ -29,7 +29,7 @@ class ResearchController extends Controller
     }
 
     public function store(
-        StoreResearchRequest $request,
+        StoreQuestionRequest $request,
     ): Application|RedirectResponse|Redirector {
         $request->validated();
         Research::create($request->all());
@@ -48,7 +48,7 @@ class ResearchController extends Controller
     }
 
     public function update(
-        StoreResearchRequest $request,
+        StoreQuestionRequest $request,
         Research $research,
     ): RedirectResponse {
         $request->validated();

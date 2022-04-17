@@ -25,7 +25,7 @@
             </form>
         </div>
     </div>
-    <x-tabs title="sectionDetails" :tabs="['Details', 'Resultaten']">
+    <x-tabs title="sectionDetails" :tabs="['Details', 'Vragen', 'Resultaten']">
         @section('Details')
             <div class="row mt-2">
                 <h2>Gegevens</h2>
@@ -53,6 +53,18 @@
             <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
             <script>mapboxgl.accessToken = 'pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw';</script>
             <script src="{{ asset('js/location.js') }}"></script>
+        @endsection
+        @section('Vragen')
+            <div class="mt-2">
+                <div class="row justify-content-end">
+                    <div class="w-auto">
+                        <x-button type="secondary" link="{{ route('questions.create', [$questionnaire->research->id, $questionnaire->id, $section->id]) }}">
+                            Nieuwe vraag
+                        </x-button>
+                    </div>
+                </div>
+                <x-table :headers="$questionHeaders" :items="$questions" :keys="$questionKeys" :row-link="$questionRowLink"/>
+            </div>
         @endsection
         @section('Resultaten')
         @endsection

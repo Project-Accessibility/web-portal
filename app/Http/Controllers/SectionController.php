@@ -9,6 +9,8 @@ use App\Models\Geofence;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use App\Models\Section;
+use App\Utils\TableLink;
+use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -161,9 +163,45 @@ class SectionController extends Controller
         Section $section,
     ): View {
         $geofence = Geofence::whereId($section->geofence_id)->first();
+
+        $questions = $section->questions->toArray();
+        $questionHeaders = ['ID', 'Titel', 'Vraag'];
+
+        $questionKeys = ['id', 'title', 'question'];
+
+        $questionLinkParameters = [
+            new TableLinkParameter(routeParameter: 'question', itemIndex: 'id'),
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                routeValue: $questionnaire->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $research->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'section',
+                routeValue: $section->id,
+            ),
+        ];
+
+        $questionRowLink = new TableLink(
+            'questions.details',
+            collect($questionLinkParameters),
+        );
+
         return view(
             'admin.section.details',
-            compact('research', 'questionnaire', 'section', 'geofence'),
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'geofence',
+                'questions',
+                'questionHeaders',
+                'questionKeys',
+                'questionRowLink',
+            ),
         );
     }
 
