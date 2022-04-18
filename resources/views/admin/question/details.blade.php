@@ -50,7 +50,7 @@
                                 <div id="collapse{{ $loop->index }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#questionTypes">
                                     <div class="accordion-body">
                                         @foreach($questionType->extra_data as $key => $extraData)
-                                            <strong>{{ __('question-types.'. $key) }}: </strong>
+                                            <strong>{{ ucfirst(__('question-types.'. $key)) }}: </strong>
                                             @if(is_array($extraData))
                                                 <ul>
                                                     @foreach($extraData as $extraDataItem)

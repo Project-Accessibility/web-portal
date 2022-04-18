@@ -2,6 +2,6 @@
 
 return [
     'placeholder' => 'placeholder',
-    'multiple' => 'peerdere antwoorden mogelijk',
+    'multiple' => 'meerdere antwoorden mogelijk',
     'values' => 'keuze mogelijkheden',
 ];
