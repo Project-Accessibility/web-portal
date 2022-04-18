@@ -101,7 +101,6 @@ class QuestionController extends Controller
         Section $section,
         Question $question,
     ): View {
-
         $question = $question->load('options');
         $questionOptionType = QuestionOptionType::class;
         return view(
@@ -111,7 +110,7 @@ class QuestionController extends Controller
                 'questionnaire',
                 'section',
                 'question',
-                'questionOptionType'
+                'questionOptionType',
             ),
         );
     }

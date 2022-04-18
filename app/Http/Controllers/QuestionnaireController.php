@@ -111,7 +111,10 @@ class QuestionnaireController extends Controller
         );
 
         $sectionLinks = collect([
-            new TableLink('sections.questions', $sectionQuestionsLinkParameters),
+            new TableLink(
+                'sections.questions',
+                $sectionQuestionsLinkParameters,
+            ),
             new TableLink('sections.results', $sectionResultsLinkParameters),
         ]);
 
