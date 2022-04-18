@@ -14,8 +14,6 @@ class Table extends Component
     public array $keys;
     public ?TableLink $rowLink;
     public ?Collection $tableLinks;
-    public ?string $ifKey;
-    public ?string $ifValue;
 
     public function __construct(
         array $headers,

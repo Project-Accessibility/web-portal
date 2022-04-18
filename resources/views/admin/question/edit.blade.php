@@ -41,7 +41,7 @@
             @csrf
             @method('PUT')
 
-            <h1 class="title">Nieuwe vraag</h1>
+            <h1 class="title">{{ $question->title }} aanpassen</h1>
             <div class="col-md-6">
                 <h2 class="h2">Gegevens</h2>
                             <x-input type="text" label="Titel" name="title" placeholder="Titel van de vraag" :value="$question->title"
