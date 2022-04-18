@@ -3,16 +3,16 @@
     @switch($type)
         @case('primary')
             {{ $attributes->merge(['class' => 'btn btn-primary']) }}
-        @break
-        @case('secondary')
+            @break
+            @case('secondary')
             {{ $attributes->merge(['class' => 'btn btn-secondary']) }}
-        @break
-        @case('remove')
+            @break
+            @case('remove')
             {{ $attributes->merge(['class' => 'btn btn-danger']) }}
-        @break
-        @default
+            @break
+            @default
             {{ $attributes->merge(['class' => 'btn btn-primary']) }}
-        @break
+            @break
         @endswitch
     >
         {{$slot}}

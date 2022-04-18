@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'placeholder' => 'Placeholder:',
-    'multiple' => 'Meerdere antwoorden mogelijk?',
-    'values' => 'Keuze mogelijkheden:',
+    'placeholder' => 'placeholder',
+    'multiple' => 'peerdere antwoorden mogelijk',
+    'values' => 'keuze mogelijkheden',
 ];

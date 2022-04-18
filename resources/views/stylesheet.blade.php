@@ -390,11 +390,11 @@
                             $keys = ['id','name','age'];
 
                             $tableLinks = collect([
-                                new \App\Utils\TableLink('welcome'),
+                                new \App\Utils\TableLink('inputs'),
                                 new \App\Utils\TableLink('stylesheet')
                             ]);
 
-                            $rowLink = new \App\Utils\TableLink('welcome');
+                            $rowLink = new \App\Utils\TableLink('inputs');
                         @endphp
 
                         <x-table :headers="$headers" :items="$items" :keys="$keys" :rowLink="$rowLink" :tableLinks="$tableLinks"/>

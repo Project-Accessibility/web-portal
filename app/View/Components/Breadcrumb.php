@@ -27,13 +27,13 @@ class Breadcrumb extends Component
 
         $pathSplit = array_values(array_filter(explode('/', $url['path'])));
 
-        $this->paths[] = [
-            'display' => 'home',
-            'url' => $schemeHost . '/',
-        ];
-
         foreach ($pathSplit as $path) {
-            $fullPath = end($this->paths)['url'] . $path . '/';
+            $fullPath =
+                (count($this->paths) > 0
+                    ? end($this->paths)['url']
+                    : $schemeHost . '/') .
+                $path .
+                '/';
             if ($route = $this->getRoute($fullPath)) {
                 $view = $this->getDisplay($route) ?? $path;
                 $this->paths[] = [
