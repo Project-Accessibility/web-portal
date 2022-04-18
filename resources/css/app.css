@@ -15,8 +15,8 @@
 
 .accordion-button:disabled::after {
     background: none;
-  
+}
+
 .dropdown-menu > .nav-item .dropdown-item:hover {
     background-color: rgba(256, 256, 256, 0.1);
-
 }
