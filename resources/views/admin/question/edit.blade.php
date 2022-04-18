@@ -13,7 +13,7 @@
         </div>
     @endif
         @php
-            $openAnswerOption= null;
+            $openOption= null;
             $multipleChoiceOption = null;
             $photoOption = null;
             $audioOption = null;
