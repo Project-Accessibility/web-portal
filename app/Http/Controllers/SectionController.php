@@ -170,7 +170,10 @@ class SectionController extends Controller
         $questionKeys = ['id', 'title', 'question'];
 
         $questionLinkParameters = [
-            new TableLinkParameter(routeParameter: 'question', itemIndex: 'id'),
+            new TableLinkParameter(
+                routeParameter: 'question',
+                itemIndex: 'id'
+            ),
             new TableLinkParameter(
                 routeParameter: 'questionnaire',
                 routeValue: $questionnaire->id,

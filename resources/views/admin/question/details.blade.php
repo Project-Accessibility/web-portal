@@ -38,40 +38,44 @@
         <div class="col-md-6">
             <h2>Antwoordmogelijkheden</h2>
             <div class="accordion" id="questionTypes">
-                @foreach($questionTypes as $questionType)
-                    <div class="accordion-item">
-                        @if(isset($questionType->extra_data) && count($questionType->extra_data) > 0)
-                            <span class="accordion-header" id="headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $loop->index }}" aria-expanded="false" aria-controls="collapseOne">
-                                    {{ $questionType->typeDisplay }}
-                                </button>
-                            </span>
-                            <div id="collapse{{ $loop->index }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#questionTypes">
-                                <div class="accordion-body">
-                                    @foreach($questionType->extra_data as $key => $extraData)
-                                        <strong>{{ __('question-types.'. $key) }}</strong>
-                                        @if(is_array($extraData))
-                                            <ul>
-                                                @foreach($extraData as $extraDataItem)
-                                                    <li>{{ $extraDataItem }}</li>
-                                                @endforeach
-                                            </ul>
-                                        @else
-                                            <span>{{ $extraData === '1' ? 'Ja' : ($extraData === '0' ? 'Nee' : $extraData) }}</span>
-                                        @endif
-                                        <br />
-                                    @endforeach
+                @if(count($questionTypes) > 0)
+                    @foreach($questionTypes as $questionType)
+                        <div class="accordion-item">
+                            @if(isset($questionType->extra_data) && count($questionType->extra_data) > 0)
+                                <span class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $loop->index }}" aria-expanded="false" aria-controls="collapseOne">
+                                        {{ $questionType->typeDisplay }}
+                                    </button>
+                                </span>
+                                <div id="collapse{{ $loop->index }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#questionTypes">
+                                    <div class="accordion-body">
+                                        @foreach($questionType->extra_data as $key => $extraData)
+                                            <strong>{{ __('question-types.'. $key) }}</strong>
+                                            @if(is_array($extraData))
+                                                <ul>
+                                                    @foreach($extraData as $extraDataItem)
+                                                        <li>{{ $extraDataItem }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                <span>{{ $extraData === '1' ? 'Ja' : ($extraData === '0' ? 'Nee' : $extraData) }}</span>
+                                            @endif
+                                            <br />
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                        @else
-                            <span class="accordion-header" id="headingOne">
-                                <button disabled class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $loop->index }}" aria-expanded="true" aria-controls="collapseOne">
-                                    {{ $questionType->typeDisplay }}
-                                </button>
-                            </span>
-                        @endif
-                    </div>
-                @endforeach
+                            @else
+                                <span class="accordion-header" id="headingOne">
+                                    <button disabled class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $loop->index }}" aria-expanded="true" aria-controls="collapseOne">
+                                        {{ $questionType->typeDisplay }}
+                                    </button>
+                                </span>
+                            @endif
+                        </div>
+                    @endforeach
+                @else
+                    <span>Er zijn voor deze vraag nog geen antwoordmogelijkheden geselecteerd.</span>
+                @endif
             </div>
         </div>
     </div>

@@ -101,9 +101,18 @@ class QuestionController extends Controller
         Section $section,
         Question $question,
     ): View {
+
+        $question = $question->load('options');
+        $questionOptionType = QuestionOptionType::class;
         return view(
             'admin.question.edit',
-            compact('research', 'questionnaire', 'section', 'question'),
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'question',
+                'questionOptionType'
+            ),
         );
     }
 
