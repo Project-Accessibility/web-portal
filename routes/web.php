@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::redirect('/', '/researches');
-
     Route::controller(ResearchController::class)
         ->prefix('/researches')
         ->group(function () {
@@ -58,21 +57,118 @@ Route::middleware('auth')->group(function () {
                                 'questionnaires.remove',
                             );
 
-                            Route::get('/sections', function (
-                                Research $research,
-                                Questionnaire $questionnaire,
-                            ) {
-                                return redirect()->route(
-                                    'questionnaires.details',
-                                    [
-                                        $research,
-                                        $questionnaire,
-                                        'tab' => 'Onderdelen',
-                                    ],
-                                );
-                            })
-                                ->name('questionnaires.sections')
-                                ->defaults('display', 'Onderdelen');
+                            Route::controller(SectionController::class)
+                                ->prefix('/sections')
+                                ->group(function () {
+                                    Route::get('/', 'overview')
+                                        ->name('questionnaires.sections')
+                                        ->defaults('display', 'Onderdelen');
+                                    Route::get('/create', 'create')
+                                        ->name('sections.create')
+                                        ->defaults('display', 'Aanmaken');
+                                    Route::post('/', 'store')->name(
+                                        'sections.store',
+                                    );
+                                    Route::prefix('/{section}')->group(
+                                        function () {
+                                            Route::get('/', 'details')->name(
+                                                'sections.details',
+                                            );
+                                            Route::get('/edit', 'edit')
+                                                ->name('sections.edit')
+                                                ->defaults(
+                                                    'display',
+                                                    'aanpassen',
+                                                );
+                                            Route::delete('/', 'remove')->name(
+                                                'sections.remove',
+                                            );
+                                            Route::put('/', 'update')->name(
+                                                'sections.update',
+                                            );
+                                            Route::controller(
+                                                ResultController::class,
+                                            )
+                                                ->prefix('/results')
+                                                ->group(function () {
+                                                    Route::get(
+                                                        '/',
+                                                        'sectionOverview',
+                                                    )
+                                                        ->name(
+                                                            'sections.results',
+                                                        )
+                                                        ->defaults(
+                                                            'display',
+                                                            'Resultaten',
+                                                        );
+                                                });
+                                            Route::controller(
+                                                QuestionController::class,
+                                            )
+                                                ->prefix('/questions')
+                                                ->group(function () {
+                                                    Route::get('/', 'overview')
+                                                        ->name(
+                                                            'sections.questions',
+                                                        )
+                                                        ->defaults(
+                                                            'display',
+                                                            'Vragen',
+                                                        );
+                                                    Route::get(
+                                                        '/create',
+                                                        'create',
+                                                    )
+                                                        ->name(
+                                                            'questions.create',
+                                                        )
+                                                        ->defaults(
+                                                            'display',
+                                                            'Aanmaken',
+                                                        );
+                                                    Route::post(
+                                                        '/',
+                                                        'store',
+                                                    )->name('questions.store');
+                                                    Route::prefix(
+                                                        '/{question}',
+                                                    )->group(function () {
+                                                        Route::get(
+                                                            '/',
+                                                            'details',
+                                                        )->name(
+                                                            'questions.details',
+                                                        );
+                                                        Route::get(
+                                                            '/edit',
+                                                            'edit',
+                                                        )
+                                                            ->name(
+                                                                'questions.edit',
+                                                            )
+                                                            ->defaults(
+                                                                'display',
+                                                                'Aanpassen',
+                                                            );
+
+                                                        Route::delete(
+                                                            '/',
+                                                            'remove',
+                                                        )->name(
+                                                            'questions.remove',
+                                                        );
+                                                        Route::put(
+                                                            '/',
+                                                            'update',
+                                                        )->name(
+                                                            'questions.update',
+                                                        );
+                                                    });
+                                                });
+                                        },
+                                    );
+                                });
 
                             Route::get('/results', function (
                                 Research $research,
