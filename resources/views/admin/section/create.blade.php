@@ -23,6 +23,7 @@
                      placeholder="Een kleine omschrijving van het onderdeel" :extraData="['rows'=>8]"></x-input>
             <x-input  type="textarea" label="Locatie omschrijving" name="location_description"
                      placeholder="Een kleine omschrijving van de locatie" :extraData="['rows'=>8]"></x-input>
+            <x-input  type="select" label="Teachable machine class" name="teachable_machine_class" :extraData="['multiple'=>false,'options'=>$classNames]"></x-input>
         </div>
         <h2>Geofence</h2>
         <div class="row">
@@ -36,7 +37,7 @@
                 <div id="map" data-editable="true" class="h-100 border border-primary"></div>
             </div>
         </div>
-        <div class="mt-2">
+        <div class="mt-2 col-md-6">
             <x-button id="location-button" class="float-start" type="primary" link="#">Locatie ophalen</x-button>
             <x-button class="float-end" type="secondary">Toevoegen</x-button>
         </div>

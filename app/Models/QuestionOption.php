@@ -49,6 +49,8 @@ class QuestionOption extends Model
         'updated_at' => 'datetime',
     ];
 
+    protected $appends = ['typeDisplay'];
+
     public function question(): BelongsTo
     {
         return $this->belongsTo(Question::class);
@@ -57,5 +59,10 @@ class QuestionOption extends Model
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function getTypeDisplayAttribute()
+    {
+        return $this->type->display();
     }
 }

@@ -4,13 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSectionRequest extends FormRequest
+class StoreQuestionRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
             'title' => 'required|max:255',
-            'radius' => 'min:10',
+            'question' => 'required|max:255',
         ];
     }
 
@@ -18,6 +18,7 @@ class StoreSectionRequest extends FormRequest
     {
         return [
             'title' => 'titel',
+            'question' => 'vraag',
         ];
     }
 }

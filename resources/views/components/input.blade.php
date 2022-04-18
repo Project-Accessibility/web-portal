@@ -90,7 +90,7 @@
         @case('switch')
         <input type="hidden" value="0" name="{{ $name }}"/>
         <input type="checkbox" value="1" class="form-check-input" id="{{$name}}" title="{{$name}}"
-               name="{{$name}}" {{old($name) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}}/>
+               name="{{$name}}" {{is_string(old($name)) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}}/>
         @break
         @case('range')
         <div class="d-flex @error($name) is-invalid highlight-error @enderror">

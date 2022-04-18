@@ -13,26 +13,33 @@ class RadarHandler
      * @param $radius
      * @return array
      */
-    public static function createGeofence(
+    public static function saveGeofence(
         $id,
+        $tag,
+        $description,
         $longitude,
         $latitude,
         $radius,
     ): array {
-        $url = env('RADAR_API_URL') . '/geofences';
+        $url = env('RADAR_API_URL') . "/geofences/{$tag}/{$id}";
+        $secret = env('RADAR_SECRET');
         $headers = [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-            'Authorization' => env('RADAR_SECRET'),
+            'Accept: application/json',
+            'Content-Type: application/x-www-form-urlencoded',
+            "Authorization: {$secret}",
         ];
-        $data = `{"description": ${$id},"type": "circle","coordinates": [${$longitude},${$latitude}],"radius": ${$radius}}`;
-
+        $data = [
+            'description' => $description ? $description : $tag,
+            'type' => 'circle',
+            'coordinates' => [$longitude, $latitude],
+            'radius' => $radius,
+        ];
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         return self::runRequest($ch);

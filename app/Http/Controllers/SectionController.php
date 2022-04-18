@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Handlers\RadarHandler;
+use App\Http\Handlers\TeachableMachineHandler;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Geofence;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use App\Models\Section;
+use App\Utils\TableLink;
+use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -29,10 +33,13 @@ class SectionController extends Controller
         Research $research,
         Questionnaire $questionnaire,
     ): View {
-        //        https://storage.googleapis.com/tm-model/yhj979xY8/metadata.json
+        $classNames = TeachableMachineHandler::getClassNames(
+            'https://storage.googleapis.com/tm-model/yhj979xY8',
+        );
         return view('admin.section.create', [
             'research' => $research,
             'questionnaire' => $questionnaire,
+            'classNames' => $classNames,
         ]);
     }
 
@@ -47,6 +54,9 @@ class SectionController extends Controller
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'location_description' => $request->input('location_description'),
+            'teachable_machine_class' => $request->input(
+                'teachable_machine_class',
+            ),
         ]);
         $radius = $request->input('radius');
         $latitude = $request->input('latitude');
@@ -59,14 +69,23 @@ class SectionController extends Controller
             ]);
             $section->geofence_id = $geofence->id;
             $section->save();
+            RadarHandler::saveGeofence(
+                $geofence->id,
+                $section->title,
+                $section->description,
+                $longitude,
+                $latitude,
+                $radius,
+            );
         }
 
-        return redirect(
-            route('questionnaires.sections', [
+        return redirect()
+            ->route('questionnaires.details', [
                 $research->id,
                 $questionnaire->id,
-            ]),
-        )->with('success', 'Het onderdeel is aangemaakt!');
+                'tab' => 'Onderdelen',
+            ])
+            ->with('success', 'Het onderdeel is aangemaakt!');
     }
 
     public function edit(
@@ -74,10 +93,19 @@ class SectionController extends Controller
         Questionnaire $questionnaire,
         Section $section,
     ): View {
+        $classNames = TeachableMachineHandler::getClassNames(
+            'https://storage.googleapis.com/tm-model/yhj979xY8',
+        );
         $geofence = Geofence::whereId($section->geofence_id)->first();
         return view(
             'admin.section.edit',
-            compact('research', 'questionnaire', 'section', 'geofence'),
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'geofence',
+                'classNames',
+            ),
         );
     }
 
@@ -109,6 +137,14 @@ class SectionController extends Controller
                 $section->geofence_id = $geofence->id;
                 $section->save();
             }
+            RadarHandler::saveGeofence(
+                $geofence->id,
+                $section->title,
+                $section->description,
+                $longitude,
+                $latitude,
+                $radius,
+            );
         }
 
         return redirect()
@@ -127,9 +163,45 @@ class SectionController extends Controller
         Section $section,
     ): View {
         $geofence = Geofence::whereId($section->geofence_id)->first();
+
+        $questions = $section->questions->toArray();
+        $questionHeaders = ['ID', 'Titel', 'Vraag'];
+
+        $questionKeys = ['id', 'title', 'question'];
+
+        $questionLinkParameters = [
+            new TableLinkParameter(routeParameter: 'question', itemIndex: 'id'),
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                routeValue: $questionnaire->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $research->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'section',
+                routeValue: $section->id,
+            ),
+        ];
+
+        $questionRowLink = new TableLink(
+            'questions.details',
+            collect($questionLinkParameters),
+        );
+
         return view(
             'admin.section.details',
-            compact('research', 'questionnaire', 'section', 'geofence'),
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'geofence',
+                'questions',
+                'questionHeaders',
+                'questionKeys',
+                'questionRowLink',
+            ),
         );
     }
 
