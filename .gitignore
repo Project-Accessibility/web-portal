@@ -17,5 +17,4 @@ yarn-error.log
 /.vscode
 resources/.DS_Store
 /public/mix-manifest.json
-/storage/framework
 
