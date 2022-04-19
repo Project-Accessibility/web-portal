@@ -5,23 +5,6 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  create-envfile:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-          envkey_APP_NAME: "Accessibility Questionnaire Dashboard"
-          envkey_APP_ENV: "local"
-          envkey_APP_KEY: ${{ secrets.APP_KEY }}
-          envkey_APP_URL: "http://localhost"
-          envkey_MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-          envkey_RADAR_API_URL: "https://api.radar.io/v1"
-          envkey_RADAR_SECRET: ${{ secrets.APP_KEY }}
-          file_name: .env
-          fail_on_empty: false
   preview:
     runs-on: ubuntu-latest
     steps:
@@ -41,10 +24,21 @@ jobs:
       run: sleep 30s
       shell: bash
 
+    - uses: actions/checkout@v2
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.dist', '.env');"
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Generate key
+      run: php artisan key:generate
+
     - name: Deploy preview environment
       uses: okteto/deploy-preview@latest
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+       RADAR_API_URL: https://api.radar.io/v1
+       RADAR_SECRET: ${{ secrets.RADAR_SECRET }}
       with:
         name: pr-${{ github.event.number }}-gewoonjaap
         scope: personal
