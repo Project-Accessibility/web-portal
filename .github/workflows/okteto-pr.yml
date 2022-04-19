@@ -28,6 +28,7 @@ jobs:
       uses: okteto/deploy-preview@latest
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
       with:
         name: pr-${{ github.event.number }}-gewoonjaap
         scope: personal
