@@ -16,8 +16,6 @@ RUN yarn install
 RUN yarn prod
 RUN rm -rf node_modules/
 
-RUN php artisan key:generate
-
 RUN apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

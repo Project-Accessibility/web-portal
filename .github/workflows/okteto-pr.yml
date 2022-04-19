@@ -29,6 +29,7 @@ jobs:
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+       APP_KEY: ${{ secrets.APP_KEY }}
       with:
         name: pr-${{ github.event.number }}-gewoonjaap
         scope: personal
