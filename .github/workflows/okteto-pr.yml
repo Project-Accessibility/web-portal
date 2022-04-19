@@ -39,4 +39,4 @@ jobs:
         name: pr-${{ github.event.number }}-gewoonjaap
         scope: personal
         timeout: 15m
-        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing,APP_KEY=base64:6wkU4A5ZKR86KjWkxhdaddxgC3Rb239U78YQqxvqbPs=,${{ secrets.APP_KEY }}, DB_USERNAME=admin,DB_PASSWORD=admin,DB_HOST=mysql,MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw,RADAR_SECRET=prj_test_sk_ff7db4eafcbaeab87d30a3d1b28ebae427a73372,RADAR_API_URL=https://api.radar.io/v1
+        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing,APP_KEY=base64:6wkU4A5ZKR86KjWkxhdaddxgC3Rb239U78YQqxvqbPs=,DB_USERNAME=admin,DB_PASSWORD=admin,DB_HOST=mysql,MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw,RADAR_SECRET=prj_test_sk_ff7db4eafcbaeab87d30a3d1b28ebae427a73372,RADAR_API_URL=https://api.radar.io/v1
