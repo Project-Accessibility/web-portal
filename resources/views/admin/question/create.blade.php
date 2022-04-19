@@ -35,12 +35,13 @@
                     <div class="hr"></div>
                     <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
                              :value="false"></x-input>
-                    <div class="row">
-                        <x-input class="col mb-0 mt-1" type="text" name="listInput"
-                                 placeholder="Voer antwoord optie in"></x-input>
-                        <div class="col-md-2 mt-1 px-0 me-3" style="width: 40px!important;">
-                            <x-button class="fw-bold w-100" type="primary" link="#" id="add-list-item-button">+
-                            </x-button>
+                    <div>
+                        <div class="d-flex gap-2 align-items-center">
+                            <x-input class="w-100 mb-0 mt-1" type="text" name="listInput"
+                                     placeholder="Voer antwoord optie in"></x-input>
+                            <div class="mt-1 px-0">
+                                <x-button class="fw-bold" type="primary" link="#" id="add-list-item-button">+</x-button>
+                            </div>
                         </div>
                         <ul class="list-group list-group-flush px-2" id="list">
                         </ul>

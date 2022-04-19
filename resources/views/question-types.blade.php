@@ -18,7 +18,7 @@
         <div>
             <p class="h2">Audio</p>
             <audio controls>
-                <source src="{{ asset('storage/upload/files/audio/20220411_62538caeb6572.mp3') }}" type="audio/mpeg">
+                <source src="https://jaap.su/youLost.mp3" type="audio/mpeg">
             </audio>
         </div>
     </div>

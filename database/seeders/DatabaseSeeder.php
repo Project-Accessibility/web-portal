@@ -76,5 +76,12 @@ class DatabaseSeeder extends Seeder
             'location_description' =>
                 'Hier kan je meer informatie vragen en kaartjes kopen.',
         ]);
+
+//        $this->createNemoEntranceQuestions($entrance_section);
     }
+
+//    private function createNemoEntranceQuestions(Section $section)
+//    {
+//        $
+//    }
 }
