@@ -77,11 +77,11 @@ class DatabaseSeeder extends Seeder
                 'Hier kan je meer informatie vragen en kaartjes kopen.',
         ]);
 
-//        $this->createNemoEntranceQuestions($entrance_section);
+        //        $this->createNemoEntranceQuestions($entrance_section);
     }
 
-//    private function createNemoEntranceQuestions(Section $section)
-//    {
-//        $
-//    }
+    //    private function createNemoEntranceQuestions(Section $section)
+    //    {
+    //        $
+    //    }
 }
