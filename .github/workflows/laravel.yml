@@ -22,4 +22,5 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: ':memory:'
+        APP_KEY: ${{ secrets.APP_KEY }}
       run: vendor/bin/phpunit
