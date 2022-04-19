@@ -28,8 +28,13 @@ jobs:
       uses: okteto/deploy-preview@latest
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+       APP_NAME: "Accessibility Questionnaire Dashboard"
+       APP_ENV: local
        APP_KEY: ${{ secrets.APP_KEY }}
+       APP_URL: http://localhost
+       MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+       RADAR_API_URL: https://api.radar.io/v1
+       RADAR_SECRET: ${{ secrets.APP_KEY }}
       with:
         name: pr-${{ github.event.number }}-gewoonjaap
         scope: personal
