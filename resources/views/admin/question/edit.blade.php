@@ -54,7 +54,7 @@
                                 <div class="collapse {{is_string(old('open')) ? (old('open') ? 'show' : '') : ($openOption != null ? 'show' : '')}}" id="open-configuration">
                                     <div class="hr"></div>
                                     <x-input class="col mb-0 mt-1" label="Placeholder" type="text" name="openPlaceholder"
-                                             placeholder="Voer placeholder voor open antwoord in" :value="$openOption ? $openOption->extra_data['placeholder'] : ''"></x-input>
+                                             placeholder="Voer placeholder voor open antwoord in" :value="$openOption && isset($openOption->extra_data['placeholder']) ? $openOption->extra_data['placeholder'] : ''"></x-input>
                                 </div>
                             </div>
                             <div class="border border-primary p-2 border-bottom-0">

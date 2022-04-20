@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\QuestionOptionType;
 use App\Models\Answer;
 use App\Models\Geofence;
 use App\Models\Participant;
@@ -77,11 +78,26 @@ class DatabaseSeeder extends Seeder
                 'Hier kan je meer informatie vragen en kaartjes kopen.',
         ]);
 
-        //        $this->createNemoEntranceQuestions($entrance_section);
+        $this->createNemoEntranceQuestions($entrance_section);
     }
 
-    //    private function createNemoEntranceQuestions(Section $section)
-    //    {
-    //        $
-    //    }
+    private function createNemoEntranceQuestions(Section $section)
+    {
+        $questionOne = Question::factory()->create([
+            'section_id' => $section->id,
+            'title' => 'Route',
+            'question' => 'Hoe is de route naar NEMO toe?',
+        ]);
+
+        QuestionOption::factory()->create([
+            'question_id' => $questionOne->id,
+            'type' => QuestionOptionType::OPEN,
+        ]);
+
+        Question::factory()->create([
+            'section_id' => $section->id,
+            'title' => 'Obstakels',
+            'question' => 'Hoe kom je binnen? Zijn hierbij obstakels?',
+        ]);
+    }
 }
