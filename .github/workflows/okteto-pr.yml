@@ -8,43 +8,39 @@ jobs:
   preview:
     runs-on: ubuntu-latest
     steps:
-    - name: Context
-      uses: okteto/context@latest
-      with:
-        token: ${{ secrets.OKTETO_TOKEN }}
+      - name: Context
+        uses: okteto/context@latest
+        with:
+          token: ${{ secrets.OKTETO_TOKEN }}
 
-      # Delete the Okteto Preview before deploying a new one. Fixes the issue that containers get stuck in progressing
-    - name: Delete Preview
-      uses: okteto/destroy-preview@latest
-      with:
-        name: pr-${{ github.event.number }}-gewoonjaap
+      - name: Make envfile Acceptation
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_APP_ENV: 'testing'
+          envkey_DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          envkey_DB_HOST: 'mysql'
+          envkey_DB_PORT: ${{ secrets.FORWARD_DB_PORT }}
+          envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          envkey_RADAR_SECRET: ${{ secrets.RADAR_SECRET }}
+        # Delete the Okteto Preview before deploying a new one. Fixes the issue that containers get stuck in progressing
+      - name: Delete Preview
+        uses: okteto/destroy-preview@latest
+        with:
+          name: pr-${{ github.event.number }}-gewoonjaap
 
-      # Wait 30 seconds, to make sure the preview is destroyed. Kinda hacky lol
-    - name: Waiting for preview to be deleted
-      run: sleep 30s
-      shell: bash
+        # Wait 30 seconds, to make sure the preview is destroyed. Kinda hacky lol
+      - name: Waiting for preview to be deleted
+        run: sleep 30s
+        shell: bash
 
-    - name: Make envfile Acceptation
-      uses: SpicyPizza/create-envfile@v1.3
-      with:
-        envkey_APP_ENV: 'testing'
-        envkey_DB_DATABASE: ${{ secrets.DB_DATABASE }}
-        envkey_DB_HOST: 'mysql'
-        envkey_DB_PORT: ${{ secrets.FORWARD_DB_PORT }}
-        envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        envkey_MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-        envkey_RADAR_SECRET: ${{ secrets.RADAR_SECRET }}
-
-    - name: Deploy preview environment
-      uses: okteto/deploy-preview@latest
-      env:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-       RADAR_API_URL: https://api.radar.io/v1
-       RADAR_SECRET: ${{ secrets.RADAR_SECRET }}
-      with:
-        name: pr-${{ github.event.number }}-gewoonjaap
-        scope: personal
-        timeout: 15m
-        variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing,APP_KEY=base64:6wkU4A5ZKR86KjWkxhdaddxgC3Rb239U78YQqxvqbPs=,DB_USERNAME=admin,DB_PASSWORD=admin,DB_HOST=mysql,MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw,RADAR_SECRET=prj_test_sk_ff7db4eafcbaeab87d30a3d1b28ebae427a73372,RADAR_API_URL=https://api.radar.io/v1
+      - name: Deploy preview environment
+        uses: okteto/deploy-preview@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: pr-${{ github.event.number }}-gewoonjaap
+          scope: personal
+          timeout: 15m
+          variables: DB_DATABASE=accessibility_dashboard,APP_ENV=testing,DB_USERNAME=admin,DB_PASSWORD=admin,DB_HOST=mysql,MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw
