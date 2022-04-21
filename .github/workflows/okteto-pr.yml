@@ -27,6 +27,7 @@ jobs:
     - name: Make envfile Acceptation
       uses: SpicyPizza/create-envfile@v1.3
       with:
+        envkey_APP_ENV: 'testing'
         envkey_DB_DATABASE: ${{ secrets.DB_DATABASE }}
         envkey_DB_HOST: 'mysql'
         envkey_DB_PORT: ${{ secrets.FORWARD_DB_PORT }}
