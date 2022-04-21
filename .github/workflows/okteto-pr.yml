@@ -24,13 +24,16 @@ jobs:
       run: sleep 30s
       shell: bash
 
-    - uses: actions/checkout@v2
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.dist', '.env');"
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Generate key
-      run: php artisan key:generate
+    - name: Make envfile Acceptation
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_DB_DATABASE: ${{ secrets.DB_DATABASE }}
+        envkey_DB_HOST: 'mysql'
+        envkey_DB_PORT: ${{ secrets.FORWARD_DB_PORT }}
+        envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        envkey_MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+        envkey_RADAR_SECRET: ${{ secrets.RADAR_SECRET }}
 
     - name: Deploy preview environment
       uses: okteto/deploy-preview@latest
