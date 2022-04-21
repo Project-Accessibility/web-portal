@@ -16,7 +16,8 @@ RUN yarn install
 RUN yarn prod
 RUN rm -rf node_modules/
 
-RUN cp -f .env.dist .env
+RUN touch .env
+# RUN cp -f .env.dist .env
 RUN php artisan key:generate
 
 RUN apt-get -y autoremove \
