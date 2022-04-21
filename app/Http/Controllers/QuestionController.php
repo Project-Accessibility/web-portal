@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreQuestionnaireRequest;
+use App\Enums\QuestionOptionType;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Models\Question;
 use App\Models\Questionnaire;
@@ -47,8 +47,10 @@ class QuestionController extends Controller
         Section $section,
     ): Application|RedirectResponse|Redirector {
         $request->validated();
+        $data = $request->all();
 
-        $section->questions()->create($request->all());
+        $question = $section->questions()->create($data);
+        $this->storeOptions($question, $data);
 
         return redirect()
             ->route('sections.details', [
@@ -60,28 +62,72 @@ class QuestionController extends Controller
             ->with('success', 'De vraag is aangemaakt!');
     }
 
+    private function storeOptions($question, $data)
+    {
+        if ($data['open']) {
+            $question->options()->create([
+                'type' => QuestionOptionType::OPEN,
+                'extra_data' => [
+                    'placeholder' => $data['openPlaceholder'],
+                ],
+            ]);
+        }
+        if ($data['multipleChoice'] && isset($data['list'])) {
+            $question->options()->create([
+                'type' => QuestionOptionType::MULTIPLE_CHOICE,
+                'extra_data' => [
+                    'multiple' => $data['multipleAnswers'],
+                    'values' => $data['list'],
+                ],
+            ]);
+        }
+        if ($data['photo']) {
+            $question->options()->create([
+                'type' => QuestionOptionType::IMAGE,
+                'extra_data' => [],
+            ]);
+        }
+        if ($data['audio']) {
+            $question->options()->create([
+                'type' => QuestionOptionType::VOICE,
+                'extra_data' => [],
+            ]);
+        }
+    }
+
     public function edit(
         Research $research,
         Questionnaire $questionnaire,
         Section $section,
         Question $question,
     ): View {
+        $question = $question->load('options');
+        $questionOptionType = QuestionOptionType::class;
         return view(
             'admin.question.edit',
-            compact('research', 'questionnaire', 'section', 'question'),
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'question',
+                'questionOptionType',
+            ),
         );
     }
 
     public function update(
-        StoreQuestionnaireRequest $request,
+        StoreQuestionRequest $request,
         Research $research,
         Questionnaire $questionnaire,
         Section $section,
         Question $question,
     ): RedirectResponse {
         $request->validated();
+        $data = $request->all();
 
-        $question->update($request->all());
+        $question->update($data);
+        $question->options()->delete();
+        $this->storeOptions($question, $data);
 
         return redirect()
             ->route('questions.details', [
@@ -100,9 +146,21 @@ class QuestionController extends Controller
         Section $section,
         Question $question,
     ): View {
+        $questionTypes = $question->options()->get();
+        $questionTypesHeaders = ['Mogelijkheid'];
+        $questionTypesKeys = ['typeDisplay'];
+
         return view(
             'admin.question.details',
-            compact('research', 'questionnaire', 'section', 'question'),
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'question',
+                'questionTypes',
+                'questionTypesHeaders',
+                'questionTypesKeys',
+            ),
         );
     }
 

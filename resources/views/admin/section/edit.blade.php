@@ -41,7 +41,7 @@
                 <div id="map" data-editable="true" class="h-100 border border-primary"></div>
             </div>
         </div>
-        <div class="mt-2">
+        <div class="mt-2 col-md-6">
             <x-button id="location-button" class="float-start" type="primary" link="#">Locatie ophalen</x-button>
             <x-button class="float-end" type="secondary">Aanpassen</x-button>
         </div>

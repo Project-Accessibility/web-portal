@@ -101,7 +101,20 @@ class QuestionnaireController extends Controller
             ]),
         );
 
+        $sectionQuestionsLinkParameters = collect(
+            array_merge($sectionLinkParameters, [
+                new TableLinkParameter(
+                    routeParameter: 'tab',
+                    routeValue: 'questions',
+                ),
+            ]),
+        );
+
         $sectionLinks = collect([
+            new TableLink(
+                'sections.questions',
+                $sectionQuestionsLinkParameters,
+            ),
             new TableLink('sections.results', $sectionResultsLinkParameters),
         ]);
 

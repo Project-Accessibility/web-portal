@@ -137,6 +137,7 @@ $btn-close-opacity: 1;
 // Lists
 $list-group-item-bg-scale: -80%;
 $list-group-item-color-scale: 0%;
+$list-group-border-color: #1f1f1f;
 
 // Badge
 $badge-padding-y: .65em;
@@ -209,7 +210,7 @@ $progress-height: 1.5rem;
 }
 
 .form-group {
-    margin-bottom: 0.5rem!important;
+    margin-bottom: 0.5rem;
 }
 
 .form-control.is-invalid,
@@ -424,4 +425,17 @@ body {
 /* Icons */
 .bi-x-lg::before {
     content: "\f5ee";
+}
+
+/* Links */
+a.deco-none {
+    color: #000000 !important;
+    text-decoration: none;
+}
+
+/* hr */
+.hr{
+    margin-top: 0.25rem !important;
+    margin-bottom: 1em;
+    border-top: 1px solid #1f1f1f;
 }

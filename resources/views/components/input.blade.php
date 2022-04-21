@@ -1,11 +1,12 @@
-<div
-    class="{{$type != 'switch' ? 'form-group' : 'form-check form-switch'}}@error($name) {{$type == 'switch' ? 'is-invalid highlight-error': ''}} @enderror">
-    <label for="{{$name}}" class="form-label">
-        {{ ucfirst($label) }}
-        @if($required)
-            <span class="text-red ml-1">*</span>
-        @endif
-    </label>
+<div {{$attributes->merge(['class' => ($type != 'switch' ? 'form-group' : 'form-check form-switch').($errors->has($name) ? ($type == 'switch' ? 'is-invalid highlight-error': '') : '')])}}>
+    @if($label)
+        <label for="{{$name}}" class="form-label">
+            {{ ucfirst($label) }}
+            @if($required)
+                <span class="text-red ml-1">*</span>
+            @endif
+        </label>
+    @endif
     @switch($type)
         @case('text')
         @if(isset($extraData['before']) || isset($extraData['after']))
@@ -107,7 +108,7 @@
         @case('switch')
         <input type="hidden" value="0" name="{{ $name }}"/>
         <input type="checkbox" value="1" class="form-check-input" id="{{$name}}" title="{{$name}}"
-               name="{{$name}}" {{old($name) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}}/>
+               name="{{$name}}" {{is_string(old($name)) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}}/>
         @break
         @case('range')
         <div class="d-flex @error($name) is-invalid highlight-error @enderror">
