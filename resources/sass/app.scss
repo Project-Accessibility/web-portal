@@ -256,14 +256,19 @@ $progress-height: 1.5rem;
     background-size: 60% 60%;
 }
 
+@function hexToRGB($hex) {
+
+    @return red($hex), green($hex), blue($hex); // Plain comma seperated RGB values.
+
+}
+
 .form-switch> input:not(:checked){
-    background-image: url(("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='"+rgba($primary, 1)+"'/%3e%3c/svg%3e"));
+    background-image: url(("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='"+hexToRGB($primary)+"'/%3e%3c/svg%3e"));
 }
 
-.form-switch> input:not(:focus){
-    background-image: url(("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='"+rgba($primary, 1)+"'/%3e%3c/svg%3e"));
+.form-switch> input:focus{
+    background-image: url(("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='"+hexToRGB($primary)+"'/%3e%3c/svg%3e"));
 }
-
 
 textarea:disabled{
     background-image: none!important;
