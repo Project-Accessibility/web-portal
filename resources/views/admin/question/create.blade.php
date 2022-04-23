@@ -22,6 +22,9 @@
             <x-input type="text" label="Vraag" name="question" placeholder="De vraag" required></x-input>
             <h2 class="h2">Antwoord mogelijkheden</h2>
             <div class="border border-primary p-2 border-bottom-0">
+                <x-input class="m-0" type="switch" label="Spraakopname" name="audio" :value="true"></x-input>
+            </div>
+            <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Open antwoord" name="open" :value="false"></x-input>
                 <div class="collapse {{old('open') ? 'show' : ''}}" id="open-configuration">
                     <div class="hr"></div>
@@ -51,8 +54,8 @@
             <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Foto" name="photo" :value="false"></x-input>
             </div>
-            <div class="border border-primary p-2">
-                <x-input class="m-0" type="switch" label="Spraakopname" name="audio" :value="true"></x-input>
+            <div class="border border-primary p-2 border">
+                <x-input class="m-0" type="switch" label="Video" name="video" :value="false"></x-input>
             </div>
             <x-button class="float-end mt-2" type="secondary">Toevoegen</x-button>
         </div>
