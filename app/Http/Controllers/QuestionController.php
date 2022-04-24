@@ -93,6 +93,12 @@ class QuestionController extends Controller
                 'extra_data' => [],
             ]);
         }
+        if ($data['video']) {
+            $question->options()->create([
+                'type' => QuestionOptionType::VIDEO,
+                'extra_data' => [],
+            ]);
+        }
     }
 
     public function edit(
