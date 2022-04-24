@@ -19,6 +19,7 @@ RUN rm -rf node_modules/
 
 RUN cp -f .env.dist .env
 RUN php artisan key:generate
+RUN php artisan config:clear
 
 RUN apt-get -y autoremove \
     && apt-get clean \
