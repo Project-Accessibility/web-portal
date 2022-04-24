@@ -454,3 +454,28 @@ a.deco-none {
     margin-bottom: 1em;
     border-top: 1px solid #1f1f1f;
 }
+
+/* Answers */
+.vh-60{
+   min-height: 60vh;
+}
+
+.section-button{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.2em 0.5em;
+    margin-bottom: 0.75em;
+    color: $black;
+    border: 1.5px solid #a7a7a7 !important;
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+.selected{
+    background-color: #a7a7a7;
+    color: $white;
+}
+
+.small-height{
+    min-height: 1em;;
+}
