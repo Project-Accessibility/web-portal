@@ -20,6 +20,7 @@ class QuestionController extends Controller
         Questionnaire $questionnaire,
         Section $section,
     ): RedirectResponse {
+        dd(env('APP_ENV'), env('MAPBOX_ACCESS_TOKEN'), env('RADAR_SECRET'));
         return redirect()->route('sections.details', [
             $research->id,
             $questionnaire->id,

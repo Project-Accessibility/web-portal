@@ -7,6 +7,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
     install-php-extensions @composer curl gd mbstring openssl fileinfo mysqli pdo_mysql zip
 
+COPY ./php.ini.local $PHP_INI_DIR/conf.d/
 COPY . /app
 WORKDIR /app
 
