@@ -130,9 +130,9 @@ class SectionAnswers {
         const displayDescription = document.createElement('p');
         displayDescription.className = 'small m-0 small-height';
         displayDescription.textContent =
-            description.length <= this.maxStringLength
-                ? description
-                : description.substring(0, this.maxStringLength) + '...';
+            description.length <= this.maxStringLength ?
+            description :
+            description.substring(0, this.maxStringLength) + '...';
         left.append(displayTitle, displayDescription);
         return left;
     }
@@ -154,15 +154,15 @@ class SectionAnswers {
         this.isDeleting = true;
         this.noQuestionsText.hidden = true;
         for (const question of Array.from(
-            document.querySelectorAll('.question.show')
-        ).reverse()) {
+                document.querySelectorAll('.question.show')
+            ).reverse()) {
             question.hidden = true;
             question.classList.add('remove');
             await this.delay(50);
         }
         for (const answer of Array.from(
-            document.querySelectorAll('.answer.show')
-        ).reverse()) {
+                document.querySelectorAll('.answer.show')
+            ).reverse()) {
             answer.hidden = true;
             answer.classList.add('remove');
             await this.delay(50);
@@ -187,8 +187,8 @@ class SectionAnswers {
         this.isDeleting = true;
         this.noAnswersText.hidden = true;
         for (const answer of Array.from(
-            document.querySelectorAll('.answer.show')
-        ).reverse()) {
+                document.querySelectorAll('.answer.show')
+            ).reverse()) {
             answer.hidden = true;
             answer.classList.add('remove');
             await this.delay(50);

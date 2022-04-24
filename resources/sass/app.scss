@@ -1,43 +1,29 @@
 @import "accessibility";
 @import "../../node_modules/bootstrap/scss/functions";
 // == Bootstrap changes ==
-
 // These colors are not in use and are deleted from Bootstrap
 @import "./exclude/exclude-colors";
-
 // Colors
 $blue-light: $accessibility-blue-light;
-$blue:       $accessibility-blue;
-$blue-dark:  $accessibility-blue-dark;
-$red:        $accessibility-red;
-$orange:     $accessibility-orange;
-$green:      $accessibility-green;
-$teal:       $accessibility-teal-on-dark;
-$teal-dark:  $accessibility-teal-on-light;
-$gray:       #626264;
-$gray-dark:  #27272b;
-$black:      #000;
-$white:      #fff;
-
-$primary:   $blue-dark;
+$blue : $accessibility-blue;
+$blue-dark : $accessibility-blue-dark;
+$red : $accessibility-red;
+$orange : $accessibility-orange;
+$green : $accessibility-green;
+$teal : $accessibility-teal-on-dark;
+$teal-dark : $accessibility-teal-on-light;
+$gray : #626264;
+$gray-dark : #27272b;
+$black : #000;
+$white : #fff;
+$primary : $blue-dark;
 $secondary: $teal;
-$success:   $green;
-$danger:    $red;
-$light:     $white;
-$dark:      $black;
-
+$success : $green;
+$danger : $red;
+$light : $white;
+$dark : $black;
 $color-contrast-dark: $blue-dark;
-
-$custom-colors: (
-    "blue-light": $blue-light,
-    "blue-dark": $blue-dark,
-    "teal-dark": $teal-dark,
-    "gray": $gray,
-    "gray-dark": $gray-dark,
-    "black": $black,
-    "white": $white,
-);
-
+$custom-colors: ( "blue-light": $blue-light, "blue-dark": $blue-dark, "teal-dark": $teal-dark, "gray": $gray, "gray-dark": $gray-dark, "black": $black, "white": $white, );
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/utilities";
 @import "../../node_modules/bootstrap/scss/mixins";
@@ -45,90 +31,44 @@ $custom-colors: (
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 @import "../../node_modules/bootstrap-select/dist/css/bootstrap-select.min.css";
 @import "./exclude/exclude-maps.scss";
-
 $colors: map-merge($colors, $custom-colors);
-
-$utilities: (
-    "background-color": (
-        property: background-color,
-        class: bg,
-        values: map-merge(
-                $colors,
-                (
-                    "body": $body-bg,
-                    "transparent": transparent
-                )
-        )
-    ),
-    "color": (
-        property: color,
-        class: text,
-        values: map-merge(
-                $colors,
-                (
-                    "body": $body-color,
-                    "muted": $text-muted,
-                    "black-50": rgba($black, .5),
-                    "white-50": rgba($white, .5),
-                    "reset": inherit,
-                )
-        )
-    ),
-);
-
+$utilities: ( "background-color": ( property: background-color, class: bg, values: map-merge( $colors, ( "body": $body-bg, "transparent": transparent))), "color": ( property: color, class: text, values: map-merge( $colors, ( "body": $body-color, "muted": $text-muted, "black-50": rgba($black, .5), "white-50": rgba($white, .5), "reset": inherit, ))), );
 $headings-color: $primary;
-
 $link-shade-percentage: 100%;
-
 // Image
 $figure-caption-color: $gray-700;
-
 // Font
 $font-family-base: Muli;
-
 // Main
 $border-width: .15rem;
 $border-radius: .4rem;
-
 $min-contrast-ratio: 7;
-
 // Form
 $form-select-box-shadow: none;
 $form-label-font-weight: 800;
 $form-label-color: $primary;
-
 $input-color: $black;
-
 $form-file-button-color: $white;
 $form-file-button-bg: $primary;
 $form-file-button-hover-bg: lighten($primary, 10);
-
 $form-select-border-color: $primary;
-
 $btn-disabled-opacity: 100%;
 $form-check-input-disabled-opacity: 100%;
-
 $input-btn-padding-x: 1rem;
 $input-btn-padding-y: .7rem;
 $input-border-color: $primary;
 $input-border-width: $border-width;
-
 $form-select-border-width: $border-width;
 $form-select-box-shadow: none;
 $form-select-focus-box-shadow: none;
-
 $input-focus-border-color: $primary;
 $input-focus-box-shadow: none;
-
 $input-group-addon-bg: $primary;
 $input-group-addon-color: $white;
 $input-group-addon-border-color: $primary;
-
 $form-text-color: $black;
-
 // Validation
 $form-feedback-margin-top: 0;
-
 // Alerts
 $alert-bg-scale: -80%;
 $alert-color-scale: 0%;
@@ -136,42 +76,32 @@ $alert-border-scale: 0%;
 $alert-border-width: $border-width;
 $alert-link-font-weight: $font-weight-base;
 $btn-close-opacity: 1;
-
 // Lists
 $list-group-item-bg-scale: -80%;
 $list-group-item-color-scale: 0%;
 $list-group-border-color: #1f1f1f;
-
 // Badge
 $badge-padding-y: .65em;
 $badge-padding-x: .95em;
-
 // Navbar
-$navbar-dark-color:                 $white;
-$navbar-dark-hover-color:           $white;
-$navbar-dark-active-color:          $white;
-$navbar-dark-disabled-color:        $white;
-$navbar-dark-toggler-border-color:  $white;
-
-$navbar-light-color:                $black;
-$navbar-light-hover-color:          $black;
-$navbar-light-active-color:         $black;
-$navbar-light-disabled-color:       $black;
+$navbar-dark-color : $white;
+$navbar-dark-hover-color : $white;
+$navbar-dark-active-color : $white;
+$navbar-dark-disabled-color : $white;
+$navbar-dark-toggler-border-color : $white;
+$navbar-light-color : $black;
+$navbar-light-hover-color : $black;
+$navbar-light-active-color : $black;
+$navbar-light-disabled-color : $black;
 $navbar-light-toggler-border-color: $black;
-
 $navbar-padding-y: 0px;
-
 // Breadcrumbs
 $breadcrumb-active-color: $gray-700;
-
 // Code
 $code-color: $white;
-
 // Progress
 $progress-height: 1.5rem;
-
 @import "../../node_modules/bootstrap/scss/bootstrap";
-
 // Custom CSS
 .display-1,
 .display-2,
@@ -182,12 +112,12 @@ $progress-height: 1.5rem;
     color: $accessibility-text;
 }
 
-.navbar-nav > .nav-item > .nav-link {
+.navbar-nav>.nav-item>.nav-link {
     border-bottom: .1rem solid transparent;
     padding: 1rem;
 }
 
-.navbar-nav > .nav-item > .nav-link:hover {
+.navbar-nav>.nav-item>.nav-link:hover {
     border-color: $white;
 }
 
@@ -196,13 +126,14 @@ $progress-height: 1.5rem;
     box-shadow: .1rem .1rem 5px rgba($black, .5);
 }
 
-.valid-feedback, .invalid-feedback {
+.valid-feedback,
+.invalid-feedback {
     padding: .2rem .6rem;
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
 }
 
-.valid-feedback  {
+.valid-feedback {
     background: $form-feedback-valid-color;
     color: color-contrast($form-feedback-valid-color);
 }
@@ -219,7 +150,7 @@ $progress-height: 1.5rem;
 .form-control.is-invalid,
 .form-control.is-valid,
 .form-select.is-invalid,
-.form-select.is-valid{
+.form-select.is-valid {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -228,7 +159,7 @@ $progress-height: 1.5rem;
     z-index: 50;
 }
 
-.input-group-text ~ .form-control.is-invalid ~ .invalid-feedback {
+.input-group-text~.form-control.is-invalid~.invalid-feedback {
     padding-top: $border-radius + .2rem;
     margin-top: -$border-radius;
 }
@@ -260,20 +191,20 @@ $progress-height: 1.5rem;
 }
 
 @function hexToRGB($hex) {
-
-    @return red($hex), green($hex), blue($hex); // Plain comma seperated RGB values.
-
+    @return red($hex),
+    green($hex),
+    blue($hex); // Plain comma seperated RGB values.
 }
 
-.form-switch> input:not(:checked){
+.form-switch>input:not(:checked) {
     background-image: url(("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='"+hexToRGB($primary)+"'/%3e%3c/svg%3e"));
 }
 
-.form-switch> input:focus{
+.form-switch>input:focus {
     background-image: url(("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='"+hexToRGB($primary)+"'/%3e%3c/svg%3e"));
 }
 
-textarea:disabled{
+textarea:disabled {
     background-image: none!important;
 }
 
@@ -287,7 +218,7 @@ textarea:disabled{
     color: lighten($gray, 20);
 }
 
-.form-check-input:disabled ~ .form-check-label {
+.form-check-input:disabled~.form-check-label {
     background-image: url('../bootstrap_icons/x-circle.svg');
     background-repeat: no-repeat;
     background-position: right 45%;
@@ -305,7 +236,7 @@ code {
     margin-top: $spacer * 1.5;
 }
 
-td > .table-row-text {
+td>.table-row-text {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -315,39 +246,37 @@ td > .table-row-text {
 }
 
 @include media-breakpoint-down(md) {
-    td > .table-row-text {
+    td>.table-row-text {
         -webkit-line-clamp: var(--truncateLines);
-        line-clamp: var(--truncateLines);;
+        line-clamp: var(--truncateLines);
+        ;
     }
 }
 
-@each $color, $value in $theme-colors {
+@each $color,
+$value in $theme-colors {
     .bg-#{$color} {
         background-color: $value;
         color: color-contrast($value);
     }
-
     .alert-#{$color} .alert-link {
         color: color-contrast(lighten($value, 80));
     }
-
-    .navbar.bg-#{$color} .nav-pills > .nav-item > .nav-link {
+    .navbar.bg-#{$color} .nav-pills>.nav-item>.nav-link {
         color: color-contrast($value);
     }
-
-    .navbar.bg-#{$color} .nav-pills > .nav-item > .nav-link.active {
+    .navbar.bg-#{$color} .nav-pills>.nav-item>.nav-link.active {
         background: lighten($value, 20);
         color: $color;
     }
-
-    .bg-#{$color} .nav-item:hover > .nav-link {
+    .bg-#{$color} .nav-item:hover>.nav-link {
         border-bottom: .1rem solid color-contrast($value);
     }
-
-    .bg-#{$color}.dropdown-menu > li > a:hover {
+    .bg-#{$color}.dropdown-menu>li>a:hover {
         background-color: darken($value, 10);
     }
 }
+
 .nav-tabs .nav-item {
     margin-bottom: -1px;
 }
@@ -378,57 +307,59 @@ body {
     line-height: normal;
 }
 
+
 /* Select input */
+
 .bootstrap-select {
     .dropdown-menu {
         inset: unset!important;
         transform: none!important;
     }
-
-    .dropdown-toggle{
+    .dropdown-toggle {
         border: $border-width solid $blue-dark !important;
         border-radius: $border-radius;
     }
 }
 
+
 /* validation messages */
 
-.is-invalid{
-    .input-group-text{
+.is-invalid {
+    .input-group-text {
         border-color: $red;
         background-color: $red;
         border-bottom-left-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
     }
-    input{
+    input {
         border-color: $red;
     }
-    .file-input{
+    .file-input {
         border-color: $red;
         border-bottom-left-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
-        .file-caption{
-            .input-group{
-                .btn-file{
+        .file-caption {
+            .input-group {
+                .btn-file {
                     background-color: $red;
                     border-color: $red;
                     border-bottom-right-radius: 0 !important;
                 }
-                .file-caption-name{
+                .file-caption-name {
                     border-bottom-left-radius: 0 !important;
                 }
             }
         }
     }
-    .bootstrap-select{
-        .dropdown-toggle{
+    .bootstrap-select {
+        .dropdown-toggle {
             border: $border-width solid $red !important;
             border-radius: $border-radius $border-radius 0 0 !important;
         }
     }
 }
 
-.highlight-error{
+.highlight-error {
     border: $border-width solid $red !important;
     border-top-left-radius: $border-radius !important;
     border-top-right-radius: $border-radius !important;
@@ -436,43 +367,52 @@ body {
     padding: 0.375rem 0.75rem;
 }
 
-.highlight-error > .form-check-input {
+.highlight-error>.form-check-input {
     margin-left: 0;
 }
 
+
 /* Icons */
+
 .bi-x-lg::before {
     content: "\f5ee";
 }
 
+
 /* Links */
+
 a.deco-none {
     color: #000000 !important;
     text-decoration: none;
 }
 
+
 /* hr */
-.hr{
+
+.hr {
     margin-top: 0.25rem !important;
     margin-bottom: 1em;
     border-top: 1px solid #1f1f1f;
 }
 
+
 /* Answers */
-.vh-60{
-   min-height: 60vh;
+
+.vh-60 {
+    min-height: 60vh;
 }
 
-.selected{
+.selected {
     background-color: #a7a7a7;
     color: $white!important;
 }
 
-.small-height{
-    min-height: 1em;;
+.small-height {
+    min-height: 1em;
+    ;
 }
 
-.result-button{
+.result-button {
     display: flex;
     flex-wrap: wrap;
     padding: 0.2em 0.5em;
