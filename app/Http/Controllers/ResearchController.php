@@ -16,12 +16,7 @@ class ResearchController extends Controller
 {
     public function overview(): View
     {
-        dd(
-            env('APP_DEBUG'),
-            env('APP_ENV'),
-            env('MAPBOX_ACCESS_TOKEN'),
-            env('RADAR_SECRET'),
-        );
+        dd($_ENV);
         $researches = Research::all()->toArray();
 
         return view('admin.research.overview', [
