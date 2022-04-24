@@ -20,7 +20,7 @@ services:
             DB_USERNAME: '${DB_USERNAME:-admin}'
             DB_PASSWORD: '${DB_PASSWORD:-admin}'
             REDIS_HOST: 'redis'
-            MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN:-TestToken}'
+            MAPBOX_ACCESS_TOKEN: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
             RADAR_SECRET: '${RADAR_SECRET:-prj_test_sk_ff7db4eafcbaeab87d30a3d1b28ebae427a73372}'
             RADAR_API_URL: '${RADAR_API_URL:-https://api.radar.io/v1}'
             APP_DEBUG: '${APP_DEBUG:-false}'
