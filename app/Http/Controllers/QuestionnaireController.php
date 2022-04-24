@@ -75,7 +75,7 @@ class QuestionnaireController extends Controller
         Questionnaire $questionnaire,
     ): View {
         // Sections
-        $sections = $questionnaire->sections->toArray();
+        $sections = $questionnaire->sections;
         $sectionHeaders = ['ID', 'Titel', 'Omschrijving'];
         $sectionKeys = ['id', 'title', 'description'];
 
@@ -158,6 +158,14 @@ class QuestionnaireController extends Controller
             collect($participantLinkParameters),
         );
 
+        // Results
+        $questionSections = [];
+        foreach ($sections as $section){
+            $section['questions'] = $section->questions->toArray();
+            $questionSections[] = $section;
+        }
+        $sections = $sections->toArray();
+
         return view(
             'admin.questionnaire.details',
             compact(
@@ -173,6 +181,7 @@ class QuestionnaireController extends Controller
                 'participantHeaders',
                 'participantKeys',
                 'participantRowLink',
+                'questionSections'
             ),
         );
     }
