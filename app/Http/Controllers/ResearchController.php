@@ -19,7 +19,7 @@ class ResearchController extends Controller
         dd(
             env('APP_DEBUG'),
             env('APP_ENV'),
-            env('APP_MAPBOX_ACCESS_TOKEN'),
+            env('MAPBOX_ACCESS_TOKEN'),
             env('RADAR_SECRET'),
         );
         $researches = Research::all()->toArray();
