@@ -171,6 +171,12 @@ Route::middleware('auth')->group(function () {
                                                         )->name(
                                                             'questions.update',
                                                         );
+                                                        Route::get(
+                                                            '/answer/{participant}',
+                                                            'answer',
+                                                        )->name(
+                                                            'questions.answer',
+                                                        );
                                                     });
                                                 });
                                         },

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|Answer whereParticipantId($value)
  * @method static Builder|Answer whereQuestionOptionId($value)
  * @method static Builder|Answer whereUpdatedAt($value)
+ * @method static where(string $string, string $string1, int $id)
  * @property-read \App\Models\Participant $participant
  * @property-read \App\Models\QuestionOption $questionOption
  */
@@ -42,6 +44,7 @@ class Answer extends Model
 
     /* @var array */
     protected $casts = [
+        'answer' => AsArrayObject::class,
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -51,8 +54,8 @@ class Answer extends Model
         return $this->belongsTo(Participant::class);
     }
 
-    public function option(): BelongsTo
+    public function option(): QuestionOption
     {
-        return $this->belongsTo(QuestionOption::class);
+        return QuestionOption::whereId($this->question_option_id)->first();
     }
 }
