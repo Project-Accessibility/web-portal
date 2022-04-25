@@ -27,7 +27,7 @@
             <fieldset disabled>
                 <x-input type="text" label="Teachable Machine model" name="teachable_machine_link" placeholder="Link naar het teachable machine model"></x-input>
             </fieldset>
-            <x-button class="float-end mt-2" type="secondary">Toevoegen</x-button>
+            <x-button class="float-end mt-2" type="secondary">Aanpassen</x-button>
         </div>
     </form>
 @endsection
