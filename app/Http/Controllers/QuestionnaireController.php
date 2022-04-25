@@ -131,7 +131,7 @@ class QuestionnaireController extends Controller
             $section['questions'] = $section
                 ->questions()
                 ->selectRaw(
-                    'questions.id, questions.title, count(answers.id) as amountOfAnswers',
+                    'questions.id, questions.title, count(distinct(answers.participant_id)) as amountOfAnswers',
                 )
                 ->join(
                     'question_options',
