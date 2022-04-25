@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Questionnaire;
+use App\Utils\UniqueRandomParticipantCode;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -20,7 +21,7 @@ class ParticipantFactory extends Factory
     {
         return [
             'questionnaire_id' => Questionnaire::factory(),
-            'code' => $this->faker->unique()->md5,
+            'code' => (new UniqueRandomParticipantCode())->generate(),
         ];
     }
 }

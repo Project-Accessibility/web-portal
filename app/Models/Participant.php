@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Base64;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,6 +45,7 @@ class Participant extends Model
 
     /* @var array */
     protected $casts = [
+        'code' => Base64::class,
         'finished' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
