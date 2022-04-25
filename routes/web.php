@@ -1,14 +1,16 @@
 <?php
 
+use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Requests\TestInputsRequest;
+use App\Models\Participant;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use Illuminate\Support\Facades\App;
-use App\Http\Controllers\QuestionnaireController;
+use App\Http\Controllers\ParticipantController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -166,6 +168,28 @@ Route::middleware('auth')->group(function () {
                                                         );
                                                     });
                                                 });
+                                        },
+                                    );
+                                });
+
+                            Route::controller(ParticipantController::class)
+                                ->prefix('/participants')
+                                ->group(function () {
+                                    Route::get('/', 'overview')
+                                        ->name('questionnaires.participants')
+                                        ->defaults('display', 'Participanten');
+
+                                    Route::post('/', 'store')->name(
+                                        'participants.store',
+                                    );
+                                    Route::prefix('/{participant}')->group(
+                                        function () {
+                                            Route::get('/', 'details')->name(
+                                                'participants.details',
+                                            );
+                                            Route::delete('/', 'remove')->name(
+                                                'participants.remove',
+                                            );
                                         },
                                     );
                                 });

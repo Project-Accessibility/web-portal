@@ -75,9 +75,7 @@ class QuestionnaireController extends Controller
         Questionnaire $questionnaire,
     ): View {
         $sections = $questionnaire->sections->toArray();
-
         $sectionHeaders = ['ID', 'Titel', 'Omschrijving'];
-
         $sectionKeys = ['id', 'title', 'description'];
 
         $sectionLinkParameters = [
@@ -122,6 +120,36 @@ class QuestionnaireController extends Controller
             'sections.details',
             collect($sectionLinkParameters),
         );
+
+        $participants = $questionnaire
+            ->participants()
+            ->withMax('answers', 'updated_at')
+            ->get()
+            ->toArray();
+
+        $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltoloid'];
+        $participantKeys = ['id', 'code', 'answers_max_updated_at', 'finished'];
+
+        $participantLinkParameters = [
+            new TableLinkParameter(
+                routeParameter: 'participant',
+                itemIndex: 'id',
+            ),
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                routeValue: $questionnaire->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $questionnaire->research->id,
+            ),
+        ];
+
+        $participantRowLink = new TableLink(
+            'participants.details',
+            collect($participantLinkParameters),
+        );
+
         return view(
             'admin.questionnaire.details',
             compact(
@@ -132,6 +160,10 @@ class QuestionnaireController extends Controller
                 'sectionLinks',
                 'sectionKeys',
                 'sectionRowLink',
+                'participants',
+                'participantHeaders',
+                'participantKeys',
+                'participantRowLink',
             ),
         );
     }
