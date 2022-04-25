@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\QuestionOptionType;
 use App\Http\Requests\StoreQuestionRequest;
+use App\Models\Answer;
+use App\Models\Participant;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\Research;
@@ -193,6 +195,31 @@ class QuestionController extends Controller
                 'tab' => 'Vragen',
             ]),
         )->with('success', 'De vraag is verwijderd!');
+    }
+
+    public function answer(
+        Research $research,
+        Questionnaire $questionnaire,
+        Section $section,
+        Question $question,
+        Participant $participant
+    ): Application|RedirectResponse|Redirector {
+        $questionOptions = $question->options;
+        $answers = $questionOptions->filter(function($questionOption) use ($participant) {
+            return Answer::where('participant_id', '=', $participant->id)
+                ->where('question_option_id', '=', $questionOption->id)->first();
+        });
+        dd($answers);
+        return view(
+            'admin.question.details',
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'question',
+                'answers'
+            ),
+        );
     }
 
     public function archive(Question $question)
