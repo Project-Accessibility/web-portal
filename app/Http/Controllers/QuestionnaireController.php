@@ -158,6 +158,36 @@ class QuestionnaireController extends Controller
         // Results
         $results = $questionnaire->results()->toArray();
 
+        // Participants
+        $participants = $questionnaire
+            ->participants()
+            ->withMax('answers', 'updated_at')
+            ->get()
+            ->toArray();
+
+        $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltoloid'];
+        $participantKeys = ['id', 'code', 'answers_max_updated_at', 'finished'];
+
+        $participantLinkParameters = [
+            new TableLinkParameter(
+                routeParameter: 'participant',
+                itemIndex: 'id',
+            ),
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                routeValue: $questionnaire->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $questionnaire->research->id,
+            ),
+        ];
+
+        $participantRowLink = new TableLink(
+            'participants.details',
+            collect($participantLinkParameters),
+        );
+
         return view(
             'admin.questionnaire.details',
             compact(
@@ -173,6 +203,10 @@ class QuestionnaireController extends Controller
                 'participantKeys',
                 'participantRowLink',
                 'results',
+                'participants',
+                'participantHeaders',
+                'participantKeys',
+                'participantRowLink',
             ),
         );
     }
