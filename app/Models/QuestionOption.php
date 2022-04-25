@@ -61,9 +61,4 @@ class QuestionOption extends Model
     {
         return $this->hasMany(Answer::class)->with('participant');
     }
-
-    public function getTypeDisplayAttribute()
-    {
-        return $this->type->display();
-    }
 }
