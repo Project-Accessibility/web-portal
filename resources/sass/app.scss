@@ -479,3 +479,15 @@ a.deco-none {
 .small-height{
     min-height: 1em;;
 }
+
+.question-button{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.2em 0.5em;
+    margin-bottom: 0.75em;
+    color: $black;
+    text-decoration: none;
+    border: 1.5px solid #a7a7a7 !important;
+    border-radius: 0.25em;
+    cursor: pointer;
+}

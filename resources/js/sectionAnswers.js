@@ -2,17 +2,19 @@ window.addEventListener('load', () => {
     new SectionAnswers();
 });
 
-class SectionAnswers{
+class SectionAnswers {
     sectionsContainer;
     questionsContainer;
     questions;
     maxStringLength;
+    isDeleting;
 
     constructor() {
         this.sectionsContainer = document.getElementById('sections');
         this.questionsContainer = document.getElementById('questions');
         this.questions = [];
         this.maxStringLength = 40;
+        this.isDeleting = false;
         this.initSections();
     }
 
@@ -26,24 +28,24 @@ class SectionAnswers{
         }
     }
 
-    createSection(section){
+    createSection(section) {
         const displaySection = document.createElement('div');
         displaySection.className = 'section-button';
         displaySection.append(this.createLeftSide(section.title, section.description))
         displaySection.append(this.createRightSide());
-        displaySection.addEventListener('click', (e) => {
+        displaySection.addEventListener('click', async (e) => {
             e.preventDefault();
             const oldSelectedSection = document.getElementsByClassName('selected');
-            if(oldSelectedSection.length > 0){
+            if (oldSelectedSection.length > 0) {
                 oldSelectedSection[0].classList.remove('selected');
             }
             displaySection.classList.add('selected');
-            this.displayQuestions(section.id);
+            await this.displayQuestions(section.id);
         })
         return displaySection;
     }
 
-    initQuestions(section){
+    initQuestions(section) {
         this.questions[section.id] = [];
         section.questions.forEach(question => {
             const displayQuestion = this.createQuestion(section.id, question);
@@ -52,17 +54,18 @@ class SectionAnswers{
         });
     }
 
-    createQuestion(sectionId, question){
-        const displayQuestion = document.createElement('question');
-        displayQuestion.className = 'section-button';
-        displayQuestion.setAttribute("name",'question' + sectionId);
+    createQuestion(sectionId, question) {
+        const displayQuestion = document.createElement('a');
+        displayQuestion.href = `${window.url}/${sectionId}/questions/${question.id}/answers`;
+        displayQuestion.className = 'question-button';
         displayQuestion.hidden = true;
-        displayQuestion.append(this.createLeftSide(question.title, question.description))
+        displayQuestion.setAttribute("name", 'question' + sectionId);
+        displayQuestion.append(this.createLeftSide(question.title, 'Aantal antwoorden: ' + question.amountOfAnswers))
         displayQuestion.append(this.createRightSide());
         return displayQuestion;
     }
 
-    createLeftSide(title, description){
+    createLeftSide(title, description) {
         description = description ? description : '';
         const left = document.createElement('div');
         left.className = 'col';
@@ -76,7 +79,7 @@ class SectionAnswers{
         return left;
     }
 
-    createRightSide(){
+    createRightSide() {
         const right = document.createElement('div');
         right.className = 'd-flex justify-content-end align-items-center';
         right.innerHTML = `
@@ -89,14 +92,30 @@ class SectionAnswers{
         return right;
     }
 
-    displayQuestions(sectionId){
-        const allQuestions = document.getElementsByTagName('question');
-        Array.prototype.forEach.call(allQuestions, question => {
+    async displayQuestions(sectionId) {
+        this.isDeleting = true;
+        for (const question of Array.from(document.querySelectorAll('.question-button.show')).reverse()) {
             question.hidden = true;
-        });
-        const questions = document.getElementsByName('question'+sectionId);
-        questions.forEach(question => {
+            question.classList.add('remove');
+            await this.delay(50);
+        }
+        this.isDeleting = false;
+        const questions = document.getElementsByName('question' + sectionId);
+        for (const question of questions) {
+            if(this.isDeleting){
+                break;
+            }
             question.hidden = false;
-        })
+            question.classList.add('show');
+            await this.delay(50);
+        }
+    }
+
+    delay(delayInms) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(2);
+            }, delayInms);
+        });
     }
 }

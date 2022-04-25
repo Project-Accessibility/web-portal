@@ -8,12 +8,10 @@ use App\Models\Research;
 use App\Utils\TableLink;
 use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Symfony\Component\Console\Input\Input;
 
 class QuestionnaireController extends Controller
 {
@@ -130,7 +128,11 @@ class QuestionnaireController extends Controller
         // Results
         $questionSections = [];
         foreach ($sections as $section){
-            $section['questions'] = $section->questions->toArray();
+            $section['questions'] = $section->questions()->selectRaw('questions.id, questions.title, count(answers.id) as amountOfAnswers')
+                ->join('question_options', 'questions.id', '=', 'question_options.question_id')
+                ->leftJoin('answers', 'question_options.id', '=', 'answers.question_option_id')
+                ->groupBy(['questions.id', 'questions.title'])
+                ->get()->toArray();
             $questionSections[] = $section;
         }
         $sections = $sections->toArray();

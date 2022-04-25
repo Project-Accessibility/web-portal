@@ -12,6 +12,7 @@
     </div>
 </div>
 <script>
+    window.url = '{!! env('APP_URL') . "/researches/$research->id/questionnaires/$questionnaire->id/sections" !!}';
     window.values = {!! json_encode($questionSections) !!};
 </script>
 <script src="{{ asset('js/sectionAnswers.js') }}"></script>
