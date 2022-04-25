@@ -194,7 +194,11 @@ class QuestionnaireController extends Controller
         // Results
         $questionSections = [];
         foreach ($sections as $section){
-            $section['questions'] = $section->questions->toArray();
+            $section['questions'] = $section->questions()->selectRaw('questions.id, questions.title, count(answers.id) as amountOfAnswers')
+                ->join('question_options', 'questions.id', '=', 'question_options.question_id')
+                ->leftJoin('answers', 'question_options.id', '=', 'answers.question_option_id')
+                ->groupBy(['questions.id', 'questions.title'])
+                ->get()->toArray();
             $questionSections[] = $section;
         }
         $sections = $sections->toArray();
