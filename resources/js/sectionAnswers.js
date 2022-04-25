@@ -31,17 +31,20 @@ class SectionAnswers {
     createSection(section) {
         const displaySection = document.createElement('div');
         displaySection.className = 'section-button';
-        displaySection.append(this.createLeftSide(section.title, section.description))
+        displaySection.append(
+            this.createLeftSide(section.title, section.description)
+        );
         displaySection.append(this.createRightSide());
-        displaySection.addEventListener('click', async (e) => {
+        displaySection.addEventListener('click', async e => {
             e.preventDefault();
-            const oldSelectedSection = document.getElementsByClassName('selected');
+            const oldSelectedSection =
+                document.getElementsByClassName('selected');
             if (oldSelectedSection.length > 0) {
                 oldSelectedSection[0].classList.remove('selected');
             }
             displaySection.classList.add('selected');
             await this.displayQuestions(section.id);
-        })
+        });
         return displaySection;
     }
 
@@ -59,8 +62,13 @@ class SectionAnswers {
         displayQuestion.href = `${window.url}/${sectionId}/questions/${question.id}/answers`;
         displayQuestion.className = 'question-button';
         displayQuestion.hidden = true;
-        displayQuestion.setAttribute("name", 'question' + sectionId);
-        displayQuestion.append(this.createLeftSide(question.title, 'Aantal antwoorden: ' + question.amountOfAnswers))
+        displayQuestion.setAttribute('name', 'question' + sectionId);
+        displayQuestion.append(
+            this.createLeftSide(
+                question.title,
+                'Aantal antwoorden: ' + question.amountOfAnswers
+            )
+        );
         displayQuestion.append(this.createRightSide());
         return displayQuestion;
     }
@@ -74,7 +82,10 @@ class SectionAnswers {
         displayTitle.textContent = title;
         const displayDescription = document.createElement('p');
         displayDescription.className = 'small m-0 small-height';
-        displayDescription.textContent = description.length <= this.maxStringLength ? description : description.substring(0, this.maxStringLength) + '...';
+        displayDescription.textContent =
+            description.length <= this.maxStringLength
+                ? description
+                : description.substring(0, this.maxStringLength) + '...';
         left.append(displayTitle, displayDescription);
         return left;
     }
@@ -94,7 +105,9 @@ class SectionAnswers {
 
     async displayQuestions(sectionId) {
         this.isDeleting = true;
-        for (const question of Array.from(document.querySelectorAll('.question-button.show')).reverse()) {
+        for (const question of Array.from(
+            document.querySelectorAll('.question-button.show')
+        ).reverse()) {
             question.hidden = true;
             question.classList.add('remove');
             await this.delay(50);
@@ -102,7 +115,7 @@ class SectionAnswers {
         this.isDeleting = false;
         const questions = document.getElementsByName('question' + sectionId);
         for (const question of questions) {
-            if(this.isDeleting){
+            if (this.isDeleting) {
                 break;
             }
             question.hidden = false;
