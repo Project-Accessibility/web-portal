@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Casts\DisplayDateTime;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use App\Utils\TableLink;
 use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Symfony\Component\Console\Input\Input;
 
 class QuestionnaireController extends Controller
 {
@@ -124,6 +123,9 @@ class QuestionnaireController extends Controller
         $participants = $questionnaire
             ->participants()
             ->withMax('answers', 'updated_at')
+            ->withCasts([
+                'answers_max_updated_at' => DisplayDateTime::class,
+            ])
             ->get()
             ->toArray();
 
