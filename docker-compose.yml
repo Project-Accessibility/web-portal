@@ -3,83 +3,60 @@ version: '3'
 services:
     laravel:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.1
+            context: ./
             dockerfile: Dockerfile
-            args:
-                WWWGROUP: '${WWWGROUP}'
-        image: sail-8.1/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '${APP_PORT:-80}:80'
+            - '${APP_PORT:-80}:8080'
         environment:
-            WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            APP_ENV: '${APP_ENV:-local}'
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            DB_HOST: 'mysql'
+            DB_PORT: '${FORWARD_DB_PORT:-3306}'
+            DB_DATABASE: '${DB_DATABASE:-accessibility_dashboard}'
+            DB_USERNAME: '${DB_USERNAME:-admin}'
+            DB_PASSWORD: '${DB_PASSWORD:-admin}'
+            REDIS_HOST: 'redis'
+            MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN:-pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw}'
         volumes:
-            - '.:/var/www/html'
-        networks:
-            - sail
+            - '.:/app'
         depends_on:
             - mysql
             - redis
-            - meilisearch
-            - selenium
+        networks:
+            - sail
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_PASSWORD: 'root'
             MYSQL_ROOT_HOST: "%"
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_DATABASE: '${DB_DATABASE:-accessibility_dashboard}'
+            MYSQL_USER: '${DB_USERNAME:-admin}'
+            MYSQL_PASSWORD: '${DB_PASSWORD:-admin}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
             - 'sail-mysql:/var/lib/mysql'
-        networks:
-            - sail
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+        networks:
+            - sail
     redis:
         image: 'redis:alpine'
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
             - 'sail-redis:/data'
-        networks:
-            - sail
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
             timeout: 5s
-    meilisearch:
-        image: 'getmeili/meilisearch:latest'
-        ports:
-            - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
-        volumes:
-            - 'sail-meilisearch:/data.ms'
-        networks:
-            - sail
-        healthcheck:
-            test: ["CMD", "wget", "--no-verbose", "--spider",  "http://localhost:7700/health"]
-            retries: 3
-            timeout: 5s
-    mailhog:
-        image: 'mailhog/mailhog:latest'
-        ports:
-            - '${FORWARD_MAILHOG_PORT:-1025}:1025'
-            - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
-        networks:
-            - sail
-    selenium:
-        image: 'selenium/standalone-chrome'
-        volumes:
-            - '/dev/shm:/dev/shm'
         networks:
             - sail
 networks:
@@ -89,6 +66,4 @@ volumes:
     sail-mysql:
         driver: local
     sail-redis:
-        driver: local
-    sail-meilisearch:
         driver: local
