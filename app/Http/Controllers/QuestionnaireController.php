@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Casts\DisplayDateTime;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Questionnaire;
 use App\Models\Research;
@@ -128,6 +129,9 @@ class QuestionnaireController extends Controller
         $participants = $questionnaire
             ->participants()
             ->withMax('answers', 'updated_at')
+            ->withCasts([
+                'answers_max_updated_at' => DisplayDateTime::class,
+            ])
             ->get()
             ->toArray();
 

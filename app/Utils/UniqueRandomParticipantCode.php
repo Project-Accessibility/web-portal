@@ -8,8 +8,7 @@ class UniqueRandomParticipantCode
 {
     public function generate(): string
     {
-        $permitted_chars =
-            '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZ';
+        $permitted_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXZ';
         $participantCodes = Participant::get('code')
             ->pluck('code')
             ->toArray();

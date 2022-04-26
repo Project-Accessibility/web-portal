@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreQuestionnaireRequest;
+use App\Casts\DisplayDateTime;
 use App\Models\Participant;
 use App\Models\Questionnaire;
 use App\Models\Research;
-use App\Utils\TableLink;
-use App\Utils\TableLinkParameter;
 use App\Utils\UniqueRandomParticipantCode;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Symfony\Component\Console\Input\Input;
 
 class ParticipantController extends Controller
 {
@@ -42,12 +38,18 @@ class ParticipantController extends Controller
     }
 
     public function details(
-        Request $request,
         Research $research,
         Questionnaire $questionnaire,
         Participant $participant,
     ): View {
-        $participant->load('answers.questionOption.question.section');
+        $participant->load([
+            'answers' => function (Relation $query) {
+                $query->withCasts([
+                    'updated_at' => DisplayDateTime::class,
+                ]);
+            },
+            'answers.questionOption.question.section',
+        ]);
 
         return view(
             'admin.participant.details',
