@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\QuestionOptionType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAnswerRequest;
+use App\Models\Participant;
 use App\Models\Question;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class QuestionController extends Controller
 {
@@ -24,8 +32,64 @@ class QuestionController extends Controller
         ])->findOrFail($question);
     }
 
-    public function answer(Question $question, string $code): Model
+    public function answer(StoreAnswerRequest $request, Question $question, string $code): JsonResponse
     {
-        abort(Response::HTTP_NOT_IMPLEMENTED, 'Deze functie werkt nog niet');
+        // validation
+        $request->validated();
+
+        $options = $question->options;
+        $participant = Participant::whereCode($code)->first();
+
+        // Add answers
+        // Todo: Make it updatable
+        $options->map(function ($option) use ($participant, $request) {
+            switch ($option->type){
+                case QuestionOptionType::VOICE:
+                    $audios = $request->file('audios');
+                    $this->handleFile($option, $participant->id,  $audios, 'audios');
+                    break;
+                case QuestionOptionType::IMAGE:
+                    $images = $request->file('images');
+                    $this->handleFile($option, $participant->id,  $images, 'images');
+                    break;
+                default:
+//                    abort(ResponseAlias::HTTP_NOT_IMPLEMENTED, 'Deze functie werkt nog niet');
+            }
+        });
+        return response()->json([
+            'message' => 'answers saved!'
+        ]);
+    }
+
+    private function handleFile($option, $participantId, $files, $path): void
+    {
+        if (!$files) {
+            return;
+        }
+        if (is_array($files)) {
+            // handle multiple files
+            foreach ($files as $file) {
+                $option->answers()->create([
+                    'participant_id' => $participantId,
+                    'answer' => ['link' => $this->uploadFile($file, $path)]
+                ]);
+            }
+        } else {
+            // handle single file
+            $option->answers()->create([
+                'participant_id' => $participantId,
+                'answer' => ['link' => $this->uploadFile($files, $path)]
+            ]);
+        }
+    }
+
+    private function uploadFile($file, $path): string|UrlGenerator|Application
+    {
+        $uniqueId = uniqid();
+        $extension = $file->getClientOriginalExtension();
+        $filename = Carbon::now()->format('Ymd') . '_' . $uniqueId . '.' . $extension;
+        $filePath = url("/storage/upload/files/$path/" . $filename);
+        $file->storeAs("public/upload/files/$path/", $filename);
+        return $filePath;
     }
 }
