@@ -39,7 +39,7 @@ class StoreAnswerRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $this->checkIfValidAnswers($validator);
+//            $this->checkIfValidAnswers($validator);
             $multipleChoice = json_decode($this->get('MULTIPLE_CHOICE'));
             if(is_array($multipleChoice) && count($multipleChoice) > 0){
                 $this->checkIfMultipleChoiceValid($validator, $multipleChoice);
