@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\QuestionOptionType;
 use App\Models\Participant;
-use App\Models\Question;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAnswerRequest extends FormRequest
@@ -29,7 +29,54 @@ class StoreAnswerRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'audio' => 'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,aac'
+            'OPEN' => 'nullable',
+            'VOICE[]' => 'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
+            'IMAGE[]' => 'nullable|file|mimes:jpg,jpeg,png,bmp,gif,svg,webp',
+            'VIDEO[]' => 'nullable|file|mimes:mp4',
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $this->checkIfValidAnswers($validator);
+            $multipleChoice = json_decode($this->get('MULTIPLE_CHOICE'));
+            if(is_array($multipleChoice) && count($multipleChoice) > 0){
+                $this->checkIfMultipleChoiceValid($validator, $multipleChoice);
+            }
+        });
+    }
+
+    private function checkIfValidAnswers($validator) : void {
+        $options = $this->route('question')->options;
+        $questionOptionTypes = $options->pluck('type')->pluck('value')->toArray();
+        $allOptionTypes = QuestionOptionType::cases();
+        foreach ($allOptionTypes as $optionType){
+            $optionType = $optionType->value;
+            if($this->get($optionType) != null && !in_array($optionType, $questionOptionTypes)){
+                $validator
+                    ->errors()
+                    ->add($optionType, ($optionType . ' antwoord is geen vraag optie.'));
+            }
+        }
+    }
+
+    private function checkIfMultipleChoiceValid($validator, $multipleChoice) : void {
+        $option = $this->route('question')->options()->where('type', '=', QuestionOptionType::MULTIPLE_CHOICE->value)->first();
+        if($option){
+            if(!$option->extra_data['multiple'] && count($multipleChoice) > 1){
+                $validator
+                    ->errors()
+                    ->add('MULTIPLE_CHOICE', 'Er kan maar een waarde gekozen worden.');
+            }
+            foreach ($multipleChoice as $value){
+                if(!in_array($value, $option->extra_data['values'])){
+                    $validator
+                        ->errors()
+                        ->add('MULTIPLE_CHOICE', 'Meerkeuze heeft deze waardes niet.');
+                    return;
+                }
+            }
+        }
     }
 }
