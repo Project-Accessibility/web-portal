@@ -162,6 +162,9 @@ class QuestionnaireController extends Controller
         $participants = $questionnaire
             ->participants()
             ->withMax('answers', 'updated_at')
+            ->withCasts([
+                'answers_max_updated_at' => DisplayDateTime::class,
+            ])
             ->get()
             ->toArray();
 
