@@ -213,12 +213,12 @@ class QuestionController extends Controller
         Participant   $participant
     ): Factory|View|Application
     {
-        $questionOptions = $question->options;
-        $answers = $questionOptions->map(function ($questionOption) use ($participant) {
+        $options = $question->options;
+        $options = $options->map(function ($option) use ($participant) {
             return Answer::where('participant_id', '=', $participant->id)
-                ->where('question_option_id', '=', $questionOption->id)->first();
+                ->where('question_option_id', '=', $option->id)->get();
         })->filter(function ($answer) {
-            return $answer != null;
+            return $answer != null && count($answer) > 0;
         });
 
         return view(
@@ -229,7 +229,7 @@ class QuestionController extends Controller
                 'section',
                 'question',
                 'participant',
-                'answers',
+                'options',
             ),
         );
     }

@@ -44,16 +44,34 @@ class QuestionController extends Controller
         // Todo: Make it updatable
         $options->map(function ($option) use ($participant, $request) {
             switch ($option->type){
+                case QuestionOptionType::OPEN:
+                    $open = $request->get('OPEN');
+                    $option->answers()->create([
+                        'participant_id' => $participant->id,
+                        'answer' => ['text' => $open]
+                    ]);
+                    break;
                 case QuestionOptionType::VOICE:
-                    $audios = $request->file('audios');
+                    $audios = $request->file('VOICE');
                     $this->handleFile($option, $participant->id,  $audios, 'audios');
                     break;
                 case QuestionOptionType::IMAGE:
-                    $images = $request->file('images');
+                    $images = $request->file('IMAGE');
                     $this->handleFile($option, $participant->id,  $images, 'images');
                     break;
+                case QuestionOptionType::VIDEO:
+                    $images = $request->file('VIDEO');
+                    $this->handleFile($option, $participant->id,  $images, 'videos');
+                    break;
+                case QuestionOptionType::MULTIPLE_CHOICE:
+                    $answers = json_decode($request->get('MULTIPLE_CHOICE'));
+                    $option->answers()->create([
+                        'participant_id' => $participant->id,
+                        'answer' => ['options' => $option->extra_data['values'], 'selected' => $answers]
+                    ]);
+                    break;
                 default:
-//                    abort(ResponseAlias::HTTP_NOT_IMPLEMENTED, 'Deze functie werkt nog niet');
+                    abort(ResponseAlias::HTTP_NOT_IMPLEMENTED, 'Deze functie werkt nog niet');
             }
         });
         return response()->json([
