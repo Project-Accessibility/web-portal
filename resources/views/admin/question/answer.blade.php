@@ -27,6 +27,13 @@
                             @endforeach
                         </div>
                         @break;
+                    @case(\App\Enums\QuestionOptionType::VIDEO)
+                        <div class="row gy-2">
+                            @foreach($answers as $answer)
+                                <video src="{{ $answer->answer['link'] }}" class="col-md-6" controls>
+                            @endforeach
+                        </div>
+                    @break;
                     @case(\App\Enums\QuestionOptionType::MULTIPLE_CHOICE)
                         <div class="row gy-2">
                             <ul class="list-group">
