@@ -1,11 +1,7 @@
-FROM php:8.1
+FROM bitnami/laravel:9
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
 RUN apt-get update -y && apt-get install -y --no-install-recommends openssl zip unzip git nodejs
-
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions @composer curl gd mbstring openssl fileinfo mysqli pdo_mysql zip
 
 COPY ./php.ini.local $PHP_INI_DIR/conf.d/
 COPY . /app
