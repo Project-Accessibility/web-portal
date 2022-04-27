@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM bitnami/php-fpm:8.1
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
 RUN apt-get update -y && apt-get install -y --no-install-recommends openssl zip unzip git nodejs
