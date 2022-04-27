@@ -1,4 +1,4 @@
-FROM bitnami/laravel:9
+FROM php:8.1-fpm
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
 RUN apt-get update -y && apt-get install -y --no-install-recommends openssl zip unzip git nodejs
@@ -27,6 +27,6 @@ ENTRYPOINT ["sh", "./docker-entrypoint.sh"]
 
 CMD php artisan migrate --seed \
   & php artisan queue:work \
-  & php artisan serve --host=0.0.0.0 --port=8080
+  & php-fpm
 
 EXPOSE 8080
