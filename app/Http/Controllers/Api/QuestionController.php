@@ -32,8 +32,11 @@ class QuestionController extends Controller
         ])->findOrFail($question);
     }
 
-    public function answer(StoreAnswerRequest $request, Question $question, string $code): JsonResponse
-    {
+    public function answer(
+        StoreAnswerRequest $request,
+        Question $question,
+        string $code,
+    ): JsonResponse {
         // validation
         $request->validated();
 
@@ -43,39 +46,60 @@ class QuestionController extends Controller
         // Add answers
         // Todo: Make it updatable
         $options->map(function ($option) use ($participant, $request) {
-            switch ($option->type){
+            switch ($option->type) {
                 case QuestionOptionType::OPEN:
                     $open = $request->get('OPEN');
                     $option->answers()->create([
                         'participant_id' => $participant->id,
-                        'answer' => ['text' => $open]
+                        'answer' => ['text' => $open],
                     ]);
                     break;
                 case QuestionOptionType::VOICE:
                     $audios = $request->file('VOICE');
-                    $this->handleFile($option, $participant->id,  $audios, 'audios');
+                    $this->handleFile(
+                        $option,
+                        $participant->id,
+                        $audios,
+                        'audios',
+                    );
                     break;
                 case QuestionOptionType::IMAGE:
                     $images = $request->file('IMAGE');
-                    $this->handleFile($option, $participant->id,  $images, 'images');
+                    $this->handleFile(
+                        $option,
+                        $participant->id,
+                        $images,
+                        'images',
+                    );
                     break;
                 case QuestionOptionType::VIDEO:
                     $images = $request->file('VIDEO');
-                    $this->handleFile($option, $participant->id,  $images, 'videos');
+                    $this->handleFile(
+                        $option,
+                        $participant->id,
+                        $images,
+                        'videos',
+                    );
                     break;
                 case QuestionOptionType::MULTIPLE_CHOICE:
                     $answers = json_decode($request->get('MULTIPLE_CHOICE'));
                     $option->answers()->create([
                         'participant_id' => $participant->id,
-                        'answer' => ['options' => $option->extra_data['values'], 'selected' => $answers]
+                        'answer' => [
+                            'options' => $option->extra_data['values'],
+                            'selected' => $answers,
+                        ],
                     ]);
                     break;
                 default:
-                    abort(ResponseAlias::HTTP_NOT_IMPLEMENTED, 'Deze functie werkt nog niet');
+                    abort(
+                        ResponseAlias::HTTP_NOT_IMPLEMENTED,
+                        'Deze functie werkt nog niet',
+                    );
             }
         });
         return response()->json([
-            'message' => 'answers saved!'
+            'message' => 'answers saved!',
         ]);
     }
 
@@ -89,14 +113,14 @@ class QuestionController extends Controller
             foreach ($files as $file) {
                 $option->answers()->create([
                     'participant_id' => $participantId,
-                    'answer' => ['link' => $this->uploadFile($file, $path)]
+                    'answer' => ['link' => $this->uploadFile($file, $path)],
                 ]);
             }
         } else {
             // handle single file
             $option->answers()->create([
                 'participant_id' => $participantId,
-                'answer' => ['link' => $this->uploadFile($files, $path)]
+                'answer' => ['link' => $this->uploadFile($files, $path)],
             ]);
         }
     }
@@ -105,7 +129,8 @@ class QuestionController extends Controller
     {
         $uniqueId = uniqid();
         $extension = $file->getClientOriginalExtension();
-        $filename = Carbon::now()->format('Ymd') . '_' . $uniqueId . '.' . $extension;
+        $filename =
+            Carbon::now()->format('Ymd') . '_' . $uniqueId . '.' . $extension;
         $filePath = url("/storage/upload/files/$path/" . $filename);
         $file->storeAs("public/upload/files/$path/", $filename);
         return $filePath;
