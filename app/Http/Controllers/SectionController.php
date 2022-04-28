@@ -164,7 +164,7 @@ class SectionController extends Controller
     ): View {
         $geofence = Geofence::whereId($section->geofence_id)->first();
 
-        $questions = $section->questions->toArray();
+        $questions = $section->currentQuestions->toArray();
         $questionHeaders = ['ID', 'Titel', 'Vraag'];
 
         $questionKeys = ['id', 'title', 'question'];

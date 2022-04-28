@@ -131,7 +131,13 @@ class QuestionController extends Controller
         $request->validated();
         $data = $request->all();
 
-        $question->update($data);
+        if($questionnaire->open){
+            $question = $section->questions()->create($data);
+            $successMessage = 'Er is een nieuwe versie van de vraag aangemaakt!';
+        }else{
+            $question->update($data);
+            $successMessage = 'De vraag is aangepast!';
+        }
         $question->options()->delete();
         $this->storeOptions($question, $data);
 
@@ -143,7 +149,7 @@ class QuestionController extends Controller
                 'question' => $question,
                 'tab' => 'Details',
             ])
-            ->with('success', 'De vraag is aangepast!');
+            ->with('success', $successMessage);
     }
 
     public function details(

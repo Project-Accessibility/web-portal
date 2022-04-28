@@ -75,10 +75,10 @@ class Section extends Model
         return $this->hasMany(Question::class);
     }
 
-    public function latest_questions(): HasMany
+    public function currentQuestions(): HasMany
     {
         return $this->hasMany(Question::class)
-            ->orderBy('version', 'desc')
-            ->groupBy('question_id');
+            ->selectRaw('id, section_id, uuid, MAX(version) as version, title, question, created_at, updated_at')
+            ->groupBy('uuid');
     }
 }

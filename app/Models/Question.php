@@ -42,9 +42,9 @@ class Question extends Model
 
     /* @var array */
     protected $fillable = [
+        'section_id',
         'uuid',
         'version',
-        'section_id',
         'title',
         'question',
     ];
