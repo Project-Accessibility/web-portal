@@ -126,8 +126,7 @@ class QuestionnaireController extends Controller
         );
 
         // Results
-        $questionSections = [];
-        foreach ($sections as $section) {
+        $questionSections = $sections->filter(function ($section){
             $section['questions'] = $section
                 ->questions()
                 ->selectRaw(
@@ -148,8 +147,8 @@ class QuestionnaireController extends Controller
                 ->groupBy(['questions.id', 'questions.title'])
                 ->get()
                 ->toArray();
-            $questionSections[] = $section;
-        }
+            return $section;
+        });
         $sections = $sections->toArray();
 
         return view(
