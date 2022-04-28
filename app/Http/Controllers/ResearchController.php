@@ -16,7 +16,7 @@ class ResearchController extends Controller
 {
     public function overview(): View
     {
-        dd($_ENV);
+        dd($_SERVER);
         $researches = Research::all()->toArray();
 
         return view('admin.research.overview', [
