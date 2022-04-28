@@ -39,16 +39,16 @@ class StoreAnswerRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-//            $this->checkIfValidAnswers($validator);
+            $options = $this->route('question')->options();
+            $this->checkIfValidAnswers($validator, $options->get());
             $multipleChoice = json_decode($this->get('MULTIPLE_CHOICE'));
             if(is_array($multipleChoice) && count($multipleChoice) > 0){
-                $this->checkIfMultipleChoiceValid($validator, $multipleChoice);
+                $this->checkIfMultipleChoiceValid($validator, $options, $multipleChoice);
             }
         });
     }
 
-    private function checkIfValidAnswers($validator) : void {
-        $options = $this->route('question')->options;
+    private function checkIfValidAnswers($validator, $options) : void {
         $questionOptionTypes = $options->pluck('type')->pluck('value')->toArray();
         $allOptionTypes = QuestionOptionType::cases();
         foreach ($allOptionTypes as $optionType){
@@ -61,8 +61,8 @@ class StoreAnswerRequest extends FormRequest
         }
     }
 
-    private function checkIfMultipleChoiceValid($validator, $multipleChoice) : void {
-        $option = $this->route('question')->options()->where('type', '=', QuestionOptionType::MULTIPLE_CHOICE->value)->first();
+    private function checkIfMultipleChoiceValid($validator, $options, $multipleChoice) : void {
+        $option = $options->where('type', '=', QuestionOptionType::MULTIPLE_CHOICE->value)->first();
         if($option){
             if(!$option->extra_data['multiple'] && count($multipleChoice) > 1){
                 $validator
