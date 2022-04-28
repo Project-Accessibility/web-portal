@@ -14,7 +14,7 @@
                     @case(\App\Enums\QuestionOptionType::VOICE)
                     <div class="row gy-2">
                         @foreach($answers as $answer)
-                            <audio class="col-md-6" controls>
+                            <audio  controls>
                                 <source src="{{ $answer->answer['link'] }}" type="audio/mpeg">
                             </audio>
                         @endforeach
@@ -25,7 +25,7 @@
                         @foreach($answers as $answer)
                             <a href="#" class="col-md-6" data-bs-toggle="modal"
                                data-bs-target="#previewImage{{$answer->id}}">
-                                <img src="{{ $answer->answer['link'] }}" class="w-100" alt="image">
+                                <img src="{{ $answer->answer['link'] }}" class="w-100 h-100" alt="image">
                             </a>
                             <div class="modal fade" id="previewImage{{$answer->id}}" tabindex="-1"
                                  aria-labelledby="previewImageLabel" aria-hidden="true">
@@ -62,7 +62,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <video id="video{{$answer->id}}" src="{{ $answer->answer['link'] }}"
-                                                       class="w-100" controls></video>
+                                                       class="w-100 h-100" controls></video>
                                             </div>
                                             <script>
                                                 const modal = document.getElementById('previewVideo' + '{{$answer->id}}');
