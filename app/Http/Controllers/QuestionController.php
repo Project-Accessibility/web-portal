@@ -19,11 +19,10 @@ use Illuminate\Routing\Redirector;
 class QuestionController extends Controller
 {
     public function overview(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-    ): RedirectResponse
-    {
+        Section $section,
+    ): RedirectResponse {
         return redirect()->route('sections.details', [
             $research->id,
             $questionnaire->id,
@@ -33,11 +32,10 @@ class QuestionController extends Controller
     }
 
     public function create(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-    ): View
-    {
+        Section $section,
+    ): View {
         return view('admin.question.create', [
             'research' => $research,
             'questionnaire' => $questionnaire,
@@ -47,11 +45,10 @@ class QuestionController extends Controller
 
     public function store(
         StoreQuestionRequest $request,
-        Research             $research,
-        Questionnaire        $questionnaire,
-        Section              $section,
-    ): Application|RedirectResponse|Redirector
-    {
+        Research $research,
+        Questionnaire $questionnaire,
+        Section $section,
+    ): Application|RedirectResponse|Redirector {
         $request->validated();
         $data = $request->all();
 
@@ -108,12 +105,11 @@ class QuestionController extends Controller
     }
 
     public function edit(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-        Question      $question,
-    ): View
-    {
+        Section $section,
+        Question $question,
+    ): View {
         $question = $question->load('options');
         $questionOptionType = QuestionOptionType::class;
         return view(
@@ -130,12 +126,11 @@ class QuestionController extends Controller
 
     public function update(
         StoreQuestionRequest $request,
-        Research             $research,
-        Questionnaire        $questionnaire,
-        Section              $section,
-        Question             $question,
-    ): RedirectResponse
-    {
+        Research $research,
+        Questionnaire $questionnaire,
+        Section $section,
+        Question $question,
+    ): RedirectResponse {
         $request->validated();
         $data = $request->all();
 
@@ -162,12 +157,11 @@ class QuestionController extends Controller
     }
 
     public function details(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-        Question      $question,
-    ): View
-    {
+        Section $section,
+        Question $question,
+    ): View {
         $questionTypes = $question->options()->get();
         $questionTypesHeaders = ['Mogelijkheid'];
         $questionTypesKeys = ['typeDisplay'];
@@ -187,12 +181,11 @@ class QuestionController extends Controller
     }
 
     public function remove(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-        Question      $question,
-    ): Application|RedirectResponse|Redirector
-    {
+        Section $section,
+        Question $question,
+    ): Application|RedirectResponse|Redirector {
         $question->delete();
 
         return redirect(
@@ -206,20 +199,22 @@ class QuestionController extends Controller
     }
 
     public function answer(
-        Research      $research,
+        Research $research,
         Questionnaire $questionnaire,
-        Section       $section,
-        Question      $question,
-        Participant   $participant
-    ): Factory|View|Application
-    {
+        Section $section,
+        Question $question,
+        Participant $participant,
+    ): Factory|View|Application {
         $options = $question->options;
-        $options = $options->map(function ($option) use ($participant) {
-            return Answer::where('participant_id', '=', $participant->id)
-                ->where('question_option_id', '=', $option->id)->get();
-        })->filter(function ($answer) {
-            return $answer != null && count($answer) > 0;
-        });
+        $options = $options
+            ->map(function ($option) use ($participant) {
+                return Answer::where('participant_id', '=', $participant->id)
+                    ->where('question_option_id', '=', $option->id)
+                    ->get();
+            })
+            ->filter(function ($answer) {
+                return $answer != null && count($answer) > 0;
+            });
 
         return view(
             'admin.question.answer',
