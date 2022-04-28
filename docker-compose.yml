@@ -24,6 +24,10 @@ services:
             RADAR_SECRET: '${RADAR_SECRET:-prj_test_sk_ff7db4eafcbaeab87d30a3d1b28ebae427a73372}'
             RADAR_API_URL: '${RADAR_API_URL:-https://api.radar.io/v1}'
             APP_DEBUG: '${APP_DEBUG:-false}'
+            XDEBUG_MAPBOX: 'TestToken'
+            MAP_BOX: 10
+            LARAVEL_RADAR: 'Yup'
+            SAIL_RADAR: 'Test'
         volumes:
             - '.:/app'
         depends_on:
