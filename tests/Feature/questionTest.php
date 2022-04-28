@@ -14,7 +14,7 @@ class questionTest extends TestCase
         $questionOne = Question::create([
             'section_id' => $section->id,
             'title' => 'Eerste versie',
-            'question' => 'test',
+            'question' => 'test'
         ]);
 
         dd($questionOne);

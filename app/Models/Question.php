@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 /**
  * App\Models\Question
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Question whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereQuestion($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereSectionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereTitle($value)
@@ -40,7 +42,7 @@ class Question extends Model
 
     /* @var array */
     protected $fillable = [
-        'question_id',
+        'uuid',
         'version',
         'section_id',
         'title',
@@ -52,6 +54,24 @@ class Question extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::creating(function ($question) {
+            if (!$question->uuid) {
+                $question->uuid = Str::uuid();
+                $question->version = 1;
+            } else {
+                $currentQuestion = Question::whereUuid($question->uuid)->orderBy('version', 'desc')->first();
+                $question->version = $currentQuestion->version + 1;
+            }
+        });
+    }
 
     public function section(): BelongsTo
     {
