@@ -41,6 +41,12 @@ $app->singleton(
     App\Exceptions\Handler::class,
 );
 
+try {
+    Dotenv::create(__DIR__ . '/../')->overload();
+} catch (Dotenv\Exception\InvalidPathException $e) {
+    //
+}
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
