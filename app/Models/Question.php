@@ -39,7 +39,13 @@ class Question extends Model
     public $table = 'questions';
 
     /* @var array */
-    protected $fillable = ['section_id', 'title', 'question'];
+    protected $fillable = [
+        'question_id',
+        'version',
+        'section_id',
+        'title',
+        'question',
+    ];
 
     /* @var array */
     protected $casts = [

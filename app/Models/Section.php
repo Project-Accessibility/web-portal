@@ -74,4 +74,11 @@ class Section extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function latest_questions(): HasMany
+    {
+        return $this->hasMany(Question::class)
+            ->orderBy('version', 'desc')
+            ->groupBy('question_id');
+    }
 }
