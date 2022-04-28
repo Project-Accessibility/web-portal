@@ -10,6 +10,10 @@ services:
         ports:
             - '${APP_PORT:-80}:8080'
         environment:
+            XDEBUG_MAPBOX: 'TestToken'
+            MAP_BOX: 10
+            LARAVEL_RADAR: 'Yup'
+            SAIL_RADAR: 'Test'
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
             APP_ENV: '${APP_ENV:-local}'
@@ -24,10 +28,6 @@ services:
             RADAR_SECRET: '${RADAR_SECRET:-prj_test_sk_ff7db4eafcbaeab87d30a3d1b28ebae427a73372}'
             RADAR_API_URL: '${RADAR_API_URL:-https://api.radar.io/v1}'
             APP_DEBUG: '${APP_DEBUG:-false}'
-            XDEBUG_MAPBOX: 'TestToken'
-            MAP_BOX: 10
-            LARAVEL_RADAR: 'Yup'
-            SAIL_RADAR: 'Test'
         volumes:
             - '.:/app'
         depends_on:
