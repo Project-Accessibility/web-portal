@@ -78,7 +78,29 @@ class Section extends Model
     public function currentQuestions(): HasMany
     {
         return $this->hasMany(Question::class)
-            ->selectRaw('id, section_id, uuid, MAX(version) as version, title, question, created_at, updated_at')
+            ->selectRaw(
+                'questions.id, section_id, uuid, MAX(version) as version, title, question, questions.created_at, questions.updated_at',
+            )
             ->groupBy('uuid');
+    }
+
+    public function currentQuestionsWithAnswers(): HasMany
+    {
+        return $this->currentQuestions()
+            ->selectRaw(
+                'questions.id, questions.title, count(distinct(answers.participant_id)) as amountOfAnswers',
+            )
+            ->leftJoin(
+                'question_options',
+                'questions.id',
+                '=',
+                'question_options.question_id',
+            )
+            ->leftJoin(
+                'answers',
+                'question_options.id',
+                '=',
+                'answers.question_option_id',
+            );
     }
 }
