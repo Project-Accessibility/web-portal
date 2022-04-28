@@ -27,6 +27,6 @@ ENTRYPOINT ["sh", "./docker-entrypoint.sh"]
 
 CMD php artisan migrate --seed \
   & php artisan queue:work \
-  & php-fpm
+  & php artisan serve --host=0.0.0.0 --port=8080
 
 EXPOSE 8080
