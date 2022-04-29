@@ -41,6 +41,9 @@ $custom-colors: (
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/utilities";
 @import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap-fileinput/css/fileinput.min.css";
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+@import "../../node_modules/bootstrap-select/dist/css/bootstrap-select.min.css";
 @import "./exclude/exclude-maps.scss";
 
 $colors: map-merge($colors, $custom-colors);
@@ -460,27 +463,16 @@ a.deco-none {
    min-height: 60vh;
 }
 
-.section-button{
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0.2em 0.5em;
-    margin-bottom: 0.75em;
-    color: $black;
-    border: 1.5px solid #a7a7a7 !important;
-    border-radius: 0.25em;
-    cursor: pointer;
-}
-
 .selected{
     background-color: #a7a7a7;
-    color: $white;
+    color: $white!important;
 }
 
 .small-height{
     min-height: 1em;;
 }
 
-.question-button{
+.result-button{
     display: flex;
     flex-wrap: wrap;
     padding: 0.2em 0.5em;

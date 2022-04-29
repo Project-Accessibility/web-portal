@@ -3,18 +3,20 @@
 namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
  * App\Models\Question
  *
- * @method static \Illuminate\Database\Eloquent\Builder|Question newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Question newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Question query()
+ * @method static Builder|Question newModelQuery()
+ * @method static Builder|Question newQuery()
+ * @method static Builder|Question query()
  * @mixin Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\QuestionOption[] $questionOptions
  * @property-read int|null $question_options_count
@@ -24,13 +26,13 @@ use Illuminate\Support\Str;
  * @property string $question
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereUuid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereQuestion($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereSectionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
+ * @method static Builder|Question whereCreatedAt($value)
+ * @method static Builder|Question whereId($value)
+ * @method static Builder|Question whereUuid($value)
+ * @method static Builder|Question whereQuestion($value)
+ * @method static Builder|Question whereSectionId($value)
+ * @method static Builder|Question whereTitle($value)
+ * @method static Builder|Question whereUpdatedAt($value)
  * @property-read \App\Models\Section $section
  */
 class Question extends Model
@@ -83,5 +85,19 @@ class Question extends Model
     public function options(): HasMany
     {
         return $this->hasMany(QuestionOption::class);
+    }
+
+    public function answers(): Collection
+    {
+        $answers = collect();
+        $questions = Question::whereUuid($this->uuid)->get();
+        $options = collect();
+        foreach ($questions as $question) {
+            $options = $options->merge($question->options()->get());
+        }
+        foreach ($options as $option) {
+            $answers = $answers->merge($option->answers()->get());
+        }
+        return $answers;
     }
 }

@@ -10,7 +10,6 @@ use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 class QuestionnaireController extends Controller
@@ -71,12 +70,11 @@ class QuestionnaireController extends Controller
     }
 
     public function details(
-        Request $request,
         Research $research,
         Questionnaire $questionnaire,
     ): View {
         // Sections
-        $sections = $questionnaire->sections;
+        $sections = $questionnaire->sections->toArray();
 
         $sectionHeaders = ['ID', 'Titel', 'Omschrijving'];
 
@@ -126,13 +124,7 @@ class QuestionnaireController extends Controller
         );
 
         // Results
-        $questionSections = $sections->filter(function ($section) {
-            $section[
-                'questions'
-            ] = $section->currentQuestionsWithAnswers->toArray();
-            return $section;
-        });
-        $sections = $sections->toArray();
+        $results = $questionnaire->results()->toArray();
 
         return view(
             'admin.questionnaire.details',
@@ -144,7 +136,7 @@ class QuestionnaireController extends Controller
                 'sectionLinks',
                 'sectionKeys',
                 'sectionRowLink',
-                'questionSections',
+                'results',
             ),
         );
     }

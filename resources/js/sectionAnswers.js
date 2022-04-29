@@ -6,6 +6,10 @@ class SectionAnswers {
     sectionsContainer;
     questionsContainer;
     questions;
+    noQuestionsText;
+    answersContainer;
+    answers;
+    noAnswersText;
     maxStringLength;
     isDeleting;
 
@@ -13,6 +17,10 @@ class SectionAnswers {
         this.sectionsContainer = document.getElementById('sections');
         this.questionsContainer = document.getElementById('questions');
         this.questions = [];
+        this.noQuestionsText = document.getElementById('noQuestions');
+        this.answersContainer = document.getElementById('answers');
+        this.answers = [];
+        this.noAnswersText = document.getElementById('noAnswers');
         this.maxStringLength = 40;
         this.isDeleting = false;
         this.initSections();
@@ -30,17 +38,19 @@ class SectionAnswers {
 
     createSection(section) {
         const displaySection = document.createElement('div');
-        displaySection.className = 'section-button';
+        displaySection.className = 'result-button';
         displaySection.append(
             this.createLeftSide(section.title, section.description)
         );
         displaySection.append(this.createRightSide());
         displaySection.addEventListener('click', async e => {
             e.preventDefault();
-            const oldSelectedSection =
+            const oldSelectedButtons =
                 document.getElementsByClassName('selected');
-            if (oldSelectedSection.length > 0) {
-                oldSelectedSection[0].classList.remove('selected');
+            if (oldSelectedButtons.length > 0) {
+                Array.from(oldSelectedButtons).forEach(oldSelectedButton => {
+                    oldSelectedButton.classList.remove('selected');
+                });
             }
             displaySection.classList.add('selected');
             await this.displayQuestions(section.id);
@@ -50,27 +60,64 @@ class SectionAnswers {
 
     initQuestions(section) {
         this.questions[section.id] = [];
-        section.questions.forEach(question => {
+        const questions = [];
+        Object.keys(section.questions).map(id => {
+            questions.push(section.questions[id]);
+        });
+        questions.forEach(question => {
             const displayQuestion = this.createQuestion(section.id, question);
             this.questions[section.id].push(displayQuestion);
             this.questionsContainer.append(displayQuestion);
+            this.initAnswers(section, question);
         });
     }
 
     createQuestion(sectionId, question) {
         const displayQuestion = document.createElement('a');
-        displayQuestion.href = `${window.url}/${sectionId}/questions/${question.id}/answers`;
-        displayQuestion.className = 'question-button';
+        displayQuestion.className = 'result-button question';
         displayQuestion.hidden = true;
         displayQuestion.setAttribute('name', 'question' + sectionId);
         displayQuestion.append(
-            this.createLeftSide(
-                question.title,
-                'Aantal antwoorden: ' + question.amountOfAnswers
-            )
+            this.createLeftSide(question.title, question.question)
         );
         displayQuestion.append(this.createRightSide());
+        displayQuestion.addEventListener('click', async e => {
+            e.preventDefault();
+            const oldSelectedQuestion =
+                document.getElementsByClassName('selected');
+            if (oldSelectedQuestion.length > 1) {
+                oldSelectedQuestion[1].classList.remove('selected');
+            }
+            displayQuestion.classList.add('selected');
+            await this.displayAnswers(question.id);
+        });
         return displayQuestion;
+    }
+
+    initAnswers(section, question) {
+        this.answers[question.id] = [];
+        question.answers.forEach(answer => {
+            const displayAnswer = this.createAnswer(
+                section.id,
+                question.id,
+                answer
+            );
+            this.answers[question.id].push(displayAnswer);
+            this.answersContainer.append(displayAnswer);
+        });
+    }
+
+    createAnswer(sectionId, questionId, answer) {
+        const displayAnswer = document.createElement('a');
+        displayAnswer.href = `${window.url}/${sectionId}/questions/${questionId}/answers/${answer.participant.code}`;
+        displayAnswer.className = 'result-button answer';
+        displayAnswer.hidden = true;
+        displayAnswer.setAttribute('name', 'answer' + questionId);
+        displayAnswer.append(
+            this.createLeftSide('Participant #' + answer.participant.code, '')
+        );
+        displayAnswer.append(this.createRightSide());
+        return displayAnswer;
     }
 
     createLeftSide(title, description) {
@@ -105,15 +152,27 @@ class SectionAnswers {
 
     async displayQuestions(sectionId) {
         this.isDeleting = true;
+        this.noQuestionsText.hidden = true;
         for (const question of Array.from(
-            document.querySelectorAll('.question-button.show')
+            document.querySelectorAll('.question.show')
         ).reverse()) {
             question.hidden = true;
             question.classList.add('remove');
             await this.delay(50);
         }
+        for (const answer of Array.from(
+            document.querySelectorAll('.answer.show')
+        ).reverse()) {
+            answer.hidden = true;
+            answer.classList.add('remove');
+            await this.delay(50);
+        }
         this.isDeleting = false;
         const questions = document.getElementsByName('question' + sectionId);
+        if (questions.length === 0) {
+            this.noQuestionsText.hidden = false;
+            return;
+        }
         for (const question of questions) {
             if (this.isDeleting) {
                 break;
@@ -124,11 +183,37 @@ class SectionAnswers {
         }
     }
 
-    delay(delayInms) {
+    async displayAnswers(questionId) {
+        this.isDeleting = true;
+        this.noAnswersText.hidden = true;
+        for (const answer of Array.from(
+            document.querySelectorAll('.answer.show')
+        ).reverse()) {
+            answer.hidden = true;
+            answer.classList.add('remove');
+            await this.delay(50);
+        }
+        this.isDeleting = false;
+        const answers = document.getElementsByName('answer' + questionId);
+        if (answers.length === 0) {
+            this.noAnswersText.hidden = false;
+            return;
+        }
+        for (const answer of answers) {
+            if (this.isDeleting) {
+                break;
+            }
+            answer.hidden = false;
+            answer.classList.add('show');
+            await this.delay(50);
+        }
+    }
+
+    delay(delayInMs) {
         return new Promise(resolve => {
             setTimeout(() => {
                 resolve(2);
-            }, delayInms);
+            }, delayInMs);
         });
     }
 }
