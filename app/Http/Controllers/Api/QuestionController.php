@@ -36,8 +36,7 @@ class QuestionController extends Controller
         StoreAnswerRequest $request,
         Question $question,
         string $code,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         // validation
         $request->validated();
 
@@ -67,7 +66,9 @@ class QuestionController extends Controller
 
     private function saveAnswer($option, $request, $participant)
     {
-        $answer = Answer::whereParticipantId($participant->id)->whereQuestionOptionId($option->id)->first();
+        $answer = Answer::whereParticipantId($participant->id)
+            ->whereQuestionOptionId($option->id)
+            ->first();
         if ($answer == null) {
             $answer = new Answer();
             $answer->question_option_id = $option->id;
