@@ -61,7 +61,7 @@ class SectionAnswers {
     initQuestions(section) {
         this.questions[section.id] = [];
         const questions = [];
-        Object.keys(section.questions).map(id => {
+        Object.keys(section.questions).forEach(id => {
             questions.push(section.questions[id]);
         });
         questions.forEach(question => {
