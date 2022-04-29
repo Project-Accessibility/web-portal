@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enums\QuestionOptionType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAnswerRequest;
+use App\Models\Answer;
 use App\Models\Participant;
 use App\Models\Question;
 use Illuminate\Contracts\Foundation\Application;
@@ -13,7 +14,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -36,7 +36,8 @@ class QuestionController extends Controller
         StoreAnswerRequest $request,
         Question $question,
         string $code,
-    ): JsonResponse {
+    ): JsonResponse
+    {
         // validation
         $request->validated();
 
@@ -44,85 +45,80 @@ class QuestionController extends Controller
         $participant = Participant::whereCode($code)->first();
 
         // Add answers
-        // Todo: Make it updatable
-        $options->map(function ($option) use ($participant, $request) {
-            switch ($option->type) {
-                case QuestionOptionType::OPEN:
-                    $open = $request->get('OPEN');
-                    $option->answers()->create([
-                        'participant_id' => $participant->id,
-                        'answer' => ['text' => $open],
-                    ]);
-                    break;
-                case QuestionOptionType::VOICE:
-                    $audios = $request->file('VOICE');
-                    $this->handleFile(
-                        $option,
-                        $participant->id,
-                        $audios,
-                        'audios',
-                    );
-                    break;
-                case QuestionOptionType::IMAGE:
-                    $images = $request->file('IMAGE');
-                    $this->handleFile(
-                        $option,
-                        $participant->id,
-                        $images,
-                        'images',
-                    );
-                    break;
-                case QuestionOptionType::VIDEO:
-                    $images = $request->file('VIDEO');
-                    $this->handleFile(
-                        $option,
-                        $participant->id,
-                        $images,
-                        'videos',
-                    );
-                    break;
-                case QuestionOptionType::MULTIPLE_CHOICE:
-                    $answers = json_decode($request->get('MULTIPLE_CHOICE'));
-                    $option->answers()->create([
-                        'participant_id' => $participant->id,
-                        'answer' => [
-                            'options' => $option->extra_data['values'],
-                            'selected' => $answers,
-                        ],
-                    ]);
-                    break;
-                default:
-                    abort(
-                        ResponseAlias::HTTP_NOT_IMPLEMENTED,
-                        'Deze functie werkt nog niet',
-                    );
-            }
+        $this->removeAnswers($request, $participant);
+        $options->map(function ($option) use ($request, $participant) {
+            $this->saveAnswer($option, $request, $participant);
         });
         return response()->json([
             'message' => 'answers saved!',
         ]);
     }
 
-    private function handleFile($option, $participantId, $files, $path): void
+    private function removeAnswers($request, $participant)
     {
+        $answers = $participant->answers;
+        $answers->map(function ($answer) use ($request) {
+            $type = $request->get($answer->option()->type->value);
+            if ($type == null && $type . '[]' == null) {
+                $answer->delete();
+            }
+        });
+    }
+
+    private function saveAnswer($option, $request, $participant)
+    {
+        $answer = Answer::whereParticipantId($participant->id)->whereQuestionOptionId($option->id)->first();
+        if ($answer == null) {
+            $answer = new Answer();
+            $answer->question_option_id = $option->id;
+            $answer->participant_id = $participant->id;
+        }
+        switch ($option->type) {
+            case QuestionOptionType::OPEN:
+                $open = $request->get('OPEN');
+                $answer->answer = [$open];
+                break;
+            case QuestionOptionType::VOICE:
+                $audios = $request->file('VOICE');
+                $answer->answer = $this->handleFiles($audios, 'audios');
+                break;
+            case QuestionOptionType::IMAGE:
+                $images = $request->file('IMAGE');
+                $answer->answer = $this->handleFiles($images, 'images');
+                break;
+            case QuestionOptionType::VIDEO:
+                $videos = $request->file('VIDEO');
+                $answer->answer = $this->handleFiles($videos, 'videos');
+                break;
+            case QuestionOptionType::MULTIPLE_CHOICE:
+                $answers = json_decode($request->get('MULTIPLE_CHOICE'));
+                $answer->answer = $answers;
+                break;
+            default:
+                abort(
+                    ResponseAlias::HTTP_NOT_IMPLEMENTED,
+                    'Deze functie werkt nog niet',
+                );
+        }
+        $answer->save();
+    }
+
+    private function handleFiles($files, $path): array
+    {
+        $links = [];
         if (!$files) {
-            return;
+            return $links;
         }
         if (is_array($files)) {
             // handle multiple files
             foreach ($files as $file) {
-                $option->answers()->create([
-                    'participant_id' => $participantId,
-                    'answer' => ['link' => $this->uploadFile($file, $path)],
-                ]);
+                array_push($links, $this->uploadFile($file, $path));
             }
         } else {
             // handle single file
-            $option->answers()->create([
-                'participant_id' => $participantId,
-                'answer' => ['link' => $this->uploadFile($files, $path)],
-            ]);
+            array_push($links, $this->uploadFile($files, $path));
         }
+        return $links;
     }
 
     private function uploadFile($file, $path): string|UrlGenerator|Application
