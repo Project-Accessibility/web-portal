@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * App\Models\Section
@@ -75,32 +78,11 @@ class Section extends Model
         return $this->hasMany(Question::class);
     }
 
-    public function currentQuestions(): HasMany
+    public function getLatestVersionsOfQuestions(): Collection
     {
-        return $this->hasMany(Question::class)
-            ->selectRaw(
-                'questions.id, section_id, uuid, MAX(version) as version, title, question, questions.created_at, questions.updated_at',
-            )
-            ->groupBy('uuid');
-    }
-
-    public function currentQuestionsWithAnswers(): HasMany
-    {
-        return $this->currentQuestions()
-            ->selectRaw(
-                'questions.id, questions.title, count(distinct(answers.participant_id)) as amountOfAnswers',
-            )
-            ->leftJoin(
-                'question_options',
-                'questions.id',
-                '=',
-                'question_options.question_id',
-            )
-            ->leftJoin(
-                'answers',
-                'question_options.id',
-                '=',
-                'answers.question_option_id',
-            );
+        return $this->questions()
+            ->orderBy('version', 'desc')
+            ->get()
+            ->unique('uuid');
     }
 }
