@@ -205,15 +205,14 @@ class QuestionController extends Controller
         Question $question,
         Participant $participant,
     ): Factory|View|Application {
-        $options = $question->options;
-        $options = $options
+        $answers = $question->options
             ->map(function ($option) use ($participant) {
                 return Answer::where('participant_id', '=', $participant->id)
                     ->where('question_option_id', '=', $option->id)
-                    ->get();
+                    ->first();
             })
             ->filter(function ($answer) {
-                return $answer != null && count($answer) > 0;
+                return $answer != null;
             });
 
         return view(
@@ -224,7 +223,7 @@ class QuestionController extends Controller
                 'section',
                 'question',
                 'participant',
-                'options',
+                'answers',
             ),
         );
     }
