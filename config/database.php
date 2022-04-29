@@ -61,7 +61,7 @@ return [
                 'NO_ZERO_IN_DATE',
                 'NO_ZERO_DATE',
                 'ERROR_FOR_DIVISION_BY_ZERO',
-                'NO_ENGINE_SUBSTITUTION'
+                'NO_ENGINE_SUBSTITUTION',
             ],
             'options' => extension_loaded('pdo_mysql')
                 ? array_filter([

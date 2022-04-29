@@ -67,7 +67,9 @@ class Question extends Model
                 $question->uuid = Str::uuid();
                 $question->version = 1;
             } else {
-                $currentQuestion = Question::whereUuid($question->uuid)->orderBy('version', 'desc')->first();
+                $currentQuestion = Question::whereUuid($question->uuid)
+                    ->orderBy('version', 'desc')
+                    ->first();
                 $question->version = $currentQuestion->version + 1;
             }
         });
