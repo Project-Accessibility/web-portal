@@ -29,7 +29,7 @@ services:
         networks:
             - sail
     mysql:
-        image: 'mysql:8.0.29-debian'
+        image: 'mysql:8.0.28-oracle'
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
@@ -42,7 +42,7 @@ services:
         volumes:
             - 'sail-mysql:/var/lib/mysql'
         healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+            test: ["CMD", "mysqladmin", "ping", "-p root"]
             retries: 3
             timeout: 5s
         networks:
