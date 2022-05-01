@@ -37,9 +37,12 @@ class QuestionnaireController extends Controller
 
         $research->questionnaires()->create($request->all());
 
-        return redirect(
-            route('researches.questionnaires', $research->id),
-        )->with('success', 'De vragenlijst is aangemaakt!');
+        return redirect()
+            ->route('researches.details', [
+                $research->id,
+                'tab' => 'Vragenlijsten',
+            ])
+            ->with('success', 'De vragenlijst is aangemaakt!');
     }
 
     public function edit(Research $research, Questionnaire $questionnaire): View

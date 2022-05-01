@@ -21,13 +21,18 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'overview')
                 ->name('researches')
                 ->defaults('display', 'Onderzoeken');
-
             Route::get('/create', 'create')
                 ->name('researches.create')
                 ->defaults('display', 'Aanmaken');
+            Route::post('/', 'store')->name('researches.store');
 
             Route::prefix('/{research}')->group(function () {
                 Route::get('/', 'details')->name('researches.details');
+                Route::get('/edit', 'edit')
+                    ->name('researches.edit')
+                    ->defaults('display', 'Aanpassen');
+                Route::put('/', 'update')->name('researches.update');
+                Route::delete('/', 'remove')->name('researches.remove');
 
                 Route::controller(QuestionnaireController::class)
                     ->prefix('/questionnaires')
@@ -228,14 +233,6 @@ Route::middleware('auth')->group(function () {
                         });
                     });
             });
-
-            Route::get('/{research}/edit', 'edit')
-                ->name('researches.edit')
-                ->defaults('display', 'Aanpassen');
-
-            Route::post('/', 'store')->name('researches.store');
-            Route::put('/{research}', 'update')->name('researches.update');
-            Route::delete('/{research}', 'remove')->name('researches.remove');
         });
 });
 
