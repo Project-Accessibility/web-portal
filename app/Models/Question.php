@@ -90,22 +90,30 @@ class Question extends Model
     public function answers(): Collection
     {
         $answers = collect();
-        $questions = Question::whereUuid($this->uuid)->get();
-        $options = collect();
+        $questions = Question::whereUuid($this->uuid)->with('options.answers')->get();
         foreach ($questions as $question) {
-            $options = $options->merge($question->options()->get());
-        }
-        foreach ($options as $option) {
-            $tempAnswers = $option->answers()->get();
-            foreach ($tempAnswers as $temp) {
-                $answerExists = $answers
-                    ->where('participant_id', '=', $temp->participant_id)
-                    ->first();
-                if ($answerExists == null) {
-                    $answers->push($temp);
+            foreach($question->options as $option){
+                foreach ($option->answers as $answer) {
+                    $answerExists = $answers
+                        ->where('participant_id', '=', $answer->participant_id)
+                        ->first();
+                    if ($answerExists == null) {
+                        $answers->push($answer);
+                    }
                 }
             }
         }
+//        foreach ($options as $option) {
+//            $tempAnswers = $option->answers()->get();
+//            foreach ($tempAnswers as $temp) {
+//                $answerExists = $answers
+//                    ->where('participant_id', '=', $temp->participant_id)
+//                    ->first();
+//                if ($answerExists == null) {
+//                    $answers->push($temp);
+//                }
+//            }
+//        }
         return $answers;
     }
 }
