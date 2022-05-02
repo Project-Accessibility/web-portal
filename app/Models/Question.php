@@ -90,9 +90,11 @@ class Question extends Model
     public function answers(): Collection
     {
         $answers = collect();
-        $questions = Question::whereUuid($this->uuid)->with('options.answers')->get();
+        $questions = Question::whereUuid($this->uuid)
+            ->with('options.answers')
+            ->get();
         foreach ($questions as $question) {
-            foreach($question->options as $option){
+            foreach ($question->options as $option) {
                 foreach ($option->answers as $answer) {
                     $answerExists = $answers
                         ->where('participant_id', '=', $answer->participant_id)
