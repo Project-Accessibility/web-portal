@@ -31,7 +31,7 @@ services:
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
-            - '${FORWARD_DB_PORT:-3306}:3306'
+            - '${FORWARD_DB_PORT:-33060}:33060'
         environment:
             MYSQL_ROOT_PASSWORD: 'root'
             MYSQL_ROOT_HOST: "%"
