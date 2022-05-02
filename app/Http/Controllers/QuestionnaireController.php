@@ -237,7 +237,7 @@ class QuestionnaireController extends Controller
                 'participantHeaders',
                 'participantKeys',
                 'participantRowLink',
-                'questionSections'
+                'questionSections',
             ),
         );
     }
