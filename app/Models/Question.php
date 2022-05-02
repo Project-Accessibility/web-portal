@@ -103,17 +103,6 @@ class Question extends Model
                 }
             }
         }
-//        foreach ($options as $option) {
-//            $tempAnswers = $option->answers()->get();
-//            foreach ($tempAnswers as $temp) {
-//                $answerExists = $answers
-//                    ->where('participant_id', '=', $temp->participant_id)
-//                    ->first();
-//                if ($answerExists == null) {
-//                    $answers->push($temp);
-//                }
-//            }
-//        }
         return $answers;
     }
 }
