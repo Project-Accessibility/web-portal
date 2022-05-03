@@ -45,7 +45,6 @@ class Participant extends Model
 
     /* @var array */
     protected $casts = [
-        'code' => Base64::class,
         'finished' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
