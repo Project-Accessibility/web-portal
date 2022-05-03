@@ -5,7 +5,7 @@ set -e
 
 # Wait for the backend to be up, if we know where it is.
 if [ -n "mysql" ]; then
-  ./wait-for-it.sh "mysql:33060" -t 120
+  ./wait-for-it.sh "mysql:3306" -t 120
 fi
 
 # Run the main container command.
