@@ -36,6 +36,7 @@ class SectionController extends Controller
         $classNames = TeachableMachineHandler::getClassNames(
             'https://storage.googleapis.com/tm-model/yhj979xY8',
         );
+
         return view('admin.section.create', [
             'research' => $research,
             'questionnaire' => $questionnaire,

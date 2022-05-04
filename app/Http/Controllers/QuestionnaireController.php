@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Casts\DisplayDateTime;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Questionnaire;
 use App\Models\Research;
@@ -75,9 +76,7 @@ class QuestionnaireController extends Controller
     ): View {
         // Sections
         $sections = $questionnaire->sections->toArray();
-
         $sectionHeaders = ['ID', 'Titel', 'Omschrijving'];
-
         $sectionKeys = ['id', 'title', 'description'];
 
         $sectionLinkParameters = [
@@ -123,6 +122,39 @@ class QuestionnaireController extends Controller
             collect($sectionLinkParameters),
         );
 
+        // Participants
+        $participants = $questionnaire
+            ->participants()
+            ->withMax('answers', 'updated_at')
+            ->withCasts([
+                'answers_max_updated_at' => DisplayDateTime::class,
+            ])
+            ->get()
+            ->toArray();
+
+        $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltoloid'];
+        $participantKeys = ['id', 'code', 'answers_max_updated_at', 'finished'];
+
+        $participantLinkParameters = [
+            new TableLinkParameter(
+                routeParameter: 'participant',
+                itemIndex: 'id',
+            ),
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                routeValue: $questionnaire->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $questionnaire->research->id,
+            ),
+        ];
+
+        $participantRowLink = new TableLink(
+            'participants.details',
+            collect($participantLinkParameters),
+        );
+
         // Results
         $results = $questionnaire->results()->toArray();
 
@@ -136,6 +168,10 @@ class QuestionnaireController extends Controller
                 'sectionLinks',
                 'sectionKeys',
                 'sectionRowLink',
+                'participants',
+                'participantHeaders',
+                'participantKeys',
+                'participantRowLink',
                 'results',
             ),
         );
