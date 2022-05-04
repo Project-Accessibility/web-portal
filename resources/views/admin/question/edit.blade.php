@@ -54,14 +54,14 @@
                      required></x-input>
             <h2 class="h2">Antwoord mogelijkheden</h2>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Spraakopname" name="audio"
+                <x-input class="m-0" type="switch" label="Spraakopname" name="VOICE"
                          :value="$audioOption != null"></x-input>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Open antwoord" name="open"
+                <x-input class="m-0" type="switch" label="Open antwoord" name="OPEN"
                          :value="$openOption != null"></x-input>
                 <div
-                    class="collapse {{is_string(old('open')) ? (old('open') ? 'show' : '') : ($openOption != null ? 'show' : '')}}"
+                    class="collapse {{is_string(old('OPEN')) ? (old('OPEN') ? 'show' : '') : ($openOption != null ? 'show' : '')}}"
                     id="open-configuration">
                     <div class="hr"></div>
                     <x-input class="col mb-0 mt-1" label="Placeholder" type="text" name="openPlaceholder"
@@ -70,10 +70,10 @@
                 </div>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Meerkeuze" name="multipleChoice"
+                <x-input class="m-0" type="switch" label="Meerkeuze" name="MULTIPLE_CHOICE"
                          :value="$multipleChoiceOption != null"></x-input>
                 <div
-                    class="collapse {{is_string(old('multipleChoice')) ? (old('multipleChoice') ? 'show' : '') : ($multipleChoiceOption != null ? 'show' : '')}}"
+                    class="collapse {{is_string(old('MULTIPLE_CHOICE')) ? (old('MULTIPLE_CHOICE') ? 'show' : '') : ($multipleChoiceOption != null ? 'show' : '')}}"
                     id="list-configuration">
                     <div class="hr"></div>
                     <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
@@ -93,10 +93,10 @@
                 </div>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Foto" name="photo" :value="$photoOption != null"></x-input>
+                <x-input class="m-0" type="switch" label="Foto" name="IMAGE" :value="$photoOption != null"></x-input>
             </div>
             <div class="border border-primary p-2">
-                <x-input class="m-0" type="switch" label="Video" name="video"
+                <x-input class="m-0" type="switch" label="Video" name="VIDEO"
                          :value="$videoOption != null"></x-input>
             </div>
             @if($questionnaire->open)
@@ -107,7 +107,7 @@
         </div>
     </form>
     <script>
-        if (!{{empty(old('multipleChoice')) ? 1 : 0}}) {
+        if (!{{empty(old('MULTIPLE_CHOICE')) ? 1 : 0}}) {
             if (!{{empty(old('list')) ? 1 : 0}}) {
                 window.values = {!! json_encode(old('list')) !!};
             }

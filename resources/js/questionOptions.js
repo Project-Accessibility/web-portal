@@ -8,7 +8,7 @@ class OpenConfiguration {
     openConfigurationBox;
 
     constructor() {
-        this.openSwitch = document.getElementById('open');
+        this.openSwitch = document.getElementById('OPEN');
         this.openConfigurationBox =
             document.getElementById('open-configuration');
         this.addListeners();
@@ -33,7 +33,7 @@ class SelectConfiguration {
 
     constructor() {
         this.values = [];
-        this.listSwitch = document.getElementById('multipleChoice');
+        this.listSwitch = document.getElementById('MULTIPLE_CHOICE');
         this.listConfigurationBox =
             document.getElementById('list-configuration');
         this.addListItemButton = document.getElementById(
