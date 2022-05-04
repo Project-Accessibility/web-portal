@@ -98,6 +98,7 @@ class QuestionController extends Controller
         $data = $request->all();
 
         if ($questionnaire->open) {
+            $data['uuid'] = $question->uuid;
             $question = $section->questions()->create($data);
             $successMessage =
                 'Er is een nieuwe versie van de vraag aangemaakt!';
