@@ -90,13 +90,11 @@
                     </div>
                     @break;
                     @case(\App\Enums\QuestionOptionType::MULTIPLE_CHOICE)
-                    <div class="row gy-2">
-                        <ul class="list-group">
-                            @foreach($answer->option()->extra_data['values'] as $option)
-                                <li class="list-group-item {{in_array($option, $answer->answer) ? 'selected' : ''}}">{{ $option }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    <ul class="list-group">
+                        @foreach($answer->option()->extra_data['values'] as $option)
+                            <li class="list-group-item {{in_array($option, $answer->answer) ? 'selected' : ''}}">{{ $option }}</li>
+                        @endforeach
+                    </ul>
                     @break;
                 @endswitch
             </div>
