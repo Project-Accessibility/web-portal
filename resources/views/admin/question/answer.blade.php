@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="title">Onderdeel {{$section->id}} - Vraag {{$question->id}} - Participant #{{$participant->id}}</h1>
+    <h1 class="title">Onderdeel {{$section->id}} - Vraag {{$question->id}} - Participant #{{$participant->code}}</h1>
     <div class="col-md-auto d-flex align-items-center gap-2">
         <h2 class="h2">{{$question->question}}</h2>
         <span>

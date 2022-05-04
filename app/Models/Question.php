@@ -109,8 +109,8 @@ class Question extends Model
         return $answers;
     }
 
-    public function latestVersion(){
-        return Question::whereUuid($this->uuid)
-            ->max('version');
+    public function latestVersion()
+    {
+        return Question::whereUuid($this->uuid)->max('version');
     }
 }
