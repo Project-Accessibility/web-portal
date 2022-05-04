@@ -154,7 +154,7 @@ class QuestionnaireController extends Controller
             'participants.details',
             collect($participantLinkParameters),
         );
-      
+
         // Results
         $results = $questionnaire->results()->toArray();
 
