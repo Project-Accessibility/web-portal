@@ -8,12 +8,9 @@ use App\Models\Research;
 use App\Utils\TableLink;
 use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Symfony\Component\Console\Input\Input;
 
 class QuestionnaireController extends Controller
 {
@@ -73,10 +70,10 @@ class QuestionnaireController extends Controller
     }
 
     public function details(
-        Request $request,
         Research $research,
         Questionnaire $questionnaire,
     ): View {
+        // Sections
         $sections = $questionnaire->sections->toArray();
 
         $sectionHeaders = ['ID', 'Titel', 'Omschrijving'];
@@ -125,6 +122,10 @@ class QuestionnaireController extends Controller
             'sections.details',
             collect($sectionLinkParameters),
         );
+
+        // Results
+        $results = $questionnaire->results()->toArray();
+
         return view(
             'admin.questionnaire.details',
             compact(
@@ -135,6 +136,7 @@ class QuestionnaireController extends Controller
                 'sectionLinks',
                 'sectionKeys',
                 'sectionRowLink',
+                'results',
             ),
         );
     }

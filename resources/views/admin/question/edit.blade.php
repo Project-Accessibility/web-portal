@@ -99,7 +99,11 @@
                 <x-input class="m-0" type="switch" label="Video" name="video"
                          :value="$videoOption != null"></x-input>
             </div>
-            <x-button class="float-end mt-2" type="secondary">Aanpassen</x-button>
+            @if($questionnaire->open)
+                <x-button class="float-end mt-2" type="secondary">Nieuwe versie aanmaken</x-button>
+            @else
+                <x-button class="float-end mt-2" type="secondary">Aanpassen</x-button>
+            @endif
         </div>
     </form>
     <script>
