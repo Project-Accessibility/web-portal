@@ -22,19 +22,19 @@
             <x-input type="text" label="Vraag" name="question" placeholder="De vraag" required></x-input>
             <h2 class="h2">Antwoord mogelijkheden</h2>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Spraakopname" name="audio" :value="true"></x-input>
+                <x-input class="m-0" type="switch" label="Spraakopname" name="VOICE" :value="true"></x-input>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Open antwoord" name="open" :value="false"></x-input>
-                <div class="collapse {{old('open') ? 'show' : ''}}" id="open-configuration">
+                <x-input class="m-0" type="switch" label="Open antwoord" name="OPEN" :value="false"></x-input>
+                <div class="collapse {{old('OPEN') ? 'show' : ''}}" id="open-configuration">
                     <div class="hr"></div>
                     <x-input class="col mb-0 mt-1" label="Placeholder" type="text" name="openPlaceholder"
                              placeholder="Voer placeholder voor open antwoord in"></x-input>
                 </div>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Meerkeuze" name="multipleChoice" :value="false"></x-input>
-                <div class="collapse {{old('multipleChoice') ? 'show' : ''}}" id="list-configuration">
+                <x-input class="m-0" type="switch" label="Meerkeuze" name="MULTIPLE_CHOICE" :value="false"></x-input>
+                <div class="collapse {{old('MULTIPLE_CHOICE') ? 'show' : ''}}" id="list-configuration">
                     <div class="hr"></div>
                     <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
                              :value="false"></x-input>
@@ -52,16 +52,16 @@
                 </div>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Foto" name="photo" :value="false"></x-input>
+                <x-input class="m-0" type="switch" label="Foto" name="IMAGE" :value="false"></x-input>
             </div>
             <div class="border border-primary p-2 border">
-                <x-input class="m-0" type="switch" label="Video" name="video" :value="false"></x-input>
+                <x-input class="m-0" type="switch" label="Video" name="VIDEO" :value="false"></x-input>
             </div>
             <x-button class="float-end mt-2" type="secondary">Toevoegen</x-button>
         </div>
     </form>
     <script>
-        if ({{(old('multipleChoice') && old('list')) ? 1 : 0}}) {
+        if ({{(old('MULTIPLE_CHOICE') && old('list')) ? 1 : 0}}) {
             window.values = {!! json_encode(old('list')) !!};
         }
     </script>
