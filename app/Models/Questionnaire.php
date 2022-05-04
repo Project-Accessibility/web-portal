@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Traits\RelationsManager;
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,9 +14,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * App\Models\Questionnaire
  *
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire query()
+ * @method static Builder|Questionnaire newModelQuery()
+ * @method static Builder|Questionnaire newQuery()
+ * @method static Builder|Questionnaire query()
  * @mixin Eloquent
  * @property int $id
  * @property int $research_id
@@ -24,14 +26,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $open
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereInstructions($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereOpen($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereResearchId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Questionnaire whereUpdatedAt($value)
+ * @method static Builder|Questionnaire whereCreatedAt($value)
+ * @method static Builder|Questionnaire whereDescription($value)
+ * @method static Builder|Questionnaire whereId($value)
+ * @method static Builder|Questionnaire whereInstructions($value)
+ * @method static Builder|Questionnaire whereOpen($value)
+ * @method static Builder|Questionnaire whereResearchId($value)
+ * @method static Builder|Questionnaire whereTitle($value)
+ * @method static Builder|Questionnaire whereUpdatedAt($value)
  * @property-read \App\Models\Research $research
  */
 class Questionnaire extends Model
@@ -71,5 +73,20 @@ class Questionnaire extends Model
     public function sections(): HasMany
     {
         return $this->hasMany(Section::class);
+    }
+
+    public function results(): Collection
+    {
+        $sections = $this->sections()->get();
+        return $sections->filter(function ($section) {
+            $questions = $section->getLatestVersionsOfQuestions();
+            $questions = $questions->filter(function ($question) {
+                $answers = $question->answers();
+                $question['answers'] = $answers->toArray();
+                return $question;
+            });
+            $section['questions'] = $questions;
+            return $section;
+        });
     }
 }

@@ -18,7 +18,7 @@
                 </div>
             </div>
         @endif
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mx-2">
             <div class="card">
                 <div class="card-body">
                     <x-breadcrumb />

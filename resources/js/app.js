@@ -1,11 +1,12 @@
 require('./bootstrap');
+require('../../node_modules/bootstrap-select/dist/js/bootstrap-select.min');
 window.onload = () => {
     // If there is on the initial page load a tab query given, the PHP code will handle this.
     if (window.location.href.indexOf('?tab=') === -1) {
         createActiveBreadCrumb();
     }
 
-    var elements = document.getElementsByClassName('clickable-row');
+    const elements = document.getElementsByClassName('clickable-row');
 
     Array.from(elements).forEach(function (element) {
         element.addEventListener('click', function (clickedElement) {
