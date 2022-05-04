@@ -54,21 +54,34 @@
             </div>
         @endsection
         @section('Onderdelen')
-                <div class="mt-2">
-                    <div class="row justify-content-end">
-                        <div class="w-auto">
-                            <x-button type="secondary" link="{{ route('sections.create', [$questionnaire->research->id, $questionnaire->id]) }}">
-                                Nieuwe Onderdeel
-                            </x-button>
-                        </div>
+            <div class="mt-2">
+                <div class="row justify-content-end">
+                    <div class="w-auto">
+                        <x-button type="secondary" link="{{ route('sections.create', [$questionnaire->research->id, $questionnaire->id]) }}">
+                            Nieuwe Onderdeel
+                        </x-button>
                     </div>
-                    <x-table :tableLinks="$sectionLinks" :headers="$sectionHeaders" :items="$sections" :keys="$sectionKeys" :row-link="$sectionRowLink"/>
                 </div>
+                <x-table :tableLinks="$sectionLinks" :headers="$sectionHeaders" :items="$sections" :keys="$sectionKeys" :row-link="$sectionRowLink"/>
+            </div>
         @endsection
         @section('Resultaten')
             @include('admin.questionnaire.answers')
         @endsection
         @section('Participanten')
+            <div class="mt-2">
+                <div class="row justify-content-end">
+                    <div class="w-auto">
+                        <form method="POST" action="{{ route('participants.store', [$research->id, $questionnaire->id]) }}">
+                            @csrf
+                            <x-button type="secondary">
+                                Nieuwe participant
+                            </x-button>
+                        </form>
+                    </div>
+                </div>
+                <x-table :headers="$participantHeaders" :items="$participants" :keys="$participantKeys" :row-link="$participantRowLink"/>
+            </div>
         @endsection
     </x-tabs>
 @endsection
