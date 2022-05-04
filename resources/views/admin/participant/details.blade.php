@@ -4,7 +4,7 @@
     <div class="row justify-content-between mb-3 mb-lg-0">
         <div class="col-md-auto d-flex align-items-center gap-2">
             <h1 class="title col-md-auto">
-                {{$participant->code}}
+                Participant #{{$participant->code}}
             </h1>
         </div>
         <div class="col-md-auto d-inline-flex flex-wrap gap-2 gap-sm-1">
