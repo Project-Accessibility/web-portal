@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\QuestionOptionType;
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,9 +14,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * App\Models\QuestionOption
  *
- * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption query()
+ * @method static Builder|QuestionOption newModelQuery()
+ * @method static Builder|QuestionOption newQuery()
+ * @method static Builder|QuestionOption query()
  * @mixin Eloquent
  * @property int $id
  * @property int $question_id
@@ -23,12 +24,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $extra_data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption whereExtraData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption whereQuestionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|QuestionOption whereUpdatedAt($value)
+ * @method static Builder|QuestionOption whereCreatedAt($value)
+ * @method static Builder|QuestionOption whereExtraData($value)
+ * @method static Builder|QuestionOption whereId($value)
+ * @method static Builder|QuestionOption whereQuestionId($value)
+ * @method static Builder|QuestionOption whereType($value)
+ * @method static Builder|QuestionOption whereUpdatedAt($value)
  * @property-read \App\Models\Question $question
  */
 class QuestionOption extends Model
@@ -58,7 +59,7 @@ class QuestionOption extends Model
 
     public function answers(): HasMany
     {
-        return $this->hasMany(Answer::class);
+        return $this->hasMany(Answer::class)->with('participant');
     }
 
     public function getTypeDisplayAttribute()

@@ -66,6 +66,7 @@
                 </div>
         @endsection
         @section('Resultaten')
+            @include('admin.questionnaire.answers')
         @endsection
         @section('Participanten')
         @endsection
