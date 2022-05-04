@@ -2,7 +2,16 @@
 
 @section('content')
     <h1 class="title">Onderdeel {{$section->id}} - Vraag {{$question->id}} - Participant #{{$participant->id}}</h1>
-    <h2 class="h2">{{$question->question}}</h2>
+    <div class="col-md-auto d-flex align-items-center gap-2">
+        <h2 class="h2">{{$question->question}}</h2>
+        <span>
+            @if($question->latestVersion() == $question->version)
+                <span class="badge rounded-pill bg-secondary">Laatste versie</span>
+            @else
+                <span class="badge rounded-pill bg-secondary">Versie {{$question->version}}</span>
+            @endif
+        </span>
+    </div>
     <div class="row">
         @foreach($answers as $answer)
             <div class="col-md-6 mt-2">
@@ -14,7 +23,7 @@
                     @case(\App\Enums\QuestionOptionType::VOICE)
                     <div class="row gy-2">
                         @foreach($answer->answer as $link)
-                            <audio  controls>
+                            <audio controls>
                                 <source src="{{ $link }}" type="audio/mpeg">
                             </audio>
                         @endforeach
@@ -48,7 +57,8 @@
                     @case(\App\Enums\QuestionOptionType::VIDEO)
                     <div class="row gy-2">
                         @foreach($answer->answer as $link)
-                            <a href="#" class="col-md-6 d-flex justify-content-center align-items-center" data-bs-toggle="modal"
+                            <a href="#" class="col-md-6 d-flex justify-content-center align-items-center"
+                               data-bs-toggle="modal"
                                data-bs-target="#previewVideo{{$answer->id}}">
                                 <video src="{{ $link }}" class="w-100"></video>
                                 <i class="bi bi-play position-absolute text-white h1"></i>
