@@ -100,11 +100,17 @@ class Question extends Model
                         ->where('participant_id', '=', $answer->participant_id)
                         ->first();
                     if ($answerExists == null) {
+                        $answer['question_id'] = $question->id;
                         $answers->push($answer);
                     }
                 }
             }
         }
         return $answers;
+    }
+
+    public function latestVersion(){
+        return Question::whereUuid($this->uuid)
+            ->max('version');
     }
 }
