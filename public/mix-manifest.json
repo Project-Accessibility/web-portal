@@ -3,5 +3,6 @@
     "/js/location.js": "/js/location.js",
     "/js/select.js": "/js/select.js",
     "/js/questionOptions.js": "/js/questionOptions.js",
+    "/js/sectionAnswers.js": "/js/sectionAnswers.js",
     "/css/app.css": "/css/app.css"
 }

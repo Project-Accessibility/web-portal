@@ -11,7 +11,6 @@ use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 class QuestionnaireController extends Controller
@@ -72,10 +71,10 @@ class QuestionnaireController extends Controller
     }
 
     public function details(
-        Request $request,
         Research $research,
         Questionnaire $questionnaire,
     ): View {
+        // Sections
         $sections = $questionnaire->sections->toArray();
         $sectionHeaders = ['ID', 'Titel', 'Omschrijving'];
         $sectionKeys = ['id', 'title', 'description'];
@@ -123,6 +122,7 @@ class QuestionnaireController extends Controller
             collect($sectionLinkParameters),
         );
 
+        // Participants
         $participants = $questionnaire
             ->participants()
             ->withMax('answers', 'updated_at')
@@ -155,6 +155,9 @@ class QuestionnaireController extends Controller
             collect($participantLinkParameters),
         );
 
+        // Results
+        $results = $questionnaire->results()->toArray();
+
         return view(
             'admin.questionnaire.details',
             compact(
@@ -169,6 +172,7 @@ class QuestionnaireController extends Controller
                 'participantHeaders',
                 'participantKeys',
                 'participantRowLink',
+                'results',
             ),
         );
     }
