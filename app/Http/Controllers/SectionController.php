@@ -36,6 +36,7 @@ class SectionController extends Controller
         $classNames = TeachableMachineHandler::getClassNames(
             'https://storage.googleapis.com/tm-model/yhj979xY8',
         );
+
         return view('admin.section.create', [
             'research' => $research,
             'questionnaire' => $questionnaire,
@@ -164,7 +165,7 @@ class SectionController extends Controller
     ): View {
         $geofence = Geofence::whereId($section->geofence_id)->first();
 
-        $questions = $section->questions->toArray();
+        $questions = $section->getLatestVersionsOfQuestions()->toArray();
         $questionHeaders = ['ID', 'Titel', 'Vraag'];
 
         $questionKeys = ['id', 'title', 'question'];
