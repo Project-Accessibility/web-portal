@@ -168,7 +168,7 @@ class QuestionnaireController extends Controller
             ->get()
             ->toArray();
 
-        $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltoloid'];
+        $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltooid'];
         $participantKeys = ['id', 'code', 'answers_max_updated_at', 'finished'];
 
         $participantLinkParameters = [

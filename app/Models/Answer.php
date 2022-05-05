@@ -62,9 +62,4 @@ class Answer extends Model
     {
         return QuestionOption::whereId($this->question_option_id)->first();
     }
-
-    public function questionOption(): BelongsTo
-    {
-        return $this->belongsTo(QuestionOption::class);
-    }
 }
