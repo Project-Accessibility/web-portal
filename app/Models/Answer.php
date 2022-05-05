@@ -53,13 +53,13 @@ class Answer extends Model
         return $this->belongsTo(Participant::class);
     }
 
-    public function questionOption(): BelongsTo
-    {
-        return $this->belongsTo(QuestionOption::class);
-    }
-
     public function option(): QuestionOption
     {
         return QuestionOption::whereId($this->question_option_id)->first();
+    }
+
+    public function questionOption(): BelongsTo
+    {
+        return $this->belongsTo(QuestionOption::class);
     }
 }
