@@ -17,7 +17,7 @@ enum QuestionOptionType: string
         return match ($this) {
             QuestionOptionType::OPEN => 'Open antwoord',
             QuestionOptionType::IMAGE => 'Afbeeldingen',
-            QuestionOptionType::VIDEO => "Video's",
+            QuestionOptionType::VIDEO => 'Video\'s',
             QuestionOptionType::VOICE => 'Spraakopnames',
             QuestionOptionType::MULTIPLE_CHOICE => 'Meerkeuze',
             QuestionOptionType::DATE => 'Datum',
