@@ -193,7 +193,7 @@ Elke response wordt teruggeven in een `json` formaat.
     <summary>POST: /questions/{question}/{code}</summary>
 
     {
-        "message": "Deze functie werkt nog niet"
+        "message": "answers saved!"
     }
 
 </details>
@@ -202,75 +202,84 @@ Elke response wordt teruggeven in een `json` formaat.
 
 ### Input
 
-#### Text
+<details>
+    <summary>Text</summary>
 
-```
-@php
-$extraData=array(
-'before' => '$',
-'after' => '.00'
-);
-@endphp
-<x-input type="text" name="input" placeholder="input" :extraData="$extraData"></x-input>
-```
+    @php
+    $extraData = array(
+        'before' => '$',
+        'after' => '.00'
+    );
+    @endphp
+    <x-input type="text" name="input" placeholder="input" :extraData="$extraData"></x-input>
 
-#### Password
+</details>
 
-`<x-input type="password" name="input" placeholder="input"></x-input>`
+<details>
+    <summary>Password</summary>
 
-#### Select
+    <x-input type="password" name="input" placeholder="input"></x-input>
 
-```
-@php
-    $extraData=array(
+</details>
+
+<details>
+    <summary>Select</summary>
+
+    @php
+    $extraData = array(
         'multiple' => true,
         'options' => [
-          ['option_1', 'value_1'],
-          ['option_2', 'value_2'],
-          ['option_3', 'value_3'],
+            ['option_1', 'value_1'],
+            ['option_2', 'value_2'],
+            ['option_3', 'value_3'],
         ]
     );
-@endphp
-<x-input label="test" type="select" name="selectList" :extraData="$extraData" :value="['value_1', 'value_3']"></x-input>
-```
+    @endphp
+    <x-input label="test" type="select" name="selectList" :extraData="$extraData" :value="['value_1', 'value_3']"></x-input>
 
-#### Dates
+</details>
 
-```
-<x-input type="date" name="input" value="2021-03-21"></x-input>
-```
+<details>
+    <summary>Dates</summary>
 
-```
-<x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>
-```
+    <x-input type="date" name="input" value="2021-03-21"></x-input>
 
-#### Switch
+    <x-input type="datetime" name="input" value="2021-03-21T08:00"></x-input>
 
-`<x-input type="switch" name="input" :value="true"></x-input>`
+</details>
 
-#### Range
+<details>
+    <summary>Switch</summary>
 
-```
-@php
-    $extraData=array(
+    <x-input type="switch" name="input" :value="true"></x-input>
+
+</details>
+
+<details>
+    <summary>Range</summary>
+
+    @php
+    $extraData = array(
         'min' => 0,
         'max' => 5,
         'step' => 0.5
     );
-@endphp
-<x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
-```
+    @endphp
+    <x-input type="range" name="input" :extraData="$extraData" :value="1.5"></x-input>
 
-#### File
+</details>
 
-```
-@php
-$extraData=array(
-    'multiple' => false,
-);
-@endphp
-<x-input type="file" name="input" :extraData="$extraData"></x-input>
-```
+<details>
+    <summary>File</summary>
+
+    @php
+    $extraData = array(
+        'multiple' => false,
+    );
+    @endphp
+    <x-input type="file" name="input" :extraData="$extraData"></x-input>
+
+</details>
 
 ### Buttons
 
