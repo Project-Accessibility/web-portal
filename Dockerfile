@@ -28,6 +28,7 @@ RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh
 ENTRYPOINT ["sh", "./docker-entrypoint.sh"]
 
 CMD php artisan migrate --seed \
+  & php artisan storage:link \
   & php artisan queue:work \
   & php artisan serve --host=0.0.0.0 --port=8080
 
