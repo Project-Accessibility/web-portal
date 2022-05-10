@@ -57,8 +57,24 @@ class QuestionController extends Controller
     {
         $answers = $participant->answers;
         $answers->map(function ($answer) use ($request) {
-            $type = $request->get($answer->option()->type->value);
-            if ($type == null && $type . '[]' == null) {
+            if (
+                in_array($answer->option()->type, [
+                    QuestionOptionType::VIDEO,
+                    QuestionOptionType::IMAGE,
+                    QuestionOptionType::VIDEO,
+                ])
+            ) {
+                $value = $request->file($answer->option()->type->value);
+            } elseif (
+                $answer->option()->type == QuestionOptionType::MULTIPLE_CHOICE
+            ) {
+                $value = json_decode(
+                    $request->get($answer->option()->type->value),
+                );
+            } else {
+                $value = $request->get($answer->option()->type->value);
+            }
+            if ($value == null) {
                 $answer->delete();
             }
         });
@@ -77,22 +93,37 @@ class QuestionController extends Controller
         switch ($option->type) {
             case QuestionOptionType::OPEN:
                 $open = $request->get('OPEN');
+                if (!$open) {
+                    return;
+                }
                 $answer->answer = [$open];
                 break;
             case QuestionOptionType::VOICE:
                 $audios = $request->file('VOICE');
+                if (!$audios) {
+                    return;
+                }
                 $answer->answer = $this->handleFiles($audios, 'audios');
                 break;
             case QuestionOptionType::IMAGE:
                 $images = $request->file('IMAGE');
+                if (!$images) {
+                    return;
+                }
                 $answer->answer = $this->handleFiles($images, 'images');
                 break;
             case QuestionOptionType::VIDEO:
                 $videos = $request->file('VIDEO');
+                if (!$videos) {
+                    return;
+                }
                 $answer->answer = $this->handleFiles($videos, 'videos');
                 break;
             case QuestionOptionType::MULTIPLE_CHOICE:
                 $answers = json_decode($request->get('MULTIPLE_CHOICE'));
+                if (!$answers) {
+                    return;
+                }
                 $answer->answer = $answers;
                 break;
             default:

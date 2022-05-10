@@ -48,6 +48,14 @@ class StoreAnswerRequest extends FormRequest
             $options = $this->route('question')->options();
             $this->checkIfValidAnswers($validator, $options->get());
             $multipleChoice = json_decode($this->get('MULTIPLE_CHOICE'));
+            if ($this->get('MULTIPLE_CHOICE') && !is_array($multipleChoice)) {
+                $validator
+                    ->errors()
+                    ->add(
+                        'MULTIPLE_CHOICE',
+                        'Waarde is niet van het type array',
+                    );
+            }
             if (is_array($multipleChoice) && count($multipleChoice) > 0) {
                 $this->checkIfMultipleChoiceValid(
                     $validator,
