@@ -109,7 +109,7 @@ class SectionAnswers {
 
     createAnswer(sectionId, questionId, answer) {
         const displayAnswer = document.createElement('a');
-        displayAnswer.href = `${window.url}/${sectionId}/questions/${questionId}/answers/${answer.participant.code}`;
+        displayAnswer.href = `${window.url}/${sectionId}/questions/${answer.question_id}/answer/${answer.participant.id}`;
         displayAnswer.className = 'result-button answer';
         displayAnswer.hidden = true;
         displayAnswer.setAttribute('name', 'answer' + questionId);

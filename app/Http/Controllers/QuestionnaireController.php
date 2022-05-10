@@ -75,7 +75,7 @@ class QuestionnaireController extends Controller
         Questionnaire $questionnaire,
     ): View {
         // Sections
-        $sections = $questionnaire->sections->toArray();
+        $sections = $questionnaire->sections;
         $sectionHeaders = ['ID', 'Titel', 'Omschrijving'];
         $sectionKeys = ['id', 'title', 'description'];
 
@@ -158,6 +158,40 @@ class QuestionnaireController extends Controller
         // Results
         $results = $questionnaire->results()->toArray();
 
+        // Participants
+        $participants = $questionnaire
+            ->participants()
+            ->withMax('answers', 'updated_at')
+            ->withCasts([
+                'answers_max_updated_at' => DisplayDateTime::class,
+            ])
+            ->get()
+            ->toArray();
+
+        $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltooid'];
+        $participantKeys = ['id', 'code', 'answers_max_updated_at', 'finished'];
+
+        $participantLinkParameters = [
+            new TableLinkParameter(
+                routeParameter: 'participant',
+                itemIndex: 'id',
+            ),
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                routeValue: $questionnaire->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $questionnaire->research->id,
+            ),
+        ];
+
+        $participantRowLink = new TableLink(
+            'participants.details',
+            collect($participantLinkParameters),
+        );
+        $sections = $sections->toArray();
+
         return view(
             'admin.questionnaire.details',
             compact(
@@ -173,6 +207,10 @@ class QuestionnaireController extends Controller
                 'participantKeys',
                 'participantRowLink',
                 'results',
+                'participants',
+                'participantHeaders',
+                'participantKeys',
+                'participantRowLink',
             ),
         );
     }

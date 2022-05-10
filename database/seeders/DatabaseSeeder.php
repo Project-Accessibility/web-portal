@@ -93,10 +93,7 @@ class DatabaseSeeder extends Seeder
             'question' => 'Hoe is de route naar NEMO toe?',
         ]);
 
-        $questionOneOptionOne = QuestionOption::factory()->create([
-            'question_id' => $questionOne->id,
-            'type' => QuestionOptionType::OPEN,
-        ]);
+        $questionOneOptionOne = $this->createQuestionOptions($questionOne)[0];
 
         Question::factory()->create([
             'section_id' => $section->id,
@@ -105,6 +102,42 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->createNemoAnswer($questionOneOptionOne, $participant);
+    }
+
+    private function createQuestionOptions($question)
+    {
+        return [
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::OPEN,
+                'extra_data' => [
+                    'placeholder' => 'Placeholder question',
+                ],
+            ]),
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::IMAGE,
+                'extra_data' => [],
+            ]),
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::VIDEO,
+                'extra_data' => [],
+            ]),
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::VOICE,
+                'extra_data' => [],
+            ]),
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::MULTIPLE_CHOICE,
+                'extra_data' => [
+                    'multiple' => true,
+                    'values' => ['Waarde 1', 'Waarde 2', 'Waarde 3'],
+                ],
+            ]),
+        ];
     }
 
     private function createNemoParticipant(Questionnaire $questionnaire)
@@ -121,9 +154,9 @@ class DatabaseSeeder extends Seeder
         Answer::factory()->create([
             'participant_id' => $participant->id,
             'question_option_id' => $questionOption->id,
-            'answer' => json_encode([
+            'answer' => [
                 'De route was erg prettig, de paden waren breed genoeg en de ingang stond duidelijk aangegeven.',
-            ]),
+            ],
         ]);
     }
 }

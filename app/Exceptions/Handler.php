@@ -2,14 +2,12 @@
 
 namespace App\Exceptions;
 
-use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Spatie\LaravelIgnition\Exceptions\ViewException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -55,21 +53,6 @@ class Handler extends ExceptionHandler
         Request $request,
         Throwable $exception,
     ): JsonResponse {
-        if ($exception instanceof HttpResponseException) {
-            $exception = $exception->getResponse();
-        }
-
-        if ($exception instanceof AuthenticationException) {
-            $exception = $this->unauthenticated($request, $exception);
-        }
-
-        if ($exception instanceof ValidationException) {
-            $exception = $this->convertValidationExceptionToResponse(
-                $exception,
-                $request,
-            );
-        }
-
         if ($exception instanceof NotFoundHttpException) {
             $notFoundException = $exception->getPrevious();
 
@@ -94,11 +77,24 @@ class Handler extends ExceptionHandler
             }
         }
 
-        return $this->customApiResponse($exception);
+        return $this->customApiResponse($request, $exception);
     }
 
-    private function customApiResponse(Throwable $exception): JsonResponse
-    {
+    private function customApiResponse(
+        Request $request,
+        Throwable $exception,
+    ): JsonResponse {
+        if ($exception instanceof HttpResponseException) {
+            return $exception->getResponse();
+        }
+
+        if ($exception instanceof ValidationException) {
+            return $this->convertValidationExceptionToResponse(
+                $exception,
+                $request,
+            );
+        }
+
         if (method_exists($exception, 'getStatusCode')) {
             $statusCode = $exception->getStatusCode();
         } else {
