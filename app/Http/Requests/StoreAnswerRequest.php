@@ -35,9 +35,9 @@ class StoreAnswerRequest extends FormRequest
             'OPEN' => 'nullable',
             'VOICE.*' => 'file|mimes:audio/mpeg,mpga,mp3,wav,aac|max:2048',
             'VOICE' => 'nullable|max:10',
-            'IMAGE.*' => 'image|mimes:jpg,jpeg,png,bmp,gif,svg,webp',
+            'IMAGE.*' => 'image|mimes:jpg,jpeg,png,bmp,gif,svg,webp|max:2048',
             'IMAGE' => 'nullable|max:10',
-            'VIDEO.*' => 'file|mimes:mp4|max:20000',
+            'VIDEO.*' => 'file|mimes:mp4,mov,m4v|max:20000',
             'VIDEO' => 'nullable|max:10',
         ];
     }
@@ -121,5 +121,20 @@ class StoreAnswerRequest extends FormRequest
                 }
             }
         }
+    }
+
+    public function messages()
+    {
+        return [
+            'VOICE.*.mimes' => 'Het audio bestand moet van het type audio/mpeg,mpga,mp3,wav of aac zijn.',
+            'VOICE.*.max' => 'Het audio bestand mag niet groter dan :max kb zijn.',
+            'VOICE.max' => 'Er mogen maximaal :max bestanden worden geupload.',
+            'IMAGE.*.mimes' => 'De afbeelding moet van het type jpg,jpeg,png,bmp,gif,svg of webp zijn.',
+            'IMAGE.*.max' => 'De afbeelding mag niet groter dan :max kb zijn.',
+            'IMAGE.max' => 'Er mogen maximaal :max bestanden worden geupload.',
+            'VIDEO.*.mimes' => 'Het video bestand moet van het type mp4,mov of m4v zijn.',
+            'VIDEO.*.max' => 'Het video bestand mag niet groter dan :max kb zijn.',
+            'VIDEO.max' => 'Er mogen maximaal :max bestanden worden geupload.',
+        ];
     }
 }
