@@ -33,9 +33,12 @@ class StoreAnswerRequest extends FormRequest
     {
         return [
             'OPEN' => 'nullable',
-            'VOICE[]' => 'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,aac',
-            'IMAGE[]' => 'nullable|file|mimes:jpg,jpeg,png,bmp,gif,svg,webp',
-            'VIDEO[]' => 'nullable|file|mimes:mp4',
+            'VOICE.*' => 'file|mimes:audio/mpeg,mpga,mp3,wav,aac|max:2048',
+            'VOICE' => 'nullable|max:10',
+            'IMAGE.*' => 'image|mimes:jpg,jpeg,png,bmp,gif,svg,webp',
+            'IMAGE' => 'nullable|max:10',
+            'VIDEO.*' => 'file|mimes:mp4|max:20000',
+            'VIDEO' => 'nullable|max:10',
         ];
     }
 

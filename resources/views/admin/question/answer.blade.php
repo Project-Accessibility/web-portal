@@ -12,9 +12,10 @@
             @endif
         </span>
     </div>
+    <hr/>
     <div class="row">
         @foreach($answers as $answer)
-            <div class="col-md-6 mt-2">
+            <div class="mt-2">
                 <h3 class="h4">{{ $answer->option()->type->display() }}</h3>
                 @switch($answer->option()->type)
                     @case(\App\Enums\QuestionOptionType::OPEN)
@@ -32,16 +33,16 @@
                     @case(\App\Enums\QuestionOptionType::IMAGE)
                     <div class="row gy-2">
                         @foreach($answer->answer as $link)
-                            <a href="#" class="col-md-6" data-bs-toggle="modal"
-                               data-bs-target="#previewImage{{$answer->id}}">
-                                <img src="{{ $link }}" class="w-100 h-100" alt="image">
+                            <a href="#" class="col-lg-4 col-md-6" data-bs-toggle="modal"
+                               data-bs-target="#previewImage{{$loop->index}}">
+                                <img src="{{ $link }}" class="fit-image-cover" alt="image">
                             </a>
-                            <div class="modal fade" id="previewImage{{$answer->id}}" tabindex="-1"
+                            <div class="modal fade" id="previewImage{{$loop->index}}" tabindex="-1"
                                  aria-labelledby="previewImageLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-xl">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="previewImageLabel">Afbeelding preview</h5>
+                                            <h5 class="modal-title" id="previewImageLabel">Volledige grootte</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
@@ -57,17 +58,17 @@
                     @case(\App\Enums\QuestionOptionType::VIDEO)
                     <div class="row gy-2">
                         @foreach($answer->answer as $link)
-                            <a href="#" class="col-md-6 d-flex justify-content-center align-items-center"
+                            <a href="#" class="col-lg-4 col-md-6 d-flex justify-content-center align-items-center"
                                data-bs-toggle="modal"
-                               data-bs-target="#previewVideo{{$answer->id}}">
+                               data-bs-target="#previewVideo{{$loop->index}}">
                                 <video src="{{ $link }}" class="w-100"></video>
                                 <i class="bi bi-play position-absolute text-white h1"></i>
-                                <div class="modal fade" id="previewVideo{{$answer->id}}" tabindex="-1"
+                                <div class="modal fade" id="previewVideo{{$loop->index}}" tabindex="-1"
                                      aria-labelledby="previewVideoLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="previewVideoLabel">Video preview</h5>
+                                                <h5 class="modal-title" id="previewVideoLabel">Volledige grootte</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
@@ -92,7 +93,7 @@
                     @case(\App\Enums\QuestionOptionType::MULTIPLE_CHOICE)
                     <ul class="list-group">
                         @foreach($answer->option()->extra_data['values'] as $option)
-                            <li class="list-group-item {{in_array($option, $answer->answer) ? 'selected' : ''}}">{{ $option }}</li>
+                            <li class="list-group-item {{in_array($option, $answer->answer) ? 'selected' : ''}}" {{in_array($option, $answer->answer) ? 'aria-selected=true' : 'aria-selected=false'}}>{{ $option }}</li>
                         @endforeach
                     </ul>
                     @break;
