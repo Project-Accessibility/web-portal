@@ -45,7 +45,7 @@ De API bestaat uit de volgende routes.
     | Route                           | Methode | Query                                 | Response                                                                                 |
     |---------------------------------|---------|---------------------------------------|------------------------------------------------------------------------------------------|
     | /ping                           | GET     |                                       | Pong                                                                                     |
-    | /questionnaires/getByCodes      | GET     |                                       | Array van vragenlijsten welke zijn gekoppeld aan de codes.                               |
+    | /questionnaires/getByCodes      | POST     |                                       | Array van vragenlijsten welke zijn gekoppeld aan de codes.                               |
     | /questionnaires/{code}          | GET     | code: code van de participant         | Een vragenlijst met daarbij de onderdelen en vragen.                                     |
     | /questionnaires/{questionnaire} | POST    | questionnaire: ID van een vragenlijst | 406 - Not implemented                                                                    |
     | /questions/{question}/{code}    | GET     | question: ID van de vraag             | Een vraag met daarbij de antwoordmogelijkheden en gegeven antwoorden door de participant |
