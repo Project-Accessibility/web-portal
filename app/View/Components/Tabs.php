@@ -36,7 +36,7 @@ class Tabs extends Component
 
     public function render(): View
     {
-        if($this->tabQuery && in_array($this->tabQuery, $this->tabs)) {
+        if ($this->tabQuery && in_array($this->tabQuery, $this->tabs)) {
             return view('components.tabs');
         }
 
