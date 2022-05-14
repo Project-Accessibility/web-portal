@@ -25,7 +25,6 @@ class SectionFactory extends Factory
             'title' => $name,
             'description' => $this->faker->paragraph(),
             'location_description' => $this->faker->address,
-            'teachable_machine_class' => $name,
         ];
     }
 }
