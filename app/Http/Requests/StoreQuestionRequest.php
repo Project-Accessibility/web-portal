@@ -11,6 +11,7 @@ class StoreQuestionRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'question' => 'required|max:255',
+            'list' => 'required_if:MULTIPLE_CHOICE,"1"|array|min:2',
         ];
     }
 
@@ -19,6 +20,16 @@ class StoreQuestionRequest extends FormRequest
         return [
             'title' => 'titel',
             'question' => 'vraag',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'list.required_if' =>
+                'Bij een meerkeuze mogelijkheid zijn minimaal twee mogelijkheden veriest.',
+            'list.array' =>
+                'Bij een meerkeuze mogelijkheid zijn minimaal twee mogelijkheden veriest.',
         ];
     }
 }
