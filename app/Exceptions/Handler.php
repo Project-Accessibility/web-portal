@@ -50,7 +50,10 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ViewException) {
             $exception = $exception->getPrevious();
 
-            if (!method_exists($exception, 'getStatusCode') || $exception->getStatusCode() === null) {
+            if (
+                !method_exists($exception, 'getStatusCode') ||
+                $exception->getStatusCode() === null
+            ) {
                 return response('errors.500');
             }
 

@@ -21,7 +21,11 @@ class Tabs extends Component
 
     public function __construct(string $title, array $tabs)
     {
-        $tabQuery = request()->query('tab');
+        $tabs = array_map(function ($tab) {
+            return strtolower($tab);
+        }, $tabs);
+
+        $tabQuery = strtolower(request()->query('tab'));
 
         if (count($tabs) < 0) {
             throw new Exception(
@@ -29,7 +33,11 @@ class Tabs extends Component
             );
         }
 
-        abort_if($tabQuery !== null && !in_array($tabQuery, $tabs), 404);
+        abort_if(
+            $tabQuery !== null &&
+            !in_array($tabQuery, $tabs),
+            Response::HTTP_NOT_FOUND
+        );
 
         $this->title = $title;
         $this->tabs = $tabs;

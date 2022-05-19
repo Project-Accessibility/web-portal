@@ -20,7 +20,7 @@
         </div>
     </div>
     <x-tabs title="researchesDetails" :tabs="['Details', 'Vragenlijsten']" :currentTab="'Details'">
-        @section('Details')
+        @section('details')
             <div class="mt-2">
                 <strong>Omschrijving</strong>
                 <div>
@@ -28,7 +28,7 @@
                 </div>
             </div>
         @endsection
-        @section('Vragenlijsten')
+        @section('vragenlijsten')
             <div class="mt-2">
                 <div class="row justify-content-end">
                     <div class="w-auto">
