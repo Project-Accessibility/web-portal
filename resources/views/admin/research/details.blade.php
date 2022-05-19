@@ -10,10 +10,10 @@
                     Onderzoek aanpassen
                 </x-button>
             </div>
-            <form method="POST" action="{{ route('researches.remove', $research->id) }}">
+            <form method="POST" id="deleteForm" action="{{ route('researches.remove', $research->id) }}">
                 @csrf
                 @method('DELETE')
-                <x-button type="remove">
+                <x-button type="remove" link="#" formId="deleteForm">
                     Onderzoek verwijderen
                 </x-button>
             </form>
