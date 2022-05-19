@@ -49,16 +49,16 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ViewException) {
             $exception = $exception->getPrevious();
-        }
 
-        if ($exception->getStatusCode() === null) {
-            return response('errors.500');
-        }
+            if (!method_exists($exception, 'getStatusCode') || $exception->getStatusCode() === null) {
+                return response('errors.500');
+            }
 
-        return match ($exception->getStatusCode()) {
-            404 => response()->view('errors.404'),
-            default => response()->view('errors.500')
-        };
+            return match ($exception->getStatusCode()) {
+                404 => response()->view('errors.404'),
+                default => response()->view('errors.500')
+            };
+        }
     }
 
     private function handleApiException(
