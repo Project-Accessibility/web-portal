@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('question_id');
             $table->enum('type', ["OPEN", "IMAGE", "VIDEO", "VOICE", "MULTIPLE_CHOICE", "RANGE", "DATE", "DATETIME"]);
-            $table->json('extra_data');
+            $table->text('extra_data');
 
             $table->foreign('question_id')->references('id')->on('questions')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

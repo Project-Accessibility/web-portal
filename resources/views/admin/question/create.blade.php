@@ -64,9 +64,10 @@
                     <x-input class="col mb-0 mt-1" label="Minimum" type="number" name="rangeMin"
                              placeholder="Voer minimum van schaal in"></x-input>
                     <x-input class="col mb-0 mt-1" label="Maximum" type="number" name="rangeMax"
-                             placeholder="Voer minimum van schaal in"></x-input>
+                             placeholder="Voer maximum van schaal in"></x-input>
                     <x-input class="col mb-0 mt-1" label="Stap" type="number" name="rangeStep"
-                             placeholder="Voer de stap in die de schaal moet gebruiken"></x-input>
+                             placeholder="Voer de stap in die de schaal moet gebruiken"
+                             value="1"></x-input>
                 </div>
             </div>
             <x-button class="float-end mt-2" type="secondary">Toevoegen</x-button>
