@@ -34,9 +34,8 @@ class Tabs extends Component
         }
 
         abort_if(
-            $tabQuery !== null &&
-            !in_array($tabQuery, $tabs),
-            Response::HTTP_NOT_FOUND
+            $tabQuery !== null && !in_array($tabQuery, $tabs),
+            Response::HTTP_NOT_FOUND,
         );
 
         $this->title = $title;
