@@ -8,6 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Spatie\LaravelIgnition\Exceptions\ViewException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -36,8 +37,6 @@ class Handler extends ExceptionHandler
                 return $this->handleWebException($exception);
             }
         });
-
-        parent::register();
     }
 
     private function handleWebException(Throwable $exception)
@@ -47,6 +46,19 @@ class Handler extends ExceptionHandler
                 ->route('login')
                 ->with('unauth', 'U moet ingelogd zijn.');
         }
+
+        if($exception instanceof ViewException) {
+            $exception = $exception->getPrevious();
+        }
+
+        if($exception->getStatusCode() === null) {
+            return response('errors.500');
+        }
+
+        return match ($exception->getStatusCode()) {
+            404 => response()->view('errors.404'),
+            default => response()->view('errors.500')
+        };
     }
 
     private function handleApiException(

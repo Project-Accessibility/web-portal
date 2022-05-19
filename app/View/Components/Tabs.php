@@ -10,24 +10,26 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\Component;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Tabs extends Component
 {
-    private string $tabQuery;
     public string $title;
     public array $tabs;
     public ?string $currentTab;
 
     public function __construct(string $title, array $tabs)
     {
-        $this->tabQuery = request()->query('tab');
+        $tabQuery = request()->query('tab');
 
         if (count($tabs) < 0) {
             throw new Exception(
                 'There needs to be at least 1 tab given to the tabs component.',
             );
         }
+
+        abort_if($tabQuery !== null && ! in_array($tabQuery, $tabs), 404);
 
         $this->title = $title;
         $this->tabs = $tabs;
@@ -36,10 +38,6 @@ class Tabs extends Component
 
     public function render(): View
     {
-        if ($this->tabQuery && in_array($this->tabQuery, $this->tabs)) {
-            return view('components.tabs');
-        }
-
-        abort(Response::HTTP_NOT_FOUND, 'Tab not found.');
+        return view('components.tabs');
     }
 }
