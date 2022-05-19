@@ -2,4 +2,8 @@
 
 @section('title', __('Page Expired'))
 @section('code', '419')
-@section('message', __('Page Expired'))
+@if($message)
+    <div class="h2">
+        @section('message', $message)
+    </div>
+@endif

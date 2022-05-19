@@ -33,7 +33,11 @@ class Tabs extends Component
             );
         }
 
-        abort_if($tabQuery !== '' && !in_array($tabQuery, $tabs), 404);
+        abort_if(
+            $tabQuery !== '' && !in_array($tabQuery, $tabs),
+            404,
+            'Onjuiste tab',
+        );
 
         $this->title = $title;
         $this->tabs = $tabs;

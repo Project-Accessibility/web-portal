@@ -2,4 +2,8 @@
 
 @section('title', __('Forbidden'))
 @section('code', '403')
-@section('message', __($exception->getMessage() ?: 'Forbidden'))
+@if($exception)
+    <div class="h2">
+        @section('message',  __($exception->getMessage() ?: 'Forbidden'))
+    </div>
+@endif

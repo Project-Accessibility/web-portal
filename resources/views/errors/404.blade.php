@@ -2,4 +2,5 @@
 
 @section('title', 'Niet gevonden')
 @section('code', '404')
-@section('message', 'Niet gevonden')
+@section('header', 'Pagina niet gevonden')
+@section('message', $message ?? 'URL bestaat niet')

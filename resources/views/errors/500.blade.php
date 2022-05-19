@@ -2,4 +2,8 @@
 
 @section('title', 'Server error')
 @section('code', '500')
-@section('message', 'Server Error')
+@if($message)
+    <div class="h2">
+        @section('message', $message)
+    </div>
+@endif

@@ -58,7 +58,9 @@ class Handler extends ExceptionHandler
             }
 
             return match ($exception->getStatusCode()) {
-                404 => response()->view('errors.404'),
+                404 => response()->view('errors.404', [
+                    'message' => $exception->getMessage(),
+                ]),
                 default => response()->view('errors.500')
             };
         }
