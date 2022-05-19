@@ -1,6 +1,7 @@
 window.addEventListener('load', () => {
     new OpenConfiguration();
     new SelectConfiguration();
+    new RangeConfiguration();
 });
 
 class OpenConfiguration {
@@ -116,5 +117,25 @@ class SelectConfiguration {
             }
         });
         return removeButton;
+    }
+}
+
+class RangeConfiguration {
+    rangeSwitch;
+    rangeConfigurationBox;
+
+    constructor() {
+        this.rangeSwitch = document.getElementById('RANGE');
+        this.rangeConfigurationBox =
+            document.getElementById('range-configuration');
+        this.addListeners();
+    }
+
+    addListeners() {
+        // Add switch listener
+        this.rangeSwitch.addEventListener('change', () => {
+            // Collapse list configuration box
+            new bootstrap.Collapse(this.rangeConfigurationBox);
+        });
     }
 }

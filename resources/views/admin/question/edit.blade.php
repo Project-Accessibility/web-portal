@@ -18,6 +18,7 @@
         $multipleChoiceOption = null;
         $photoOption = null;
         $videoOption = null;
+        $rangeOption = null;
         foreach ($question->options as $option){
             switch ($option->type){
                 case \App\Enums\QuestionOptionType::VOICE:
@@ -34,6 +35,9 @@
                     break;
                 case \App\Enums\QuestionOptionType::VIDEO:
                     $videoOption = $option;
+                    break;
+                case \App\Enums\QuestionOptionType::RANGE:
+                    $rangeOption = $option;
                     break;
                 default:
                     break;
@@ -95,9 +99,27 @@
             <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Foto" name="IMAGE" :value="$photoOption != null"></x-input>
             </div>
-            <div class="border border-primary p-2">
+            <div class="border border-primary p-2 border-bottom-0">
                 <x-input class="m-0" type="switch" label="Video" name="VIDEO"
                          :value="$videoOption != null"></x-input>
+            </div>
+            <div class="border border-primary p-2">
+                <x-input class="m-0" type="switch" label="Schaal" name="RANGE"
+                         :value="$rangeOption != null"></x-input>
+                <div
+                    class="collapse {{is_string(old('RANGE')) ? (old('RANGE') ? 'show' : '') : ($openOption != null ? 'show' : '')}}"
+                    id="range-configuration">
+                    <div class="hr"></div>
+                    <x-input class="col mb-0 mt-1" label="Minimum" type="number" name="rangeMin"
+                             placeholder="Voer minimum van schaal in"
+                             :value="$rangeOption && isset($rangeOption->extra_data['rangeMin']) ? $rangeOption->extra_data['rangeMin'] : ''"></x-input>
+                    <x-input class="col mb-0 mt-1" label="Minimum" type="number" name="rangeMin"
+                             placeholder="Voer minimum van schaal in"
+                             :value="$rangeOption && isset($rangeOption->extra_data['rangeMin']) ? $rangeOption->extra_data['rangeMin'] : ''"></x-input>
+                    <x-input class="col mb-0 mt-1" label="Minimum" type="number" name="rangeMin"
+                             placeholder="Voer minimum van schaal in"
+                             :value="$rangeOption && isset($rangeOption->extra_data['rangeMin']) ? $rangeOption->extra_data['rangeMin'] : ''"></x-input>
+                </div>
             </div>
             @if($questionnaire->open)
                 <x-button class="float-end mt-2" type="secondary">Nieuwe versie aanmaken</x-button>
