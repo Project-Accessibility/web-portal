@@ -9,6 +9,12 @@ window.deleteConfirm = function (formId, removeText = '') {
         cancelButtonText: 'Annuleren',
         confirmButtonText: 'Verwijder',
         confirmButtonColor: '#e3342f',
+        showClass: {
+            icon: '',
+        },
+        hideClass: {
+            icon: '',
+        },
     }).then(result => {
         if (result.isConfirmed) {
             document.getElementById(formId).submit();
