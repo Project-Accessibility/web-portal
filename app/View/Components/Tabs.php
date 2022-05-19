@@ -25,7 +25,7 @@ class Tabs extends Component
 
         if (count($tabs) < 0) {
             throw new Exception(
-                'There needs to be at least 1 tab given to the tabs component',
+                'There needs to be at least 1 tab given to the tabs component.',
             );
         }
 
@@ -40,6 +40,6 @@ class Tabs extends Component
             return view('components.tabs');
         }
 
-        abort(Response::HTTP_NOT_FOUND, 'tab not found');
+        abort(Response::HTTP_NOT_FOUND, 'Tab not found.');
     }
 }
