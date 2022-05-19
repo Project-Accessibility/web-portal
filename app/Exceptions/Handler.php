@@ -47,11 +47,11 @@ class Handler extends ExceptionHandler
                 ->with('unauth', 'U moet ingelogd zijn.');
         }
 
-        if($exception instanceof ViewException) {
+        if ($exception instanceof ViewException) {
             $exception = $exception->getPrevious();
         }
 
-        if($exception->getStatusCode() === null) {
+        if ($exception->getStatusCode() === null) {
             return response('errors.500');
         }
 

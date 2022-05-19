@@ -29,7 +29,7 @@ class Tabs extends Component
             );
         }
 
-        abort_if($tabQuery !== null && ! in_array($tabQuery, $tabs), 404);
+        abort_if($tabQuery !== null && !in_array($tabQuery, $tabs), 404);
 
         $this->title = $title;
         $this->tabs = $tabs;
