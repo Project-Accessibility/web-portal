@@ -83,8 +83,12 @@ function createActiveBreadCrumb(query) {
 
         let newBreadcrumb = document.createElement('li');
         newBreadcrumb.classList = fullClassList;
-        newBreadcrumb.innerText = query;
+        newBreadcrumb.innerText = capitalizeFirstLetter(query);
 
         breadcrumbs.appendChild(newBreadcrumb);
+    }
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 }
