@@ -9,17 +9,19 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\Component;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Tabs extends Component
 {
+    private string $tabQuery;
     public string $title;
     public array $tabs;
     public ?string $currentTab;
 
     public function __construct(string $title, array $tabs)
     {
-        $tabQuery = request()->query('tab');
+        $this->tabQuery = request()->query('tab');
 
         if (count($tabs) < 0) {
             throw new Exception(
@@ -34,6 +36,10 @@ class Tabs extends Component
 
     public function render(): View
     {
-        return view('components.tabs');
+        if ($this->tabQuery && in_array($this->tabQuery, $this->tabs)) {
+            return view('components.tabs');
+        }
+
+        abort(Response::HTTP_NOT_FOUND, 'tab not found');
     }
 }
