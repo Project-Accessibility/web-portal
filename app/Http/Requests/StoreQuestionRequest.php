@@ -27,11 +27,11 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
             'list.required_if' =>
-                'Bij een meerkeuze vraag zijn minimaal twee mogelijkheden veriest.',
+                'Bij een meerkeuze vraag zijn minimaal twee mogelijkheden vereist.',
             'list.array' =>
-                'Bij een meerkeuze vraag zijn minimaal twee mogelijkheden veriest.',
+                'Bij een meerkeuze vraag zijn minimaal twee mogelijkheden vereist.',
             'list.min' =>
-                'Bij een meerkeuze vraag zijn minimaal twee mogelijkheden veriest.',
+                'Bij een meerkeuze vraag zijn minimaal twee mogelijkheden vereist.',
         ];
     }
 }

@@ -14,15 +14,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Tabs extends Component
 {
-    private string $tabQuery;
     public string $title;
     public array $tabs;
     public ?string $currentTab;
 
     public function __construct(string $title, array $tabs)
     {
-        $this->tabQuery = request()->query('tab');
-
         if (count($tabs) < 0) {
             throw new Exception(
                 'There needs to be at least 1 tab given to the tabs component',
@@ -36,10 +33,6 @@ class Tabs extends Component
 
     public function render(): View
     {
-        if ($this->tabQuery && in_array($this->tabQuery, $this->tabs)) {
-            return view('components.tabs');
-        }
-
-        abort(Response::HTTP_NOT_FOUND, 'tab not found');
+        return view('components.tabs');
     }
 }
