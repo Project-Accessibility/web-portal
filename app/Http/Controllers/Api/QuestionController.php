@@ -126,6 +126,13 @@ class QuestionController extends Controller
                 }
                 $answer->answer = $answers;
                 break;
+            case QuestionOptionType::RANGE:
+                $range = json_decode($request->get('RANGE'));
+                if (!$range) {
+                    return;
+                }
+                $answer->answer = [$range];
+                break;
             default:
                 abort(
                     ResponseAlias::HTTP_NOT_IMPLEMENTED,
