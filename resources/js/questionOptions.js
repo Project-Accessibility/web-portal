@@ -126,8 +126,9 @@ class RangeConfiguration {
 
     constructor() {
         this.rangeSwitch = document.getElementById('RANGE');
-        this.rangeConfigurationBox =
-            document.getElementById('range-configuration');
+        this.rangeConfigurationBox = document.getElementById(
+            'range-configuration'
+        );
         this.addListeners();
     }
 
