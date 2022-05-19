@@ -88,12 +88,7 @@ class SectionController extends Controller
         $geofence = Geofence::whereId($section->geofence_id)->first();
         return view(
             'admin.section.edit',
-            compact(
-                'research',
-                'questionnaire',
-                'section',
-                'geofence',
-            ),
+            compact('research', 'questionnaire', 'section', 'geofence'),
         );
     }
 
