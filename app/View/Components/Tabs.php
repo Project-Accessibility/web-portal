@@ -33,14 +33,11 @@ class Tabs extends Component
             );
         }
 
-        abort_if(
-            $tabQuery !== null && !in_array($tabQuery, $tabs),
-            Response::HTTP_NOT_FOUND,
-        );
+        abort_if($tabQuery !== '' && !in_array($tabQuery, $tabs), 404);
 
         $this->title = $title;
         $this->tabs = $tabs;
-        $this->currentTab = $tabQuery ?? $tabs[0];
+        $this->currentTab = in_array($tabQuery, $tabs) ? $tabQuery : $tabs[0];
     }
 
     public function render(): View
