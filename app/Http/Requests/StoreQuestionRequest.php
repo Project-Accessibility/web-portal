@@ -12,9 +12,9 @@ class StoreQuestionRequest extends FormRequest
             'title' => 'required|max:255',
             'question' => 'required|max:255',
             'list' => 'required_if:MULTIPLE_CHOICE,"1"|array|min:2',
-            'rangeMin' => 'required_if:RANGE,"1"|integer|min:0',
-            'rangeMax' => 'required_if:RANGE,"1"|integer|gt:rangeMin',
-            'rangeStep' => 'required_if:RANGE,"1"|integer|min:1',
+            'rangeMin' => 'required_if:RANGE,"1"|nullable|integer|min:0',
+            'rangeMax' => 'required_if:RANGE,"1"|nullable|integer|gt:rangeMin',
+            'rangeStep' => 'required_if:RANGE,"1"|nullable|integer|min:1',
         ];
     }
 
