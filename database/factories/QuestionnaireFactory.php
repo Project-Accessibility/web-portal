@@ -21,7 +21,6 @@ class QuestionnaireFactory extends Factory
             'research_id' => Research::factory(),
             'title' => $this->faker->company(),
             'description' => $this->faker->paragraph(),
-            'teachable_machine_link' => $this->faker->domainName,
             'open' => $this->faker->boolean,
         ];
     }

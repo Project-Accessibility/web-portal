@@ -54,7 +54,6 @@ class Section extends Model
         'title',
         'description',
         'location_description',
-        'teachable_machine_class',
     ];
 
     /* @var array */
