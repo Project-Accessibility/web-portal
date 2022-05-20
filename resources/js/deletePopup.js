@@ -8,7 +8,8 @@ window.deleteConfirm = function (formId, removeText = '') {
         showCancelButton: true,
         cancelButtonText: 'Annuleren',
         confirmButtonText: 'Verwijder',
-        confirmButtonColor: '#e3342f',
+        confirmButtonColor: '#9b1100',
+        cancelButtonColor: '#626264',
         showClass: {
             icon: '',
         },
