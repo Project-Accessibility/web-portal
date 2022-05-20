@@ -46,12 +46,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-2">
-                <strong>Teachable Machine model</strong>
-                <div>
-                    <a href="{{ $questionnaire->teachable_machine_link }}">{{ $questionnaire->teachable_machine_link }}</a>
-                </div>
-            </div>
         @endsection
         @section('Onderdelen')
             <div class="mt-2">
