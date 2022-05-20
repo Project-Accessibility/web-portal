@@ -3,7 +3,9 @@
 @section('title', 'Server error')
 @section('code', '500')
 @if($message)
-    <div class="h2">
-        @section('message', $message)
-    </div>
+    @section('message')
+        <div class="h2">
+            {{$message}}
+        </div>
+    @endsection
 @endif

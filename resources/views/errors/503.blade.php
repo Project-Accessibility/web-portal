@@ -3,7 +3,9 @@
 @section('title', __('Service Unavailable'))
 @section('code', '503')
 @if($message)
-    <div class="h2">
-        @section('message', $message)
-    </div>
+    @section('message')
+        <div class="h2">
+            {{$message}}
+        </div>
+    @endsection
 @endif
