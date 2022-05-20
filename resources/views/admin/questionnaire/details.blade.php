@@ -31,7 +31,7 @@
         </div>
     </div>
     <x-tabs title="questionnaireDetails" :tabs="['Details', 'Onderdelen', 'Resultaten', 'Participanten']">
-        @section('Details')
+        @section('details')
             <div class="row mt-2">
                 <div class="col-sm-6">
                     <strong>Omschrijving</strong>
@@ -46,14 +46,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-2">
-                <strong>Teachable Machine model</strong>
-                <div>
-                    <a href="{{ $questionnaire->teachable_machine_link }}">{{ $questionnaire->teachable_machine_link }}</a>
-                </div>
-            </div>
         @endsection
-        @section('Onderdelen')
+        @section('onderdelen')
             <div class="mt-2">
                 <div class="row justify-content-end">
                     <div class="w-auto">
@@ -65,10 +59,10 @@
                 <x-table :tableLinks="$sectionLinks" :headers="$sectionHeaders" :items="$sections" :keys="$sectionKeys" :row-link="$sectionRowLink"/>
             </div>
         @endsection
-        @section('Resultaten')
+        @section('resultaten')
             @include('admin.questionnaire.answers')
         @endsection
-        @section('Participanten')
+        @section('participanten')
             <div class="mt-2">
                 <div class="row justify-content-end">
                     <div class="w-auto">
