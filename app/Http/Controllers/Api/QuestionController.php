@@ -22,7 +22,7 @@ class QuestionController extends Controller
     public function get(int $question, string $code): Model
     {
         return Question::with([
-            'options.answers' => function (HasMany $answers) use ($code) {
+            'options.answer' => function (HasMany $answers) use ($code) {
                 $answers->whereHas('participant', function (
                     Builder $participant,
                 ) use ($code) {
@@ -96,42 +96,42 @@ class QuestionController extends Controller
                 if (!$open) {
                     return;
                 }
-                $answer->answer = [$open];
+                $answer->values = [$open];
                 break;
             case QuestionOptionType::VOICE:
                 $audios = $request->file('VOICE');
                 if (!$audios) {
                     return;
                 }
-                $answer->answer = $this->handleFiles($audios, 'audios');
+                $answer->values = $this->handleFiles($audios, 'audios');
                 break;
             case QuestionOptionType::IMAGE:
                 $images = $request->file('IMAGE');
                 if (!$images) {
                     return;
                 }
-                $answer->answer = $this->handleFiles($images, 'images');
+                $answer->values = $this->handleFiles($images, 'images');
                 break;
             case QuestionOptionType::VIDEO:
                 $videos = $request->file('VIDEO');
                 if (!$videos) {
                     return;
                 }
-                $answer->answer = $this->handleFiles($videos, 'videos');
+                $answer->values = $this->handleFiles($videos, 'videos');
                 break;
             case QuestionOptionType::MULTIPLE_CHOICE:
                 $answers = json_decode($request->get('MULTIPLE_CHOICE'));
                 if (!$answers) {
                     return;
                 }
-                $answer->answer = $answers;
+                $answer->values = $answers;
                 break;
             case QuestionOptionType::RANGE:
                 $range = json_decode($request->get('RANGE'));
                 if (!$range) {
                     return;
                 }
-                $answer->answer = [$range];
+                $answer->values = [$range];
                 break;
             default:
                 abort(

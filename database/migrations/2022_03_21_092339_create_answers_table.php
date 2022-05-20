@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('participant_id');
             $table->foreignId('question_option_id');
-            $table->json("answer")->nullable();
+            $table->json("values")->nullable();
 
             $table->foreign('participant_id')->references('id')->on('participants')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('question_option_id')->references('id')->on('question_options')->cascadeOnDelete()->cascadeOnUpdate();

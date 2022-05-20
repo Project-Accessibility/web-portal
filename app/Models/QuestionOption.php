@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\QuestionOption
@@ -57,8 +58,8 @@ class QuestionOption extends Model
         return $this->belongsTo(Question::class);
     }
 
-    public function answers(): HasMany
+    public function answer(): HasOne
     {
-        return $this->hasMany(Answer::class)->with('participant');
+        return $this->HasOne(Answer::class)->with('participant');
     }
 }
