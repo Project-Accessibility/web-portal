@@ -57,6 +57,8 @@
                                                         <li>{{ $extraDataItem }}</li>
                                                     @endforeach
                                                 </ul>
+                                            @elseif($questionOption->type === \App\Enums\QuestionOptionType::RANGE)
+                                                <span>{{ $extraData }}</span>
                                             @else
                                                 <span>{{ $extraData === '1' ? 'Ja' : ($extraData === '0' ? 'Nee' : $extraData) }}</span>
                                             @endif
