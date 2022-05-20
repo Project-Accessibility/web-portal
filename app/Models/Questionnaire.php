@@ -50,7 +50,6 @@ class Questionnaire extends Model
         'description',
         'instructions',
         'open',
-        'teachable_machine_link',
     ];
 
     /* @var array */
