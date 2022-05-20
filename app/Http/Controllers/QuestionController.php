@@ -161,6 +161,11 @@ class QuestionController extends Controller
                 'multiple' => $data['multipleAnswers'],
                 'values' => $data['list'],
             ],
+            QuestionOptionType::RANGE => [
+                'min' => $data['rangeMin'],
+                'max' => $data['rangeMax'],
+                'step' => $data['rangeStep'],
+            ],
             default => []
         };
         $option->save();
