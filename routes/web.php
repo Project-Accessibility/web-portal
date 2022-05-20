@@ -14,7 +14,7 @@ use App\Http\Controllers\ParticipantController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
-    Route::redirect('/', '/researches');
+    Route::redirect('/', '/researches')->name('home');
     Route::controller(ResearchController::class)
         ->prefix('/researches')
         ->group(function () {
