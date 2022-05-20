@@ -98,7 +98,6 @@ Elke response wordt teruggeven in een `json` formaat.
             "description": "Aut odit itaque adipisci at. At in tenetur tempora natus labore rem. Necessitatibus odio quae et quod.",
             "instructions": null,
             "open": true,
-            "teachable_machine_link": "howell.info",
             "created_at": "2022-04-03T19:17:30.000000Z",
             "updated_at": "2022-04-03T19:17:30.000000Z"
         }
@@ -116,7 +115,6 @@ Elke response wordt teruggeven in een `json` formaat.
         "description": "Aut odit itaque adipisci at. At in tenetur tempora natus labore rem. Necessitatibus odio quae et quod.",
         "instructions": null,
         "open": true,
-        "teachable_machine_link": "howell.info",
         "created_at": "2022-04-03T19:17:30.000000Z",
         "updated_at": "2022-04-03T19:17:30.000000Z",
         "sections": [
@@ -127,7 +125,6 @@ Elke response wordt teruggeven in een `json` formaat.
                 "title": "Korey Vista",
                 "description": "Earum vitae dolore aut. Ipsum officiis sit qui sed. Mollitia consequuntur recusandae temporibus quo qui quas tempore. Qui molestiae voluptatem veritatis ipsum placeat ea quisquam.",
                 "location_description": "8929 Gutkowski Corners\nAngelaport, NJ 06587",
-                "teachable_machine_class": "Korey Vista",
                 "created_at": "2022-04-03T19:17:30.000000Z",
                 "updated_at": "2022-04-03T19:17:30.000000Z",
                 "questions": [
