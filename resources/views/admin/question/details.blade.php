@@ -16,10 +16,11 @@
                 </x-button>
             </div>
             <form method="POST"
+                    id="deleteForm"
                   action="{{ route('questions.remove', [$research->id, $questionnaire->id, $section->id, $question->id]) }}">
                 @csrf
                 @method('DELETE')
-                <x-button type="remove">
+                <x-button type="remove" link="#" formId="deleteForm">
                     Vraag verwijderen
                 </x-button>
             </form>

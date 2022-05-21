@@ -8,10 +8,10 @@
             </h1>
         </div>
         <div class="col-md-auto d-inline-flex flex-wrap gap-2 gap-sm-1">
-            <form method="POST" action="{{ route('participants.remove', [$research->id, $questionnaire->id, $participant->id]) }}">
+            <form method="POST" id="deleteForm" action="{{ route('participants.remove', [$research->id, $questionnaire->id, $participant->id]) }}">
                 @csrf
                 @method('DELETE')
-                <x-button type="remove">
+                <x-button type="remove" link="#" formId="deleteForm">
                     Participant verwijderen
                 </x-button>
             </form>

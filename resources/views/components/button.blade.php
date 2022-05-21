@@ -9,6 +9,7 @@
             @break
             @case('remove')
             {{ $attributes->merge(['class' => 'btn btn-danger']) }}
+            {{ $attributes->merge(['onClick' => 'deleteConfirm("'. ($formId ?? "") . '", "' . ($removeText ?? "") . '")']) }}
             @break
             @default
             {{ $attributes->merge(['class' => 'btn btn-primary']) }}
