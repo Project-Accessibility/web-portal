@@ -95,7 +95,7 @@ class Question extends Model
             ->get();
         foreach ($questions as $question) {
             foreach ($question->options as $option) {
-                foreach ($option->answers as $answer){
+                foreach ($option->answers as $answer) {
                     $answerExists =
                         $answers
                             ->where(

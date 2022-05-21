@@ -63,8 +63,10 @@ class QuestionOption extends Model
         return $this->HasMany(Answer::class)->with('participant');
     }
 
-    public function answerParticipant($participantId): Answer | null
+    public function answerParticipant($participantId): Answer|null
     {
-        return Answer::whereQuestionOptionId($this->id)->whereParticipantId($participantId)->with('participant');
+        return Answer::whereQuestionOptionId($this->id)
+            ->whereParticipantId($participantId)
+            ->with('participant');
     }
 }
