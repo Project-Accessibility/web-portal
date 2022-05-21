@@ -91,25 +91,25 @@ class Question extends Model
     {
         $answers = collect();
         $questions = Question::whereUuid($this->uuid)
-            ->with('options.answer')
+            ->with('options.answers')
             ->get();
         foreach ($questions as $question) {
             foreach ($question->options as $option) {
-                $answerExists =
-                    $option->answer &&
-                    $answers
-                        ->where(
-                            'participant_id',
-                            '=',
-                            $option->answer->participant_id,
-                        )
-                        ->first() != null;
-                if (!$answerExists && $option->answer) {
-                    $code = $option->answer->participant->code;
-                    $answer = $option->answer;
-                    $answer['question_id'] = $question->id;
-                    $answer['participant_code'] = $code;
-                    $answers->push($answer);
+                foreach ($option->answers as $answer){
+                    $answerExists =
+                        $answers
+                            ->where(
+                                'participant_id',
+                                '=',
+                                $answer->participant_id,
+                            )
+                            ->first() != null;
+                    if (!$answerExists) {
+                        $code = $answer->participant->code;
+                        $answer['question_id'] = $question->id;
+                        $answer['participant_code'] = $code;
+                        $answers->push($answer);
+                    }
                 }
             }
         }

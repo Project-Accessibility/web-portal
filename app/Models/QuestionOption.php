@@ -58,8 +58,13 @@ class QuestionOption extends Model
         return $this->belongsTo(Question::class);
     }
 
-    public function answer(): HasOne
+    public function answers(): HasMany
     {
-        return $this->HasOne(Answer::class)->with('participant');
+        return $this->HasMany(Answer::class)->with('participant');
+    }
+
+    public function answerParticipant($participantId): Answer | null
+    {
+        return Answer::whereQuestionOptionId($this->id)->whereParticipantId($participantId)->with('participant');
     }
 }
