@@ -21,10 +21,10 @@
                     Vragenlijst aanpassen
                 </x-button>
             </div>
-            <form method="POST" action="{{ route('questionnaires.remove', [$research->id, $questionnaire->id]) }}">
+            <form method="POST" id="deleteForm" action="{{ route('questionnaires.remove', [$research->id, $questionnaire->id]) }}">
                 @csrf
                 @method('DELETE')
-                <x-button type="remove">
+                <x-button type="remove" link="#" formId="deleteForm">
                     Vragenlijst verwijderen
                 </x-button>
             </form>
