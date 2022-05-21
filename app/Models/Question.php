@@ -95,9 +95,15 @@ class Question extends Model
             ->get();
         foreach ($questions as $question) {
             foreach ($question->options as $option) {
-                $answerExists = $option->answer && ($answers
-                    ->where('participant_id', '=', $option->answer->participant_id)
-                    ->first() != null);
+                $answerExists =
+                    $option->answer &&
+                    $answers
+                        ->where(
+                            'participant_id',
+                            '=',
+                            $option->answer->participant_id,
+                        )
+                        ->first() != null;
                 if (!$answerExists && $option->answer) {
                     $code = $option->answer->participant->code;
                     $answer = $option->answer;
