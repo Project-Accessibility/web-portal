@@ -96,11 +96,18 @@ class Question extends Model
         foreach ($questions as $question) {
             foreach ($question->options as $option) {
                 foreach ($option->answers as $answer) {
-                    $answerExists = $answers
-                        ->where('participant_id', '=', $answer->participant_id)
-                        ->first();
-                    if ($answerExists == null) {
+                    $answerExists =
+                        $answers
+                            ->where(
+                                'participant_id',
+                                '=',
+                                $answer->participant_id,
+                            )
+                            ->first() != null;
+                    if (!$answerExists) {
+                        $code = $answer->participant->code;
                         $answer['question_id'] = $question->id;
+                        $answer['participant_code'] = $code;
                         $answers->push($answer);
                     }
                 }
