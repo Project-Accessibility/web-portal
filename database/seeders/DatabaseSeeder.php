@@ -154,7 +154,7 @@ class DatabaseSeeder extends Seeder
         Answer::factory()->create([
             'participant_id' => $participant->id,
             'question_option_id' => $questionOption->id,
-            'answer' => [
+            'values' => [
                 'De route was erg prettig, de paden waren breed genoeg en de ingang stond duidelijk aangegeven.',
             ],
         ]);
