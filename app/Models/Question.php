@@ -128,7 +128,9 @@ class Question extends Model
                     ->max('updated_at');
             })
             ->first()
-            ->answers->first()->updated_at;
+            ->answers()
+            ->where('participant_id', $participantId)
+            ->first()->updated_at;
     }
 
     public function latestVersion()
