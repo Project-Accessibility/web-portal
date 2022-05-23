@@ -78,26 +78,85 @@ class DatabaseSeeder extends Seeder
                 'Hier kan je meer informatie vragen en kaartjes kopen.',
         ]);
 
-        $this->createNemoEntranceQuestions($entrance_section);
+        $participant = $this->createNemoParticipant($questionnaire);
+        $this->createNemoParticipant($questionnaire);
+        $this->createNemoEntranceQuestions($entrance_section, $participant);
     }
 
-    private function createNemoEntranceQuestions(Section $section)
-    {
+    private function createNemoEntranceQuestions(
+        Section $section,
+        Participant $participant,
+    ) {
         $questionOne = Question::factory()->create([
             'section_id' => $section->id,
             'title' => 'Route',
             'question' => 'Hoe is de route naar NEMO toe?',
         ]);
 
-        QuestionOption::factory()->create([
-            'question_id' => $questionOne->id,
-            'type' => QuestionOptionType::OPEN,
-        ]);
+        $questionOneOptionOne = $this->createQuestionOptions($questionOne)[0];
 
         Question::factory()->create([
             'section_id' => $section->id,
             'title' => 'Obstakels',
             'question' => 'Hoe kom je binnen? Zijn hierbij obstakels?',
+        ]);
+
+        $this->createNemoAnswer($questionOneOptionOne, $participant);
+    }
+
+    private function createQuestionOptions($question)
+    {
+        return [
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::OPEN,
+                'extra_data' => [
+                    'placeholder' => 'Placeholder question',
+                ],
+            ]),
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::IMAGE,
+                'extra_data' => [],
+            ]),
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::VIDEO,
+                'extra_data' => [],
+            ]),
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::VOICE,
+                'extra_data' => [],
+            ]),
+            QuestionOption::factory()->create([
+                'question_id' => $question->id,
+                'type' => QuestionOptionType::MULTIPLE_CHOICE,
+                'extra_data' => [
+                    'multiple' => true,
+                    'values' => ['Waarde 1', 'Waarde 2', 'Waarde 3'],
+                ],
+            ]),
+        ];
+    }
+
+    private function createNemoParticipant(Questionnaire $questionnaire)
+    {
+        return Participant::factory()->create([
+            'questionnaire_id' => $questionnaire->id,
+        ]);
+    }
+
+    private function createNemoAnswer(
+        QuestionOption $questionOption,
+        Participant $participant,
+    ) {
+        Answer::factory()->create([
+            'participant_id' => $participant->id,
+            'question_option_id' => $questionOption->id,
+            'answer' => [
+                'De route was erg prettig, de paden waren breed genoeg en de ingang stond duidelijk aangegeven.',
+            ],
         ]);
     }
 }

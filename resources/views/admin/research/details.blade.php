@@ -10,17 +10,17 @@
                     Onderzoek aanpassen
                 </x-button>
             </div>
-            <form method="POST" action="{{ route('researches.remove', $research->id) }}">
+            <form method="POST" id="deleteForm" action="{{ route('researches.remove', $research->id) }}">
                 @csrf
                 @method('DELETE')
-                <x-button type="remove">
+                <x-button type="remove" link="#" formId="deleteForm">
                     Onderzoek verwijderen
                 </x-button>
             </form>
         </div>
     </div>
     <x-tabs title="researchesDetails" :tabs="['Details', 'Vragenlijsten']" :currentTab="'Details'">
-        @section('Details')
+        @section('details')
             <div class="mt-2">
                 <strong>Omschrijving</strong>
                 <div>
@@ -28,7 +28,7 @@
                 </div>
             </div>
         @endsection
-        @section('Vragenlijsten')
+        @section('vragenlijsten')
             <div class="mt-2">
                 <div class="row justify-content-end">
                     <div class="w-auto">

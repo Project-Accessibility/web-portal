@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Enums\QuestionOptionType;
 use App\Http\Requests\StoreQuestionRequest;
+use App\Models\Answer;
+use App\Models\Participant;
 use App\Models\Question;
 use App\Models\Questionnaire;
+use App\Models\QuestionOption;
 use App\Models\Research;
 use App\Models\Section;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class QuestionController extends Controller
 {
@@ -50,7 +55,7 @@ class QuestionController extends Controller
         $data = $request->all();
 
         $question = $section->questions()->create($data);
-        $this->storeOptions($question, $data);
+        $this->saveOptions($question, $data);
 
         return redirect()
             ->route('sections.details', [
@@ -60,45 +65,6 @@ class QuestionController extends Controller
                 'tab' => 'Vragen',
             ])
             ->with('success', 'De vraag is aangemaakt!');
-    }
-
-    private function storeOptions($question, $data)
-    {
-        if ($data['open']) {
-            $question->options()->create([
-                'type' => QuestionOptionType::OPEN,
-                'extra_data' => [
-                    'placeholder' => $data['openPlaceholder'],
-                ],
-            ]);
-        }
-        if ($data['multipleChoice'] && isset($data['list'])) {
-            $question->options()->create([
-                'type' => QuestionOptionType::MULTIPLE_CHOICE,
-                'extra_data' => [
-                    'multiple' => $data['multipleAnswers'],
-                    'values' => $data['list'],
-                ],
-            ]);
-        }
-        if ($data['photo']) {
-            $question->options()->create([
-                'type' => QuestionOptionType::IMAGE,
-                'extra_data' => [],
-            ]);
-        }
-        if ($data['audio']) {
-            $question->options()->create([
-                'type' => QuestionOptionType::VOICE,
-                'extra_data' => [],
-            ]);
-        }
-        if ($data['video']) {
-            $question->options()->create([
-                'type' => QuestionOptionType::VIDEO,
-                'extra_data' => [],
-            ]);
-        }
     }
 
     public function edit(
@@ -131,9 +97,17 @@ class QuestionController extends Controller
         $request->validated();
         $data = $request->all();
 
-        $question->update($data);
-        $question->options()->delete();
-        $this->storeOptions($question, $data);
+        if ($questionnaire->open) {
+            $data['uuid'] = $question->uuid;
+            $question = $section->questions()->create($data);
+            $successMessage =
+                'Er is een nieuwe versie van de vraag aangemaakt!';
+        } else {
+            $question->update($data);
+            $this->removeOptions($question, $data);
+            $successMessage = 'De vraag is aangepast!';
+        }
+        $this->saveOptions($question, $data);
 
         return redirect()
             ->route('questions.details', [
@@ -143,7 +117,58 @@ class QuestionController extends Controller
                 'question' => $question,
                 'tab' => 'Details',
             ])
-            ->with('success', 'De vraag is aangepast!');
+            ->with('success', $successMessage);
+    }
+
+    private function removeOptions(Question $question, $data)
+    {
+        $options = $question->options;
+        $options->map(function ($option) use ($data) {
+            $type = $data[$option->type->value];
+            if (!$type) {
+                $option->delete();
+            }
+        });
+    }
+
+    private function saveOptions($question, $data)
+    {
+        $availableOptionTypes = QuestionOptionType::cases();
+        foreach ($availableOptionTypes as $availableOptionType) {
+            $type = $availableOptionType->value;
+            $saveOption = $data[$type] ?? false;
+            if ($saveOption) {
+                $this->saveOption($question, $availableOptionType, $data);
+            }
+        }
+    }
+
+    private function saveOption($question, $type, $data)
+    {
+        $option = QuestionOption::whereType($type->value)
+            ->whereQuestionId($question->id)
+            ->first();
+        if ($option == null) {
+            $option = new QuestionOption();
+            $option->type = $type;
+            $option->question_id = $question->id;
+        }
+        $option->extra_data = match ($type) {
+            QuestionOptionType::OPEN => [
+                'placeholder' => $data['openPlaceholder'],
+            ],
+            QuestionOptionType::MULTIPLE_CHOICE => [
+                'multiple' => $data['multipleAnswers'],
+                'values' => $data['list'],
+            ],
+            QuestionOptionType::RANGE => [
+                'min' => $data['rangeMin'],
+                'max' => $data['rangeMax'],
+                'step' => $data['rangeStep'],
+            ],
+            default => []
+        };
+        $option->save();
     }
 
     public function details(
@@ -152,9 +177,7 @@ class QuestionController extends Controller
         Section $section,
         Question $question,
     ): View {
-        $questionTypes = $question->options()->get();
-        $questionTypesHeaders = ['Mogelijkheid'];
-        $questionTypesKeys = ['typeDisplay'];
+        $questionOptions = $question->options()->get();
 
         return view(
             'admin.question.details',
@@ -163,9 +186,7 @@ class QuestionController extends Controller
                 'questionnaire',
                 'section',
                 'question',
-                'questionTypes',
-                'questionTypesHeaders',
-                'questionTypesKeys',
+                'questionOptions',
             ),
         );
     }
@@ -186,6 +207,36 @@ class QuestionController extends Controller
                 'tab' => 'Vragen',
             ]),
         )->with('success', 'De vraag is verwijderd!');
+    }
+
+    public function answer(
+        Research $research,
+        Questionnaire $questionnaire,
+        Section $section,
+        Question $question,
+        Participant $participant,
+    ): Factory|View|Application {
+        $answers = $question->options
+            ->map(function ($option) use ($participant) {
+                return Answer::where('participant_id', '=', $participant->id)
+                    ->where('question_option_id', '=', $option->id)
+                    ->first();
+            })
+            ->filter(function ($answer) {
+                return $answer != null;
+            });
+
+        return view(
+            'admin.question.answer',
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'question',
+                'participant',
+                'answers',
+            ),
+        );
     }
 
     public function archive(Question $question)

@@ -16,17 +16,18 @@
                 </x-button>
             </div>
             <form method="POST"
+                id="deleteForm"
                   action="{{ route('sections.remove', [$research->id, $questionnaire->id, $section->id]) }}">
                 @csrf
                 @method('DELETE')
-                <x-button type="remove">
+                <x-button type="remove" link="#" formId="deleteForm">
                     Onderdeel verwijderen
                 </x-button>
             </form>
         </div>
     </div>
     <x-tabs title="sectionDetails" :tabs="['Details', 'Vragen', 'Resultaten']">
-        @section('Details')
+        @section('details')
             <div class="row mt-2">
                 <h2>Gegevens</h2>
                 <div class="col-sm-6">
@@ -54,7 +55,7 @@
             <script>mapboxgl.accessToken = 'pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw';</script>
             <script src="{{ asset('js/location.js') }}"></script>
         @endsection
-        @section('Vragen')
+        @section('vragen')
             <div class="mt-2">
                 <div class="row justify-content-end">
                     <div class="w-auto">
@@ -66,7 +67,7 @@
                 <x-table :headers="$questionHeaders" :items="$questions" :keys="$questionKeys" :row-link="$questionRowLink"/>
             </div>
         @endsection
-        @section('Resultaten')
+        @section('resultaten')
         @endsection
     </x-tabs>
 @endsection

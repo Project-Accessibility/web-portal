@@ -1,6 +1,7 @@
 window.addEventListener('load', () => {
     new OpenConfiguration();
     new SelectConfiguration();
+    new RangeConfiguration();
 });
 
 class OpenConfiguration {
@@ -8,7 +9,7 @@ class OpenConfiguration {
     openConfigurationBox;
 
     constructor() {
-        this.openSwitch = document.getElementById('open');
+        this.openSwitch = document.getElementById('OPEN');
         this.openConfigurationBox =
             document.getElementById('open-configuration');
         this.addListeners();
@@ -33,7 +34,7 @@ class SelectConfiguration {
 
     constructor() {
         this.values = [];
-        this.listSwitch = document.getElementById('multipleChoice');
+        this.listSwitch = document.getElementById('MULTIPLE_CHOICE');
         this.listConfigurationBox =
             document.getElementById('list-configuration');
         this.addListItemButton = document.getElementById(
@@ -116,5 +117,26 @@ class SelectConfiguration {
             }
         });
         return removeButton;
+    }
+}
+
+class RangeConfiguration {
+    rangeSwitch;
+    rangeConfigurationBox;
+
+    constructor() {
+        this.rangeSwitch = document.getElementById('RANGE');
+        this.rangeConfigurationBox = document.getElementById(
+            'range-configuration'
+        );
+        this.addListeners();
+    }
+
+    addListeners() {
+        // Add switch listener
+        this.rangeSwitch.addEventListener('change', () => {
+            // Collapse list configuration box
+            new bootstrap.Collapse(this.rangeConfigurationBox);
+        });
     }
 }

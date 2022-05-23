@@ -24,9 +24,6 @@
             <x-input type="textarea" label="Instructies" name="instructions"
                      placeholder="De instructies voor de participant in de app" :extraData="['rows'=>8]" :value="$questionnaire->instructions"></x-input>
             <x-input label="Onderzoek kan worden gebruikt" type="switch" name="open" :value="false" :value="$questionnaire->open"></x-input>
-            <fieldset disabled>
-                <x-input type="text" label="Teachable Machine model" name="teachable_machine_link" placeholder="Link naar het teachable machine model"></x-input>
-            </fieldset>
             <x-button class="float-end mt-2" type="secondary">Aanpassen</x-button>
         </div>
     </form>

@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Casts\DisplayDateTime;
 use App\Http\Requests\StoreQuestionnaireRequest;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use App\Utils\TableLink;
 use App\Utils\TableLinkParameter;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Symfony\Component\Console\Input\Input;
 
 class QuestionnaireController extends Controller
 {
@@ -73,14 +71,12 @@ class QuestionnaireController extends Controller
     }
 
     public function details(
-        Request $request,
         Research $research,
         Questionnaire $questionnaire,
     ): View {
-        $sections = $questionnaire->sections->toArray();
-
+        // Sections
+        $sections = $questionnaire->sections;
         $sectionHeaders = ['ID', 'Titel', 'Omschrijving'];
-
         $sectionKeys = ['id', 'title', 'description'];
 
         $sectionLinkParameters = [
@@ -125,6 +121,77 @@ class QuestionnaireController extends Controller
             'sections.details',
             collect($sectionLinkParameters),
         );
+
+        // Participants
+        $participants = $questionnaire
+            ->participants()
+            ->withMax('answers', 'updated_at')
+            ->withCasts([
+                'answers_max_updated_at' => DisplayDateTime::class,
+            ])
+            ->get()
+            ->toArray();
+
+        $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltoloid'];
+        $participantKeys = ['id', 'code', 'answers_max_updated_at', 'finished'];
+
+        $participantLinkParameters = [
+            new TableLinkParameter(
+                routeParameter: 'participant',
+                itemIndex: 'id',
+            ),
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                routeValue: $questionnaire->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $questionnaire->research->id,
+            ),
+        ];
+
+        $participantRowLink = new TableLink(
+            'participants.details',
+            collect($participantLinkParameters),
+        );
+
+        // Results
+        $results = $questionnaire->results()->toArray();
+
+        // Participants
+        $participants = $questionnaire
+            ->participants()
+            ->withMax('answers', 'updated_at')
+            ->withCasts([
+                'answers_max_updated_at' => DisplayDateTime::class,
+            ])
+            ->get()
+            ->toArray();
+
+        $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltooid'];
+        $participantKeys = ['id', 'code', 'answers_max_updated_at', 'finished'];
+
+        $participantLinkParameters = [
+            new TableLinkParameter(
+                routeParameter: 'participant',
+                itemIndex: 'id',
+            ),
+            new TableLinkParameter(
+                routeParameter: 'questionnaire',
+                routeValue: $questionnaire->id,
+            ),
+            new TableLinkParameter(
+                routeParameter: 'research',
+                routeValue: $questionnaire->research->id,
+            ),
+        ];
+
+        $participantRowLink = new TableLink(
+            'participants.details',
+            collect($participantLinkParameters),
+        );
+        $sections = $sections->toArray();
+
         return view(
             'admin.questionnaire.details',
             compact(
@@ -135,6 +202,15 @@ class QuestionnaireController extends Controller
                 'sectionLinks',
                 'sectionKeys',
                 'sectionRowLink',
+                'participants',
+                'participantHeaders',
+                'participantKeys',
+                'participantRowLink',
+                'results',
+                'participants',
+                'participantHeaders',
+                'participantKeys',
+                'participantRowLink',
             ),
         );
     }

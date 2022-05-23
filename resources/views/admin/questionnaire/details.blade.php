@@ -21,17 +21,17 @@
                     Vragenlijst aanpassen
                 </x-button>
             </div>
-            <form method="POST" action="{{ route('questionnaires.remove', [$research->id, $questionnaire->id]) }}">
+            <form method="POST" id="deleteForm" action="{{ route('questionnaires.remove', [$research->id, $questionnaire->id]) }}">
                 @csrf
                 @method('DELETE')
-                <x-button type="remove">
+                <x-button type="remove" link="#" formId="deleteForm">
                     Vragenlijst verwijderen
                 </x-button>
             </form>
         </div>
     </div>
     <x-tabs title="questionnaireDetails" :tabs="['Details', 'Onderdelen', 'Resultaten', 'Participanten']">
-        @section('Details')
+        @section('details')
             <div class="row mt-2">
                 <div class="col-sm-6">
                     <strong>Omschrijving</strong>
@@ -46,28 +46,36 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-2">
-                <strong>Teachable Machine model</strong>
-                <div>
-                    <a href="{{ $questionnaire->teachable_machine_link }}">{{ $questionnaire->teachable_machine_link }}</a>
+        @endsection
+        @section('onderdelen')
+            <div class="mt-2">
+                <div class="row justify-content-end">
+                    <div class="w-auto">
+                        <x-button type="secondary" link="{{ route('sections.create', [$questionnaire->research->id, $questionnaire->id]) }}">
+                            Nieuwe Onderdeel
+                        </x-button>
+                    </div>
                 </div>
+                <x-table :tableLinks="$sectionLinks" :headers="$sectionHeaders" :items="$sections" :keys="$sectionKeys" :row-link="$sectionRowLink"/>
             </div>
         @endsection
-        @section('Onderdelen')
-                <div class="mt-2">
-                    <div class="row justify-content-end">
-                        <div class="w-auto">
-                            <x-button type="secondary" link="{{ route('sections.create', [$questionnaire->research->id, $questionnaire->id]) }}">
-                                Nieuwe Onderdeel
+        @section('resultaten')
+            @include('admin.questionnaire.answers')
+        @endsection
+        @section('participanten')
+            <div class="mt-2">
+                <div class="row justify-content-end">
+                    <div class="w-auto">
+                        <form method="POST" action="{{ route('participants.store', [$research->id, $questionnaire->id]) }}">
+                            @csrf
+                            <x-button type="secondary">
+                                Nieuwe participant
                             </x-button>
-                        </div>
+                        </form>
                     </div>
-                    <x-table :tableLinks="$sectionLinks" :headers="$sectionHeaders" :items="$sections" :keys="$sectionKeys" :row-link="$sectionRowLink"/>
                 </div>
-        @endsection
-        @section('Resultaten')
-        @endsection
-        @section('Participanten')
+                <x-table :headers="$participantHeaders" :items="$participants" :keys="$participantKeys" :row-link="$participantRowLink"/>
+            </div>
         @endsection
     </x-tabs>
 @endsection

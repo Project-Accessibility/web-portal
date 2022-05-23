@@ -16,10 +16,11 @@
                 </x-button>
             </div>
             <form method="POST"
+                    id="deleteForm"
                   action="{{ route('questions.remove', [$research->id, $questionnaire->id, $section->id, $question->id]) }}">
                 @csrf
                 @method('DELETE')
-                <x-button type="remove">
+                <x-button type="remove" link="#" formId="deleteForm">
                     Vraag verwijderen
                 </x-button>
             </form>
@@ -37,19 +38,19 @@
         </div>
         <div class="col-md-6">
             <h2>Antwoordmogelijkheden</h2>
-            <div class="accordion" id="questionTypes">
-                @if(count($questionTypes) > 0)
-                    @foreach($questionTypes as $questionType)
+            <div class="accordion" id="questionOptions">
+                @if(count($questionOptions) > 0)
+                    @foreach($questionOptions as $questionOption)
                         <div class="accordion-item">
-                            @if(isset($questionType->extra_data) && count($questionType->extra_data) > 0)
+                            @if(isset($questionOption->extra_data) && count($questionOption->extra_data) > 0)
                                 <span class="accordion-header" id="headingOne">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $loop->index }}" aria-expanded="false" aria-controls="collapseOne">
-                                        {{ $questionType->typeDisplay }}
+                                        {{ $questionOption->type->display() }}
                                     </button>
                                 </span>
-                                <div id="collapse{{ $loop->index }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#questionTypes">
+                                <div id="collapse{{ $loop->index }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#questionOptions">
                                     <div class="accordion-body">
-                                        @foreach($questionType->extra_data as $key => $extraData)
+                                        @foreach($questionOption->extra_data as $key => $extraData)
                                             <strong>{{ ucfirst(__('question-types.'. $key)) }}: </strong>
                                             @if(is_array($extraData))
                                                 <ul>
@@ -57,6 +58,8 @@
                                                         <li>{{ $extraDataItem }}</li>
                                                     @endforeach
                                                 </ul>
+                                            @elseif($questionOption->type === \App\Enums\QuestionOptionType::RANGE)
+                                                <span>{{ $extraData }}</span>
                                             @else
                                                 <span>{{ $extraData === '1' ? 'Ja' : ($extraData === '0' ? 'Nee' : $extraData) }}</span>
                                             @endif
@@ -67,7 +70,7 @@
                             @else
                                 <span class="accordion-header" id="headingOne">
                                     <button disabled class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $loop->index }}" aria-expanded="true" aria-controls="collapseOne">
-                                        {{ $questionType->typeDisplay }}
+                                        {{ $questionOption->type->display() }}
                                     </button>
                                 </span>
                             @endif

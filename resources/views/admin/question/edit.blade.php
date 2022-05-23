@@ -18,6 +18,7 @@
         $multipleChoiceOption = null;
         $photoOption = null;
         $videoOption = null;
+        $rangeOption = null;
         foreach ($question->options as $option){
             switch ($option->type){
                 case \App\Enums\QuestionOptionType::VOICE:
@@ -34,6 +35,9 @@
                     break;
                 case \App\Enums\QuestionOptionType::VIDEO:
                     $videoOption = $option;
+                    break;
+                case \App\Enums\QuestionOptionType::RANGE:
+                    $rangeOption = $option;
                     break;
                 default:
                     break;
@@ -54,14 +58,14 @@
                      required></x-input>
             <h2 class="h2">Antwoord mogelijkheden</h2>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Spraakopname" name="audio"
+                <x-input class="m-0" type="switch" label="Spraakopname" name="VOICE"
                          :value="$audioOption != null"></x-input>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Open antwoord" name="open"
+                <x-input class="m-0" type="switch" label="Open antwoord" name="OPEN"
                          :value="$openOption != null"></x-input>
                 <div
-                    class="collapse {{is_string(old('open')) ? (old('open') ? 'show' : '') : ($openOption != null ? 'show' : '')}}"
+                    class="collapse {{is_string(old('OPEN')) ? (old('OPEN') ? 'show' : '') : ($openOption != null ? 'show' : '')}}"
                     id="open-configuration">
                     <div class="hr"></div>
                     <x-input class="col mb-0 mt-1" label="Placeholder" type="text" name="openPlaceholder"
@@ -70,10 +74,10 @@
                 </div>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Meerkeuze" name="multipleChoice"
+                <x-input class="m-0" type="switch" label="Meerkeuze" name="MULTIPLE_CHOICE"
                          :value="$multipleChoiceOption != null"></x-input>
                 <div
-                    class="collapse {{is_string(old('multipleChoice')) ? (old('multipleChoice') ? 'show' : '') : ($multipleChoiceOption != null ? 'show' : '')}}"
+                    class="collapse {{is_string(old('MULTIPLE_CHOICE')) ? (old('MULTIPLE_CHOICE') ? 'show' : '') : ($multipleChoiceOption != null ? 'show' : '')}}"
                     id="list-configuration">
                     <div class="hr"></div>
                     <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
@@ -93,17 +97,39 @@
                 </div>
             </div>
             <div class="border border-primary p-2 border-bottom-0">
-                <x-input class="m-0" type="switch" label="Foto" name="photo" :value="$photoOption != null"></x-input>
+                <x-input class="m-0" type="switch" label="Foto" name="IMAGE" :value="$photoOption != null"></x-input>
             </div>
-            <div class="border border-primary p-2">
-                <x-input class="m-0" type="switch" label="Video" name="video"
+            <div class="border border-primary p-2 border-bottom-0">
+                <x-input class="m-0" type="switch" label="Video" name="VIDEO"
                          :value="$videoOption != null"></x-input>
             </div>
-            <x-button class="float-end mt-2" type="secondary">Aanpassen</x-button>
+            <div class="border border-primary p-2">
+                <x-input class="m-0" type="switch" label="Schaal" name="RANGE"
+                         :value="$rangeOption != null"></x-input>
+                <div
+                    class="collapse {{is_string(old('RANGE')) ? (old('RANGE') ? 'show' : '') : ($rangeOption != null ? 'show' : '')}}"
+                    id="range-configuration">
+                    <div class="hr"></div>
+                    <x-input class="col mb-0 mt-1" label="Minimum" type="number" name="rangeMin"
+                             placeholder="Voer minimum van schaal in"
+                             :value="$rangeOption && isset($rangeOption->extra_data['min']) ? $rangeOption->extra_data['min'] : ''"></x-input>
+                    <x-input class="col mb-0 mt-1" label="Maximum" type="number" name="rangeMax"
+                             placeholder="Voer maximum van schaal in"
+                             :value="$rangeOption && isset($rangeOption->extra_data['max']) ? $rangeOption->extra_data['max'] : ''"></x-input>
+                    <x-input class="col mb-0 mt-1" label="Stap" type="number" name="rangeStep"
+                             placeholder="Voer de stap in die de schaal moet gebruiken"
+                             :value="$rangeOption && isset($rangeOption->extra_data['step']) ? $rangeOption->extra_data['step'] : ''"></x-input>
+                </div>
+            </div>
+            @if($questionnaire->open)
+                <x-button class="float-end mt-2" type="secondary">Nieuwe versie aanmaken</x-button>
+            @else
+                <x-button class="float-end mt-2" type="secondary">Aanpassen</x-button>
+            @endif
         </div>
     </form>
     <script>
-        if (!{{empty(old('multipleChoice')) ? 1 : 0}}) {
+        if (!{{empty(old('MULTIPLE_CHOICE')) ? 1 : 0}}) {
             if (!{{empty(old('list')) ? 1 : 0}}) {
                 window.values = {!! json_encode(old('list')) !!};
             }
