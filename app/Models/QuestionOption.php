@@ -51,8 +51,6 @@ class QuestionOption extends Model
         'updated_at' => 'datetime',
     ];
 
-    protected $appends = ['typeDisplay'];
-
     public function question(): BelongsTo
     {
         return $this->belongsTo(Question::class);
@@ -60,13 +58,6 @@ class QuestionOption extends Model
 
     public function answers(): HasMany
     {
-        return $this->HasMany(Answer::class)->with('participant');
-    }
-
-    public function answerParticipant($participantId): Answer|null
-    {
-        return Answer::whereQuestionOptionId($this->id)
-            ->whereParticipantId($participantId)
-            ->with('participant');
+        return $this->HasMany(Answer::class);
     }
 }
