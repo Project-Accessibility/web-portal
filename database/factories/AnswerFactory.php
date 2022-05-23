@@ -21,7 +21,7 @@ class AnswerFactory extends Factory
         return [
             'participant_id' => Participant::factory(),
             'question_option_id' => QuestionOption::factory(),
-            'answer' => json_encode([]),
+            'values' => json_encode([]),
         ];
     }
 }
