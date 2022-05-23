@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
                 !method_exists($exception, 'getStatusCode') ||
                 $exception->getStatusCode() === null
             ) {
-                return response('errors.500');
+                return response()->view('errors.500');
             }
 
             return match ($exception->getStatusCode()) {
