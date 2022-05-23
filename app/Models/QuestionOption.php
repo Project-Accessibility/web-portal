@@ -51,8 +51,6 @@ class QuestionOption extends Model
         'updated_at' => 'datetime',
     ];
 
-    protected $appends = ['typeDisplay'];
-
     public function question(): BelongsTo
     {
         return $this->belongsTo(Question::class);

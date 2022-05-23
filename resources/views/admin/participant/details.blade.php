@@ -17,7 +17,7 @@
             </form>
         </div>
     </div>
-    @foreach($participant->answers as $answer)
+    @foreach($questions as $question)
         <div class="d-flex gap-4">
             <div class="col-auto text-center align-end justify-content-end flex-column d-none d-sm-flex">
                 <div class="d-flex justify-content-center h-50">
@@ -31,14 +31,14 @@
             <div class="col py-2">
                 <div class="card">
                     <div class="card-body d-flex flex-column gap-2">
-                        <b class="card-text">{{ 'Vraag \'' . $answer->questionOption->question->title . '\' van onderdeel \'' . $answer->questionOption->question->section->title . '\' beantwoord.' }}</b>
-                        <small>{{ $answer->updated_at }}</small>
+                        <b class="card-text">{{ 'Vraag \'' . $question->title . '\' van onderdeel \'' . $question->section->title . '\' beantwoord.' }}</b>
+                        <small>{{ $question->latest_answer }}</small>
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
-    @if(count($participant->answers) === 0)
+    @if(count($questions) === 0)
         <div class="mt-2">
             <span class="fs-5">Er zijn door deze participant nog geen acties uitgevoerd</span>
         </div>
