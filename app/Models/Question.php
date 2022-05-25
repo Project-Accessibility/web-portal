@@ -116,6 +116,23 @@ class Question extends Model
         return $answers;
     }
 
+    public function getLatestAnswerOfParticipant(int $participantId): ?string
+    {
+        return $this->options
+            ->sortByDesc(function (QuestionOption $option) use (
+                $participantId,
+            ) {
+                return $option
+                    ->answers()
+                    ->where('participant_id', $participantId)
+                    ->max('updated_at');
+            })
+            ->first()
+            ->answers()
+            ->where('participant_id', $participantId)
+            ->first()->updated_at;
+    }
+
     public function latestVersion()
     {
         return Question::whereUuid($this->uuid)->max('version');

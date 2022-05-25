@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Casts\DisplayDateTime;
 use App\Models\Participant;
+use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use App\Utils\UniqueRandomParticipantCode;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -42,18 +46,30 @@ class ParticipantController extends Controller
         Questionnaire $questionnaire,
         Participant $participant,
     ): View {
-        $participant->load([
-            'answers' => function (Relation $query) {
-                $query->withCasts([
-                    'updated_at' => DisplayDateTime::class,
-                ]);
-            },
-            'answers.questionOption.question.section',
-        ]);
+        $questions = Question::whereHas('options.answers', function (
+            Builder $query,
+        ) use ($participant) {
+            $query->whereIn(
+                'id',
+                $participant->answers->pluck('id')->toArray(),
+            );
+        })
+            ->get()
+            ->map(function (Question $question) use ($participant) {
+                $latest_answer = $question->getLatestAnswerOfParticipant(
+                    $participant->id,
+                );
+                $question->latest_answer = $latest_answer
+                    ? Carbon::parse($latest_answer)->translatedFormat(
+                        'l d F Y \o\m h:i',
+                    )
+                    : null;
+                return $question;
+            });
 
         return view(
             'admin.participant.details',
-            compact('research', 'questionnaire', 'participant'),
+            compact('research', 'questionnaire', 'participant', 'questions'),
         );
     }
 
