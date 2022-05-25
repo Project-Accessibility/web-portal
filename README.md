@@ -88,7 +88,7 @@ Elke response wordt teruggeven in een `json` formaat.
 </details>
 
 <details>
-    <summary>GET: /questionnaires/getByCodes</summary>
+    <summary>POST: /questionnaires/getByCodes</summary>
 
     [
         {
@@ -111,30 +111,107 @@ Elke response wordt teruggeven in een `json` formaat.
     {
         "id": 1,
         "research_id": 1,
-        "title": "Torp-Moen",
-        "description": "Aut odit itaque adipisci at. At in tenetur tempora natus labore rem. Necessitatibus odio quae et quod.",
+        "title": "Vragenlijst toegankelijkheid",
+        "description": "De algemene vragenlijst.",
         "instructions": null,
         "open": true,
-        "created_at": "2022-04-03T19:17:30.000000Z",
-        "updated_at": "2022-04-03T19:17:30.000000Z",
+        "created_at": "2022-05-25T15:51:48.000000Z",
+        "updated_at": "2022-05-25T15:51:48.000000Z",
         "sections": [
             {
                 "id": 1,
                 "questionnaire_id": 1,
                 "geofence_id": 1,
-                "title": "Korey Vista",
-                "description": "Earum vitae dolore aut. Ipsum officiis sit qui sed. Mollitia consequuntur recusandae temporibus quo qui quas tempore. Qui molestiae voluptatem veritatis ipsum placeat ea quisquam.",
-                "location_description": "8929 Gutkowski Corners\nAngelaport, NJ 06587",
-                "created_at": "2022-04-03T19:17:30.000000Z",
-                "updated_at": "2022-04-03T19:17:30.000000Z",
+                "title": "Entree",
+                "description": "Benoem zowel je positieve als negatieve ervaringen.",
+                "location_description": "Dit is het gedeelte waar je NEMO binnen komt.",
+                "created_at": "2022-05-25T15:51:48.000000Z",
+                "updated_at": "2022-05-25T15:51:48.000000Z",
                 "questions": [
                     {
                         "id": 1,
+                        "uuid": "ad93f8d7-a593-4564-b8e5-c762cd2575ee",
+                        "version": 1,
                         "section_id": 1,
-                        "title": "Mr.",
-                        "question": "Prof.",
-                        "created_at": "2022-04-03T19:17:30.000000Z",
-                        "updated_at": "2022-04-03T19:17:30.000000Z"
+                        "title": "Route",
+                        "question": "Hoe is de route naar NEMO toe?",
+                        "created_at": "2022-05-25T15:51:48.000000Z",
+                        "updated_at": "2022-05-25T15:51:48.000000Z",
+                        "options": [
+                            {
+                                "id": 1,
+                                "question_id": 1,
+                                "type": "OPEN",
+                                "extra_data": {
+                                    "placeholder": "Placeholder question"
+                                },
+                                "created_at": "2022-05-25T15:51:48.000000Z",
+                                "updated_at": "2022-05-25T15:51:48.000000Z",
+                                "answer": {
+                                    "id": 1,
+                                    "participant_id": 1,
+                                    "question_option_id": 1,
+                                    "values": [
+                                        "De route was erg prettig, de paden waren breed genoeg en de ingang stond duidelijk aangegeven."
+                                    ],
+                                    "created_at": "2022-05-25T15:51:48.000000Z",
+                                    "updated_at": "2022-05-25T15:51:48.000000Z"
+                                }
+                            },
+                            {
+                                "id": 2,
+                                "question_id": 1,
+                                "type": "IMAGE",
+                                "extra_data": [],
+                                "created_at": "2022-05-25T15:51:48.000000Z",
+                                "updated_at": "2022-05-25T15:51:48.000000Z",
+                                "answer": null
+                            },
+                            {
+                                "id": 3,
+                                "question_id": 1,
+                                "type": "VIDEO",
+                                "extra_data": [],
+                                "created_at": "2022-05-25T15:51:48.000000Z",
+                                "updated_at": "2022-05-25T15:51:48.000000Z",
+                                "answer": null
+                            },
+                            {
+                                "id": 4,
+                                "question_id": 1,
+                                "type": "VOICE",
+                                "extra_data": [],
+                                "created_at": "2022-05-25T15:51:48.000000Z",
+                                "updated_at": "2022-05-25T15:51:48.000000Z",
+                                "answer": null
+                            },
+                            {
+                                "id": 5,
+                                "question_id": 1,
+                                "type": "MULTIPLE_CHOICE",
+                                "extra_data": {
+                                    "multiple": true,
+                                    "values": [
+                                        "Waarde 1",
+                                        "Waarde 2",
+                                        "Waarde 3"
+                                    ]
+                                },
+                                "created_at": "2022-05-25T15:51:48.000000Z",
+                                "updated_at": "2022-05-25T15:51:48.000000Z",
+                                "answer": {
+                                    "id": 2,
+                                    "participant_id": 1,
+                                    "question_option_id": 5,
+                                    "values": [
+                                        "Waarde 1",
+                                        "Waarde 2"
+                                    ],
+                                    "created_at": "2022-05-25T15:51:48.000000Z",
+                                    "updated_at": "2022-05-25T15:51:48.000000Z"
+                                }
+                            }
+                        ]
                     }
                 ]
             }

@@ -7,6 +7,7 @@ use App\Models\Answer;
 use App\Models\Participant;
 use App\Models\Question;
 use App\Models\Questionnaire;
+use App\Models\QuestionOption;
 use App\Models\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -42,58 +43,54 @@ class QuestionnaireController extends Controller
 
     public function get(string $code): ?Model
     {
-        $questionnaire = Questionnaire::where('open', true)
-            ->whereHas('participants', function (Builder $participant) use (
-                $code,
-            ) {
-                $participant->whereCode($code);
-            })
-            ->firstOrFail();
+        $participant = Participant::whereCode($code)->firstOrFail();
 
-        $questionnaire->sections = $this->getSections($code, $questionnaire);
-
-        return $questionnaire;
-    }
-
-    public function getSections(
-        string $code,
-        Questionnaire $questionnaire,
-    ): Collection {
-        $participantAnswersQuestionsIds = Participant::where('code', $code)
-            ->first()
-            ->answers->map(function (Answer $answer) {
-                return $answer->option()->question->id;
-            })
-            ->unique()
-            ->toArray();
-
-        return $questionnaire->sections->map(function (Section $section) use (
-            $participantAnswersQuestionsIds,
-        ) {
+        $participant->questionnaire->sections->map(function (
+            Section $section,
+        ) use ($participant) {
             $section->questions = $section->questions
                 ->groupBy('uuid')
-                ->map(function (Collection $questions) use (
-                    $participantAnswersQuestionsIds,
-                ) {
-                    $questionIds = $questions->pluck('id')->toArray();
+                ->map(function (Collection $questions) use ($participant) {
+                    $options = $questions->pluck('options.*.id')->flatten();
+                    $answer = Answer::whereParticipantId($participant->id)
+                        ->whereIn('question_option_id', $options)
+                        ->first();
 
-                    $arrayIntersect = array_intersect(
-                        $questionIds,
-                        $participantAnswersQuestionsIds,
-                    );
-
-                    if (count($arrayIntersect) === 1) {
-                        return $questions->where('id', $arrayIntersect[0]);
-                    } else {
-                        return Question::whereUuid($questions->first()->uuid)
-                            ->orderBy('version', 'DESC')
+                    if ($answer) {
+                        $question = $questions
+                            ->where('id', $answer->option->question->id)
                             ->first();
+                        $question->options->map(function (
+                            QuestionOption $option,
+                        ) use ($participant) {
+                            $option->answer = $option->answers
+                                ->where('participant_id', $participant->id)
+                                ->where('question_option_id', $option->id)
+                                ->first();
+
+                            $option->unsetRelation('answers');
+                        });
+                    } else {
+                        $question = $questions->sortByDesc('version')->first();
+                        $question->options->map(function (
+                            QuestionOption $option,
+                        ) use ($participant) {
+                            $option->answer = null;
+
+                            $option->unsetRelation('answers');
+                        });
                     }
+
+                    return $question;
                 })
-                ->flatten();
+                ->values();
+
+            $section->unsetRelation('questions');
 
             return $section;
         });
+
+        return $participant->questionnaire;
     }
 
     public function submit(Questionnaire $questionnaire): Model

@@ -16,8 +16,8 @@
     <div class="row">
         @foreach($answers as $answer)
             <div class="mt-2">
-                <h3 class="h4">{{ $answer->option()->type->display() }}</h3>
-                @switch($answer->option()->type)
+                <h3 class="h4">{{ $answer->option->type->display() }}</h3>
+                @switch($answer->option->type)
                     @case(\App\Enums\QuestionOptionType::OPEN)
                     <p>{{$answer->values[0]}}</p>
                     @break;
@@ -92,7 +92,7 @@
                     @break;
                     @case(\App\Enums\QuestionOptionType::MULTIPLE_CHOICE)
                     <ul class="list-group">
-                        @foreach($answer->option()->extra_data['values'] as $option)
+                        @foreach($answer->option->extra_data['values'] as $option)
                             <li class="list-group-item {{in_array($option, $answer->values) ? 'selected' : ''}}" {{in_array($option, $answer->values) ? 'aria-selected=true' : 'aria-selected=false'}}>
                                 @if(in_array($option, $answer->values))
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" stroke-width="1" stroke="white">
