@@ -7,6 +7,7 @@ window.addEventListener('load', () => {
 class OpenConfiguration {
     openSwitch;
     openConfigurationBox;
+    isAnimating = false;
 
     constructor() {
         this.openSwitch = document.getElementById('OPEN');
@@ -18,8 +19,19 @@ class OpenConfiguration {
     addListeners() {
         // Add switch listener
         this.openSwitch.addEventListener('change', () => {
-            // Collapse list configuration box
-            new bootstrap.Collapse(this.openConfigurationBox);
+            if (!this.isAnimating) {
+                this.isAnimating = true;
+                new bootstrap.Collapse(this.openConfigurationBox);
+            }
+        });
+
+        this.openConfigurationBox.addEventListener('shown.bs.collapse', () => {
+            this.isAnimating = false;
+            this.openSwitch.checked = true;
+        });
+        this.openConfigurationBox.addEventListener('hidden.bs.collapse', () => {
+            this.isAnimating = false;
+            this.openSwitch.checked = false;
         });
     }
 }
@@ -31,6 +43,7 @@ class SelectConfiguration {
     addListItemButton;
     listAnswerInput;
     listDisplay;
+    isAnimating = false;
 
     constructor() {
         this.values = [];
@@ -49,9 +62,21 @@ class SelectConfiguration {
     addListeners() {
         // Add switch listener
         this.listSwitch.addEventListener('change', () => {
-            // Collapse list configuration box
-            new bootstrap.Collapse(this.listConfigurationBox);
+            if (!this.isAnimating) {
+                this.isAnimating = true;
+                new bootstrap.Collapse(this.listConfigurationBox);
+            }
         });
+
+        this.listConfigurationBox.addEventListener('shown.bs.collapse', () => {
+            this.isAnimating = false;
+            this.listSwitch.checked = true;
+        });
+        this.listConfigurationBox.addEventListener('hidden.bs.collapse', () => {
+            this.isAnimating = false;
+            this.listSwitch.checked = false;
+        });
+
         // Add list item listener
         this.addListItemButton.addEventListener('click', e => {
             e.preventDefault();
@@ -123,6 +148,7 @@ class SelectConfiguration {
 class RangeConfiguration {
     rangeSwitch;
     rangeConfigurationBox;
+    isAnimating = false;
 
     constructor() {
         this.rangeSwitch = document.getElementById('RANGE');
@@ -136,7 +162,22 @@ class RangeConfiguration {
         // Add switch listener
         this.rangeSwitch.addEventListener('change', () => {
             // Collapse list configuration box
-            new bootstrap.Collapse(this.rangeConfigurationBox);
+            if (!this.isAnimating) {
+                this.isAnimating = true;
+                new bootstrap.Collapse(this.rangeConfigurationBox);
+            }
         });
+
+        this.rangeConfigurationBox.addEventListener('shown.bs.collapse', () => {
+            this.isAnimating = false;
+            this.rangeSwitch.checked = true;
+        });
+        this.rangeConfigurationBox.addEventListener(
+            'hidden.bs.collapse',
+            () => {
+                this.isAnimating = false;
+                this.rangeSwitch.checked = false;
+            }
+        );
     }
 }
