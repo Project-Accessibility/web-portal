@@ -61,7 +61,7 @@ class ParticipantController extends Controller
                 );
                 $question->latest_answer = $latest_answer
                     ? Carbon::parse($latest_answer)->translatedFormat(
-                        'l d F Y \o\m h:i',
+                        'l d F Y \o\m H:i',
                     )
                     : null;
                 return $question;
