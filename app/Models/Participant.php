@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Builder;
  * App\Models\Participant
  *
  * @mixin Builder
- * @property-read Collection|Answer[] $answers
  * @property-read int|null $answers_count
  * @method static Builder|Participant newModelQuery()
  * @method static Builder|Participant newQuery()

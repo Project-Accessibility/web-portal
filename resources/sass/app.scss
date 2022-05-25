@@ -433,3 +433,12 @@ a.deco-none {
     height: 15em;
     object-fit: cover;
 }
+
+.participant-timeline-card {
+    transition: all 0.1s ease;
+}
+
+.participant-timeline-card:hover {
+    border-color: $accessibility-blue-dark !important;
+    background-color: rgba(0,0,0,0.1);
+}
