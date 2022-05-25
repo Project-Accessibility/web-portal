@@ -8,28 +8,33 @@ use App\Http\Requests\StoreAnswerRequest;
 use App\Models\Answer;
 use App\Models\Participant;
 use App\Models\Question;
+use App\Models\QuestionOption;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class QuestionController extends Controller
 {
-    public function get(int $question, string $code): Model
+    public function get(int $question, string $code): ?Model
     {
-        return Question::with([
-            'options.answers' => function (HasMany $answers) use ($code) {
-                $answers->whereHas('participant', function (
-                    Builder $participant,
-                ) use ($code) {
-                    $participant->where('code', $code);
-                });
-            },
-        ])->findOrFail($question);
+        $participantId = Participant::where('code', $code)->first()?->id;
+
+        $question = Question::with('options')->find($question);
+
+        $question->options->map(function (QuestionOption $option) use (
+            $participantId,
+        ) {
+            $option->answer = $option
+                ->answers()
+                ->whereQuestionOptionId($option->id)
+                ->whereParticipantId($participantId)
+                ->first();
+        });
+
+        return $question;
     }
 
     public function answer(
@@ -96,42 +101,42 @@ class QuestionController extends Controller
                 if (!$open) {
                     return;
                 }
-                $answer->answer = [$open];
+                $answer->values = [$open];
                 break;
             case QuestionOptionType::VOICE:
                 $audios = $request->file('VOICE');
                 if (!$audios) {
                     return;
                 }
-                $answer->answer = $this->handleFiles($audios, 'audios');
+                $answer->values = $this->handleFiles($audios, 'audios');
                 break;
             case QuestionOptionType::IMAGE:
                 $images = $request->file('IMAGE');
                 if (!$images) {
                     return;
                 }
-                $answer->answer = $this->handleFiles($images, 'images');
+                $answer->values = $this->handleFiles($images, 'images');
                 break;
             case QuestionOptionType::VIDEO:
                 $videos = $request->file('VIDEO');
                 if (!$videos) {
                     return;
                 }
-                $answer->answer = $this->handleFiles($videos, 'videos');
+                $answer->values = $this->handleFiles($videos, 'videos');
                 break;
             case QuestionOptionType::MULTIPLE_CHOICE:
                 $answers = json_decode($request->get('MULTIPLE_CHOICE'));
                 if (!$answers) {
                     return;
                 }
-                $answer->answer = $answers;
+                $answer->values = $answers;
                 break;
             case QuestionOptionType::RANGE:
                 $range = json_decode($request->get('RANGE'));
                 if (!$range) {
                     return;
                 }
-                $answer->answer = [$range];
+                $answer->values = [$range];
                 break;
             default:
                 abort(
