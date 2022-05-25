@@ -35,7 +35,6 @@ use Illuminate\Support\Facades\Schema;
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereQuestionnaireId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Section whereUpdatedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Question[] $questions
  * @property-read int|null $questions_count
  * @property-read \App\Models\Geofence|null $geofence
  * @property-read \App\Models\Questionnaire $questionnaire

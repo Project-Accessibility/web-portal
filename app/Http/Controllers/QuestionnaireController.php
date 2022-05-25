@@ -122,19 +122,6 @@ class QuestionnaireController extends Controller
             collect($sectionLinkParameters),
         );
 
-        // Participants
-        $participants = $questionnaire
-            ->participants()
-            ->withMax('answers', 'updated_at')
-            ->withCasts([
-                'answers_max_updated_at' => DisplayDateTime::class,
-            ])
-            ->get()
-            ->toArray();
-
-        $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltoloid'];
-        $participantKeys = ['id', 'code', 'answers_max_updated_at', 'finished'];
-
         $participantLinkParameters = [
             new TableLinkParameter(
                 routeParameter: 'participant',

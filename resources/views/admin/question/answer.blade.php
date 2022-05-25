@@ -19,11 +19,11 @@
                 <h3 class="h4">{{ $answer->option()->type->display() }}</h3>
                 @switch($answer->option()->type)
                     @case(\App\Enums\QuestionOptionType::OPEN)
-                    <p>{{$answer->answer[0]}}</p>
+                    <p>{{$answer->values[0]}}</p>
                     @break;
                     @case(\App\Enums\QuestionOptionType::VOICE)
                     <div class="row gy-2">
-                        @foreach($answer->answer as $link)
+                        @foreach($answer->values as $link)
                             <audio controls>
                                 <source src="{{ $link }}" type="audio/mpeg">
                             </audio>
@@ -32,7 +32,7 @@
                     @break;
                     @case(\App\Enums\QuestionOptionType::IMAGE)
                     <div class="row gy-2">
-                        @foreach($answer->answer as $link)
+                        @foreach($answer->values as $link)
                             <a href="#" class="col-lg-4 col-md-6" data-bs-toggle="modal"
                                data-bs-target="#previewImage{{$loop->index}}">
                                 <img src="{{ $link }}" class="fit-image-cover" alt="image">
@@ -57,7 +57,7 @@
                     @break;
                     @case(\App\Enums\QuestionOptionType::VIDEO)
                     <div class="row gy-2">
-                        @foreach($answer->answer as $link)
+                        @foreach($answer->values as $link)
                             <a href="#" class="col-lg-4 col-md-6 d-flex justify-content-center align-items-center"
                                data-bs-toggle="modal"
                                data-bs-target="#previewVideo{{$loop->index}}">
@@ -93,8 +93,8 @@
                     @case(\App\Enums\QuestionOptionType::MULTIPLE_CHOICE)
                     <ul class="list-group">
                         @foreach($answer->option()->extra_data['values'] as $option)
-                            <li class="list-group-item {{in_array($option, $answer->answer) ? 'selected' : ''}}" {{in_array($option, $answer->answer) ? 'aria-selected=true' : 'aria-selected=false'}}>
-                                @if(in_array($option, $answer->answer))
+                            <li class="list-group-item {{in_array($option, $answer->values) ? 'selected' : ''}}" {{in_array($option, $answer->values) ? 'aria-selected=true' : 'aria-selected=false'}}>
+                                @if(in_array($option, $answer->values))
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" stroke-width="1" stroke="white">
                                         <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
                                         <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
