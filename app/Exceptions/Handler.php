@@ -41,7 +41,6 @@ class Handler extends ExceptionHandler
 
     private function handleWebException(Throwable $exception)
     {
-        dd($exception);
         if ($exception instanceof AuthenticationException) {
             return redirect()
                 ->route('login')
