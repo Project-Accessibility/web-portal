@@ -63,21 +63,21 @@ class QuestionController extends Controller
         $answers = $participant->answers;
         $answers->map(function ($answer) use ($request) {
             if (
-                in_array($answer->option()->type, [
+                in_array($answer->option->type, [
                     QuestionOptionType::VIDEO,
                     QuestionOptionType::IMAGE,
                     QuestionOptionType::VIDEO,
                 ])
             ) {
-                $value = $request->file($answer->option()->type->value);
+                $value = $request->file($answer->option->type->value);
             } elseif (
-                $answer->option()->type == QuestionOptionType::MULTIPLE_CHOICE
+                $answer->option->type == QuestionOptionType::MULTIPLE_CHOICE
             ) {
                 $value = json_decode(
-                    $request->get($answer->option()->type->value),
+                    $request->get($answer->option->type->value),
                 );
             } else {
-                $value = $request->get($answer->option()->type->value);
+                $value = $request->get($answer->option->type->value);
             }
             if ($value == null) {
                 $answer->delete();
