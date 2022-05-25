@@ -58,7 +58,7 @@ class QuestionnaireController extends Controller
 
                     if ($answer) {
                         $question = $questions
-                            ->where('id', $answer->option->question->id)
+                            ->where('id', $answer->option->question_id)
                             ->first();
                         $question->options->map(function (
                             QuestionOption $option,
