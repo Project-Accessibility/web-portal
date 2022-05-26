@@ -115,7 +115,7 @@ class QuestionController extends Controller
                 $answer->values = $answers;
                 break;
             case QuestionOptionType::RANGE:
-                $range = json_decode($request->get('RANGE'));
+                $range = $request->get('RANGE');
                 if (!$range) {
                     return;
                 }
