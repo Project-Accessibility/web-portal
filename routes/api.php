@@ -35,7 +35,6 @@ Route::post('/questionnaires/{questionnaire}', [
     'submit',
 ]);
 
-Route::get('/questions/{question}/{code}', [QuestionController::class, 'get']);
 Route::post('/questions/{question}/{code}', [
     QuestionController::class,
     'answer',

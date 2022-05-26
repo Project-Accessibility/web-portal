@@ -20,25 +20,6 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class QuestionController extends Controller
 {
-    public function get(int $question, string $code): ?Model
-    {
-        $participantId = Participant::where('code', $code)->first()?->id;
-
-        $question = Question::with('options')->find($question);
-
-        $question->options->map(function (QuestionOption $option) use (
-            $participantId,
-        ) {
-            $option->answer = $option
-                ->answers()
-                ->whereQuestionOptionId($option->id)
-                ->whereParticipantId($participantId)
-                ->first();
-        });
-
-        return $question;
-    }
-
     public function answer(
         StoreAnswerRequest $request,
         Question $question,
