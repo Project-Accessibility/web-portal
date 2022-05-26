@@ -45,11 +45,9 @@ De API bestaat uit de volgende routes.
     | Route                           | Methode | Query                                 | Response                                                                                 |
     |---------------------------------|---------|---------------------------------------|------------------------------------------------------------------------------------------|
     | /ping                           | GET     |                                       | Pong                                                                                     |
-    | /questionnaires/getByCodes      | POST     |                                       | Array van vragenlijsten welke zijn gekoppeld aan de codes.                               |
+    | /questionnaires/getByCodes      | POST    |                                       | Array van vragenlijsten welke zijn gekoppeld aan de codes.                               |
     | /questionnaires/{code}          | GET     | code: code van de participant         | Een vragenlijst met daarbij de onderdelen en vragen.                                     |
     | /questionnaires/{questionnaire} | POST    | questionnaire: ID van een vragenlijst | 406 - Not implemented                                                                    |
-    | /questions/{question}/{code}    | GET     | question: ID van de vraag             | Een vraag met daarbij de antwoordmogelijkheden en gegeven antwoorden door de participant |
-    |                                 |         | code: code van de participant         |                                                                                          |
     | /questions/{question}/{code}    | POST    | question: ID van de vraag             | 406 - Not implemented.                                                                   |
     |                                 |         | code: code van de participant         |                                                                                          |
 
@@ -225,40 +223,6 @@ Elke response wordt teruggeven in een `json` formaat.
 
     {
         "message": "Deze functie werkt nog niet."
-    }
-
-</details>
-
-<details>
-    <summary>GET: /questions/{question}/{code}</summary>
-
-    {
-        "id": 1,
-        "section_id": 1,
-        "title": "Mr.",
-        "question": "Prof.",
-        "created_at": "2022-04-03T19:17:30.000000Z",
-        "updated_at": "2022-04-03T19:17:30.000000Z",
-        "options": [
-            {
-                "id": 2,
-                "question_id": 1,
-                "type": "DATE",
-                "extra_data": [],
-                "created_at": "2022-04-03T19:17:30.000000Z",
-                "updated_at": "2022-04-03T19:17:30.000000Z",
-                "answers": [
-                    {
-                        "id": 7,
-                        "participant_id": 1,
-                        "question_option_id": 2,
-                        "answer": "[]",
-                        "created_at": "2022-04-03T19:17:30.000000Z",
-                        "updated_at": "2022-04-03T19:17:30.000000Z"
-                    }
-                ]
-            }
-        ]
     }
 
 </details>
