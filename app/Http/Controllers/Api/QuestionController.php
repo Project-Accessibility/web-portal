@@ -14,6 +14,9 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class QuestionController extends Controller
@@ -167,11 +170,14 @@ class QuestionController extends Controller
 
     private function uploadFile($file, $path): string|UrlGenerator|Application
     {
+        URL::forceRootUrl(Config::get('app.url'));
+
         $uniqueId = uniqid();
         $extension = $file->getClientOriginalExtension();
         $filename =
             Carbon::now()->format('Ymd') . '_' . $uniqueId . '.' . $extension;
-        $filePath = url("/storage/upload/files/$path/" . $filename);
+        $filePath = asset('api_uploads/' . $path . '/' . $filename);
+
         $file->storeAs("public/upload/files/$path/", $filename);
         return $filePath;
     }
