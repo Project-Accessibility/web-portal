@@ -222,7 +222,7 @@ Elke response wordt teruggeven in een `json` formaat.
     <summary>POST: /questionnaires/{questionnaire}</summary>
 
     {
-        "message": "Deze functie werkt nog niet."
+        "message": "answers saved!"
     }
 
 </details>
