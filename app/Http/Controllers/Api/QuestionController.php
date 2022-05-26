@@ -14,29 +14,12 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class QuestionController extends Controller
 {
-    public function get(int $question, string $code): ?Model
-    {
-        $participantId = Participant::where('code', $code)->first()?->id;
-
-        $question = Question::with('options')->find($question);
-
-        $question->options->map(function (QuestionOption $option) use (
-            $participantId,
-        ) {
-            $option->answer = $option
-                ->answers()
-                ->whereQuestionOptionId($option->id)
-                ->whereParticipantId($participantId)
-                ->first();
-        });
-
-        return $question;
-    }
-
     public function answer(
         StoreAnswerRequest $request,
         Question $question,
@@ -167,6 +150,10 @@ class QuestionController extends Controller
 
     private function uploadFile($file, $path): string|UrlGenerator|Application
     {
+        if (env('APP_ENV') === 'local') {
+            URL::forceRootUrl(Config::get('app.url'));
+        }
+
         $uniqueId = uniqid();
         $extension = $file->getClientOriginalExtension();
         $filename =

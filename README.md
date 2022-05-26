@@ -230,40 +230,6 @@ Elke response wordt teruggeven in een `json` formaat.
 </details>
 
 <details>
-    <summary>GET: /questions/{question}/{code}</summary>
-
-    {
-        "id": 1,
-        "section_id": 1,
-        "title": "Mr.",
-        "question": "Prof.",
-        "created_at": "2022-04-03T19:17:30.000000Z",
-        "updated_at": "2022-04-03T19:17:30.000000Z",
-        "options": [
-            {
-                "id": 2,
-                "question_id": 1,
-                "type": "DATE",
-                "extra_data": [],
-                "created_at": "2022-04-03T19:17:30.000000Z",
-                "updated_at": "2022-04-03T19:17:30.000000Z",
-                "answers": [
-                    {
-                        "id": 7,
-                        "participant_id": 1,
-                        "question_option_id": 2,
-                        "answer": "[]",
-                        "created_at": "2022-04-03T19:17:30.000000Z",
-                        "updated_at": "2022-04-03T19:17:30.000000Z"
-                    }
-                ]
-            }
-        ]
-    }
-
-</details>
-
-<details>
     <summary>POST: /questions/{question}/{code}</summary>
 
     {
