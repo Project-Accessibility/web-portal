@@ -64,20 +64,6 @@ De header bevat de volgende onderdelen:
 -   `Accept` is `application/json`
 -   `X-API-Key` moet de API key bevatten.
 
-### Body
-
-Voor de `/questionnaires/getByCodes` moet je een body meegeven.<br>
-De body kan er als volgt uitzien:
-
-```
-{
-    "codes": [
-        "011362e4db517e348c713870f0270c04",
-        "031ff84c2be935fb1d9cc6cfd9805ced",
-    ]
-}
-```
-
 ### Response
 
 Elke response wordt teruggeven in een `json` formaat.
@@ -85,24 +71,6 @@ Elke response wordt teruggeven in een `json` formaat.
 <details>
     <summary>GET: /ping</summary>
     "pong"
-</details>
-
-<details>
-    <summary>POST: /questionnaires/getByCodes</summary>
-
-    [
-        {
-            "id": 1,
-            "research_id": 1,
-            "title": "Torp-Moen",
-            "description": "Aut odit itaque adipisci at. At in tenetur tempora natus labore rem. Necessitatibus odio quae et quod.",
-            "instructions": null,
-            "open": true,
-            "created_at": "2022-04-03T19:17:30.000000Z",
-            "updated_at": "2022-04-03T19:17:30.000000Z"
-        }
-    ]
-
 </details>
 
 <details>
