@@ -19,28 +19,6 @@ use function abort_if;
 
 class QuestionnaireController extends Controller
 {
-    public function getByUserCodes(Request $request): Collection
-    {
-        $codes = $request->get('codes');
-        abort_if(
-            !$codes,
-            Response::HTTP_NOT_ACCEPTABLE,
-            'Er zijn geen codes meegegeven.',
-        );
-
-        if (gettype($codes) === 'string') {
-            $codes = [$codes];
-        }
-
-        return Questionnaire::where('open', true)
-            ->whereHas('participants', function (Builder $participant) use (
-                $codes,
-            ) {
-                $participant->whereIn('code', $codes);
-            })
-            ->get();
-    }
-
     public function get(string $code): ?Model
     {
         $participant = Participant::whereCode($code)->firstOrFail();
