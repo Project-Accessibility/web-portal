@@ -87,25 +87,31 @@ class QuestionController extends Controller
                 $answer->values = [$open];
                 break;
             case QuestionOptionType::VOICE:
-                $audios = $request->file('VOICE');
-                if (!$audios) {
-                    return;
+                if(!$request->get('IMAGE')) {
+                    $audios = $request->file('VOICE');
+                    if (!$audios) {
+                        return;
+                    }
+                    $answer->values = $this->handleFiles($audios, 'audios');
                 }
-                $answer->values = $this->handleFiles($audios, 'audios');
                 break;
             case QuestionOptionType::IMAGE:
-                $images = $request->file('IMAGE');
-                if (!$images) {
-                    return;
+                if(!$request->get('IMAGE')){
+                    $images = $request->file('IMAGE');
+                    if (!$images) {
+                        return;
+                    }
+                    $answer->values = $this->handleFiles($images, 'images');
                 }
-                $answer->values = $this->handleFiles($images, 'images');
                 break;
             case QuestionOptionType::VIDEO:
-                $videos = $request->file('VIDEO');
-                if (!$videos) {
-                    return;
+                if(!$request->get('VIDEO')) {
+                    $videos = $request->file('VIDEO');
+                    if (!$videos) {
+                        return;
+                    }
+                    $answer->values = $this->handleFiles($videos, 'videos');
                 }
-                $answer->values = $this->handleFiles($videos, 'videos');
                 break;
             case QuestionOptionType::MULTIPLE_CHOICE:
                 $answers = json_decode($request->get('MULTIPLE_CHOICE'));
