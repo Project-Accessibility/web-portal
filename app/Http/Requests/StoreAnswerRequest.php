@@ -122,11 +122,11 @@ class StoreAnswerRequest extends FormRequest
 
     private function validateUploads($validator): void
     {
-        $types = ['VOICE','IMAGE', 'VIDEO'];
-        foreach ($types as $type){
+        $types = ['VOICE', 'IMAGE', 'VIDEO'];
+        foreach ($types as $type) {
             $files = $this->file($type);
-            if($files){
-                if(count($files) > 10){
+            if ($files) {
+                if (count($files) > 10) {
                     $validator
                         ->errors()
                         ->add(
@@ -141,11 +141,15 @@ class StoreAnswerRequest extends FormRequest
         }
     }
 
-    private function validateFile(string $type, UploadedFile $file, Validator $validator){
-        switch ($type){
+    private function validateFile(
+        string $type,
+        UploadedFile $file,
+        Validator $validator,
+    ) {
+        switch ($type) {
             case 'VOICE':
-                $acceptedMimeTypes = ['audio/mp3','audio/m4a','audio/mp4'];
-                if(!in_array($file->getMimeType(), $acceptedMimeTypes)){
+                $acceptedMimeTypes = ['audio/mp3', 'audio/m4a', 'audio/mp4'];
+                if (!in_array($file->getMimeType(), $acceptedMimeTypes)) {
                     $validator
                         ->errors()
                         ->add(
@@ -153,7 +157,7 @@ class StoreAnswerRequest extends FormRequest
                             'Het audio bestand moet van het type audio/mp3,audio/m4a of audio/mp4 zijn.',
                         );
                 }
-                if($file->getSize() > 50000){
+                if ($file->getSize() > 50000) {
                     $validator
                         ->errors()
                         ->add(
@@ -163,8 +167,16 @@ class StoreAnswerRequest extends FormRequest
                 }
                 break;
             case 'IMAGE':
-                $acceptedMimeTypes = ['image/jpg','image/jpeg','image/png','image/bmp','image/gif','image/svg','image/webp'];
-                if(!in_array($file->getMimeType(), $acceptedMimeTypes)){
+                $acceptedMimeTypes = [
+                    'image/jpg',
+                    'image/jpeg',
+                    'image/png',
+                    'image/bmp',
+                    'image/gif',
+                    'image/svg',
+                    'image/webp',
+                ];
+                if (!in_array($file->getMimeType(), $acceptedMimeTypes)) {
                     $validator
                         ->errors()
                         ->add(
@@ -172,7 +184,7 @@ class StoreAnswerRequest extends FormRequest
                             'De afbeelding moet van het type jpg,jpeg,png,bmp,gif,svg of webp zijn.',
                         );
                 }
-                if($file->getSize() > 9000){
+                if ($file->getSize() > 9000) {
                     $validator
                         ->errors()
                         ->add(
@@ -182,8 +194,8 @@ class StoreAnswerRequest extends FormRequest
                 }
                 break;
             case 'VIDEO':
-                $acceptedMimeTypes = ['video/mp4','video/mov','video/m4v'];
-                if(!in_array($file->getMimeType(), $acceptedMimeTypes)){
+                $acceptedMimeTypes = ['video/mp4', 'video/mov', 'video/m4v'];
+                if (!in_array($file->getMimeType(), $acceptedMimeTypes)) {
                     $validator
                         ->errors()
                         ->add(
@@ -191,7 +203,7 @@ class StoreAnswerRequest extends FormRequest
                             'Het video bestand moet van het type mp4, mov of m4v zijn.',
                         );
                 }
-                if($file->getSize() > 50000){
+                if ($file->getSize() > 50000) {
                     $validator
                         ->errors()
                         ->add(
