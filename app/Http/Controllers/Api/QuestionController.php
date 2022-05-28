@@ -87,7 +87,7 @@ class QuestionController extends Controller
                 $answer->values = [$open];
                 break;
             case QuestionOptionType::VOICE:
-                if (!$request->get('IMAGE')) {
+                if(!$request->get('IMAGE')) {
                     $audios = $request->file('VOICE');
                     if (!$audios) {
                         return;
@@ -96,7 +96,7 @@ class QuestionController extends Controller
                 }
                 break;
             case QuestionOptionType::IMAGE:
-                if (!$request->get('IMAGE')) {
+                if(!$request->get('IMAGE')){
                     $images = $request->file('IMAGE');
                     if (!$images) {
                         return;
@@ -105,7 +105,7 @@ class QuestionController extends Controller
                 }
                 break;
             case QuestionOptionType::VIDEO:
-                if (!$request->get('VIDEO')) {
+                if(!$request->get('VIDEO')) {
                     $videos = $request->file('VIDEO');
                     if (!$videos) {
                         return;
