@@ -5,8 +5,6 @@ namespace App\Http\Requests;
 use App\Enums\QuestionOptionType;
 use App\Models\Participant;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Validation\Validator;
 
 class StoreAnswerRequest extends FormRequest
 {
@@ -35,6 +33,13 @@ class StoreAnswerRequest extends FormRequest
     {
         return [
             'OPEN' => 'nullable',
+            'VOICE.*' =>
+                'file|mimes:audio/mpeg,mpga,mp3,m4a,mp4,wav,aac|max:50000',
+            'VOICE' => 'nullable|max:10',
+            'IMAGE.*' => 'image|mimes:jpg,jpeg,png,bmp,gif,svg,webp|max:9000',
+            'IMAGE' => 'nullable|max:10',
+            'VIDEO.*' => 'file|mimes:mp4,mov,m4v|max:50000',
+            'VIDEO' => 'nullable|max:10',
         ];
     }
 
@@ -59,7 +64,6 @@ class StoreAnswerRequest extends FormRequest
                     $multipleChoice,
                 );
             }
-            $this->validateUploads($validator);
         });
     }
 
@@ -120,86 +124,23 @@ class StoreAnswerRequest extends FormRequest
         }
     }
 
-    private function validateUploads($validator): void
+    public function messages()
     {
-        $types = ['VOICE','IMAGE', 'VIDEO'];
-        foreach ($types as $type){
-            $files = $this->file($type);
-            if($files){
-                if(count($files) > 10){
-                    $validator
-                        ->errors()
-                        ->add(
-                            $type,
-                            'Er mogen maximaal 10 bestanden worden geupload.',
-                        );
-                }
-                foreach ($files as $file) {
-                    $this->validateFile($type, $file, $validator);
-                }
-            }
-        }
-    }
-
-    private function validateFile(string $type, UploadedFile $file, Validator $validator){
-        switch ($type){
-            case 'VOICE':
-                $acceptedMimeTypes = ['audio/mp3','audio/m4a','audio/mp4'];
-                if(!in_array($file->getMimeType(), $acceptedMimeTypes)){
-                    $validator
-                        ->errors()
-                        ->add(
-                            $type,
-                            'Het audio bestand moet van het type audio/mp3,audio/m4a of audio/mp4 zijn.',
-                        );
-                }
-                if($file->getSize() > 50000){
-                    $validator
-                        ->errors()
-                        ->add(
-                            $type,
-                            'Het audio bestand mag niet groter dan 50000 kb zijn.',
-                        );
-                }
-                break;
-            case 'IMAGE':
-                $acceptedMimeTypes = ['image/jpg','image/jpeg','image/png','image/bmp','image/gif','image/svg','image/webp'];
-                if(!in_array($file->getMimeType(), $acceptedMimeTypes)){
-                    $validator
-                        ->errors()
-                        ->add(
-                            $type,
-                            'De afbeelding moet van het type jpg,jpeg,png,bmp,gif,svg of webp zijn.',
-                        );
-                }
-                if($file->getSize() > 9000){
-                    $validator
-                        ->errors()
-                        ->add(
-                            $type,
-                            'De afbeelding mag niet groter dan 9000 kb zijn.',
-                        );
-                }
-                break;
-            case 'VIDEO':
-                $acceptedMimeTypes = ['video/mp4','video/mov','video/m4v'];
-                if(!in_array($file->getMimeType(), $acceptedMimeTypes)){
-                    $validator
-                        ->errors()
-                        ->add(
-                            $type,
-                            'Het video bestand moet van het type mp4, mov of m4v zijn.',
-                        );
-                }
-                if($file->getSize() > 50000){
-                    $validator
-                        ->errors()
-                        ->add(
-                            $type,
-                            'Het video bestand mag niet groter dan 50000 kb zijn.',
-                        );
-                }
-                break;
-        }
+        return [
+            'VOICE.*.mimes' =>
+                'Het audio bestand moet van het type audio/mpeg,mpga,mp3,wav of aac zijn.',
+            'VOICE.*.max' =>
+                'Het audio bestand mag niet groter dan :max kb zijn.',
+            'VOICE.max' => 'Er mogen maximaal :max bestanden worden geupload.',
+            'IMAGE.*.mimes' =>
+                'De afbeelding moet van het type jpg,jpeg,png,bmp,gif,svg of webp zijn.',
+            'IMAGE.*.max' => 'De afbeelding mag niet groter dan :max kb zijn.',
+            'IMAGE.max' => 'Er mogen maximaal :max bestanden worden geupload.',
+            'VIDEO.*.mimes' =>
+                'Het video bestand moet van het type mp4,mov of m4v zijn.',
+            'VIDEO.*.max' =>
+                'Het video bestand mag niet groter dan :max kb zijn.',
+            'VIDEO.max' => 'Er mogen maximaal :max bestanden worden geupload.',
+        ];
     }
 }
