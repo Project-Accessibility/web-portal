@@ -32,8 +32,8 @@ class QuestionController extends Controller
         $participant = Participant::whereCode($code)->first();
 
         // Add answers
-        $this->removeAnswers($request, $participant, $question);
         $options->map(function ($option) use ($request, $participant) {
+            $this->removeAnswers($request, $participant, $option);
             $this->saveAnswer($option, $request, $participant);
         });
         return response()->json([
@@ -41,14 +41,14 @@ class QuestionController extends Controller
         ]);
     }
 
-    private function removeAnswers($request, $participant, $question)
+    private function removeAnswers($request, $participant, $option)
     {
-        $answers = Answer::whereParticipantId($participant->id)
-            ->whereId($question->id)
-            ->get();
-        $answers->map(function ($answer) use ($request) {
+        $answer = Answer::whereParticipantId($participant->id)
+            ->whereQuestionOptionId($option->id)
+            ->first();
+            if($answer == null) return;
             if (
-                in_array($answer->option->type, [
+                in_array($answer->option->type->name, [
                     QuestionOptionType::VIDEO,
                     QuestionOptionType::IMAGE,
                     QuestionOptionType::VIDEO,
@@ -67,7 +67,6 @@ class QuestionController extends Controller
             if ($value == null) {
                 $answer->delete();
             }
-        });
     }
 
     private function saveAnswer($option, $request, $participant)
