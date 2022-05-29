@@ -43,7 +43,9 @@ class QuestionController extends Controller
 
     private function removeAnswers($request, $participant, $question)
     {
-        $answers = Answer::whereParticipantId($participant->id)->whereId($question->id)->get();
+        $answers = Answer::whereParticipantId($participant->id)
+            ->whereId($question->id)
+            ->get();
         $answers->map(function ($answer) use ($request) {
             if (
                 in_array($answer->option->type, [
