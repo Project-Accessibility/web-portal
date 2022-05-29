@@ -46,27 +46,27 @@ class QuestionController extends Controller
         $answer = Answer::whereParticipantId($participant->id)
             ->whereQuestionOptionId($option->id)
             ->first();
-            if($answer == null) return;
-            if (
-                in_array($answer->option->type->name, [
-                    QuestionOptionType::VIDEO,
-                    QuestionOptionType::IMAGE,
-                    QuestionOptionType::VIDEO,
-                ])
-            ) {
-                $value = $request->file($answer->option->type->value);
-            } elseif (
-                $answer->option->type == QuestionOptionType::MULTIPLE_CHOICE
-            ) {
-                $value = json_decode(
-                    $request->get($answer->option->type->value),
-                );
-            } else {
-                $value = $request->get($answer->option->type->value);
-            }
-            if ($value == null) {
-                $answer->delete();
-            }
+        if ($answer == null) {
+            return;
+        }
+        if (
+            in_array($answer->option->type->name, [
+                QuestionOptionType::VIDEO,
+                QuestionOptionType::IMAGE,
+                QuestionOptionType::VIDEO,
+            ])
+        ) {
+            $value = $request->file($answer->option->type->value);
+        } elseif (
+            $answer->option->type == QuestionOptionType::MULTIPLE_CHOICE
+        ) {
+            $value = json_decode($request->get($answer->option->type->value));
+        } else {
+            $value = $request->get($answer->option->type->value);
+        }
+        if ($value == null) {
+            $answer->delete();
+        }
     }
 
     private function saveAnswer($option, $request, $participant)
