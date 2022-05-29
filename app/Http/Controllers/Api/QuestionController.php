@@ -32,7 +32,7 @@ class QuestionController extends Controller
         $participant = Participant::whereCode($code)->first();
 
         // Add answers
-        $this->removeAnswers($request, $participant);
+        $this->removeAnswers($request, $participant, $question);
         $options->map(function ($option) use ($request, $participant) {
             $this->saveAnswer($option, $request, $participant);
         });
@@ -41,9 +41,9 @@ class QuestionController extends Controller
         ]);
     }
 
-    private function removeAnswers($request, $participant)
+    private function removeAnswers($request, $participant, $question)
     {
-        $answers = $participant->answers;
+        $answers = Answer::whereParticipantId($participant->id)->whereId($question->id)->get();
         $answers->map(function ($answer) use ($request) {
             if (
                 in_array($answer->option->type, [
