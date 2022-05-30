@@ -51,6 +51,8 @@ class Input extends Component
 
     public ?string $required;
 
+    public bool $disabled;
+
     /**
      * Create a new component instance.
      *
@@ -68,6 +70,7 @@ class Input extends Component
         string $placeholder = null,
         array $extraData = null,
         bool $required = false,
+        bool $disabled = false,
     ) {
         $this->type = $type;
         $this->label = $label;
@@ -76,6 +79,7 @@ class Input extends Component
         $this->placeholder = $placeholder;
         $this->extraData = $extraData;
         $this->required = $required;
+        $this->disabled = $disabled;
     }
 
     public function render(): View

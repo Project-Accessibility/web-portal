@@ -15,7 +15,7 @@
                     <span class="input-group-text">{{$extraData['before']}}</span>
                 @endif
                 <input class="form-control" type="text" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                       placeholder="{{$placeholder}}" value="{{old($name, $value)}}"/>
+                       placeholder="{{$placeholder}}" value="{{old($name, $value)}}" {{$disabled ? 'disabled' : ''}}/>
                 @if(isset($extraData['after']))
                     <span class="input-group-text">{{$extraData['after']}}</span>
                 @endif
@@ -23,7 +23,7 @@
         @else
             <input class="form-control @error($name) is-invalid @enderror" type="text" id="{{$name}}" title="{{$name}}"
                    name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{old($name, $value)}}"/>
+                   placeholder="{{$placeholder}}" value="{{old($name, $value)}}" {{$disabled ? 'disabled' : ''}}/>
         @endif
         @break
         @case('email')
@@ -33,7 +33,7 @@
                     <span class="input-group-text">{{$extraData['before']}}</span>
                 @endif
                 <input class="form-control" type="email" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                       placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+                       placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}" {{$disabled ? 'disabled' : ''}}/>
                 @if(isset($extraData['after']))
                     <span class="input-group-text">{{$extraData['after']}}</span>
                 @endif
@@ -41,7 +41,7 @@
         @else
             <input class="form-control @error($name) is-invalid @enderror" type="text" id="{{$name}}" title="{{$name}}"
                    name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}"/>
+                   placeholder="{{$placeholder}}" value="{{old($name) ? old($name) : $value}}" {{$disabled ? 'disabled' : ''}}/>
         @endif
         @break
         @case('number')
@@ -51,7 +51,7 @@
                     <span class="input-group-text">{{$extraData['before']}}</span>
                 @endif
                 <input class="form-control" type="number" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                       placeholder="{{$placeholder}}" value="{{old($name, $value)}}"/>
+                       placeholder="{{$placeholder}}" value="{{old($name, $value)}}" {{$disabled ? 'disabled' : ''}}/>
                 @if(isset($extraData['after']))
                     <span class="input-group-text">{{$extraData['after']}}</span>
                 @endif
@@ -59,19 +59,19 @@
         @else
             <input class="form-control @error($name) is-invalid @enderror" type="number" id="{{$name}}"
                    title="{{$name}}" name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{old($name, $value)}}"/>
+                   placeholder="{{$placeholder}} {{$disabled ? 'disabled' : ''}}" value="{{old($name, $value)}}"/>
         @endif
         @break
         @case('textarea')
         <textarea class="form-control @error($name) is-invalid @enderror" type="text" id="{{$name}}" title="{{$name}}"
                   name="{{$name}}"
                   placeholder="{{$placeholder}}"
-                  rows="{{$extraData['rows']}}">{{old($name, $value)}}</textarea>
+                  rows="{{$extraData['rows']}}" {{$disabled ? 'disabled' : ''}}>{{old($name, $value)}}</textarea>
         @break
         @case('password')
         <input class="form-control @error($name) is-invalid @enderror" type="password" id="{{$name}}" title="{{$name}}"
                name="{{$name}}"
-               placeholder="{{$placeholder}}"/>
+               placeholder="{{$placeholder}}" {{$disabled ? 'disabled' : ''}}/>
         @break
         @case('select')
         <div class="@error($name) is-invalid @enderror">
@@ -79,7 +79,7 @@
                 <input type="hidden" name="{{$name}}" value=""/>
             @endif
             <select class="selectpicker form-control" id="{{$name}}" title="{{$name}}"
-                    name="{{$name}}{{$extraData['multiple']?'[]':''}}" {{$extraData['multiple']?'multiple':''}}>
+                    name="{{$name}}{{$extraData['multiple']?'[]':''}}" {{$extraData['multiple']?'multiple':''}} {{$disabled ? 'disabled' : ''}}>
                 @foreach($extraData['options'] as $option)
                     @php
                         $value = $extraData['multiple'] ? (old($name, $value) ? old($name, $value) :  []) : old($name, $value) ?? [];
@@ -98,23 +98,23 @@
         @case('date')
         <input class="form-control @error($name) is-invalid @enderror" type="date" id="{{$name}}" title="{{$name}}"
                name="{{$name}}"
-               value="{{old($name, $value)}}"/>
+               value="{{old($name, $value)}}" {{$disabled ? 'disabled' : ''}}/>
         @break
         @case('datetime')
         <input class="form-control @error($name) is-invalid @enderror" type="datetime-local" id="{{$name}}"
                title="{{$name}}" name="{{$name}}"
-               value="{{old($name, $value)}}"/>
+               value="{{old($name, $value)}}" {{$disabled ? 'disabled' : ''}}/>
         @break
         @case('switch')
         <input type="hidden" value="0" name="{{ $name }}"/>
         <input type="checkbox" value="1" class="form-check-input" id="{{$name}}" title="{{$name}}"
-               name="{{$name}}" {{is_string(old($name)) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}}/>
+               name="{{$name}}" {{is_string(old($name)) ? (old($name) == true ? 'checked': '') : ($value ? 'checked': '')}} {{$disabled ? 'disabled' : ''}}/>
         @break
         @case('range')
         <div class="d-flex @error($name) is-invalid highlight-error @enderror">
-            <input type="range" class="form-range w-75" min="{{$extraData['min']}}" max="{{$extraData['max']}}"
+            <input type="range" class="form-range" min="{{$extraData['min']}}" max="{{$extraData['max']}}"
                    step="{{$extraData['step']}}" id="{{$name}}" title="{{$name}}" name="{{$name}}"
-                   placeholder="{{$placeholder}}" value="{{old($name, $value) ?? 0}}">
+                   placeholder="{{$placeholder}}" value="{{old($name, $value) ?? 0}}" {{$disabled ? 'disabled' : ''}}>
             <output class="mx-3" name="output-{{$name}}"
                     id="output-{{$name}}">{{old($name, $value) ?? 0}}</output>
         </div>
@@ -133,7 +133,7 @@
             <input id="{{$name}}" title="{{$name}}" name="{{$name}}{{$extraData['multiple']?'[]':''}}" type="file"
                    class="file" {{$extraData['multiple']?'multiple':''}}
                    data-show-upload="false" data-show-caption="true" data-msg-placeholder="{{$placeholder}}"
-                   value="{{old($name, $value)}}">
+                   value="{{old($name, $value)}}" {{$disabled ? 'disabled' : ''}}>
         </div>
         @break
     @endswitch

@@ -104,6 +104,9 @@
                         @endforeach
                     </ul>
                     @break;
+                    @case(\App\Enums\QuestionOptionType::RANGE)
+                    <x-input type="range" name="range" :extraData="$answer->option->extra_data->toArray()" :value="$answer->values[0]" :disabled="true"></x-input>
+                    @break;
                 @endswitch
             </div>
         @endforeach
