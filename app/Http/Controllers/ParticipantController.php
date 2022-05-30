@@ -51,7 +51,12 @@ class ParticipantController extends Controller
         ) use ($participant) {
             $query->whereIn(
                 'id',
-                $participant->answers->pluck('id')->toArray(),
+                $participant
+                    ->answers()
+                    ->orderBy('updated_at')
+                    ->get()
+                    ->pluck('id')
+                    ->toArray(),
             );
         })
             ->get()
