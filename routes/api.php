@@ -24,18 +24,12 @@ Route::get('/ping', function () {
     return response()->json('pong');
 });
 
-Route::post('/questionnaires/getByCodes', [
-    QuestionnaireController::class,
-    'getByUserCodes',
-]);
-
 Route::get('/questionnaires/{code}', [QuestionnaireController::class, 'get']);
 Route::post('/questionnaires/{questionnaire}', [
     QuestionnaireController::class,
     'submit',
 ]);
 
-Route::get('/questions/{question}/{code}', [QuestionController::class, 'get']);
 Route::post('/questions/{question}/{code}', [
     QuestionController::class,
     'answer',

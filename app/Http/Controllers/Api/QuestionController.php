@@ -8,30 +8,18 @@ use App\Http\Requests\StoreAnswerRequest;
 use App\Models\Answer;
 use App\Models\Participant;
 use App\Models\Question;
+use App\Models\QuestionOption;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class QuestionController extends Controller
 {
-    public function get(int $question, string $code): Model
-    {
-        return Question::with([
-            'options.answers' => function (HasMany $answers) use ($code) {
-                $answers->whereHas('participant', function (
-                    Builder $participant,
-                ) use ($code) {
-                    $participant->where('code', $code);
-                });
-            },
-        ])->findOrFail($question);
-    }
-
     public function answer(
         StoreAnswerRequest $request,
         Question $question,
@@ -44,8 +32,8 @@ class QuestionController extends Controller
         $participant = Participant::whereCode($code)->first();
 
         // Add answers
-        $this->removeAnswers($request, $participant);
         $options->map(function ($option) use ($request, $participant) {
+            $this->removeAnswers($request, $participant, $option);
             $this->saveAnswer($option, $request, $participant);
         });
         return response()->json([
@@ -53,31 +41,32 @@ class QuestionController extends Controller
         ]);
     }
 
-    private function removeAnswers($request, $participant)
+    private function removeAnswers($request, $participant, $option)
     {
-        $answers = $participant->answers;
-        $answers->map(function ($answer) use ($request) {
-            if (
-                in_array($answer->option()->type, [
-                    QuestionOptionType::VIDEO,
-                    QuestionOptionType::IMAGE,
-                    QuestionOptionType::VIDEO,
-                ])
-            ) {
-                $value = $request->file($answer->option()->type->value);
-            } elseif (
-                $answer->option()->type == QuestionOptionType::MULTIPLE_CHOICE
-            ) {
-                $value = json_decode(
-                    $request->get($answer->option()->type->value),
-                );
-            } else {
-                $value = $request->get($answer->option()->type->value);
-            }
-            if ($value == null) {
-                $answer->delete();
-            }
-        });
+        $answer = Answer::whereParticipantId($participant->id)
+            ->whereQuestionOptionId($option->id)
+            ->first();
+        if ($answer == null) {
+            return;
+        }
+        if (
+            in_array($answer->option->type->name, [
+                QuestionOptionType::VIDEO,
+                QuestionOptionType::IMAGE,
+                QuestionOptionType::VIDEO,
+            ])
+        ) {
+            $value = $request->file($answer->option->type->value);
+        } elseif (
+            $answer->option->type == QuestionOptionType::MULTIPLE_CHOICE
+        ) {
+            $value = json_decode($request->get($answer->option->type->value));
+        } else {
+            $value = $request->get($answer->option->type->value);
+        }
+        if ($value == null) {
+            $answer->delete();
+        }
     }
 
     private function saveAnswer($option, $request, $participant)
@@ -96,42 +85,42 @@ class QuestionController extends Controller
                 if (!$open) {
                     return;
                 }
-                $answer->answer = [$open];
+                $answer->values = [$open];
                 break;
             case QuestionOptionType::VOICE:
                 $audios = $request->file('VOICE');
                 if (!$audios) {
                     return;
                 }
-                $answer->answer = $this->handleFiles($audios, 'audios');
+                $answer->values = $this->handleFiles($audios, 'audios');
                 break;
             case QuestionOptionType::IMAGE:
                 $images = $request->file('IMAGE');
                 if (!$images) {
                     return;
                 }
-                $answer->answer = $this->handleFiles($images, 'images');
+                $answer->values = $this->handleFiles($images, 'images');
                 break;
             case QuestionOptionType::VIDEO:
                 $videos = $request->file('VIDEO');
                 if (!$videos) {
                     return;
                 }
-                $answer->answer = $this->handleFiles($videos, 'videos');
+                $answer->values = $this->handleFiles($videos, 'videos');
                 break;
             case QuestionOptionType::MULTIPLE_CHOICE:
                 $answers = json_decode($request->get('MULTIPLE_CHOICE'));
                 if (!$answers) {
                     return;
                 }
-                $answer->answer = $answers;
+                $answer->values = $answers;
                 break;
             case QuestionOptionType::RANGE:
-                $range = json_decode($request->get('RANGE'));
+                $range = $request->get('RANGE');
                 if (!$range) {
                     return;
                 }
-                $answer->answer = [$range];
+                $answer->values = [$range];
                 break;
             default:
                 abort(
@@ -162,6 +151,10 @@ class QuestionController extends Controller
 
     private function uploadFile($file, $path): string|UrlGenerator|Application
     {
+        if (env('APP_ENV') === 'local') {
+            URL::forceRootUrl(Config::get('app.url'));
+        }
+
         $uniqueId = uniqid();
         $extension = $file->getClientOriginalExtension();
         $filename =

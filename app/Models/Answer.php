@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Answer
@@ -39,11 +40,11 @@ class Answer extends Model
     public $table = 'answers';
 
     /* @var array */
-    protected $fillable = ['participant_id', 'question_option_id', 'answer'];
+    protected $fillable = ['participant_id', 'question_option_id', 'values'];
 
     /* @var array */
     protected $casts = [
-        'answer' => 'array',
+        'values' => 'array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -53,9 +54,9 @@ class Answer extends Model
         return $this->belongsTo(Participant::class);
     }
 
-    public function option(): QuestionOption
+    public function option(): HasOne
     {
-        return QuestionOption::whereId($this->question_option_id)->first();
+        return $this->hasOne(QuestionOption::class, 'id', 'question_option_id');
     }
 
     public function questionOption(): BelongsTo

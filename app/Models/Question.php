@@ -96,17 +96,41 @@ class Question extends Model
         foreach ($questions as $question) {
             foreach ($question->options as $option) {
                 foreach ($option->answers as $answer) {
-                    $answerExists = $answers
-                        ->where('participant_id', '=', $answer->participant_id)
-                        ->first();
-                    if ($answerExists == null) {
+                    $answerExists =
+                        $answers
+                            ->where(
+                                'participant_id',
+                                '=',
+                                $answer->participant_id,
+                            )
+                            ->first() != null;
+                    if (!$answerExists) {
+                        $code = $answer->participant->code;
                         $answer['question_id'] = $question->id;
+                        $answer['participant_code'] = $code;
                         $answers->push($answer);
                     }
                 }
             }
         }
         return $answers;
+    }
+
+    public function getLatestAnswerOfParticipant(int $participantId): ?string
+    {
+        return $this->options
+            ->sortByDesc(function (QuestionOption $option) use (
+                $participantId,
+            ) {
+                return $option
+                    ->answers()
+                    ->where('participant_id', $participantId)
+                    ->max('updated_at');
+            })
+            ->first()
+            ->answers()
+            ->where('participant_id', $participantId)
+            ->first()->updated_at;
     }
 
     public function latestVersion()

@@ -41,28 +41,30 @@ class Handler extends ExceptionHandler
 
     private function handleWebException(Throwable $exception)
     {
-        if ($exception instanceof AuthenticationException) {
-            return redirect()
-                ->route('login')
-                ->with('unauth', 'U moet ingelogd zijn.');
-        }
-
-        if ($exception instanceof ViewException) {
-            $exception = $exception->getPrevious();
-
-            if (
-                !method_exists($exception, 'getStatusCode') ||
-                $exception->getStatusCode() === null
-            ) {
-                return response('errors.500');
+        if (!env('app_debug')) {
+            if ($exception instanceof AuthenticationException) {
+                return redirect()
+                    ->route('login')
+                    ->with('unauth', 'U moet ingelogd zijn.');
             }
 
-            return match ($exception->getStatusCode()) {
-                404 => response()->view('errors.404', [
-                    'message' => $exception->getMessage(),
-                ]),
-                default => response()->view('errors.500')
-            };
+            if ($exception instanceof ViewException) {
+                $exception = $exception->getPrevious();
+
+                if (
+                    !method_exists($exception, 'getStatusCode') ||
+                    $exception->getStatusCode() === null
+                ) {
+                    return response()->view('errors.500');
+                }
+
+                return match ($exception->getStatusCode()) {
+                    404 => response()->view('errors.404', [
+                        'message' => $exception->getMessage(),
+                    ]),
+                    default => response()->view('errors.500')
+                };
+            }
         }
     }
 

@@ -41,6 +41,8 @@ class StoreQuestionRequest extends FormRequest
                 'De maximum van een schaal vraag moet groter dan het minimum zijn.',
             'rangeStep.min' =>
                 'De stap van een schaal vraag moet minimaal 1 zijn.',
+            'list.required_if' =>
+                'Bij een meerkeuze vraag zijn minimaal twee mogelijkheden vereist.',
             'list.array' =>
                 'Bij een meerkeuze vraag zijn minimaal twee mogelijkheden vereist.',
             'list.min' =>

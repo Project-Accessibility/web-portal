@@ -93,15 +93,22 @@ class DatabaseSeeder extends Seeder
             'question' => 'Hoe is de route naar NEMO toe?',
         ]);
 
-        $questionOneOptionOne = $this->createQuestionOptions($questionOne)[0];
+        $questionOneOptions = $this->createQuestionOptions($questionOne);
 
-        Question::factory()->create([
+        $questionOneOptionOne = $questionOneOptions[0];
+        $questionOneOptionFour = $questionOneOptions[4];
+
+        $questionTwo = Question::factory()->create([
             'section_id' => $section->id,
             'title' => 'Obstakels',
             'question' => 'Hoe kom je binnen? Zijn hierbij obstakels?',
         ]);
 
-        $this->createNemoAnswer($questionOneOptionOne, $participant);
+        $this->createNemoAnswerOpen($questionOneOptionOne, $participant);
+        $this->createNemoAnswerMultipleChoice(
+            $questionOneOptionFour,
+            $participant,
+        );
     }
 
     private function createQuestionOptions($question)
@@ -147,16 +154,27 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 
-    private function createNemoAnswer(
+    private function createNemoAnswerOpen(
         QuestionOption $questionOption,
         Participant $participant,
     ) {
         Answer::factory()->create([
             'participant_id' => $participant->id,
             'question_option_id' => $questionOption->id,
-            'answer' => [
+            'values' => [
                 'De route was erg prettig, de paden waren breed genoeg en de ingang stond duidelijk aangegeven.',
             ],
+        ]);
+    }
+
+    private function createNemoAnswerMultipleChoice(
+        QuestionOption $questionOption,
+        Participant $participant,
+    ) {
+        Answer::factory()->create([
+            'participant_id' => $participant->id,
+            'question_option_id' => $questionOption->id,
+            'values' => ['Waarde 1', 'Waarde 2'],
         ]);
     }
 }
