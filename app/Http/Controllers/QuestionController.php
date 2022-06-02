@@ -133,17 +133,32 @@ class QuestionController extends Controller
 
     private function saveOptions($question, $data)
     {
-        $availableOptionTypes = QuestionOptionType::cases();
-        foreach ($availableOptionTypes as $availableOptionType) {
-            $type = $availableOptionType->value;
+        $orders = $this->getOrders($data);
+        foreach ($orders as $order => $optionType) {
+            $type = $optionType->value;
             $saveOption = $data[$type] ?? false;
             if ($saveOption) {
-                $this->saveOption($question, $availableOptionType, $data);
+                $this->saveOption($question, $optionType, $order, $data);
             }
         }
     }
 
-    private function saveOption($question, $type, $data)
+    private function getOrders($data): array
+    {
+        $optionTypes = QuestionOptionType::cases();
+        $orders = [];
+        foreach ($optionTypes as $optionType) {
+            $type = $optionType->value;
+            $order = array_search($type, array_keys($data));
+            if ($order != 0) {
+                $orders[$order] = $optionType;
+            }
+        }
+        ksort($orders);
+        return array_values($orders);
+    }
+
+    private function saveOption($question, $type, $order, $data)
     {
         $option = QuestionOption::whereType($type->value)
             ->whereQuestionId($question->id)
@@ -153,6 +168,7 @@ class QuestionController extends Controller
             $option->type = $type;
             $option->question_id = $question->id;
         }
+        $option->order = $order;
         $option->extra_data = match ($type) {
             QuestionOptionType::OPEN => [
                 'placeholder' => $data['openPlaceholder'],
