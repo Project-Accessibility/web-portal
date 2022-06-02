@@ -84,15 +84,12 @@
                             <div class="row">
                                 @foreach($answer->values as $link)
                                     <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-                                        <a href="#" data-bs-toggle="modal"
+                                        <a href="#" class="d-flex justify-content-center align-items-center"
+                                           data-bs-toggle="modal"
                                            data-bs-target="#previewVideo{{$loop->index}}">
-                                            <div
-                                                class="bg-image hover-overlay ripple shadow-1-strong rounded"
-                                                data-ripple-color="light"
-                                            >
-                                                <video id="video{{$loop->index}}" src="{{ $link }}"
-                                                       class="fit-cover"></video>
-                                            </div>
+                                            <video src="{{ $link }}"
+                                                   class="fit-cover"></video>
+                                            <i class="bi bi-play position-absolute text-white h1"></i>
                                         </a>
                                     </div>
                                 @endforeach
@@ -124,7 +121,7 @@
                                     const modal = document.getElementById('previewVideo{{$loop->index}}');
                                     const video = document.getElementById('video{{$loop->index}}');
                                     modal.addEventListener('hide.bs.modal', function () {
-                                        video.pause();
+                                        video.load();
                                     });
                                 </script>
                             @endforeach
