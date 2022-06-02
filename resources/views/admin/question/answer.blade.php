@@ -39,13 +39,8 @@
                                         <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
                                             <a href="#" data-bs-toggle="modal"
                                                data-bs-target="#previewImage{{$loop->index}}">
-                                                <div
-                                                    class="bg-image hover-overlay ripple shadow-1-strong rounded"
-                                                    data-ripple-color="light"
-                                                >
-                                                    <img src="{{ $link }}"
-                                                         class="fit-cover" alt="image{{$loop->index}}"/>
-                                                </div>
+                                                <img src="{{ $link }}"
+                                                     class="fit-cover" alt="image{{$loop->index}}"/>
                                             </a>
                                         </div>
                                     @endforeach
@@ -106,7 +101,8 @@
                                 >
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
                                         <div class="modal-content p-3">
-                                            <video class="fit-contain" id="video{{$loop->index}}" src="{{ $link }}" controls></video>
+                                            <video class="fit-contain" id="video{{$loop->index}}" src="{{ $link }}"
+                                                   controls></video>
 
                                             <div class="text-center pt-3">
                                                 <button type="button" class="btn btn-secondary"
