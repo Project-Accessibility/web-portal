@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\ResultController;
@@ -12,6 +14,23 @@ use App\Models\Research;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\ParticipantController;
 use Illuminate\Support\Facades\Route;
+
+Route::middleware('guest')
+    ->prefix('/password')
+    ->group(function () {
+        Route::controller(ForgotPasswordController::class)->group(function () {
+            Route::get('/reset', 'showLinkRequestForm')->name(
+                'password.request',
+            );
+            Route::post('/email', 'sendResetLinkEmail')->name('password.email');
+        });
+        Route::controller(ResetPasswordController::class)->group(function () {
+            Route::get('/reset-password/{token}', 'showResetForm')->name(
+                'password.reset',
+            );
+            Route::post('/reset', 'reset')->name('password.update');
+        });
+    });
 
 Route::middleware('auth')->group(function () {
     Route::redirect('/', '/researches')->name('home');
