@@ -52,7 +52,7 @@
                                         class="modal fade"
                                         id="previewImage{{$loop->index}}"
                                         tabindex="-1"
-                                        aria-labelledby="image {{$loop->index}} modal"
+                                        aria-labelledby="afbeelding {{$loop->index}} popup"
                                         aria-hidden="true"
                                     >
                                         <div class="modal-dialog modal-dialog-centered p-0">
@@ -60,7 +60,7 @@
                                                 <img class="fit-contain" src="{{ $link }}" alt="image{{$loop->index}}"/>
 
                                                 <div class="text-center pt-3">
-                                                    <button type="button" class="btn btn-secondary"
+                                                    <button type="button" class="btn btn-primary"
                                                             data-bs-dismiss="modal">
                                                         Sluiten
                                                     </button>
@@ -75,7 +75,7 @@
                     @break;
                     @case(\App\Enums\QuestionOptionType::VIDEO)
                     <section id="gallery">
-                        <section id="images">
+                        <section id="thumbnails">
                             <div class="row">
                                 @foreach($answer->values as $link)
                                     <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
@@ -96,7 +96,7 @@
                                     class="modal fade"
                                     id="previewVideo{{$loop->index}}"
                                     tabindex="-1"
-                                    aria-labelledby="video {{$loop->index}} modal"
+                                    aria-labelledby="video {{$loop->index}} popup"
                                     aria-hidden="true"
                                 >
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -105,7 +105,7 @@
                                                    controls></video>
 
                                             <div class="text-center pt-3">
-                                                <button type="button" class="btn btn-secondary"
+                                                <button type="button" class="btn btn-primary"
                                                         data-bs-dismiss="modal">
                                                     Sluiten
                                                 </button>
