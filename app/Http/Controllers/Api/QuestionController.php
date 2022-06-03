@@ -136,9 +136,8 @@ class QuestionController extends Controller
     {
         if ($filePaths) {
             foreach ($filePaths as $filePath) {
-                $search = env('APP_URL') . '/storage';
                 $filePath = storage_path(
-                    'app/public/' . str_replace($search, '', $filePath),
+                    'app/public/' . explode('storage', $filePath)[1],
                 );
                 unlink($filePath);
             }
