@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GetQuestionnaireRequest;
 use App\Models\Answer;
 use App\Models\Participant;
 use App\Models\Question;
@@ -19,8 +20,9 @@ use function abort_if;
 
 class QuestionnaireController extends Controller
 {
-    public function get(string $code): ?Model
+    public function get(GetQuestionnaireRequest $request, string $code): ?Model
     {
+        $request->validated();
         $participant = Participant::whereCode($code)->firstOrFail();
 
         $participant->questionnaire->sections->map(function (
