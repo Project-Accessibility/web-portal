@@ -4,49 +4,34 @@ window.addEventListener('load', () => {
 
 class Sortable {
     root;
-    draggables;
+    sortables;
     dragEnter = null;
 
     constructor() {
-        this.root = document.querySelector('[drag-root]');
-        this.draggables = this.root.querySelectorAll('[drag-item]');
+        this.root = document.querySelector('[sort-root]');
+        this.sortables = this.root.querySelectorAll('[sort-item]');
         this.addListeners();
     }
 
     addListeners() {
-        this.draggables.forEach(item => {
-            this.enableDragItem(item);
+        this.sortables.forEach(sortable => {
+            sortable.querySelector('[up-button]').addEventListener('click',(e) => {
+                e.preventDefault();
+
+                this.sortUp(sortable);
+            });
+            sortable.querySelector('[down-button]').addEventListener('click',(e) => {
+                e.preventDefault();
+                this.sortDown(sortable);
+            });
         });
     }
 
-    enableDragItem(item) {
-        item.setAttribute('draggable', true);
-        item.ondrag = this.handleDrag;
-        item.ondragend = this.handleDrop;
+    sortUp(sortable){
+
     }
 
-    handleDrag(item) {
-        const selectedItem = item.target,
-            list = selectedItem.parentNode,
-            x = event.clientX,
-            y = event.clientY;
-
-        selectedItem.classList.add('drag-sort-active');
-        let swapItem =
-            document.elementFromPoint(x, y) === null
-                ? selectedItem
-                : document.elementFromPoint(x, y);
-
-        if (list === swapItem.parentNode) {
-            swapItem =
-                swapItem !== selectedItem.nextSibling
-                    ? swapItem
-                    : swapItem.nextSibling;
-            list.insertBefore(selectedItem, swapItem);
-        }
-    }
-
-    handleDrop(item) {
-        item.target.classList.remove('drag-sort-active');
+    sortDown(sortable){
+        console.log(sortable);
     }
 }

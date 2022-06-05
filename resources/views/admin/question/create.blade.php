@@ -21,20 +21,47 @@
             <x-input type="text" label="Titel" name="title" placeholder="Titel van de vraag" required></x-input>
             <x-input type="text" label="Vraag" name="question" placeholder="De vraag" required></x-input>
             <h2 class="h2">Antwoord mogelijkheden</h2>
-            <div drag-root class="border border-primary border-top-0 drag-sort-enable">
-                <div drag-item class="border-top border-primary p-2">
-                    <x-input class="m-0" type="switch" label="Spraakopname" name="VOICE" :value="true"></x-input>
+            <div sort-root class="border border-primary border-top-0 drag-sort-enable">
+                <div sort-item class="border-top border-primary p-2">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <x-input class="m-0" type="switch" label="Spraakopname" name="VOICE" :value="true"></x-input>
+                            <input type="number" name="orderVOICE" value="0" hidden/>
+                        </div>
+                        <div class="sortable-icons">
+                            <a up-button href=""><i class="bi bi-caret-up-fill"></i></a>
+                            <a down-button href=""><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                        </div>
+                    </div>
                 </div>
-                <div drag-item class="border-top border-primary p-2">
-                    <x-input class="m-0" type="switch" label="Open antwoord" name="OPEN" :value="false"></x-input>
+                <div sort-item class="border-top border-primary p-2">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <x-input class="m-0" type="switch" label="Open antwoord" name="OPEN" :value="false"></x-input>
+                            <input type="number" name="orderOPEN" value="1" hidden/>
+                        </div>
+                        <div class="sortable-icons">
+                            <a up-button href=""><i class="bi bi-caret-up-fill"></i></a>
+                            <a down-button href=""><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                        </div>
+                    </div>
                     <div class="collapse {{old('OPEN') ? 'show' : ''}}" id="open-configuration">
                         <div class="hr"></div>
                         <x-input class="col mb-0 mt-1" label="Placeholder" type="text" name="openPlaceholder"
                                  placeholder="Voer placeholder voor open antwoord in"></x-input>
                     </div>
                 </div>
-                <div drag-item class="border-top border-primary p-2">
-                    <x-input class="m-0" type="switch" label="Meerkeuze" name="MULTIPLE_CHOICE" :value="false"></x-input>
+                <div sort-item class="border-top border-primary p-2">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <x-input class="m-0" type="switch" label="Meerkeuze" name="MULTIPLE_CHOICE" :value="false"></x-input>
+                            <input type="number" name="orderMULTIPLE_CHOICE" value="2" hidden/>
+                        </div>
+                        <div class="sortable-icons">
+                            <a up-button href=""><i class="bi bi-caret-up-fill"></i></a>
+                            <a down-button href=""><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                        </div>
+                    </div>
                     <div class="collapse {{old('MULTIPLE_CHOICE') ? 'show' : ''}}" id="list-configuration">
                         <div class="hr"></div>
                         <x-input class="small" type="switch" label="Meerdere antwoorden mogelijk" name="multipleAnswers"
@@ -52,14 +79,41 @@
                         </div>
                     </div>
                 </div>
-                <div drag-item class="border-top border-primary p-2">
-                    <x-input class="m-0" type="switch" label="Foto" name="IMAGE" :value="false"></x-input>
+                <div sort-item class="border-top border-primary p-2">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <x-input class="m-0" type="switch" label="Foto" name="IMAGE" :value="false"></x-input>
+                            <input type="number" name="orderIMAGE" value="3" hidden/>
+                        </div>
+                        <div class="sortable-icons">
+                            <a up-button href=""><i class="bi bi-caret-up-fill"></i></a>
+                            <a down-button href=""><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                        </div>
+                    </div>
                 </div>
-                <div drag-item class="border-top border-primary p-2">
-                    <x-input class="m-0" type="switch" label="Video" name="VIDEO" :value="false"></x-input>
+                <div sort-item class="border-top border-primary p-2">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <x-input class="m-0" type="switch" label="Video" name="VIDEO" :value="false"></x-input>
+                            <input type="number" name="orderVIDEO" value="4" hidden/>
+                        </div>
+                        <div class="sortable-icons">
+                            <a up-button href=""><i class="bi bi-caret-up-fill"></i></a>
+                            <a down-button href=""><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                        </div>
+                    </div>
                 </div>
-                <div drag-item class="border-top border-primary p-2">
-                    <x-input class="m-0" type="switch" label="Schaal" name="RANGE" :value="false"></x-input>
+                <div sort-item class="border-top border-primary p-2">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <x-input class="m-0" type="switch" label="Schaal" name="RANGE" :value="false"></x-input>
+                            <input type="number" name="orderRANGE" value="5" hidden/>
+                        </div>
+                        <div class="sortable-icons">
+                            <a up-button href=""><i class="bi bi-caret-up-fill"></i></a>
+                            <a down-button href=""><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                        </div>
+                    </div>
                     <div class="collapse {{old('RANGE') ? 'show' : ''}}" id="range-configuration">
                         <div class="hr"></div>
                         <x-input class="col mb-0 mt-1" label="Minimum" type="number" name="rangeMin"
