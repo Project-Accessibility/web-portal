@@ -55,6 +55,9 @@ class QuestionController extends Controller
             ])
         ) {
             $value = $request->file($answer->option->type->value);
+            if ($value == null) {
+                $this->removeFiles($answer->values);
+            }
         } elseif (
             $answer->option->type == QuestionOptionType::MULTIPLE_CHOICE
         ) {
@@ -90,7 +93,7 @@ class QuestionController extends Controller
                 if (!$audios) {
                     return;
                 }
-                $this->removeOldFiles($answer->values);
+                $this->removeFiles($answer->values);
                 $answer->values = $this->handleFiles($audios, 'audios');
                 break;
             case QuestionOptionType::IMAGE:
@@ -98,7 +101,7 @@ class QuestionController extends Controller
                 if (!$images) {
                     return;
                 }
-                $this->removeOldFiles($answer->values);
+                $this->removeFiles($answer->values);
                 $answer->values = $this->handleFiles($images, 'images');
                 break;
             case QuestionOptionType::VIDEO:
@@ -106,7 +109,7 @@ class QuestionController extends Controller
                 if (!$videos) {
                     return;
                 }
-                $this->removeOldFiles($answer->values);
+                $this->removeFiles($answer->values);
                 $answer->values = $this->handleFiles($videos, 'videos');
                 break;
             case QuestionOptionType::MULTIPLE_CHOICE:
@@ -132,16 +135,21 @@ class QuestionController extends Controller
         $answer->save();
     }
 
-    private function removeOldFiles($filePaths): void
+    private function removeFiles($filePaths): void
     {
         if ($filePaths) {
             foreach ($filePaths as $filePath) {
-                $filePath = storage_path(
-                    'app/public/' . explode('storage', $filePath)[1],
-                );
-                unlink($filePath);
+                $this->removeFile($filePath);
             }
         }
+    }
+
+    private function removeFile($filePath): void
+    {
+        $filePath = storage_path(
+            'app/public/' . explode('storage', $filePath)[1],
+        );
+        unlink($filePath);
     }
 
     private function handleFiles($files, $path): array
