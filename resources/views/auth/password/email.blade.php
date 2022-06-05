@@ -20,7 +20,7 @@
                   action="{{ route('password.email') }}">
                 @csrf
                 <div class="form-group">
-                    <x-input type="text" label="{{ __('Emailadres') }}" name="email" placeholder="__('Voer jouw email in')" required="true"></x-input>
+                    <x-input type="text" label="{{ __('Emailadres') }}" name="email" placeholder="{{__('Voer jouw email in')}}" required="true"></x-input>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" id="button-email" type="submit">
