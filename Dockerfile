@@ -18,7 +18,6 @@ RUN yarn install
 RUN yarn prod
 RUN rm -rf node_modules/
 
-RUN cp -f .env.dist .env
 RUN --mount=type=secret,id=MAPBOX_ACCESS_TOKEN \
    export MAPBOX_ACCESS_TOKEN=$(cat /run/secrets/MAPBOX_ACCESS_TOKEN)
 RUN php artisan key:generate

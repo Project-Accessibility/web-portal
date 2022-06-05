@@ -9,6 +9,8 @@ services:
             - 'host.docker.internal:host-gateway'
         ports:
             - '80:8080'
+        env_file:
+            - ./.env.dist
         environment:
             API_KEY: '${API_KEY:-0800fc577294c34e0b28ad2839435945}'
             LARAVEL_SAIL: 1
