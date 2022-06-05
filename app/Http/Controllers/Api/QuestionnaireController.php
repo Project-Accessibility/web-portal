@@ -23,7 +23,7 @@ class QuestionnaireController extends Controller
     public function get(GetQuestionnaireRequest $request, string $code): ?Model
     {
         $request->validated();
-        $participant = Participant::whereCode($code)->firstOrFail();
+        $participant = Participant::whereCode($code)->first();
 
         $participant->questionnaire->sections->map(function (
             Section $section,

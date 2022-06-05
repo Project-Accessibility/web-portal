@@ -22,8 +22,8 @@ class GetQuestionnaireRequest extends FormRequest
         $validator->after(function ($validator) {
             $participant = Participant::whereCode(
                 $this->route('code'),
-            )->first();
-            if ($participant && !$participant->questionnaire->open) {
+            )->firstOrFail();
+            if (!$participant->questionnaire->open) {
                 $validator
                     ->errors()
                     ->add('Questionnaire', 'Vragenlijst is gesloten.');
