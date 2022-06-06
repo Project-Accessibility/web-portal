@@ -23,6 +23,8 @@
                      placeholder="Een kleine omschrijving van de vragenlijst" :extraData="['rows'=>8]" :value="$questionnaire->description"></x-input>
             <x-input type="textarea" label="Instructies" name="instructions"
                      placeholder="De instructies voor de participant in de app" :extraData="['rows'=>8]" :value="$questionnaire->instructions"></x-input>
+            <x-input type="textarea" label="Helppagina tekst" name="help"
+                     placeholder="Tekst voor de helppagina specifiek voor deze vragenlijst" :extraData="['rows'=>8]" :value="$questionnaire->help"></x-input>
             <x-input label="Onderzoek kan worden gebruikt" type="switch" name="open" :value="false" :value="$questionnaire->open"></x-input>
             <x-button class="float-end mt-2" type="secondary">Aanpassen</x-button>
         </div>

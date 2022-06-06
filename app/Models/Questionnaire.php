@@ -49,6 +49,7 @@ class Questionnaire extends Model
         'title',
         'description',
         'instructions',
+        'help',
         'open',
     ];
 
