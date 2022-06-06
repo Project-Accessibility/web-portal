@@ -38,10 +38,19 @@ class QuestionController extends Controller
         Questionnaire $questionnaire,
         Section $section,
     ): View {
+        $order = [
+            'VOICE',
+            'OPEN',
+            'MULTIPLE_CHOICE',
+            'IMAGE',
+            'VIDEO',
+            'RANGE',
+        ];
         return view('admin.question.create', [
             'research' => $research,
             'questionnaire' => $questionnaire,
             'section' => $section,
+            'order' => $order,
         ]);
     }
 
@@ -74,6 +83,12 @@ class QuestionController extends Controller
         Question $question,
     ): View {
         $question = $question->load('options');
+        $values = $question->options
+            ->map(function ($option) {
+                return $option->type->value;
+            })
+            ->toArray();
+        $order = $this->getOrder($values);
         $questionOptionType = QuestionOptionType::class;
         return view(
             'admin.question.edit',
@@ -83,6 +98,7 @@ class QuestionController extends Controller
                 'section',
                 'question',
                 'questionOptionType',
+                'order',
             ),
         );
     }
@@ -120,6 +136,24 @@ class QuestionController extends Controller
             ->with('success', $successMessage);
     }
 
+    private function getOrder($values)
+    {
+        $types = [
+            'VOICE',
+            'OPEN',
+            'MULTIPLE_CHOICE',
+            'IMAGE',
+            'VIDEO',
+            'RANGE',
+        ];
+        foreach ($types as $type) {
+            if (!in_array($type, $values)) {
+                $values[] = $type;
+            }
+        }
+        return $values;
+    }
+
     private function removeOptions(Question $question, $data)
     {
         $options = $question->options;
@@ -133,34 +167,18 @@ class QuestionController extends Controller
 
     private function saveOptions($question, $data)
     {
-        $orders = $this->getOrders($data);
-        foreach ($orders as $order => $optionType) {
-            $type = $optionType->value;
+        $order = $data['order'];
+        foreach ($order as $index => $type) {
             $saveOption = $data[$type] ?? false;
             if ($saveOption) {
-                $this->saveOption($question, $optionType, $order, $data);
+                $this->saveOption($question, $type, $index, $data);
             }
         }
-    }
-
-    private function getOrders($data): array
-    {
-        $optionTypes = QuestionOptionType::cases();
-        $orders = [];
-        foreach ($optionTypes as $optionType) {
-            $type = $optionType->value;
-            $order = array_search($type, array_keys($data));
-            if ($order != 0) {
-                $orders[$order] = $optionType;
-            }
-        }
-        ksort($orders);
-        return array_values($orders);
     }
 
     private function saveOption($question, $type, $order, $data)
     {
-        $option = QuestionOption::whereType($type->value)
+        $option = QuestionOption::whereType($type)
             ->whereQuestionId($question->id)
             ->first();
         if ($option == null) {
