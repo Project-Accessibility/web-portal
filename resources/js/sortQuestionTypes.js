@@ -5,7 +5,6 @@ window.addEventListener('load', () => {
 class Sortable {
     root;
     sortables;
-    dragEnter = null;
 
     constructor() {
         this.root = document.querySelector('[sort-root]');
