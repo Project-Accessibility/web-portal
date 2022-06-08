@@ -26,13 +26,14 @@
 -   Run `npm i -g yarn` to install yarn.
 -   Run `yarn prepare` to install GitHooks.
 -   Run `yarn watch` real-time compiling of CSS/JS files.
--   Run `php artisan serve` to run the application.
--   Run `./vendor/bin/sail up` to run the application in Docker.
+-   Run `composer install` to install laravel packages.
 -   Run `php artisan migrate` to run the database migrations.
 -   Run `php artisan db:seed` to run the database seeders.
 -   Run `php artisan key:generate` to generate the application key.
+-   Run `php artisan serve` to run the application.
+-   Run `./vendor/bin/sail up` to run the application in Docker (optional, useful for testing the production environment).
 
-## Api
+# Api
 
 ### Routes
 

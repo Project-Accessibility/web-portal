@@ -81,7 +81,7 @@ class Questionnaire extends Model
         return $sections->filter(function ($section) {
             $questions = $section->getLatestVersionsOfQuestions();
             $questions = $questions->filter(function ($question) {
-                $answers = $question->answers();
+                $answers = $question->results();
                 $question['answers'] = $answers->toArray();
                 return $question;
             });

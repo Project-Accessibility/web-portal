@@ -34,6 +34,7 @@ use Illuminate\Support\Str;
  * @method static Builder|Question whereTitle($value)
  * @method static Builder|Question whereUpdatedAt($value)
  * @property-read \App\Models\Section $section
+ * @property mixed $options
  */
 class Question extends Model
 {
@@ -87,9 +88,9 @@ class Question extends Model
         return $this->hasMany(QuestionOption::class);
     }
 
-    public function answers(): Collection
+    public function results(): Collection
     {
-        $answers = collect();
+        $results = collect();
         $questions = Question::whereUuid($this->uuid)
             ->with('options.answers')
             ->get();
@@ -97,7 +98,7 @@ class Question extends Model
             foreach ($question->options as $option) {
                 foreach ($option->answers as $answer) {
                     $answerExists =
-                        $answers
+                        $results
                             ->where(
                                 'participant_id',
                                 '=',
@@ -108,8 +109,27 @@ class Question extends Model
                         $code = $answer->participant->code;
                         $answer['question_id'] = $question->id;
                         $answer['participant_code'] = $code;
-                        $answers->push($answer);
+                        $results->push($answer);
                     }
+                }
+            }
+        }
+        return $results;
+    }
+
+    public function answers(): Collection
+    {
+        $answers = collect();
+        $questions = Question::whereUuid($this->uuid)
+            ->with('options.answers')
+            ->get();
+        foreach ($questions as $question) {
+            foreach ($question->options as $option) {
+                foreach ($option->answers as $answer) {
+                    $answer->question_option_type = $option->type;
+                    $answer->participant_code = $answer->participant->code;
+                    unset($answer->participant);
+                    $answers->push($answer);
                 }
             }
         }

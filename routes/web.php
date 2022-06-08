@@ -172,7 +172,13 @@ Route::middleware('auth')->group(function () {
                                                             'questions.update',
                                                         );
                                                         Route::get(
-                                                            '/answer/{participant}',
+                                                            '/answers',
+                                                            'answers',
+                                                        )->name(
+                                                            'questions.answers',
+                                                        );
+                                                        Route::get(
+                                                            '/answers/{participant}',
                                                             'answer',
                                                         )->name(
                                                             'questions.answer',

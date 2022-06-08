@@ -209,6 +209,71 @@ class QuestionController extends Controller
         )->with('success', 'De vraag is verwijderd!');
     }
 
+    public function answers(
+        Research $research,
+        Questionnaire $questionnaire,
+        Section $section,
+        Question $question,
+    ): Factory|View|Application {
+        $answers = $question->answers();
+        $multipleChoiceResults = $this->getChartResults(
+            $answers->where(
+                'question_option_type',
+                QuestionOptionType::MULTIPLE_CHOICE,
+            ),
+        );
+        $rangeResults = $this->getChartResults(
+            $answers->where('question_option_type', QuestionOptionType::RANGE),
+        );
+        $generalResults = [];
+        foreach (
+            $answers->whereIn('question_option_type', [
+                QuestionOptionType::OPEN,
+                QuestionOptionType::VIDEO,
+                QuestionOptionType::IMAGE,
+                QuestionOptionType::VOICE,
+            ])
+            as $answer
+        ) {
+            $generalResults[$answer->participant_code][
+                $answer->question_option_type->value
+            ] =
+                count($answer->values) > 1
+                    ? $answer->values
+                    : $answer->values[0];
+        }
+        return view(
+            'admin.question.answers',
+            compact(
+                'research',
+                'questionnaire',
+                'section',
+                'question',
+                'multipleChoiceResults',
+                'rangeResults',
+                'generalResults',
+            ),
+        );
+    }
+
+    private function getChartResults($answers): array
+    {
+        $results = [];
+        $values = $answers
+            ->map(function ($answer) {
+                return $answer->values;
+            })
+            ->flatten();
+        foreach ($values as $value) {
+            if (key_exists($value, $results)) {
+                $results[$value]++;
+            } else {
+                $results[$value] = 1;
+            }
+        }
+        return $results;
+    }
+
     public function answer(
         Research $research,
         Questionnaire $questionnaire,

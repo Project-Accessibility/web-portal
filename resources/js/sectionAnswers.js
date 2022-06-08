@@ -96,26 +96,29 @@ class SectionAnswers {
 
     initAnswers(section, question) {
         this.answers[question.id] = [];
+        const displayAllAnswers = this.createAnswer(
+            question.id,
+            'Alle participanten',
+            `${window.url}/${section.id}/questions/${question.id}/answers`
+        );
+        this.answers[question.id].push(displayAllAnswers);
+        this.answersContainer.append(displayAllAnswers);
         question.answers.forEach(answer => {
-            const displayAnswer = this.createAnswer(
-                section.id,
-                question.id,
-                answer
-            );
+            const title = 'Participant #' + answer.participant.code;
+            const link = `${window.url}/${section.id}/questions/${answer.question_id}/answers/${answer.participant_id}`;
+            const displayAnswer = this.createAnswer(question.id, title, link);
             this.answers[question.id].push(displayAnswer);
             this.answersContainer.append(displayAnswer);
         });
     }
 
-    createAnswer(sectionId, questionId, answer) {
+    createAnswer(questionId, title, link) {
         const displayAnswer = document.createElement('a');
-        displayAnswer.href = `${window.url}/${sectionId}/questions/${answer.question_id}/answer/${answer.participant_id}`;
+        displayAnswer.href = link;
         displayAnswer.className = 'result-button answer';
         displayAnswer.hidden = true;
         displayAnswer.setAttribute('name', 'answer' + questionId);
-        displayAnswer.append(
-            this.createLeftSide('Participant #' + answer.participant.code, '')
-        );
+        displayAnswer.append(this.createLeftSide(title, ''));
         displayAnswer.append(this.createRightSide());
         return displayAnswer;
     }
