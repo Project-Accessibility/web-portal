@@ -68,8 +68,8 @@
                                     <input type="text" name="order[]" value="VOICE" hidden/>
                                 </div>
                                 <div class="sortable-icons">
-                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}}><i class="bi bi-caret-up-fill"></i></a>
-                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}}><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}} title="Vraag type prioriteit hoger sorteren"><i class="bi bi-caret-up-fill"></i></a>
+                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}} title="Vraag type prioriteit lager sorteren"><i class="bi bi-caret-down-fill pe-auto"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -82,8 +82,8 @@
                                     <input type="text" name="order[]" value="OPEN" hidden/>
                                 </div>
                                 <div class="sortable-icons">
-                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}}><i class="bi bi-caret-up-fill"></i></a>
-                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}}><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}} title="Vraag type prioriteit hoger sorteren"><i class="bi bi-caret-up-fill"></i></a>
+                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}} title="Vraag type prioriteit lager sorteren"><i class="bi bi-caret-down-fill pe-auto"></i></a>
                                 </div>
                             </div>
                             <div
@@ -104,8 +104,8 @@
                                     <input type="text" name="order[]" value="MULTIPLE_CHOICE" hidden/>
                                 </div>
                                 <div class="sortable-icons">
-                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}}><i class="bi bi-caret-up-fill"></i></a>
-                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}}><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}} title="Vraag type prioriteit hoger sorteren"><i class="bi bi-caret-up-fill"></i></a>
+                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}} title="Vraag type prioriteit lager sorteren"><i class="bi bi-caret-down-fill pe-auto"></i></a>
                                 </div>
                             </div>
                             <div
@@ -137,8 +137,8 @@
                                     <input type="text" name="order[]" value="IMAGE" hidden/>
                                 </div>
                                 <div class="sortable-icons">
-                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}}><i class="bi bi-caret-up-fill"></i></a>
-                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}}><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}} title="Vraag type prioriteit hoger sorteren"><i class="bi bi-caret-up-fill"></i></a>
+                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}} title="Vraag type prioriteit lager sorteren"><i class="bi bi-caret-down-fill pe-auto"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -151,8 +151,8 @@
                                     <input type="text" name="order[]" value="VIDEO" hidden/>
                                 </div>
                                 <div class="sortable-icons">
-                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}}><i class="bi bi-caret-up-fill"></i></a>
-                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}}><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}} title="Vraag type prioriteit hoger sorteren"><i class="bi bi-caret-up-fill"></i></a>
+                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}} title="Vraag type prioriteit lager sorteren"><i class="bi bi-caret-down-fill pe-auto"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -165,8 +165,8 @@
                                     <input type="text" name="order[]" value="RANGE" hidden/>
                                 </div>
                                 <div class="sortable-icons">
-                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}}><i class="bi bi-caret-up-fill"></i></a>
-                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}}><i class="bi bi-caret-down-fill pe-auto"></i></a>
+                                    <a up-button href="" {{$index == 0 ? 'hidden' : ''}} title="Vraag type prioriteit hoger sorteren"><i class="bi bi-caret-up-fill"></i></a>
+                                    <a down-button href="" {{$index == count($order)-1 ? 'hidden' : ''}} title="Vraag type prioriteit lager sorteren"><i class="bi bi-caret-down-fill pe-auto"></i></a>
                                 </div>
                             </div>
                             <div
