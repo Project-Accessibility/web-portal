@@ -82,7 +82,7 @@ class QuestionnaireController extends Controller
         abort_if(
             $participant->finished,
             Response::HTTP_NOT_ACCEPTABLE,
-            'The given participant is already finished with the linked questionnaire.',
+            'The participant has already finished this questionnaire.',
         );
 
         $participant->finished = true;
