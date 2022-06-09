@@ -24,7 +24,9 @@ RUN cp -f .env.dist .env
 #    && export MAPBOX_ACCESS_TOKEN
 #RUN echo $MAPBOX_ACCESS_TOKEN \
 ARG MAPBOX_ACCESS_TOKEN
+ARG API_KEY
 RUN sed -i "s|MAPBOX_ACCESS_TOKEN=|MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}|g" .env
+RUN sed -i "s|MAPBOX_ACCESS_TOKEN=|API_KEY=${API_KEY}|g" .env
 
 RUN php artisan key:generate
 

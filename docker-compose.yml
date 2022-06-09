@@ -7,6 +7,7 @@ services:
             dockerfile: Dockerfile
             args:
                 MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN}'
+                API_KEY: '${API_KEY}'
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -14,7 +15,6 @@ services:
         env_file:
             - .env.dist
         environment:
-            API_KEY: '${API_KEY:-0800fc577294c34e0b28ad2839435945}'
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
             APP_ENV: '${APP_ENV:-local}'
