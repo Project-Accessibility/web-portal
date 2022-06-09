@@ -8,6 +8,7 @@ use App\Models\Questionnaire;
 use App\Models\Research;
 use App\Utils\TableLink;
 use App\Utils\TableLinkParameter;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -130,9 +131,12 @@ class QuestionnaireController extends Controller
             ->participants()
             ->get()
             ->map(function (Participant $participant) {
-                return $participant->append('lastUpdated');
+                $participant->last_updated = Carbon::parse($participant->lastUpdated())->translatedFormat('l d F Y \o\m H:i');
+
+                return $participant;
             })
             ->toArray();
+
         $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltooid'];
         $participantKeys = ['id', 'code', 'last_updated', 'finished'];
 

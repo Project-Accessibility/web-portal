@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\DisplayDateTime;
+use Carbon\Carbon;
 use DateTime;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -61,15 +62,15 @@ class Participant extends Model
         return $this->hasMany(Answer::class);
     }
 
-    public function getLastUpdatedAttribute()
+    public function lastUpdated()
     {
         $lastAnswer = $this->answers()->max('updated_at');
         $lastUpdate = $this->updated_at;
 
         if ($lastAnswer > $lastUpdate) {
-            $this->attributes['last_updated'] = $lastAnswer;
+            return $lastAnswer;
         } else {
-            $this->attributes['last_updated'] = $lastUpdate;
+            return $lastUpdate;
         }
     }
 }
