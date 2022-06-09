@@ -6,8 +6,9 @@ services:
             context: ./
             dockerfile: Dockerfile
             args:
-                MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN}'
                 API_KEY: '${API_KEY}'
+                MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN}'
+                RADAR_SECRET: '${RADAR_SECRET}'
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
