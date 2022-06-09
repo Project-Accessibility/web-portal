@@ -6,7 +6,7 @@ services:
             context: ./
             dockerfile: Dockerfile
             args:
-                MAPBOX_ACCESS_TOKEN: 'pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw'
+                MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN}}
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
