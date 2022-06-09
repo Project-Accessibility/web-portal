@@ -27,7 +27,9 @@ class QuestionController extends Controller
         $request->validated();
 
         $options = $question->options;
-        $participant = Participant::whereCode($code)->whereFinished(false)->firstOrFail();
+        $participant = Participant::whereCode($code)
+            ->whereFinished(false)
+            ->firstOrFail();
 
         // Add answers
         $options->map(function ($option) use ($request, $participant) {

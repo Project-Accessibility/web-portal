@@ -25,7 +25,9 @@ class QuestionnaireController extends Controller
     public function get(GetQuestionnaireRequest $request, string $code): ?Model
     {
         $request->validated();
-        $participant = Participant::whereCode($code)->whereFinished(false)->firstOrFail();
+        $participant = Participant::whereCode($code)
+            ->whereFinished(false)
+            ->firstOrFail();
 
         $participant->questionnaire->sections->map(function (
             Section $section,
@@ -77,7 +79,9 @@ class QuestionnaireController extends Controller
 
     public function submit($code): JsonResponse
     {
-        $participant = Participant::whereCode($code)->whereFinished(false)->firstOrFail();
+        $participant = Participant::whereCode($code)
+            ->whereFinished(false)
+            ->firstOrFail();
 
         $participant->finished = true;
         $participant->save();
