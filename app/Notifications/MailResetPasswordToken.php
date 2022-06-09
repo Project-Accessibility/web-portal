@@ -53,8 +53,6 @@ class MailResetPasswordToken extends Notification
             ->view('mail.reset', [
                 'name' => $notifiable->name,
                 'link' => $link,
-                'message' => $this,
-                'pathToImage' => public_path() . '\\images\\logo.png',
             ]);
     }
 
