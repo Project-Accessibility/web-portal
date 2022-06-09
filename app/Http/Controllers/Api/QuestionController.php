@@ -8,10 +8,8 @@ use App\Http\Requests\StoreAnswerRequest;
 use App\Models\Answer;
 use App\Models\Participant;
 use App\Models\Question;
-use App\Models\QuestionOption;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
@@ -50,13 +48,16 @@ class QuestionController extends Controller
             return;
         }
         if (
-            in_array($answer->option->type->name, [
-                QuestionOptionType::VIDEO,
+            in_array($answer->option->type, [
+                QuestionOptionType::VOICE,
                 QuestionOptionType::IMAGE,
                 QuestionOptionType::VIDEO,
             ])
         ) {
             $value = $request->file($answer->option->type->value);
+            if ($value == null) {
+                $this->removeFiles($answer->values);
+            }
         } elseif (
             $answer->option->type == QuestionOptionType::MULTIPLE_CHOICE
         ) {
@@ -92,6 +93,7 @@ class QuestionController extends Controller
                 if (!$audios) {
                     return;
                 }
+                $this->removeFiles($answer->values);
                 $answer->values = $this->handleFiles($audios, 'audios');
                 break;
             case QuestionOptionType::IMAGE:
@@ -99,6 +101,7 @@ class QuestionController extends Controller
                 if (!$images) {
                     return;
                 }
+                $this->removeFiles($answer->values);
                 $answer->values = $this->handleFiles($images, 'images');
                 break;
             case QuestionOptionType::VIDEO:
@@ -106,6 +109,7 @@ class QuestionController extends Controller
                 if (!$videos) {
                     return;
                 }
+                $this->removeFiles($answer->values);
                 $answer->values = $this->handleFiles($videos, 'videos');
                 break;
             case QuestionOptionType::MULTIPLE_CHOICE:
@@ -131,6 +135,23 @@ class QuestionController extends Controller
         $answer->save();
     }
 
+    private function removeFiles($filePaths): void
+    {
+        if ($filePaths) {
+            foreach ($filePaths as $filePath) {
+                $this->removeFile($filePath);
+            }
+        }
+    }
+
+    private function removeFile($filePath): void
+    {
+        $filePath = storage_path(
+            'app/public/' . explode('storage', $filePath)[1],
+        );
+        unlink($filePath);
+    }
+
     private function handleFiles($files, $path): array
     {
         $links = [];
@@ -140,11 +161,11 @@ class QuestionController extends Controller
         if (is_array($files)) {
             // handle multiple files
             foreach ($files as $file) {
-                array_push($links, $this->uploadFile($file, $path));
+                $links[] = $this->uploadFile($file, $path);
             }
         } else {
             // handle single file
-            array_push($links, $this->uploadFile($files, $path));
+            $links[] = $this->uploadFile($files, $path);
         }
         return $links;
     }
