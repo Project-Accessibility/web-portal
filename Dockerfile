@@ -23,7 +23,10 @@ RUN cp -f .env.dist .env
 #    MAPBOX_ACCESS_TOKEN=$(cat /run/secrets/MAPBOX_ACCESS_TOKEN) \
 #    && export MAPBOX_ACCESS_TOKEN
 #RUN echo $MAPBOX_ACCESS_TOKEN \
-RUN sed -i "s|MAPBOX_ACCESS_TOKEN=|MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw|g" .env
+ARG MAPBOX_ACCESS_TOKEN
+ENV mapbox_access_token=$MAPBOX_ACCESS_TOKEN
+RUN sed -i "s|MAPBOX_ACCESS_TOKEN=|MAPBOX_ACCESS_TOKEN=${mapbox_access_token}|g" .env
+
 RUN php artisan key:generate
 
 RUN apt-get -y autoremove \
