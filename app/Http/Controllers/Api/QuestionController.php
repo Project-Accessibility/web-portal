@@ -48,7 +48,7 @@ class QuestionController extends Controller
             return;
         }
         if (
-            in_array($answer->option->type->name, [
+            in_array($answer->option->type, [
                 QuestionOptionType::VIDEO,
                 QuestionOptionType::IMAGE,
                 QuestionOptionType::VIDEO,
