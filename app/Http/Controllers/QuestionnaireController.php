@@ -131,7 +131,9 @@ class QuestionnaireController extends Controller
             ->participants()
             ->get()
             ->map(function (Participant $participant) {
-                $participant->last_updated = Carbon::parse($participant->lastUpdated())->translatedFormat('l d F Y \o\m H:i');
+                $participant->last_updated = Carbon::parse(
+                    $participant->lastUpdated(),
+                )->translatedFormat('l d F Y \o\m H:i');
 
                 return $participant;
             })
