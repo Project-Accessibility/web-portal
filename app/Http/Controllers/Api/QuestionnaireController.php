@@ -25,7 +25,7 @@ class QuestionnaireController extends Controller
     public function get(GetQuestionnaireRequest $request, string $code): ?Model
     {
         $request->validated();
-        $participant = Participant::whereCode($code)->first();
+        $participant = Participant::whereCode($code)->whereFinished(false)->firstOrFail();
 
         $participant->questionnaire->sections->map(function (
             Section $section,
@@ -77,13 +77,7 @@ class QuestionnaireController extends Controller
 
     public function submit($code): JsonResponse
     {
-        $participant = Participant::whereCode($code)->firstOrFail();
-
-        abort_if(
-            $participant->finished,
-            Response::HTTP_NOT_ACCEPTABLE,
-            'The given participant is already finished with the linked questionnaire.',
-        );
+        $participant = Participant::whereCode($code)->whereFinished(false)->firstOrFail();
 
         $participant->finished = true;
         $participant->save();
