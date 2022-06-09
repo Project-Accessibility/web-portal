@@ -16,7 +16,7 @@
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
                 <div class="form-group">
-                    <x-input type="text" label="{{ __('Emailadres') }}" name="email" placeholder="{{__('Voer jouw email in')}}" required="true"></x-input>
+                    <x-input type="text" label="{{ __('Emailadres') }}" name="email" placeholder="{{__('Voer jouw email in')}}" required="true" value="{{$email}}"></x-input>
                 </div>
                 <div class="form-group">
                     <x-input type="password" label="{{ __('Wachtwoord') }}" name="password" placeholder="{{__('Voer jouw wachtwoord in')}}" required="true"></x-input>

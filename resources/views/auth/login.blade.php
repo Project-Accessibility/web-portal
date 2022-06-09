@@ -22,11 +22,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ __('passwords.sent') }}
-                </div>
-            @endif
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <x-input type="email" label="E-mail" name="email" placeholder="Uw e-mail"></x-input>

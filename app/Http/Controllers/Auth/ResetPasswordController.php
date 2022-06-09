@@ -15,9 +15,12 @@ use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
-    function showResetForm($token): Factory|View|Application
+    function showResetForm(Request $request, $token): Factory|View|Application
     {
-        return view('auth.password.reset', ['token' => $token]);
+        return view('auth.password.reset', [
+            'token' => $token,
+            'email' => $request->get('email'),
+        ]);
     }
 
     function reset(Request $request): RedirectResponse
