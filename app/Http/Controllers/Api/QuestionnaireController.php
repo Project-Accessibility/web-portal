@@ -27,7 +27,7 @@ class QuestionnaireController extends Controller
         $request->validated();
         $participant = Participant::whereCode($code)
             ->whereFinished(false)
-            ->firstOrFail();
+            ->first();
 
         $participant->questionnaire->sections->map(function (
             Section $section,

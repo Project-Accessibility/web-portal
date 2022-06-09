@@ -22,7 +22,7 @@ class GetQuestionnaireRequest extends FormRequest
         $validator->after(function ($validator) {
             $participant = Participant::whereCode(
                 $this->route('code'),
-            )->firstOrFail();
+            )->whereFinished(false)->firstOrFail();
             if (!$participant->questionnaire->open) {
                 $validator
                     ->errors()

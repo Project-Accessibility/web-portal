@@ -29,7 +29,7 @@ class QuestionController extends Controller
         $options = $question->options;
         $participant = Participant::whereCode($code)
             ->whereFinished(false)
-            ->firstOrFail();
+            ->first();
 
         // Add answers
         $options->map(function ($option) use ($request, $participant) {
