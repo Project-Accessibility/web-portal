@@ -10,7 +10,7 @@ services:
         ports:
             - '80:8080'
         env_file:
-            - ./.env.dist
+            - .env.dist
         environment:
             API_KEY: '${API_KEY:-0800fc577294c34e0b28ad2839435945}'
             LARAVEL_SAIL: 1
@@ -23,7 +23,7 @@ services:
             DB_USERNAME: '${DB_USERNAME:-admin}'
             DB_PASSWORD: '${DB_PASSWORD:-admin}'
             REDIS_HOST: 'redis'
-            MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN:-pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw}'
+            MAPBOX_ACCESS_TOKEN: 'pk.eyJ1IjoibWlsb3ZkcGFzIiwiYSI6ImNsMW5veGNtcjByaXozYnFycmdlOW1mY2gifQ.XlD67O_pB2Q-ULGzQ_HQOw'
         volumes:
             - '.:/app'
         depends_on:
