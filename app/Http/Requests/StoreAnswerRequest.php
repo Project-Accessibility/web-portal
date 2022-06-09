@@ -15,7 +15,9 @@ class StoreAnswerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $participant = Participant::whereCode($this->route('code'))->whereFinished(false)->first();
+        $participant = Participant::whereCode($this->route('code'))
+            ->whereFinished(false)
+            ->first();
         $question = $this->route('question');
 
         return $participant != null &&
