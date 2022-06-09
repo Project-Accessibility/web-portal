@@ -37,7 +37,10 @@ class Breadcrumb extends Component
                 $path .
                 '/';
             if ($route = $this->getRoute($fullPath)) {
-                $view = $this->getDisplay($route) ?? $this->getModelTitle($previousRoute, (int) $path) ?? $path;
+                $view =
+                    $this->getDisplay($route) ??
+                    ($this->getModelTitle($previousRoute, (int) $path) ??
+                        $path);
                 $this->paths[] = [
                     'display' => $view,
                     'url' => $fullPath,

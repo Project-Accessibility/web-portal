@@ -125,9 +125,10 @@ Route::middleware('auth')->group(function () {
                                                         ->defaults(
                                                             'display',
                                                             'Vragen',
-                                                        )->defaults(
+                                                        )
+                                                        ->defaults(
                                                             'model',
-                                                            'questions'
+                                                            'questions',
                                                         );
                                                     Route::get(
                                                         '/create',
