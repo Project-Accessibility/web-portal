@@ -20,7 +20,7 @@ RUN rm -rf node_modules/
 
 RUN cp -f .env.dist .env
 RUN --mount=type=secret,id=MAPBOX_ACCESS_TOKEN,uid=1000 \
-    MAPBOX_ACCESS_TOKEN=$(cat /run/secrets/my_secret) \
+    MAPBOX_ACCESS_TOKEN=$(cat /run/secrets/MAPBOX_ACCESS_TOKEN) \
     && export MAPBOX_ACCESS_TOKEN
 RUN echo $MAPBOX_ACCESS_TOKEN \
 RUN sed -i "s|MAPBOX_ACCESS_TOKEN=|MAPBOX_ACCESS_TOKEN=$MAPBOX_ACCESS_TOKEN|g" .env
