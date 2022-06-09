@@ -82,7 +82,7 @@ class QuestionnaireController extends Controller
         $participant = Participant::whereCode($code)
             ->whereFinished(false)
             ->firstOrFail();
-
+        
         $participant->finished = true;
         $participant->save();
 
