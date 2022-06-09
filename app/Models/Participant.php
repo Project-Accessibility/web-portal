@@ -66,8 +66,7 @@ class Participant extends Model
         $lastAnswer = $this->answers()->max('updated_at');
         $lastUpdate = $this->updated_at;
 
-
-        if($lastAnswer > $lastUpdate) {
+        if ($lastAnswer > $lastUpdate) {
             $this->attributes['last_updated'] = $lastAnswer;
         } else {
             $this->attributes['last_updated'] = $lastUpdate;
