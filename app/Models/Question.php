@@ -94,26 +94,38 @@ class Question extends Model
             ->with('options.answers')
             ->get();
         foreach ($questions as $question) {
-            foreach ($question->options as $option) {
-                foreach ($option->answers as $answer) {
-                    $answerExists =
-                        $answers
-                            ->where(
-                                'participant_id',
-                                '=',
-                                $answer->participant_id,
-                            )
-                            ->first() != null;
-                    if (!$answerExists) {
-                        $code = $answer->participant->code;
-                        $answer['question_id'] = $question->id;
-                        $answer['participant_code'] = $code;
-                        $answers->push($answer);
-                    }
-                }
-            }
+            $this->getAnswersOfOptions($question, $answers);
         }
         return $answers;
+    }
+
+    private function getAnswersOfOptions($question, $answers){
+        foreach ($question->options as $option) {
+            $this->filterAnswers($question, $option, $answers);
+        }
+    }
+
+    private function filterAnswers($question, $option, $answers){
+        foreach ($option->answers as $answer) {
+            $this->filterAnswer($question, $answer, $answers);
+        }
+    }
+
+    private function filterAnswer($question, $answer, $answers){
+        $answerExists =
+            $answers
+                ->where(
+                    'participant_id',
+                    '=',
+                    $answer->participant_id,
+                )
+                ->first() != null;
+        if (!$answerExists) {
+            $code = $answer->participant->code;
+            $answer['question_id'] = $question->id;
+            $answer['participant_code'] = $code;
+            $answers->push($answer);
+        }
     }
 
     public function getLatestAnswerOfParticipant(int $participantId): ?string
