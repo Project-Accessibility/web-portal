@@ -45,11 +45,11 @@ class ResearchTest extends TestCase
     public function the_research_store_route_creates_a_research()
     {
         $this->post('/researches', [
-           'title' => 'THIS_IS_A_TEST_TITLE'
+            'title' => 'THIS_IS_A_TEST_TITLE',
         ]);
 
         $this->assertDatabaseHas('researches', [
-           'title' => 'THIS_IS_A_TEST_TITLE'
+            'title' => 'THIS_IS_A_TEST_TITLE',
         ]);
     }
 
@@ -57,7 +57,7 @@ class ResearchTest extends TestCase
     public function the_research_store_route_redirects_to_the_research_overview_page()
     {
         $response = $this->post('/researches', [
-            'title' => 'THIS_IS_A_TEST_TITLE'
+            'title' => 'THIS_IS_A_TEST_TITLE',
         ]);
 
         $response->assertRedirect('/researches');
@@ -107,18 +107,18 @@ class ResearchTest extends TestCase
     public function the_research_update_route_edits_the_research()
     {
         $research = Research::factory()->create([
-           'title' => 'THIS_IS_THE_BEFORE_TITLE'
+            'title' => 'THIS_IS_THE_BEFORE_TITLE',
         ]);
 
         $this->put('/researches/' . $research->id, [
-            'title' => 'THIS_IS_THE_AFTER_TITLE'
+            'title' => 'THIS_IS_THE_AFTER_TITLE',
         ]);
 
         $this->assertDatabaseHas('researches', [
-            'title' => 'THIS_IS_THE_AFTER_TITLE'
+            'title' => 'THIS_IS_THE_AFTER_TITLE',
         ]);
         $this->assertDatabaseMissing('researches', [
-            'title' => 'THIS_IS_THE_BEFORE_TITLE'
+            'title' => 'THIS_IS_THE_BEFORE_TITLE',
         ]);
     }
 
@@ -126,27 +126,29 @@ class ResearchTest extends TestCase
     public function the_research_update_route_redirects_to_the_research_details_page()
     {
         $research = Research::factory()->create([
-            'title' => 'THIS_IS_THE_BEFORE_TITLE'
+            'title' => 'THIS_IS_THE_BEFORE_TITLE',
         ]);
 
         $response = $this->put('/researches/' . $research->id, [
-            'title' => 'THIS_IS_THE_AFTER_TITLE'
+            'title' => 'THIS_IS_THE_AFTER_TITLE',
         ]);
 
-        $response->assertRedirect('researches/' . $research->id . '?tab=Details');
+        $response->assertRedirect(
+            'researches/' . $research->id . '?tab=Details',
+        );
     }
 
     /** @test */
     public function the_research_delete_route_deletes_the_research()
     {
         $research = Research::factory()->create([
-            'title' => 'THIS_IS_A_TEST_TITLE'
+            'title' => 'THIS_IS_A_TEST_TITLE',
         ]);
 
         $this->delete('/researches/' . $research->id);
 
         $this->assertDatabaseMissing('researches', [
-            'title' => 'THIS_IS_A_TEST_TITLE'
+            'title' => 'THIS_IS_A_TEST_TITLE',
         ]);
     }
 
