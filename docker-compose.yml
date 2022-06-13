@@ -9,6 +9,8 @@ services:
                 API_KEY: '${API_KEY}'
                 MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN}'
                 RADAR_SECRET: '${RADAR_SECRET}'
+                MAIL_USERNAME: '${MAIL_USERNAME}'
+                MAIL_PASSWORD: '${MAIL_PASSWORD}'
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
