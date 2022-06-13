@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -27,6 +28,7 @@ class Breadcrumb extends Component
 
         $pathSplit = array_values(array_filter(explode('/', $url['path'])));
 
+        $previousRoute = null;
         foreach ($pathSplit as $path) {
             $fullPath =
                 (count($this->paths) > 0
@@ -35,11 +37,16 @@ class Breadcrumb extends Component
                 $path .
                 '/';
             if ($route = $this->getRoute($fullPath)) {
-                $view = $this->getDisplay($route) ?? $path;
+                $view =
+                    $this->getDisplay($route) ??
+                    ($this->getModelTitle($previousRoute, (int) $path) ??
+                        $path);
                 $this->paths[] = [
                     'display' => $view,
                     'url' => $fullPath,
                 ];
+
+                $previousRoute = $route;
             }
         }
 
@@ -70,6 +77,13 @@ class Breadcrumb extends Component
     private function getDisplay(Route $route): ?string
     {
         return $route->defaults['display'] ?? null;
+    }
+
+    private function getModelTitle(Route $route, int $id): ?string
+    {
+        $model = $route->defaults['model'];
+
+        return DB::table($model)->find($id)->title;
     }
 
     public function render(): View
