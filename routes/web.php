@@ -19,7 +19,8 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::get('/', 'overview')
                 ->name('researches')
-                ->defaults('display', 'Onderzoeken');
+                ->defaults('display', 'Onderzoeken')
+                ->defaults('model', 'researches');
             Route::get('/create', 'create')
                 ->name('researches.create')
                 ->defaults('display', 'Aanmaken');
@@ -38,7 +39,8 @@ Route::middleware('auth')->group(function () {
                     ->group(function () {
                         Route::get('/', 'overview')
                             ->name('researches.questionnaires')
-                            ->defaults('display', 'Vragenlijsten');
+                            ->defaults('display', 'Vragenlijsten')
+                            ->defaults('model', 'questionnaires');
 
                         Route::get('/create', 'create')
                             ->name('questionnaires.create')
@@ -68,7 +70,8 @@ Route::middleware('auth')->group(function () {
                                 ->group(function () {
                                     Route::get('/', 'overview')
                                         ->name('questionnaires.sections')
-                                        ->defaults('display', 'Onderdelen');
+                                        ->defaults('display', 'Onderdelen')
+                                        ->defaults('model', 'sections');
                                     Route::get('/create', 'create')
                                         ->name('sections.create')
                                         ->defaults('display', 'Aanmaken');
@@ -121,6 +124,10 @@ Route::middleware('auth')->group(function () {
                                                         ->defaults(
                                                             'display',
                                                             'Vragen',
+                                                        )
+                                                        ->defaults(
+                                                            'model',
+                                                            'questions',
                                                         );
                                                     Route::get(
                                                         '/create',
