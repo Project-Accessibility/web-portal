@@ -188,14 +188,14 @@ class QuestionController extends Controller
         }
         $option->order = $order;
         $option->extra_data = match ($type) {
-            QuestionOptionType::OPEN => [
+            QuestionOptionType::OPEN->value => [
                 'placeholder' => $data['openPlaceholder'],
             ],
-            QuestionOptionType::MULTIPLE_CHOICE => [
+            QuestionOptionType::MULTIPLE_CHOICE->value => [
                 'multiple' => $data['multipleAnswers'],
                 'values' => $data['list'],
             ],
-            QuestionOptionType::RANGE => [
+            QuestionOptionType::RANGE->value => [
                 'min' => $data['rangeMin'],
                 'max' => $data['rangeMax'],
                 'step' => $data['rangeStep'],

@@ -191,7 +191,6 @@ class QuestionnaireController extends Controller
         return redirect(
             route('researches.details', [
                 $research->id,
-                $questionnaire->id,
                 'tab' => 'Vragenlijsten',
             ]),
         )->with('success', 'De vragenlijst is verwijderd!');
