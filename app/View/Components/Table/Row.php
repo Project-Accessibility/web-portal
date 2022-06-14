@@ -57,13 +57,12 @@ class Row extends Component
     ): string|Collection {
         if (get_class($tableLinks) === TableLink::class) {
             return $tableLinks->createUrl($item);
-        } else {
-            return $tableLinks->mapWithKeys(function (
-                TableLink $tableLink,
-            ) use ($item) {
-                return $tableLink->getUrlWithName($item);
-            });
         }
+        return $tableLinks->mapWithKeys(function (TableLink $tableLink) use (
+            $item,
+        ) {
+            return $tableLink->getUrlWithName($item);
+        });
     }
 
     public function render()

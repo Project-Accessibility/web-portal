@@ -68,12 +68,12 @@ class Question extends Model
             if (!$question->uuid) {
                 $question->uuid = Str::uuid();
                 $question->version = 1;
-            } else {
-                $currentQuestion = Question::whereUuid($question->uuid)
-                    ->orderBy('version', 'desc')
-                    ->first();
-                $question->version = $currentQuestion->version + 1;
+                return;
             }
+            $currentQuestion = Question::whereUuid($question->uuid)
+                ->orderBy('version', 'desc')
+                ->first();
+            $question->version = $currentQuestion->version + 1;
         });
     }
 
@@ -99,26 +99,25 @@ class Question extends Model
         return $answers;
     }
 
-    private function getAnswersOfOptions($question, $answers){
+    private function getAnswersOfOptions($question, $answers)
+    {
         foreach ($question->options as $option) {
             $this->filterAnswers($question, $option, $answers);
         }
     }
 
-    private function filterAnswers($question, $option, $answers){
+    private function filterAnswers($question, $option, $answers)
+    {
         foreach ($option->answers as $answer) {
             $this->filterAnswer($question, $answer, $answers);
         }
     }
 
-    private function filterAnswer($question, $answer, $answers){
+    private function filterAnswer($question, $answer, $answers)
+    {
         $answerExists =
             $answers
-                ->where(
-                    'participant_id',
-                    '=',
-                    $answer->participant_id,
-                )
+                ->where('participant_id', '=', $answer->participant_id)
                 ->first() != null;
         if (!$answerExists) {
             $code = $answer->participant->code;
