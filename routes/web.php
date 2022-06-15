@@ -194,7 +194,8 @@ Route::middleware('auth')->group(function () {
                                 ->group(function () {
                                     Route::get('/', 'overview')
                                         ->name('questionnaires.participants')
-                                        ->defaults('display', 'Participanten');
+                                        ->defaults('display', 'Participanten')
+                                        ->defaults('model', 'participants');
 
                                     Route::post('/', 'store')->name(
                                         'participants.store',
@@ -226,22 +227,6 @@ Route::middleware('auth')->group(function () {
                             })
                                 ->name('questionnaires.results')
                                 ->defaults('display', 'Resultaten');
-
-                            Route::get('/participants', function (
-                                Research $research,
-                                Questionnaire $questionnaire,
-                            ) {
-                                return redirect()->route(
-                                    'questionnaires.details',
-                                    [
-                                        $research,
-                                        $questionnaire,
-                                        'tab' => 'Participanten',
-                                    ],
-                                );
-                            })
-                                ->name('questionnaires.participants')
-                                ->defaults('display', 'Participanten');
                         });
                     });
             });
