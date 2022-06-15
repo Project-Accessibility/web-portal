@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Casts\DisplayDateTime;
+use Carbon\Carbon;
+use DateTime;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -56,5 +60,17 @@ class Participant extends Model
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function lastUpdated()
+    {
+        $lastAnswer = $this->answers()->max('updated_at');
+        $lastUpdate = $this->updated_at;
+
+        if ($lastAnswer > $lastUpdate) {
+            return $lastAnswer;
+        } else {
+            return $lastUpdate;
+        }
     }
 }

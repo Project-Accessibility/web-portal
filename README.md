@@ -507,7 +507,8 @@ Voeg deze code toe aan de view:<br>
 `<x-breadcrumb />`
 
 Om een naam te geven aan een url voeg je deze code toe aan je route:<br>
-`->defaults('display', 'home')`<br>
+`->defaults('display', 'Tekst welke wordt weergegeven in de breadcrumb')`<br>
+`->defaults('model', 'Modelnaam (als dit van toepassing is voor de route)')`<br>
 Dan zie je route er bijvoorbeeld als volgt uit:<br>
 
 ```

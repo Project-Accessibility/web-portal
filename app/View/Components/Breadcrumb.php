@@ -11,6 +11,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class Breadcrumb extends Component
 {
     public array $paths = [];
+    private array $modelTitles = [
+        'researches' => 'title',
+        'questionnaires' => 'title',
+        'sections' => 'title',
+        'questions' => 'title',
+        'participants' => 'code',
+    ];
 
     public function __construct()
     {
@@ -81,9 +88,14 @@ class Breadcrumb extends Component
 
     private function getModelTitle(Route $route, int $id): ?string
     {
-        $model = $route->defaults['model'];
+        if (!array_key_exists('model', $route->defaults)) {
+            return null;
+        }
 
-        return DB::table($model)->find($id)->title;
+        $model = $route->defaults['model'];
+        $modelColumn = $this->modelTitles[$model] ?? 'title';
+
+        return DB::table($model)->find($id)->$modelColumn;
     }
 
     public function render(): View

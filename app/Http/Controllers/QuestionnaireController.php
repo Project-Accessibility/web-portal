@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Casts\DisplayDateTime;
 use App\Http\Requests\StoreQuestionnaireRequest;
+use App\Models\Participant;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use App\Utils\TableLink;
 use App\Utils\TableLinkParameter;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -122,41 +123,24 @@ class QuestionnaireController extends Controller
             collect($sectionLinkParameters),
         );
 
-        $participantLinkParameters = [
-            new TableLinkParameter(
-                routeParameter: 'participant',
-                itemIndex: 'id',
-            ),
-            new TableLinkParameter(
-                routeParameter: 'questionnaire',
-                routeValue: $questionnaire->id,
-            ),
-            new TableLinkParameter(
-                routeParameter: 'research',
-                routeValue: $questionnaire->research->id,
-            ),
-        ];
-
-        $participantRowLink = new TableLink(
-            'participants.details',
-            collect($participantLinkParameters),
-        );
-
         // Results
         $results = $questionnaire->results()->toArray();
 
         // Participants
         $participants = $questionnaire
             ->participants()
-            ->withMax('answers', 'updated_at')
-            ->withCasts([
-                'answers_max_updated_at' => DisplayDateTime::class,
-            ])
             ->get()
+            ->map(function (Participant $participant) {
+                $participant->last_updated = Carbon::parse(
+                    $participant->lastUpdated(),
+                )->translatedFormat('l d F Y \o\m H:i');
+
+                return $participant;
+            })
             ->toArray();
 
         $participantHeaders = ['ID', 'Code', 'Laatst gewijzigd', 'Voltooid'];
-        $participantKeys = ['id', 'code', 'answers_max_updated_at', 'finished'];
+        $participantKeys = ['id', 'code', 'last_updated', 'finished'];
 
         $participantLinkParameters = [
             new TableLinkParameter(
@@ -189,10 +173,6 @@ class QuestionnaireController extends Controller
                 'sectionLinks',
                 'sectionKeys',
                 'sectionRowLink',
-                'participants',
-                'participantHeaders',
-                'participantKeys',
-                'participantRowLink',
                 'results',
                 'participants',
                 'participantHeaders',
