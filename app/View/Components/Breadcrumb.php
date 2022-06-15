@@ -12,11 +12,11 @@ class Breadcrumb extends Component
 {
     public array $paths = [];
     private array $modelTitles = [
-      'researches' => 'title',
-      'questionnaires' => 'title',
-      'sections' => 'title',
-      'questions' => 'title',
-      'participants' => 'code',
+        'researches' => 'title',
+        'questionnaires' => 'title',
+        'sections' => 'title',
+        'questions' => 'title',
+        'participants' => 'code',
     ];
 
     public function __construct()
@@ -88,7 +88,7 @@ class Breadcrumb extends Component
 
     private function getModelTitle(Route $route, int $id): ?string
     {
-        if(!array_key_exists('model', $route->defaults)) {
+        if (!array_key_exists('model', $route->defaults)) {
             return null;
         }
 
