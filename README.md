@@ -42,16 +42,15 @@ De API bestaat uit de volgende routes.
 <details>
     <summary>Alle API routes</summary>
 
-    | Route                           | Methode | Query                                 | Response                                                                                 |
-    |---------------------------------|---------|---------------------------------------|------------------------------------------------------------------------------------------|
-    | /ping                           | GET     |                                       | Pong                                                                                     |
-    | /questionnaires/getByCodes      | POST     |                                       | Array van vragenlijsten welke zijn gekoppeld aan de codes.                               |
-    | /questionnaires/{code}          | GET     | code: code van de participant         | Een vragenlijst met daarbij de onderdelen en vragen.                                     |
-    | /questionnaires/{questionnaire} | POST    | questionnaire: ID van een vragenlijst | 406 - Not implemented                                                                    |
-    | /questions/{question}/{code}    | GET     | question: ID van de vraag             | Een vraag met daarbij de antwoordmogelijkheden en gegeven antwoorden door de participant |
-    |                                 |         | code: code van de participant         |                                                                                          |
-    | /questions/{question}/{code}    | POST    | question: ID van de vraag             | 406 - Not implemented.                                                                   |
-    |                                 |         | code: code van de participant         |                                                                                          |
+    | Route                           | Methode | Query                                 | Response                                                                                  |
+    |---------------------------------|---------|---------------------------------------|-------------------------------------------------------------------------------------------|
+    | /ping                           | GET     |                                       | Pong                                                                                      |
+    | /questionnaires/{code}          | GET     | code: code van de participant         | Een vragenlijst met daarbij de onderdelen en vragen.                                      |
+    | /questionnaires/{code}          | POST    | code: code van de participant         | Bericht met dat de vragenlijst is afgesloten.                                             |
+    | /questions/{question}/{code}    | GET     | question: ID van de vraag             | Een vraag met daarbij de antwoordmogelijkheden en gegeven antwoorden door de participant. |
+    |                                 |         | code: code van de participant         |                                                                                           |
+    | /questions/{question}/{code}    | POST    | question: ID van de vraag             | Bericht met dat het opslaan is geslaagd.                                                  |
+    |                                 |         | code: code van de participant         |                                                                                           |
 
 </details>
 
@@ -192,7 +191,7 @@ Elke response wordt teruggeven in een `json` formaat.
     <summary>POST: /questionnaires/{questionnaire}</summary>
 
     {
-        "message": "Deze functie werkt nog niet."
+        "message": "Participant finished!"
     }
 
 </details>
