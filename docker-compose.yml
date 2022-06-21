@@ -30,6 +30,7 @@ services:
             REDIS_HOST: 'redis'
         volumes:
             - '.:/app'
+            - 'portal-assets:/app/storage'
         depends_on:
             - mysql
             - redis
@@ -73,4 +74,6 @@ volumes:
     sail-mysql:
         driver: local
     sail-redis:
+        driver: local
+    portal-assets:
         driver: local
