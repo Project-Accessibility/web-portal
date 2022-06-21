@@ -1,0 +1,35 @@
+$grays: map-remove(
+        $grays,
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900",
+);
+
+$colors: map-remove(
+        $colors,
+        "indigo",
+        "purple",
+        "pink",
+        "yellow",
+        "cyan"
+);
+
+$theme-colors: map-remove(
+        $theme-colors,
+        "warning",
+        "info",
+);
+
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+
+$table-variants: map-remove(
+        $table-variants,
+        "info",
+        "warning",
+);
