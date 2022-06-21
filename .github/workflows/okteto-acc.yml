@@ -25,8 +25,8 @@ jobs:
     - name: "Trigger the pipeline"
       uses: okteto/pipeline@latest
       with:
-        namespace: acc-accessibility-gewoonjaap
-        name: acc-accessibility
+        namespace: milovdpas
+        name: devops-2122-milovdpas2136650-wesselvtilburg2136555
         variables: DB_DATABASE=accessibility_dashboard,
                    APP_ENV=testing,DB_USERNAME=admin,
                    DB_PASSWORD=admin,DB_HOST=mysql,
