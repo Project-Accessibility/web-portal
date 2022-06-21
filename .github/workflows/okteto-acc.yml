@@ -1,0 +1,39 @@
+on:
+  push:
+    branches:
+    - main
+
+name: Okteto Acc Deployment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+
+    - name: context
+      uses: okteto/context@latest
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+
+    - name: "Activate Namespace"
+      uses: okteto/namespace@latest
+      with:
+        name: acc-accessibility-gewoonjaap
+
+    - name: "Trigger the pipeline"
+      uses: okteto/pipeline@latest
+      with:
+        namespace: acc-accessibility-gewoonjaap
+        name: acc-accessibility
+        variables: DB_DATABASE=accessibility_dashboard,
+                   APP_ENV=testing,DB_USERNAME=admin,
+                   DB_PASSWORD=admin,DB_HOST=mysql,
+                   API_KEY=${{ secrets.API_KEY }},
+                   MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }},
+                   RADAR_SECRET=${{ secrets.RADAR_SECRET }},
+                   MAIL_USERNAME=${{ secrets.MAIL_USERNAME }},
+                   MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}
+        timeout: 8m
+        skipIfExists: false

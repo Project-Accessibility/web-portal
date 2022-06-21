@@ -1,0 +1,22 @@
+/* Stylesheet page */
+.stylesheet-color-box {
+    height: 50px;
+    width: 50px;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.smallCell {
+    width: 1px;
+    white-space: nowrap;
+}
+
+.accordion-button:disabled::after {
+    background: none;
+}
+
+.dropdown-menu > .nav-item .dropdown-item:hover {
+    background-color: rgba(256, 256, 256, 0.1);
+}
