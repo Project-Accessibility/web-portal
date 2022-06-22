@@ -27,7 +27,12 @@
                 <x-input type="email" label="E-mail" name="email" placeholder="Uw e-mail"></x-input>
                 <x-input type="password" label="Wachtwoord" name="password" placeholder="Uw wachtwoord"></x-input>
 
-                <x-input label="Onthoud mij" type="switch" name="remember_me" :value="true"></x-input>
+                <div class="d-flex justify-content-between">
+                    <x-input label="Onthoud mij" type="switch" name="remember_me" :value="true"></x-input>
+                    <label class="form-label">
+                        <a href="{{ route('password.request') }}" class="float-right small">{{__('Wachtwoord vergeten?')}}</a>
+                    </label>
+                </div>
 
                 <div class="mt-2 d-flex justify-content-between align-items-center">
                     <x-button type="primary">Inloggen</x-button>

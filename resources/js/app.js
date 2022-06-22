@@ -22,6 +22,8 @@ window.onload = () => {
 
             let tabQuery = getTabQuery();
 
+            createActiveBreadCrumb(query);
+
             let nextUrl;
             if (currentUrl.indexOf('?tab=') > -1) {
                 nextUrl = currentUrl.replace(
@@ -33,8 +35,6 @@ window.onload = () => {
             }
 
             window.history.replaceState('', '', nextUrl);
-
-            createActiveBreadCrumb(query);
         });
     });
 };

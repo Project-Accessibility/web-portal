@@ -1,16 +1,15 @@
 <?php
 
+use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\ResultController;
-use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Requests\TestInputsRequest;
-use App\Models\Participant;
 use App\Models\Questionnaire;
 use App\Models\Research;
 use Illuminate\Support\Facades\App;
-use App\Http\Controllers\ParticipantController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -20,7 +19,8 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::get('/', 'overview')
                 ->name('researches')
-                ->defaults('display', 'Onderzoeken');
+                ->defaults('display', 'Onderzoeken')
+                ->defaults('model', 'researches');
             Route::get('/create', 'create')
                 ->name('researches.create')
                 ->defaults('display', 'Aanmaken');
@@ -39,7 +39,8 @@ Route::middleware('auth')->group(function () {
                     ->group(function () {
                         Route::get('/', 'overview')
                             ->name('researches.questionnaires')
-                            ->defaults('display', 'Vragenlijsten');
+                            ->defaults('display', 'Vragenlijsten')
+                            ->defaults('model', 'questionnaires');
 
                         Route::get('/create', 'create')
                             ->name('questionnaires.create')
@@ -69,7 +70,8 @@ Route::middleware('auth')->group(function () {
                                 ->group(function () {
                                     Route::get('/', 'overview')
                                         ->name('questionnaires.sections')
-                                        ->defaults('display', 'Onderdelen');
+                                        ->defaults('display', 'Onderdelen')
+                                        ->defaults('model', 'sections');
                                     Route::get('/create', 'create')
                                         ->name('sections.create')
                                         ->defaults('display', 'Aanmaken');
@@ -122,6 +124,10 @@ Route::middleware('auth')->group(function () {
                                                         ->defaults(
                                                             'display',
                                                             'Vragen',
+                                                        )
+                                                        ->defaults(
+                                                            'model',
+                                                            'questions',
                                                         );
                                                     Route::get(
                                                         '/create',
@@ -188,7 +194,8 @@ Route::middleware('auth')->group(function () {
                                 ->group(function () {
                                     Route::get('/', 'overview')
                                         ->name('questionnaires.participants')
-                                        ->defaults('display', 'Participanten');
+                                        ->defaults('display', 'Participanten')
+                                        ->defaults('model', 'participants');
 
                                     Route::post('/', 'store')->name(
                                         'participants.store',
@@ -220,22 +227,6 @@ Route::middleware('auth')->group(function () {
                             })
                                 ->name('questionnaires.results')
                                 ->defaults('display', 'Resultaten');
-
-                            Route::get('/participants', function (
-                                Research $research,
-                                Questionnaire $questionnaire,
-                            ) {
-                                return redirect()->route(
-                                    'questionnaires.details',
-                                    [
-                                        $research,
-                                        $questionnaire,
-                                        'tab' => 'Participanten',
-                                    ],
-                                );
-                            })
-                                ->name('questionnaires.participants')
-                                ->defaults('display', 'Participanten');
                         });
                     });
             });

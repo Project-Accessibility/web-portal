@@ -12,6 +12,9 @@
 */
 
 return [
+    'attributes' => [
+        'password' => 'wachtwoord',
+    ],
     'accepted' => ':Attribute moet worden geaccepteerd.',
     'accepted_if' =>
         ':Attribute moet worden geaccepteerd als :other :value is.',

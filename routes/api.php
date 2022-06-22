@@ -25,7 +25,7 @@ Route::get('/ping', function () {
 });
 
 Route::get('/questionnaires/{code}', [QuestionnaireController::class, 'get']);
-Route::post('/questionnaires/{questionnaire}', [
+Route::post('/questionnaires/{code}', [
     QuestionnaireController::class,
     'submit',
 ]);

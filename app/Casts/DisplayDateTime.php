@@ -9,7 +9,9 @@ class DisplayDateTime implements CastsAttributes
 {
     public function get($model, string $key, $value, array $attributes)
     {
-        return Carbon::parse($value)->translatedFormat('l d F Y \o\m H:i');
+        return $value
+            ? Carbon::parse($value)->translatedFormat('l d F Y \o\m H:i')
+            : null;
     }
 
     public function set($model, string $key, $value, array $attributes)

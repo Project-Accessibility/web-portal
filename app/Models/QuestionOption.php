@@ -41,7 +41,7 @@ class QuestionOption extends Model
     public $table = 'question_options';
 
     /* @var array */
-    protected $fillable = ['question_id', 'type', 'extra_data'];
+    protected $fillable = ['question_id', 'type', 'order', 'extra_data'];
 
     /* @var array */
     protected $casts = [

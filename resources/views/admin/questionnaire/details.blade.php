@@ -46,6 +46,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt-1">
+                <div class="col-sm-6">
+                    <strong>Helppagina tekst</strong>
+                    <div>
+                        {{ $questionnaire->help }}
+                    </div>
+                </div>
+            </div>
         @endsection
         @section('onderdelen')
             <div class="mt-2">
