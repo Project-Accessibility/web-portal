@@ -3,25 +3,31 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GetQuestionnaireRequest;
 use App\Models\Answer;
 use App\Models\Participant;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\QuestionOption;
 use App\Models\Section;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use function abort_if;
 
 class QuestionnaireController extends Controller
 {
-    public function get(string $code): ?Model
+    public function get(GetQuestionnaireRequest $request, string $code): ?Model
     {
-        $participant = Participant::whereCode($code)->firstOrFail();
+        $request->validated();
+        $participant = Participant::whereCode($code)
+            ->whereFinished(false)
+            ->first();
 
         $participant->questionnaire->sections->map(function (
             Section $section,
@@ -71,8 +77,17 @@ class QuestionnaireController extends Controller
         return $participant->questionnaire;
     }
 
-    public function submit(Questionnaire $questionnaire): Model
+    public function submit($code): JsonResponse
     {
-        abort(Response::HTTP_NOT_IMPLEMENTED, 'Deze functie werkt nog niet.');
+        $participant = Participant::whereCode($code)
+            ->whereFinished(false)
+            ->firstOrFail();
+
+        $participant->finished = true;
+        $participant->save();
+
+        return response()->json([
+            'message' => 'Participant finished!',
+        ]);
     }
 }

@@ -18,7 +18,18 @@ RUN yarn install
 RUN yarn prod
 RUN rm -rf node_modules/
 
-RUN cp -f .env.example .env
+RUN cp -f .env.dist .env
+ARG API_KEY
+ARG MAPBOX_ACCESS_TOKEN
+ARG RADAR_SECRET
+ARG MAIL_USERNAME
+ARG MAIL_PASSWORD
+RUN sed -i "s|API_KEY=|API_KEY=${API_KEY}|g" .env
+RUN sed -i "s|MAPBOX_ACCESS_TOKEN=|MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}|g" .env
+RUN sed -i "s|RADAR_SECRET=|RADAR_SECRET=${RADAR_SECRET}|g" .env
+RUN sed -i "s|MAIL_USERNAME=|MAIL_USERNAME=${MAIL_USERNAME}|g" .env
+RUN sed -i "s|MAIL_PASSWORD=|MAIL_PASSWORD=${MAIL_PASSWORD}|g" .env
+
 RUN php artisan key:generate
 
 RUN apt-get -y autoremove \
