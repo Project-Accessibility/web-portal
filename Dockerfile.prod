@@ -1,0 +1,81 @@
+FROM php:8.1-fpm
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
+    unzip \
+    git \
+    curl
+
+
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
+# Install PHP extensions
+
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions mbstring pdo_mysql zip exif pcntl gd
+
+
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+#Installing node 12.x
+RUN curl -sL https://deb.nodesource.com/setup_16.x| bash -
+RUN apt-get install -y nodejs
+
+RUN npm i -g yarn
+
+COPY . /var/www
+WORKDIR /var/www
+
+COPY --chown=www-data:www-data . /var/www
+# Change current user to www
+USER www-data
+
+RUN cp -f .env.prod .env
+ARG API_KEY
+ARG MAPBOX_ACCESS_TOKEN
+ARG RADAR_SECRET
+ARG MAIL_USERNAME
+ARG MAIL_PASSWORD
+ARG DB_USERNAME
+ARG DB_PASSWORD
+RUN sed -i "s|API_KEY=|API_KEY=${API_KEY}|g" .env
+RUN sed -i "s|MAPBOX_ACCESS_TOKEN=|MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}|g" .env
+RUN sed -i "s|RADAR_SECRET=|RADAR_SECRET=${RADAR_SECRET}|g" .env
+RUN sed -i "s|MAIL_USERNAME=|MAIL_USERNAME=${MAIL_USERNAME}|g" .env
+RUN sed -i "s|MAIL_PASSWORD=|MAIL_PASSWORD=${MAIL_PASSWORD}|g" .env
+RUN sed -i "s|DB_USERNAME=|DB_USERNAME=${DB_USERNAME}|g" .env
+RUN sed -i "s|DB_PASSWORD=|DB_PASSWORD=${DB_PASSWORD}|g" .env
+
+RUN rm -rf composer.lock vendor
+RUN composer install
+RUN yarn install
+RUN yarn prod
+RUN rm -rf node_modules/
+
+RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh
+
+ENTRYPOINT ["sh", "./docker-entrypoint-prod.sh"]
+
+RUN #php artisan migrate --seed
+
+RUN php artisan cache:clear &&  \
+    php artisan view:clear &&  \
+    php artisan route:clear
+
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]
