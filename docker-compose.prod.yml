@@ -1,80 +1,58 @@
+# For more information: https://laravel.com/docs/sail
 version: '3'
 services:
-  web_portal_php8:
+  laravel:
     build:
-      context: .
-      dockerfile: ./Dockerfile.prod
-    image: web_portal_php8/latest
-    container_name: web_portal_php8
-    restart: unless-stopped
-    tty: true
+      context: ./
+      dockerfile: Dockerfile.prod
+      args:
+        API_KEY: '${API_KEY}'
+        MAPBOX_ACCESS_TOKEN: '${MAPBOX_ACCESS_TOKEN}'
+        RADAR_SECRET: '${RADAR_SECRET}'
+        MAIL_USERNAME: '${MAIL_USERNAME}'
+        MAIL_PASSWORD: '${MAIL_PASSWORD}'
+        DB_USERNAME: '${DB_USERNAME}'
+        DB_PASSWORD: '${DB_PASSWORD}'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '80:8080'
     volumes:
-      - ./:/var/www
-      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
-      - web_portal_storage:/var/www/storage
-    networks:
-      - web_portal_network
+      - 'portal-assets:/app/storage'
     depends_on:
-      - web_portal_mysql
-
-  web_portal_nginx:
-    image: nginx:alpine
-    container_name: web_portal_nginx
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - .:/var/www
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - mysql
+      - redis
     networks:
-      - web_portal_network
-
-  web_portal_node_alpine:
-    image: node:alpine
-    container_name: web_portal_node_alp
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - ./:/var/www
-    networks:
-      - web_portal_network
-
-  web_portal_mysql:
-    image: mysql/mysql-server:8.0
-    container_name: web_portal_mysql
-    restart: unless-stopped
-    tty: true
+      - sail
+  mysql:
+    image: 'mysql/mysql-server:8.0'
     ports:
-      - "3306:3306"
+      - '3306:3306'
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_ROOT_HOST: "%"
       MYSQL_DATABASE: 'accessibility_dashboard'
-      MYSQL_USER: "${DB_USERNAME}"
-      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
     volumes:
-      - dbdata:/var/lib/mysql/
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - 'sail-mysql:/var/lib/mysql'
     networks:
-      - web_portal_network
-
-  web_portal_redis:
-    image: "redis:alpine"
-    container_name: web_portal_redis
-    restart: unless-stopped
-    tty: true
-    command: redis-server
+      - sail
+  redis:
+    image: 'redis:alpine'
     ports:
-      - "6379:6379"
+      - '6379:6379'
+    volumes:
+      - 'sail-redis:/data'
     networks:
-      - web_portal_network
-
+      - sail
 networks:
-  web_portal_network:
+  sail:
     driver: bridge
 volumes:
-  web_portal_storage:
+  sail-mysql:
     driver: local
-  dbdata:
+  sail-redis:
+    driver: local
+  portal-assets:
     driver: local

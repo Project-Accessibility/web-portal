@@ -1,48 +1,22 @@
-FROM php:8.1-fpm
+FROM php:8.1
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git \
-    curl
-
-
-
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-
-# Install PHP extensions
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+RUN apt-get update -y && apt-get install -y --no-install-recommends openssl zip unzip git nodejs
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions mbstring pdo_mysql zip exif pcntl gd
+    install-php-extensions @composer curl gd mbstring openssl fileinfo mysqli pdo_mysql zip
 
+ADD ./uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY . /app
+WORKDIR /app
 
-#Installing node 12.x
-RUN curl -sL https://deb.nodesource.com/setup_16.x| bash -
-RUN apt-get install -y nodejs
-
+RUN composer install
 RUN npm i -g yarn
-
-COPY . /var/www
-WORKDIR /var/www
-
-COPY --chown=www-data:www-data . /var/www
-# Change current user to www
-USER www-data
+RUN yarn install
+RUN yarn prod
+RUN rm -rf node_modules/
 
 RUN cp -f .env.prod .env
 ARG API_KEY
@@ -60,22 +34,14 @@ RUN sed -i "s|MAIL_PASSWORD=|MAIL_PASSWORD=${MAIL_PASSWORD}|g" .env
 RUN sed -i "s|DB_USERNAME=|DB_USERNAME=${DB_USERNAME}|g" .env
 RUN sed -i "s|DB_PASSWORD=|DB_PASSWORD=${DB_PASSWORD}|g" .env
 
-RUN rm -rf composer.lock vendor
-RUN composer install
-RUN yarn install
-RUN yarn prod
-RUN rm -rf node_modules/
+RUN php artisan key:generate
 
-RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh
+RUN apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENTRYPOINT ["sh", "./docker-entrypoint-prod.sh"]
+CMD php artisan storage:link \
+  & php artisan queue:work \
+  & php artisan serve --host=0.0.0.0 --port=8080
 
-RUN #php artisan migrate --seed
-
-RUN php artisan cache:clear &&  \
-    php artisan view:clear &&  \
-    php artisan route:clear
-
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+EXPOSE 8080
