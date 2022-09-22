@@ -21,12 +21,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'info@accessibility.nl',
-            'password' => Hash::make('admin'),
+            'name' => env('SEED_NAME', 'test'),
+            'email' => env('SEED_EMAIL', 'test@test.com'),
+            'password' => Hash::make(env('SEED_PASSWORD')),
         ]);
 
-        $this->createDemoData();
+//        $this->createDemoData();
     }
 
     private function createDemoData()

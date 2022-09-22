@@ -13,6 +13,9 @@ services:
         MAIL_PASSWORD: '${MAIL_PASSWORD}'
         DB_USERNAME: '${DB_USERNAME}'
         DB_PASSWORD: '${DB_PASSWORD}'
+        SEED_NAME: '${SEED_NAME}'
+        SEED_EMAIL: '${SEED_EMAIL}'
+        SEED_PASSWORD: '${SEED_PASSWORD}'
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
@@ -29,7 +32,7 @@ services:
     ports:
       - '3306:3306'
     environment:
-      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT}'
       MYSQL_ROOT_HOST: "%"
       MYSQL_DATABASE: 'accessibility_dashboard'
       MYSQL_USER: '${DB_USERNAME}'
