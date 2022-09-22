@@ -20,12 +20,12 @@ jobs:
     - name: "Activate Namespace"
       uses: okteto/namespace@latest
       with:
-        name: acc-accessibility-gewoonjaap
+        name: acc-accessibility-martijnambagtsheer
 
     - name: "Trigger the pipeline"
       uses: okteto/pipeline@latest
       with:
-        namespace: acc-accessibility-gewoonjaap
+        namespace: acc-accessibility-martijnambagtsheer
         name: acc-accessibility
         variables: DB_DATABASE=accessibility_dashboard,
                    APP_ENV=testing,DB_USERNAME=admin,

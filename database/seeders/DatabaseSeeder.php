@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make(env('SEED_PASSWORD')),
         ]);
 
-//        $this->createDemoData();
+        //        $this->createDemoData();
     }
 
     private function createDemoData()
