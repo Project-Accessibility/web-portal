@@ -17,7 +17,7 @@ jobs:
     - name: Delete Preview
       uses: okteto/destroy-preview@latest
       with:
-        name: pr-${{ github.event.number }}-gewoonjaap
+        name: pr-${{ github.event.number }}-martijnambagtsheer
 
       # Wait 30 seconds, to make sure the preview is destroyed. Kinda hacky lol
     - name: Waiting for preview to be deleted
