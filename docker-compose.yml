@@ -27,6 +27,9 @@ services:
             DB_DATABASE: '${DB_DATABASE:-accessibility_dashboard}'
             DB_USERNAME: '${DB_USERNAME:-admin}'
             DB_PASSWORD: '${DB_PASSWORD:-admin}'
+            SEED_NAME: '${SEED_NAME}'
+            SEED_EMAIL: '${SEED_EMAIL}'
+            SEED_PASSWORD: '${SEED_PASSWORD}'
             REDIS_HOST: 'redis'
         volumes:
             - '.:/app'
