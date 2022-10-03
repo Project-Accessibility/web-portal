@@ -62,7 +62,7 @@ class SectionController extends Controller
             $section->geofence_id = $geofence->id;
             $section->save();
 
-            $return = RadarHandler::saveGeofence(
+            RadarHandler::saveGeofence(
                 $geofence->id,
                 $section->title,
                 $section->description,
@@ -70,8 +70,6 @@ class SectionController extends Controller
                 $latitude,
                 $radius,
             );
-
-            dd($return);
         }
 
         return redirect()
