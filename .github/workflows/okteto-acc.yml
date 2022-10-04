@@ -20,12 +20,12 @@ jobs:
     - name: "Activate Namespace"
       uses: okteto/namespace@latest
       with:
-        name: acc-accessibility-gewoonjaap
+        namespace: acc-accessibility-martijnambagtsheer
 
     - name: "Trigger the pipeline"
       uses: okteto/pipeline@latest
       with:
-        namespace: acc-accessibility-gewoonjaap
+        namespace: acc-accessibility-martijnambagtsheer
         name: acc-accessibility
         variables: DB_DATABASE=accessibility_dashboard,
                    APP_ENV=testing,DB_USERNAME=admin,
@@ -35,5 +35,8 @@ jobs:
                    RADAR_SECRET=${{ secrets.RADAR_SECRET }},
                    MAIL_USERNAME=${{ secrets.MAIL_USERNAME }},
                    MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}
+                   SEED_NAME=${{ secrets.SEED_NAME }}
+                   SEED_EMAIL=${{ secrets.SEED_EMAIL }}
+                   SEED_PASSWORD=${{ secrets.SEED_PASSWORD }}
         timeout: 8m
         skipIfExists: false

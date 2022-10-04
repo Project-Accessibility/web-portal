@@ -61,6 +61,7 @@ class SectionController extends Controller
             ]);
             $section->geofence_id = $geofence->id;
             $section->save();
+
             RadarHandler::saveGeofence(
                 $geofence->id,
                 $section->title,
