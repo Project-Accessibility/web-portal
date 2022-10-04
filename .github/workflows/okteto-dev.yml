@@ -20,7 +20,7 @@ jobs:
     - name: "Activate Namespace"
       uses: okteto/namespace@latest
       with:
-        name: dev-accessibility-martijnambagtsheer
+        namespace: dev-accessibility-martijnambagtsheer
 
     - name: "Trigger the pipeline"
       uses: okteto/pipeline@latest
