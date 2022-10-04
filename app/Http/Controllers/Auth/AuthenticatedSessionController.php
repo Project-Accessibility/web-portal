@@ -19,6 +19,7 @@ class AuthenticatedSessionController extends Controller
 
     public function store(LoginRequest $request): RedirectResponse
     {
+        dd(env('DB_USERNAME'), env('DB_PASSWORD'));
         $request->validated();
 
         $request->authenticate();
