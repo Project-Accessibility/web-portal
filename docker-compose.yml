@@ -11,23 +11,15 @@ services:
                 RADAR_SECRET: '${RADAR_SECRET}'
                 MAIL_USERNAME: '${MAIL_USERNAME}'
                 MAIL_PASSWORD: '${MAIL_PASSWORD}'
+                DB_USERNAME: '${DB_USERNAME}'
+                DB_PASSWORD: '${DB_PASSWORD}'
+                SEED_NAME: '${SEED_NAME}'
+                SEED_EMAIL: '${SEED_EMAIL}'
+                SEED_PASSWORD: '${SEED_PASSWORD}'
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
             - '80:8080'
-        env_file:
-            - .env.dist
-        environment:
-            LARAVEL_SAIL: 1
-            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-            APP_ENV: '${APP_ENV:-local}'
-            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
-            DB_USERNAME: '${DB_USERNAME:-admin}'
-            DB_PASSWORD: '${DB_PASSWORD:-admin}'
-            SEED_NAME: '${SEED_NAME}'
-            SEED_EMAIL: '${SEED_EMAIL}'
-            SEED_PASSWORD: '${SEED_PASSWORD}'
-            REDIS_HOST: 'redis'
         volumes:
             - '.:/app'
             - 'portal-assets:/app/storage'
