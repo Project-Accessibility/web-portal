@@ -20,12 +20,6 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        dump(
-            env('SEED_NAME'),
-            env('SEED_EMAIL'),
-            env('SEED_PASSWORD'),
-        );
-
         User::factory()->create([
             'name' => env('SEED_NAME'),
             'email' => env('SEED_EMAIL'),
