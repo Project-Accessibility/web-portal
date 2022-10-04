@@ -11,10 +11,7 @@ Route::middleware('guest')->group(function () {
         'create',
     ])->name('login');
 
-    //Route::post('login', [AuthenticatedSessionController::class, 'store']);
-    Route::post('login', function () {
-        dd(env('DB_USERNAME'), env('DB_PASSWORD'));
-    });
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
     Route::controller(ForgotPasswordController::class)
         ->prefix('/password')
