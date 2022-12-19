@@ -2,10 +2,9 @@
 
 @section('title', __('Service Unavailable'))
 @section('code', '503')
-@if($message)
-    @section('message')
-        <div class="h2">
-            {{$message}}
-        </div>
-    @endsection
-@endif
+@section('message')
+    <div class="h2">
+        Het web portaal is op dit moment in onderhoud.<br>
+        Kom later terug.
+    </div>
+@endsection
