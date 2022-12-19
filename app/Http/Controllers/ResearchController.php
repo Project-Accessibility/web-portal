@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreQuestionRequest;
+use App\Http\Actions\Duplicate\DuplicateQuestionnaire;
+use App\Http\Actions\Duplicate\DuplicateResearch;
 use App\Http\Requests\StoreResearchRequest;
+use App\Models\Questionnaire;
 use App\Models\Research;
 use App\Utils\TableLink;
 use App\Utils\TableLinkParameter;
@@ -26,14 +28,34 @@ class ResearchController extends Controller
 
     public function create(): View
     {
-        return view('admin.research.create');
+        $templateExtraData = [
+            'multiple' => false,
+            'options' => Research::get(['title', 'id'])->map(function (Research $research) {
+                return [$research->title, $research->id];
+            })->toArray()
+        ];
+
+        return view('admin.research.create')->with([
+            'templateExtraData' =>$templateExtraData
+        ]);
     }
 
     public function store(
         StoreResearchRequest $request,
     ): Application|RedirectResponse|Redirector {
         $request->validated();
-        Research::create($request->all());
+
+        $newResearch = Research::create($request->all());
+
+        $templateId = (int) $request->input('template');
+
+        if ($templateId) {
+            Research::find($templateId)
+                ->questionnaires
+                ->each(function (Questionnaire $questionnaire) use ($newResearch) {
+                   DuplicateQuestionnaire::duplicate($newResearch, $questionnaire);
+                });
+        }
 
         return redirect(route('researches'))->with(
             'success',

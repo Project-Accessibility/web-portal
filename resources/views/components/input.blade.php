@@ -78,7 +78,7 @@
             @if($extraData['multiple'])
                 <input type="hidden" name="{{$name}}" value=""/>
             @endif
-            <select class="selectpicker form-control" id="{{$name}}" title="{{$name}}"
+            <select class="selectpicker form-control" id="{{$name}}" title="Selecteer"
                     name="{{$name}}{{$extraData['multiple']?'[]':''}}" {{$extraData['multiple']?'multiple':''}} {{$disabled ? 'disabled' : ''}}>
                 @foreach($extraData['options'] as $option)
                     @php

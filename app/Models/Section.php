@@ -66,9 +66,9 @@ class Section extends Model
         return $this->belongsTo(Questionnaire::class);
     }
 
-    public function geofence(): HasOne
+    public function geofence(): BelongsTo
     {
-        return $this->hasOne(Geofence::class);
+        return $this->belongsTo(Geofence::class);
     }
 
     public function questions(): HasMany
