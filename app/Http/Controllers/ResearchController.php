@@ -30,13 +30,15 @@ class ResearchController extends Controller
     {
         $templateExtraData = [
             'multiple' => false,
-            'options' => Research::get(['title', 'id'])->map(function (Research $research) {
-                return [$research->title, $research->id];
-            })->toArray()
+            'options' => Research::get(['title', 'id'])
+                ->map(function (Research $research) {
+                    return [$research->title, $research->id];
+                })
+                ->toArray(),
         ];
 
         return view('admin.research.create')->with([
-            'templateExtraData' =>$templateExtraData
+            'templateExtraData' => $templateExtraData,
         ]);
     }
 
@@ -50,11 +52,11 @@ class ResearchController extends Controller
         $templateId = (int) $request->input('template');
 
         if ($templateId) {
-            Research::find($templateId)
-                ->questionnaires
-                ->each(function (Questionnaire $questionnaire) use ($newResearch) {
-                   DuplicateQuestionnaire::duplicate($newResearch, $questionnaire);
-                });
+            Research::find($templateId)->questionnaires->each(function (
+                Questionnaire $questionnaire,
+            ) use ($newResearch) {
+                DuplicateQuestionnaire::duplicate($newResearch, $questionnaire);
+            });
         }
 
         return redirect(route('researches'))->with(

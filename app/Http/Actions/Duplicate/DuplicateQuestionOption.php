@@ -7,10 +7,10 @@ use App\Models\QuestionOption;
 
 class DuplicateQuestionOption
 {
-    public static function duplicate(Question $question, QuestionOption $templateQuestionOption): void
-    {
-        $question
-            ->options()
-            ->save($templateQuestionOption->replicate());
+    public static function duplicate(
+        Question $question,
+        QuestionOption $templateQuestionOption,
+    ): void {
+        $question->options()->save($templateQuestionOption->replicate());
     }
 }

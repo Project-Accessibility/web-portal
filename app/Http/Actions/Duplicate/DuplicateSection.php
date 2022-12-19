@@ -11,18 +11,22 @@ use App\Models\Section;
 
 class DuplicateSection
 {
-    public static function duplicate(Questionnaire $questionnaire, Section $templateSection): void
-    {
+    public static function duplicate(
+        Questionnaire $questionnaire,
+        Section $templateSection,
+    ): void {
         $newSection = $questionnaire
             ->sections()
             ->save($templateSection->replicate());
 
-        if (! $newSection instanceof Section) return;
+        if (!$newSection instanceof Section) {
+            return;
+        }
 
-        $templateSection
-            ->questions
-            ->each(function (Question $question) use ($newSection) {
-                DuplicateQuestion::duplicate($newSection, $question);
-            });
+        $templateSection->questions->each(function (Question $question) use (
+            $newSection,
+        ) {
+            DuplicateQuestion::duplicate($newSection, $question);
+        });
     }
 }

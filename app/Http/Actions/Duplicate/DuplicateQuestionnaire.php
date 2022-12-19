@@ -8,18 +8,22 @@ use App\Models\Section;
 
 class DuplicateQuestionnaire
 {
-    public static function duplicate(Research $research, Questionnaire $templateQuestionnaire): void
-    {
+    public static function duplicate(
+        Research $research,
+        Questionnaire $templateQuestionnaire,
+    ): void {
         $newQuestionnaire = $research
             ->questionnaires()
             ->save($templateQuestionnaire->replicate(['open']));
 
-        if (! $newQuestionnaire instanceof Questionnaire) return;
+        if (!$newQuestionnaire instanceof Questionnaire) {
+            return;
+        }
 
-        $templateQuestionnaire
-            ->sections
-            ->each(function (Section $section) use ($newQuestionnaire) {
-                DuplicateSection::duplicate($newQuestionnaire, $section);
-            });
+        $templateQuestionnaire->sections->each(function (Section $section) use (
+            $newQuestionnaire,
+        ) {
+            DuplicateSection::duplicate($newQuestionnaire, $section);
+        });
     }
 }

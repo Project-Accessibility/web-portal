@@ -10,7 +10,7 @@ class StoreResearchRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'template' => 'nullable|exists:researches,id'
+            'template' => 'nullable|exists:researches,id',
         ];
     }
 

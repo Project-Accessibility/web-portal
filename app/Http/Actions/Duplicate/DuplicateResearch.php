@@ -11,12 +11,14 @@ class DuplicateResearch
     {
         $research = $templateResearch->replicate();
 
-        if (! $research) return;
+        if (!$research) {
+            return;
+        }
 
-        $templateResearch
-            ->questionnaires
-            ->each(function (Questionnaire $questionnaire) use ($research) {
-                DuplicateQuestionnaire::duplicate($research, $questionnaire);
-            });
+        $templateResearch->questionnaires->each(function (
+            Questionnaire $questionnaire,
+        ) use ($research) {
+            DuplicateQuestionnaire::duplicate($research, $questionnaire);
+        });
     }
 }
