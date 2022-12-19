@@ -17,6 +17,19 @@
 
         <h1 class="title">Nieuw onderzoek</h1>
         <div class="col-md-6">
+            <div class="mb-5">
+            @if(! empty($templateExtraData['options']))
+                    <x-input class="mb-1" label="Op basis van onderzoek" type="select" name="template" :extraData="$templateExtraData"></x-input>
+                    <span class="small fst-italic">Bij het selecteren van een onderzoek worden de vraenlijsten, onderdelen en vragen gekopieerd vanuit het geselecteerde onderzoek.</span>
+            @else
+                <div class="d-flex flex-column">
+                    <span class="form-label mb-0">Op basis van onderzoek</span>
+                    <span class="small">
+                    Er zijn op dit moment geen eerdere onderzoeken beschikbaar om van te kopieren.
+                    </span>
+                </div>
+            @endif
+            </div>
             <x-input required type="text" label="Titel" name="title" placeholder="Titel van het onderzoek"></x-input>
             <x-input type="textarea" label="Omschrijving" name="description"
                      placeholder="Een kleine omschrijving van het onderzoek" :extraData="['rows'=>8]"></x-input>
