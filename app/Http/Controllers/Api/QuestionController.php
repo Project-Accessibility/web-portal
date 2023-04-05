@@ -161,11 +161,18 @@ class QuestionController extends Controller
             return $links;
         }
         if (is_array($files)) {
+
+            if(collect($files)->every(fn ($item) => URL::isValidUrl($item))) {
+                return $files;
+            }
+
             // handle multiple files
             foreach ($files as $file) {
                 $links[] = $this->uploadFile($file, $path);
             }
         } else {
+            if (URL::isValidUrl($files)) return [$files];
+
             // handle single file
             $links[] = $this->uploadFile($files, $path);
         }
