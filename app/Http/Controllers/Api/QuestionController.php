@@ -11,6 +11,7 @@ use App\Models\Question;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
@@ -23,19 +24,20 @@ class QuestionController extends Controller
         Question $question,
         string $code,
     ): JsonResponse {
-        // validation
-        $request->validated();
+        error_log($request->file('IMAGE')[0]->getFilename());
 
-        $options = $question->options;
         $participant = Participant::whereCode($code)
             ->whereFinished(false)
             ->first();
 
-        // Add answers
-        $options->map(function ($option) use ($request, $participant) {
+        $question->options->map(function ($option) use (
+            $request,
+            $participant,
+        ) {
             $this->removeAnswers($request, $participant, $option);
             $this->saveAnswer($option, $request, $participant);
         });
+
         return response()->json([
             'message' => 'answers saved!',
         ]);
@@ -149,7 +151,7 @@ class QuestionController extends Controller
     private function removeFile($filePath): void
     {
         $filePath = storage_path(
-            'app/public/' . explode('storage', $filePath)[1],
+            'app/public' . explode('storage', $filePath)[1],
         );
         unlink($filePath);
     }
@@ -161,8 +163,7 @@ class QuestionController extends Controller
             return $links;
         }
         if (is_array($files)) {
-
-            if(collect($files)->every(fn ($item) => URL::isValidUrl($item))) {
+            if (collect($files)->every(fn($item) => URL::isValidUrl($item))) {
                 return $files;
             }
 
@@ -171,7 +172,9 @@ class QuestionController extends Controller
                 $links[] = $this->uploadFile($file, $path);
             }
         } else {
-            if (URL::isValidUrl($files)) return [$files];
+            if (URL::isValidUrl($files)) {
+                return [$files];
+            }
 
             // handle single file
             $links[] = $this->uploadFile($files, $path);
