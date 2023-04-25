@@ -33,22 +33,18 @@ class StoreAnswerRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'IMAGE' => 'array',
-            'IMAGE.*' => 'required',
-        ];
+        return [];
     }
 
     public function withValidator(Validator $validator): void
     {
-        $validator->after(
-            fn(Validator $validator) => $this->afterValidation($validator),
+        $validator->after(fn(Validator $validator)
+            => $this->afterValidation($validator)
         );
     }
 
     private function afterValidation(Validator $validator): void
     {
-        error_log($this->file('IMAGE')[0]->getSize());
         $question = $this->route('question');
 
         $this->getAllAnswers($question, $validator)->each(function (
@@ -61,7 +57,7 @@ class StoreAnswerRequest extends FormRequest
                         $validator,
                         $answer,
                         ['mp4', 'mov', 'm4v'],
-                        500000,
+                        50,
                         QuestionOptionType::VIDEO,
                     );
                     break;
@@ -69,8 +65,16 @@ class StoreAnswerRequest extends FormRequest
                     $this->validateFiles(
                         $validator,
                         $answer,
-                        ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'svg', 'webp'],
-                        90000,
+                        [
+                            'jpg',
+                            'jpeg',
+                            'png',
+                            'bmp',
+                            'gif',
+                            'svg',
+                            'webp'
+                        ],
+                        10,
                         QuestionOptionType::IMAGE,
                     );
                     break;
@@ -87,7 +91,7 @@ class StoreAnswerRequest extends FormRequest
                             'wav',
                             'aac',
                         ],
-                        100000,
+                        5,
                         QuestionOptionType::VOICE,
                     );
                     break;
@@ -114,16 +118,16 @@ class StoreAnswerRequest extends FormRequest
                         );
             }
         });
-
-        error_log('eind');
     }
 
     private function validateMultipleChoice(
-        Validator $validator,
-        string $multipleChoiceJson,
-        Model|QuestionOption $questionOption,
+        Validator               $validator,
+        array|string            $multipleChoice,
+        Model|QuestionOption    $questionOption,
     ): void {
-        $multipleChoice = collect(json_decode($multipleChoiceJson, true));
+        $multipleChoice = is_string($multipleChoice)
+            ? $this->collect([$multipleChoice])
+            : $this->collect($multipleChoice);
 
         if (!$multipleChoice) {
             $validator
@@ -170,18 +174,30 @@ class StoreAnswerRequest extends FormRequest
     }
 
     private function validateFiles(
-        Validator $validator,
-        array $files,
-        array $mimes,
-        int $maxFileSize,
-        QuestionOptionType $optionType,
+        Validator           $validator,
+        array|UploadedFile|string  $files,
+        array               $mimes,
+        int                 $maxFileSizeMB,
+        QuestionOptionType  $optionType,
     ): void {
+        if (! is_array($files)) {
+            $this->validateFile(
+                $validator,
+                $files,
+                $mimes,
+                $maxFileSizeMB,
+                $optionType,
+            );
+
+            return;
+        }
+
         collect($files)->each(
             fn(UploadedFile|string $uploadedFile) => $this->validateFile(
                 $validator,
                 $uploadedFile,
                 $mimes,
-                $maxFileSize,
+                $maxFileSizeMB,
                 $optionType,
             ),
         );
@@ -192,7 +208,7 @@ class StoreAnswerRequest extends FormRequest
         UploadedFile|string $uploadedFile,
         array $mimes,
         int $maxFileSize,
-        QuestionOptionType $optionType,
+        QuestionOptionType  $optionType
     ): void {
         if (is_string($uploadedFile) && URL::isValidUrl($uploadedFile)) {
             return;
@@ -240,7 +256,7 @@ class StoreAnswerRequest extends FormRequest
         UploadedFile $uploadedFile,
         int $maxFileSize,
     ): bool {
-        return $uploadedFile->getSize() / 1000 <= $maxFileSize;
+        return $uploadedFile->getSize() / 1000000 <= $maxFileSize;
     }
 
     private function getAllAnswers(
