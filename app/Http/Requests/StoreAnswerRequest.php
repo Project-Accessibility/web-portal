@@ -38,8 +38,8 @@ class StoreAnswerRequest extends FormRequest
 
     public function withValidator(Validator $validator): void
     {
-        $validator->after(fn(Validator $validator)
-            => $this->afterValidation($validator)
+        $validator->after(
+            fn(Validator $validator) => $this->afterValidation($validator),
         );
     }
 
@@ -65,15 +65,7 @@ class StoreAnswerRequest extends FormRequest
                     $this->validateFiles(
                         $validator,
                         $answer,
-                        [
-                            'jpg',
-                            'jpeg',
-                            'png',
-                            'bmp',
-                            'gif',
-                            'svg',
-                            'webp'
-                        ],
+                        ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'svg', 'webp'],
                         10,
                         QuestionOptionType::IMAGE,
                     );
@@ -121,9 +113,9 @@ class StoreAnswerRequest extends FormRequest
     }
 
     private function validateMultipleChoice(
-        Validator               $validator,
-        array|string            $multipleChoice,
-        Model|QuestionOption    $questionOption,
+        Validator $validator,
+        array|string $multipleChoice,
+        Model|QuestionOption $questionOption,
     ): void {
         $multipleChoice = is_string($multipleChoice)
             ? $this->collect([$multipleChoice])
@@ -174,13 +166,13 @@ class StoreAnswerRequest extends FormRequest
     }
 
     private function validateFiles(
-        Validator           $validator,
-        array|UploadedFile|string  $files,
-        array               $mimes,
-        int                 $maxFileSizeMB,
-        QuestionOptionType  $optionType,
+        Validator $validator,
+        array|UploadedFile|string $files,
+        array $mimes,
+        int $maxFileSizeMB,
+        QuestionOptionType $optionType,
     ): void {
-        if (! is_array($files)) {
+        if (!is_array($files)) {
             $this->validateFile(
                 $validator,
                 $files,
@@ -208,7 +200,7 @@ class StoreAnswerRequest extends FormRequest
         UploadedFile|string $uploadedFile,
         array $mimes,
         int $maxFileSize,
-        QuestionOptionType  $optionType
+        QuestionOptionType $optionType,
     ): void {
         if (is_string($uploadedFile) && URL::isValidUrl($uploadedFile)) {
             return;

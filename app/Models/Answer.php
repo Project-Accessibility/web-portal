@@ -40,11 +40,7 @@ class Answer extends Model
     public $table = 'answers';
 
     /* @var array */
-    protected $fillable = [
-        'participant_id',
-        'question_option_id',
-        'values'
-    ];
+    protected $fillable = ['participant_id', 'question_option_id', 'values'];
 
     /* @var array */
     protected $casts = [

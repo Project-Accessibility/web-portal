@@ -27,19 +27,24 @@ class QuestionController extends Controller
             ->whereFinished(false)
             ->first();
 
-        $question
-            ->options
-            ->map(fn (QuestionOption $option)
-                => $this->answerOption($option, $request, $participant)
-            );
+        $question->options->map(
+            fn(QuestionOption $option) => $this->answerOption(
+                $option,
+                $request,
+                $participant,
+            ),
+        );
 
         return response()->json([
             'message' => 'answers saved!',
         ]);
     }
 
-    private function answerOption(QuestionOption $option, StoreAnswerRequest $request, Participant $participant): void
-    {
+    private function answerOption(
+        QuestionOption $option,
+        StoreAnswerRequest $request,
+        Participant $participant,
+    ): void {
         $apiKey = $option->type->value;
 
         $multipart = $this->getMultipart($request, $apiKey);
@@ -48,34 +53,31 @@ class QuestionController extends Controller
             case QuestionOptionType::OPEN:
             case QuestionOptionType::MULTIPLE_CHOICE:
             case QuestionOptionType::RANGE:
-                $this->answerSimple(
-                    $multipart,
-                    $option,
-                    $participant
-                );
+                $this->answerSimple($multipart, $option, $participant);
                 break;
             case QuestionOptionType::IMAGE:
             case QuestionOptionType::VOICE:
             case QuestionOptionType::VIDEO:
-                $this->answerFiles(
-                    $multipart,
-                    $option,
-                    $participant,
-                );
+                $this->answerFiles($multipart, $option, $participant);
                 break;
         }
     }
 
-    private function getMultipart(StoreAnswerRequest $request, string $apiKey): mixed
-    {
-        return $request->get($apiKey) ?? $request->file($apiKey) ?? null;
+    private function getMultipart(
+        StoreAnswerRequest $request,
+        string $apiKey,
+    ): mixed {
+        return $request->get($apiKey) ?? ($request->file($apiKey) ?? null);
     }
 
-    private function answerSimple(string|array|null $value, QuestionOption $option, Participant $participant): void
-    {
+    private function answerSimple(
+        string|array|null $value,
+        QuestionOption $option,
+        Participant $participant,
+    ): void {
         $answer = $this->getAnswerForParticipant($option, $participant);
 
-        if (! $value) {
+        if (!$value) {
             $answer->delete();
 
             return;
@@ -86,12 +88,17 @@ class QuestionController extends Controller
         $answer->save();
     }
 
-    private function answerFiles(UploadedFile|array|string|null $files, QuestionOption $option, Participant $participant): void
-    {
+    private function answerFiles(
+        UploadedFile|array|string|null $files,
+        QuestionOption $option,
+        Participant $participant,
+    ): void {
         $answer = $this->getAnswerForParticipant($option, $participant);
 
         if (empty($files)) {
-            if ($answer->values) $this->removeFiles(collect($answer->values));
+            if ($answer->values) {
+                $this->removeFiles(collect($answer->values));
+            }
 
             $answer->delete();
 
@@ -102,10 +109,17 @@ class QuestionController extends Controller
 
         $path = $this->getPathByQuestionOption($option);
 
-        if (! $path) return;
+        if (!$path) {
+            return;
+        }
 
         $values = collect($files)
-            ->map(fn (UploadedFile|string|null $file) => $this->uploadFile($file, $path))
+            ->map(
+                fn(UploadedFile|string|null $file) => $this->uploadFile(
+                    $file,
+                    $path,
+                ),
+            )
             ->filter();
 
         $needsToBeRemoved = collect($answer->values)->diff($values);
@@ -117,21 +131,28 @@ class QuestionController extends Controller
         $answer->save();
     }
 
-    private function getPathByQuestionOption(QuestionOption $questionOption): ?string
-    {
+    private function getPathByQuestionOption(
+        QuestionOption $questionOption,
+    ): ?string {
         return match ($questionOption->type) {
             QuestionOptionType::IMAGE => 'images',
             QuestionOptionType::VIDEO => 'videos',
             QuestionOptionType::VOICE => 'audios',
-            default => null,
+            default => null
         };
     }
 
-    private function uploadFile(UploadedFile|string|null $file, string $path): ?string
-    {
-        if (! $file) return null;
+    private function uploadFile(
+        UploadedFile|string|null $file,
+        string $path,
+    ): ?string {
+        if (!$file) {
+            return null;
+        }
 
-        if (is_string($file) && URL::isValidUrl($file)) return $file;
+        if (is_string($file) && URL::isValidUrl($file)) {
+            return $file;
+        }
 
         if (env('APP_ENV') === 'local') {
             URL::forceRootUrl(Config::get('app.url'));
@@ -146,8 +167,10 @@ class QuestionController extends Controller
         return $filePath;
     }
 
-    private function getAnswerForParticipant(QuestionOption $option, Participant $participant): Answer
-    {
+    private function getAnswerForParticipant(
+        QuestionOption $option,
+        Participant $participant,
+    ): Answer {
         return Answer::whereParticipantId($participant->id)
             ->whereQuestionOptionId($option->id)
             ->firstOrNew([
@@ -158,14 +181,12 @@ class QuestionController extends Controller
 
     private function removeFiles(Collection $fileUrls): void
     {
-        $fileUrls->each(fn (string $fileUrl) => $this->removeFile($fileUrl));
+        $fileUrls->each(fn(string $fileUrl) => $this->removeFile($fileUrl));
     }
 
     private function removeFile(string $url): void
     {
-        $url = storage_path(
-            'app/public' . explode('storage', $url)[1],
-        );
+        $url = storage_path('app/public' . explode('storage', $url)[1]);
         unlink($url);
     }
 }
