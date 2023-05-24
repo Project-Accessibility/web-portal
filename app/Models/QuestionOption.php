@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @mixin Eloquent
  * @property int $id
  * @property int $question_id
- * @property string $type
+ * @property QuestionOptionType $type
  * @property string $extra_data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

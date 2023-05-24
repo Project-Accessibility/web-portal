@@ -8,13 +8,13 @@ use App\Http\Requests\StoreAnswerRequest;
 use App\Models\Answer;
 use App\Models\Participant;
 use App\Models\Question;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\UrlGenerator;
+use App\Models\QuestionOption;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class QuestionController extends Controller
 {
@@ -23,157 +23,137 @@ class QuestionController extends Controller
         Question $question,
         string $code,
     ): JsonResponse {
-        // validation
-        $request->validated();
-
-        $options = $question->options;
         $participant = Participant::whereCode($code)
             ->whereFinished(false)
             ->first();
 
-        // Add answers
-        $options->map(function ($option) use ($request, $participant) {
-            $this->removeAnswers($request, $participant, $option);
-            $this->saveAnswer($option, $request, $participant);
-        });
+        $question->options->map(
+            fn(QuestionOption $option) => $this->answerOption(
+                $option,
+                $request,
+                $participant,
+            ),
+        );
+
         return response()->json([
             'message' => 'answers saved!',
         ]);
     }
 
-    private function removeAnswers($request, $participant, $option)
-    {
-        $answer = Answer::whereParticipantId($participant->id)
-            ->whereQuestionOptionId($option->id)
-            ->first();
-        if ($answer == null) {
-            return;
-        }
-        if (
-            in_array($answer->option->type, [
-                QuestionOptionType::VOICE,
-                QuestionOptionType::IMAGE,
-                QuestionOptionType::VIDEO,
-            ])
-        ) {
-            $value = $request->file($answer->option->type->value);
-            if ($value == null) {
-                $this->removeFiles($answer->values);
-            }
-        } elseif (
-            $answer->option->type == QuestionOptionType::MULTIPLE_CHOICE
-        ) {
-            $value = json_decode($request->get($answer->option->type->value));
-        } else {
-            $value = $request->get($answer->option->type->value);
-        }
-        if ($value == null) {
-            $answer->delete();
+    private function answerOption(
+        QuestionOption $option,
+        StoreAnswerRequest $request,
+        Participant $participant,
+    ): void {
+        $apiKey = $option->type->value;
+
+        $multipart = $this->getMultipart($request, $apiKey);
+
+        switch ($option->type) {
+            case QuestionOptionType::OPEN:
+            case QuestionOptionType::MULTIPLE_CHOICE:
+            case QuestionOptionType::RANGE:
+                $this->answerSimple($multipart, $option, $participant);
+                break;
+            case QuestionOptionType::IMAGE:
+            case QuestionOptionType::VOICE:
+            case QuestionOptionType::VIDEO:
+                $this->answerFiles($multipart, $option, $participant);
+                break;
         }
     }
 
-    private function saveAnswer($option, $request, $participant)
-    {
-        $answer = Answer::whereParticipantId($participant->id)
-            ->whereQuestionOptionId($option->id)
-            ->first();
-        if ($answer == null) {
-            $answer = new Answer();
-            $answer->question_option_id = $option->id;
-            $answer->participant_id = $participant->id;
+    private function getMultipart(
+        StoreAnswerRequest $request,
+        string $apiKey,
+    ): mixed {
+        return $request->get($apiKey) ?? ($request->file($apiKey) ?? null);
+    }
+
+    private function answerSimple(
+        string|array|null $value,
+        QuestionOption $option,
+        Participant $participant,
+    ): void {
+        $answer = $this->getAnswerForParticipant($option, $participant);
+
+        if (!$value) {
+            $answer->delete();
+
+            return;
         }
-        switch ($option->type) {
-            case QuestionOptionType::OPEN:
-                $open = $request->get('OPEN');
-                if (!$open) {
-                    return;
-                }
-                $answer->values = [$open];
-                break;
-            case QuestionOptionType::VOICE:
-                $audios = $request->file('VOICE');
-                if (!$audios) {
-                    return;
-                }
-                $this->removeFiles($answer->values);
-                $answer->values = $this->handleFiles($audios, 'audios');
-                break;
-            case QuestionOptionType::IMAGE:
-                $images = $request->file('IMAGE');
-                if (!$images) {
-                    return;
-                }
-                $this->removeFiles($answer->values);
-                $answer->values = $this->handleFiles($images, 'images');
-                break;
-            case QuestionOptionType::VIDEO:
-                $videos = $request->file('VIDEO');
-                if (!$videos) {
-                    return;
-                }
-                $this->removeFiles($answer->values);
-                $answer->values = $this->handleFiles($videos, 'videos');
-                break;
-            case QuestionOptionType::MULTIPLE_CHOICE:
-                $answers = json_decode($request->get('MULTIPLE_CHOICE'));
-                if (!$answers) {
-                    return;
-                }
-                $answer->values = $answers;
-                break;
-            case QuestionOptionType::RANGE:
-                $range = $request->get('RANGE');
-                if (!$range) {
-                    return;
-                }
-                $answer->values = [$range];
-                break;
-            default:
-                abort(
-                    ResponseAlias::HTTP_NOT_IMPLEMENTED,
-                    'Deze functie werkt nog niet',
-                );
-        }
+
+        $answer->values = is_array($value) ? $value : [$value];
+
         $answer->save();
     }
 
-    private function removeFiles($filePaths): void
-    {
-        if ($filePaths) {
-            foreach ($filePaths as $filePath) {
-                $this->removeFile($filePath);
+    private function answerFiles(
+        UploadedFile|array|string|null $files,
+        QuestionOption $option,
+        Participant $participant,
+    ): void {
+        $answer = $this->getAnswerForParticipant($option, $participant);
+
+        if (empty($files)) {
+            if ($answer->values) {
+                $this->removeFiles(collect($answer->values));
             }
+
+            $answer->delete();
+
+            return;
         }
+
+        $files = is_array($files) ? $files : [$files];
+
+        $path = $this->getPathByQuestionOption($option);
+
+        if (!$path) {
+            return;
+        }
+
+        $values = collect($files)
+            ->map(
+                fn(UploadedFile|string|null $file) => $this->uploadFile(
+                    $file,
+                    $path,
+                ),
+            )
+            ->filter();
+
+        $needsToBeRemoved = collect($answer->values)->diff($values);
+
+        $this->removeFiles($needsToBeRemoved);
+
+        $answer->values = $values->toArray();
+
+        $answer->save();
     }
 
-    private function removeFile($filePath): void
-    {
-        $filePath = storage_path(
-            'app/public/' . explode('storage', $filePath)[1],
-        );
-        unlink($filePath);
+    private function getPathByQuestionOption(
+        QuestionOption $questionOption,
+    ): ?string {
+        return match ($questionOption->type) {
+            QuestionOptionType::IMAGE => 'images',
+            QuestionOptionType::VIDEO => 'videos',
+            QuestionOptionType::VOICE => 'audios',
+            default => null
+        };
     }
 
-    private function handleFiles($files, $path): array
-    {
-        $links = [];
-        if (!$files) {
-            return $links;
+    private function uploadFile(
+        UploadedFile|string|null $file,
+        string $path,
+    ): ?string {
+        if (!$file) {
+            return null;
         }
-        if (is_array($files)) {
-            // handle multiple files
-            foreach ($files as $file) {
-                $links[] = $this->uploadFile($file, $path);
-            }
-        } else {
-            // handle single file
-            $links[] = $this->uploadFile($files, $path);
-        }
-        return $links;
-    }
 
-    private function uploadFile($file, $path): string|UrlGenerator|Application
-    {
+        if (is_string($file) && URL::isValidUrl($file)) {
+            return $file;
+        }
+
         if (env('APP_ENV') === 'local') {
             URL::forceRootUrl(Config::get('app.url'));
         }
@@ -185,5 +165,28 @@ class QuestionController extends Controller
         $filePath = url("/storage/upload/files/$path/" . $filename);
         $file->storeAs("public/upload/files/$path/", $filename);
         return $filePath;
+    }
+
+    private function getAnswerForParticipant(
+        QuestionOption $option,
+        Participant $participant,
+    ): Answer {
+        return Answer::whereParticipantId($participant->id)
+            ->whereQuestionOptionId($option->id)
+            ->firstOrNew([
+                'participant_id' => $participant->id,
+                'question_option_id' => $option->id,
+            ]);
+    }
+
+    private function removeFiles(Collection $fileUrls): void
+    {
+        $fileUrls->each(fn(string $fileUrl) => $this->removeFile($fileUrl));
+    }
+
+    private function removeFile(string $url): void
+    {
+        $url = storage_path('app/public' . explode('storage', $url)[1]);
+        unlink($url);
     }
 }
