@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\QuestionOptionType;
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -85,6 +86,15 @@ class Question extends Model
     public function options(): HasMany
     {
         return $this->hasMany(QuestionOption::class)->orderBy('order', 'ASC');
+    }
+
+    public function getOption(QuestionOptionType $type): ?Model
+    {
+        $questionOption = $this->options()
+            ->where('type', $type)
+            ->first();
+
+        return $questionOption ?? null;
     }
 
     public function answers(): Collection
