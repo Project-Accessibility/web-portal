@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Casts\DisplayDateTime;
+use Barryvdh\LaravelIdeHelper\Eloquent;
 use Carbon\Carbon;
+use Database\Factories\ParticipantFactory;
 use DateTime;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,6 +36,9 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Builder|Participant whereQuestionnaireId($value)
  * @method static Builder|Participant whereUpdatedAt($value)
  * @property-read \App\Models\Questionnaire $questionnaire
+ * @property-read Collection<int, \App\Models\Answer> $answers
+ * @method static ParticipantFactory factory($count = null, $state = [])
+ * @mixin Eloquent
  */
 class Participant extends Model
 {

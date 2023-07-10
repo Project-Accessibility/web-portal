@@ -10,7 +10,9 @@ use App\View\Components\Table\Row;
 use App\View\Components\Table\Table;
 use App\View\Components\NavBar;
 use App\View\Components\Tabs;
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Carbon\Carbon;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -24,7 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if ($this->app->isLocal()) {
+            $this->app->register(IdeHelperServiceProvider::class);
+        }
     }
 
     /**
@@ -39,6 +43,8 @@ class AppServiceProvider extends ServiceProvider
         } else {
             URL::forceScheme('http');
         }
+
+        JsonResource::withoutWrapping();
 
         Carbon::setLocale(config('app.locale'));
         Carbon::setFallbackLocale(config('app.fallback_locale'));

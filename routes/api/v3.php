@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\v2\QuestionController;
-use App\Http\Controllers\Api\v2\QuestionnaireController;
+use App\Http\Controllers\Api\v3\QuestionController;
+use App\Http\Controllers\Api\v3\QuestionnaireController;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 

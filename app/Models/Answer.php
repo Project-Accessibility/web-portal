@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\AnswerFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +32,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static where(string $string, string $string1, int $id)
  * @property-read \App\Models\Participant $participant
  * @property-read \App\Models\QuestionOption $questionOption
+ * @property array|null $values
+ * @property-read \App\Models\QuestionOption|null $option
+ * @method static AnswerFactory factory($count = null, $state = [])
+ * @method static Builder|Answer whereValues($value)
+ * @mixin Eloquent
  */
 class Answer extends Model
 {
@@ -40,7 +46,11 @@ class Answer extends Model
     public $table = 'answers';
 
     /* @var array */
-    protected $fillable = ['participant_id', 'question_option_id', 'values'];
+    protected $fillable = [
+        'participant_id',
+        'question_option_id',
+        'values',
+    ];
 
     /* @var array */
     protected $casts = [

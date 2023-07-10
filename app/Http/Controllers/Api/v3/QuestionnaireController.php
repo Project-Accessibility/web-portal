@@ -24,8 +24,8 @@ class QuestionnaireController extends Controller
         $participant->questionnaire->sections->map(function (
             Section $section,
         ) use ($participant) {
-            $section->questions = $section->questions
-                ->groupBy('uuid')
+            $section->questions->replace(
+                $section->questions->groupBy('uuid')
                 ->map(function (Collection $questions) use ($participant) {
                     $options = $questions->pluck('options.*.id')->flatten();
                     $answer = Answer::whereParticipantId($participant->id)
@@ -58,10 +58,7 @@ class QuestionnaireController extends Controller
                     }
 
                     return $question;
-                })
-                ->values();
-
-            $section->unsetRelation('questions');
+                }));
 
             return $section;
         });
