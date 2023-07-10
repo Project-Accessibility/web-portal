@@ -1,24 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\v2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GetQuestionnaireRequest;
 use App\Models\Answer;
 use App\Models\Participant;
-use App\Models\Question;
-use App\Models\Questionnaire;
 use App\Models\QuestionOption;
 use App\Models\Section;
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use function abort_if;
 
 class QuestionnaireController extends Controller
 {

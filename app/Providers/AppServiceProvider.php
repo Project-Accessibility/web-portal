@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\View\Components\Breadcrumb;
 use App\View\Components\Button;
-use App\View\Components\DateTime;
 use App\View\Components\Input;
 use App\View\Components\Table\Header;
 use App\View\Components\Table\Row;
