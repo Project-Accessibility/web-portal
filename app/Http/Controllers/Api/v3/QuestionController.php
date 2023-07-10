@@ -69,7 +69,6 @@ class QuestionController extends Controller
         StoreAnswerRequest $request,
         string $apiKey,
     ): Collection {
-
         $fields = collect($request->get($apiKey));
         $files = collect($request->file($apiKey));
 
