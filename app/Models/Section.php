@@ -3,21 +3,20 @@
 namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\SectionFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 /**
  * App\Models\Section
  *
- * @method static \Illuminate\Database\Eloquent\Builder|Section newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Section newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Section query()
+ * @method static Builder|Section newModelQuery()
+ * @method static Builder|Section newQuery()
+ * @method static Builder|Section query()
  * @mixin Eloquent
  * @property int $id
  * @property int $questionnaire_id
@@ -27,17 +26,22 @@ use Illuminate\Support\Facades\Schema;
  * @property string|null $location
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|Section whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Section whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Section whereGeofenceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Section whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Section whereLocation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Section whereQuestionnaireId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Section whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Section whereUpdatedAt($value)
+ * @method static Builder|Section whereCreatedAt($value)
+ * @method static Builder|Section whereDescription($value)
+ * @method static Builder|Section whereGeofenceId($value)
+ * @method static Builder|Section whereId($value)
+ * @method static Builder|Section whereLocation($value)
+ * @method static Builder|Section whereQuestionnaireId($value)
+ * @method static Builder|Section whereTitle($value)
+ * @method static Builder|Section whereUpdatedAt($value)
  * @property-read int|null $questions_count
  * @property-read \App\Models\Geofence|null $geofence
  * @property-read \App\Models\Questionnaire $questionnaire
+ * @property string|null $location_description
+ * @property-read Collection<int, \App\Models\Question> $questions
+ * @method static SectionFactory factory($count = null, $state = [])
+ * @method static Builder|Section whereLocationDescription($value)
+ * @mixin Eloquent
  */
 class Section extends Model
 {

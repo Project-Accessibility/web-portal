@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\QuestionOptionType;
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\QuestionOptionFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,6 +33,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static Builder|QuestionOption whereType($value)
  * @method static Builder|QuestionOption whereUpdatedAt($value)
  * @property-read \App\Models\Question $question
+ * @property int $order
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Answer> $answers
+ * @property-read int|null $answers_count
+ * @method static QuestionOptionFactory factory($count = null, $state = [])
+ * @method static Builder|QuestionOption whereOrder($value)
+ * @mixin Eloquent
  */
 class QuestionOption extends Model
 {

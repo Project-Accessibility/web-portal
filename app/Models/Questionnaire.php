@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\RelationsManager;
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\QuestionnaireFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,6 +36,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Builder|Questionnaire whereTitle($value)
  * @method static Builder|Questionnaire whereUpdatedAt($value)
  * @property-read \App\Models\Research $research
+ * @property string|null $help
+ * @property-read Collection<int, \App\Models\Participant> $participants
+ * @property-read int|null $participants_count
+ * @property-read Collection<int, \App\Models\Section> $sections
+ * @property-read int|null $sections_count
+ * @method static QuestionnaireFactory factory($count = null, $state = [])
+ * @method static Builder|Questionnaire whereHelp($value)
+ * @mixin Eloquent
  */
 class Questionnaire extends Model
 {

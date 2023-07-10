@@ -9,11 +9,13 @@ use App\Models\Answer;
 use App\Models\Participant;
 use App\Models\Question;
 use App\Models\QuestionOption;
+use ErrorException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
 class QuestionController extends Controller
@@ -66,36 +68,39 @@ class QuestionController extends Controller
     private function getMultipart(
         StoreAnswerRequest $request,
         string $apiKey,
-    ): mixed {
-        return $request->get($apiKey) ?? ($request->file($apiKey) ?? null);
+    ): Collection {
+        $fields = collect($request->get($apiKey));
+        $files = collect($request->file($apiKey));
+
+        return $fields->merge($files);
     }
 
     private function answerSimple(
-        string|array|null $value,
+        Collection $value,
         QuestionOption $option,
         Participant $participant,
     ): void {
         $answer = $this->getAnswerForParticipant($option, $participant);
 
-        if (!$value) {
+        if ($value->isEmpty()) {
             $answer->delete();
 
             return;
         }
 
-        $answer->values = is_array($value) ? $value : [$value];
+        $answer->values = $value->values();
 
         $answer->save();
     }
 
     private function answerFiles(
-        UploadedFile|array|string|null $files,
+        Collection $files,
         QuestionOption $option,
         Participant $participant,
     ): void {
         $answer = $this->getAnswerForParticipant($option, $participant);
 
-        if (empty($files)) {
+        if ($files->isEmpty()) {
             if ($answer->values) {
                 $this->removeFiles(collect($answer->values));
             }
@@ -105,15 +110,13 @@ class QuestionController extends Controller
             return;
         }
 
-        $files = is_array($files) ? $files : [$files];
-
         $path = $this->getPathByQuestionOption($option);
 
         if (!$path) {
             return;
         }
 
-        $values = collect($files)
+        $values = $files
             ->map(
                 fn(UploadedFile|string|null $file) => $this->uploadFile(
                     $file,
@@ -126,7 +129,7 @@ class QuestionController extends Controller
 
         $this->removeFiles($needsToBeRemoved);
 
-        $answer->values = $values->toArray();
+        $answer->values = $values->values();
 
         $answer->save();
     }
@@ -187,6 +190,11 @@ class QuestionController extends Controller
     private function removeFile(string $url): void
     {
         $url = storage_path('app/public' . explode('storage', $url)[1]);
-        unlink($url);
+
+        try {
+            unlink($url);
+        } catch (ErrorException $errorException) {
+            return;
+        }
     }
 }

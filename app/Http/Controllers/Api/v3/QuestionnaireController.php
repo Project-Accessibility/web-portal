@@ -24,44 +24,45 @@ class QuestionnaireController extends Controller
         $participant->questionnaire->sections->map(function (
             Section $section,
         ) use ($participant) {
-            $section->questions = $section->questions
-                ->groupBy('uuid')
-                ->map(function (Collection $questions) use ($participant) {
-                    $options = $questions->pluck('options.*.id')->flatten();
-                    $answer = Answer::whereParticipantId($participant->id)
-                        ->whereIn('question_option_id', $options)
-                        ->first();
-
-                    if ($answer) {
-                        $question = $questions
-                            ->where('id', $answer->option->question_id)
+            $section->questions->replace(
+                $section->questions
+                    ->groupBy('uuid')
+                    ->map(function (Collection $questions) use ($participant) {
+                        $options = $questions->pluck('options.*.id')->flatten();
+                        $answer = Answer::whereParticipantId($participant->id)
+                            ->whereIn('question_option_id', $options)
                             ->first();
-                        $question->options->map(function (
-                            QuestionOption $option,
-                        ) use ($participant) {
-                            $option->answer = $option->answers
-                                ->where('participant_id', $participant->id)
-                                ->where('question_option_id', $option->id)
+
+                        if ($answer) {
+                            $question = $questions
+                                ->where('id', $answer->option->question_id)
                                 ->first();
+                            $question->options->map(function (
+                                QuestionOption $option,
+                            ) use ($participant) {
+                                $option->answer = $option->answers
+                                    ->where('participant_id', $participant->id)
+                                    ->where('question_option_id', $option->id)
+                                    ->first();
 
-                            $option->unsetRelation('answers');
-                        });
-                    } else {
-                        $question = $questions->sortByDesc('version')->first();
-                        $question->options->map(function (
-                            QuestionOption $option,
-                        ) use ($participant) {
-                            $option->answer = null;
+                                $option->unsetRelation('answers');
+                            });
+                        } else {
+                            $question = $questions
+                                ->sortByDesc('version')
+                                ->first();
+                            $question->options->map(function (
+                                QuestionOption $option,
+                            ) use ($participant) {
+                                $option->answer = null;
 
-                            $option->unsetRelation('answers');
-                        });
-                    }
+                                $option->unsetRelation('answers');
+                            });
+                        }
 
-                    return $question;
-                })
-                ->values();
-
-            $section->unsetRelation('questions');
+                        return $question;
+                    }),
+            );
 
             return $section;
         });

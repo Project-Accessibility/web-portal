@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\QuestionOptionType;
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\QuestionFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,6 +36,13 @@ use Illuminate\Support\Str;
  * @method static Builder|Question whereTitle($value)
  * @method static Builder|Question whereUpdatedAt($value)
  * @property-read \App\Models\Section $section
+ * @property string $uuid
+ * @property int $version
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\QuestionOption> $options
+ * @property-read int|null $options_count
+ * @method static QuestionFactory factory($count = null, $state = [])
+ * @method static Builder|Question whereVersion($value)
+ * @mixin Eloquent
  */
 class Question extends Model
 {
