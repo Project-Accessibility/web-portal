@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\v2;
 
 use App\Enums\QuestionOptionType;
 use App\Http\Controllers\Controller;

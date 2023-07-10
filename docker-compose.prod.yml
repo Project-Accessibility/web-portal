@@ -41,6 +41,7 @@ services:
     ports:
       - "9000:9000"
     volumes:
+      - ./php.ini:/usr/local/etc/php/php.ini
       - .:/var/www/html
     networks:
       - accessibility
