@@ -20,4 +20,5 @@ yarn-error.log
 resources/.DS_Store
 /public/mix-manifest.json
 /docker-files
+php.ini
 

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Spatie\LaravelIgnition\Exceptions\ViewException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -95,6 +96,8 @@ class Handler extends ExceptionHandler
                 );
             }
         }
+
+        Log::error($exception->getMessage());
 
         return $this->customApiResponse($request, $exception);
     }
