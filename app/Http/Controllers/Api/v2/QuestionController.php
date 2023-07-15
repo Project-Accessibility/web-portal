@@ -138,7 +138,7 @@ class QuestionController extends Controller
             QuestionOptionType::IMAGE => 'images',
             QuestionOptionType::VIDEO => 'videos',
             QuestionOptionType::VOICE => 'audios',
-            default => null
+            default => null,
         };
     }
 

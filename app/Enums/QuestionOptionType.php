@@ -19,7 +19,7 @@ enum QuestionOptionType: string
             QuestionOptionType::VIDEO => 'Video(\'s)',
             QuestionOptionType::VOICE => 'Spraakopname(s)',
             QuestionOptionType::MULTIPLE_CHOICE => 'Meerkeuze',
-            QuestionOptionType::RANGE => 'Schaal'
+            QuestionOptionType::RANGE => 'Schaal',
         };
     }
 }

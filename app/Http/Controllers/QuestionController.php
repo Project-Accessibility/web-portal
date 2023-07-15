@@ -200,7 +200,7 @@ class QuestionController extends Controller
                 'max' => $data['rangeMax'],
                 'step' => $data['rangeStep'],
             ],
-            default => []
+            default => [],
         };
         $option->save();
     }
