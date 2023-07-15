@@ -63,7 +63,7 @@ class Handler extends ExceptionHandler
                     404 => response()->view('errors.404', [
                         'message' => $exception->getMessage(),
                     ]),
-                    default => response()->view('errors.500')
+                    default => response()->view('errors.500'),
                 };
             }
         }
@@ -150,7 +150,7 @@ class Handler extends ExceptionHandler
             'questionOption' => 'vraag mogelijkheid',
             'research' => 'onderzoek',
             'section' => 'sectie',
-            default => null
+            default => null,
         };
     }
 }

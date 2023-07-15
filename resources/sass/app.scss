@@ -1,8 +1,9 @@
 @import "accessibility";
-@import "../../node_modules/bootstrap/scss/functions";
+@import "~bootstrap/scss/functions";
 // == Bootstrap changes ==
 // These colors are not in use and are deleted from Bootstrap
 @import "./exclude/exclude-colors";
+$enable-dark-mode: false;
 // Colors
 $blue-light: $accessibility-blue-light;
 $blue: $accessibility-blue;
@@ -24,12 +25,13 @@ $light: $white;
 $dark: $black;
 $color-contrast-dark: $blue-dark;
 $custom-colors: ( "blue-light": $blue-light, "blue-dark": $blue-dark, "teal-dark": $teal-dark, "gray": $gray, "gray-dark": $gray-dark, "black": $black, "white": $white, );
-@import "../../node_modules/bootstrap/scss/variables";
-@import "../../node_modules/bootstrap/scss/utilities";
-@import "../../node_modules/bootstrap/scss/mixins";
-@import "../../node_modules/bootstrap-fileinput/css/fileinput.min.css";
-@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
-@import "../../node_modules/bootstrap-select/dist/css/bootstrap-select.min.css";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap-fileinput/css/fileinput.min.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+@import "~bootstrap-select/dist/css/bootstrap-select.min.css";
 @import "./exclude/exclude-maps.scss";
 $colors: map-merge($colors, $custom-colors);
 $utilities: ( "background-color": ( property: background-color, class: bg, values: map-merge( $colors, ( "body": $body-bg, "transparent": transparent))), "color": ( property: color, class: text, values: map-merge( $colors, ( "body": $body-color, "muted": $text-muted, "black-50": rgba($black, .5), "white-50": rgba($white, .5), "reset": inherit, ))), );
@@ -101,7 +103,7 @@ $breadcrumb-active-color: $gray-700;
 $code-color: $white;
 // Progress
 $progress-height: 1.5rem;
-@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
 // Custom CSS
 .display-1,
 .display-2,
@@ -413,7 +415,6 @@ a.deco-none {
 
 .small-height {
     min-height: 1em;
-    ;
 }
 
 .result-button {
