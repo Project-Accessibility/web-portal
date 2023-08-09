@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read \App\Models\Question $question
  * @property int $order
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Answer> $answers
+ * @property \App\Models\Answer $answer
  * @property-read int|null $answers_count
  * @method static QuestionOptionFactory factory($count = null, $state = [])
  * @method static Builder|QuestionOption whereOrder($value)

@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $help
  * @property-read Collection<int, \App\Models\Participant> $participants
  * @property-read int|null $participants_count
- * @property-read Collection<int, \App\Models\Section> $sections
+ * @property Collection<int, \App\Models\Section> $sections
  * @property-read int|null $sections_count
  * @method static QuestionnaireFactory factory($count = null, $state = [])
  * @method static Builder|Questionnaire whereHelp($value)
