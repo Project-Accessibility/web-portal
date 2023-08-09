@@ -23,10 +23,16 @@ class QuestionnaireController extends Controller
             ->whereFinished(false)
             ->first();
 
-
-        $questionnaire = tap($participant->questionnaire, function (Questionnaire $questionnaire) use ($participant) {
-            $questionnaire->sections = $questionnaire->sections->map(function (Section $section) use ($participant) {
-                $section->questions = $this->getCorrectQuestionForParticipant($section->questions, $participant->id);
+        $questionnaire = tap($participant->questionnaire, function (
+            Questionnaire $questionnaire,
+        ) use ($participant) {
+            $questionnaire->sections = $questionnaire->sections->map(function (
+                Section $section,
+            ) use ($participant) {
+                $section->questions = $this->getCorrectQuestionForParticipant(
+                    $section->questions,
+                    $participant->id,
+                );
                 $section->unsetRelation('questions');
 
                 return $section;
@@ -39,8 +45,10 @@ class QuestionnaireController extends Controller
         return $questionnaire;
     }
 
-    private function getCorrectQuestionForParticipant(Collection $questions, string $participantId): Collection
-    {
+    private function getCorrectQuestionForParticipant(
+        Collection $questions,
+        string $participantId,
+    ): Collection {
         return $questions
             ->groupBy('uuid')
             ->map(function (Collection $questions) use ($participantId) {
@@ -64,12 +72,8 @@ class QuestionnaireController extends Controller
                         $option->unsetRelation('answers');
                     });
                 } else {
-                    $question = $questions
-                        ->sortByDesc('version')
-                        ->first();
-                    $question->options->map(function (
-                        QuestionOption $option,
-                    ) {
+                    $question = $questions->sortByDesc('version')->first();
+                    $question->options->map(function (QuestionOption $option) {
                         $option->answer = null;
 
                         $option->unsetRelation('answers');
@@ -77,7 +81,8 @@ class QuestionnaireController extends Controller
                 }
 
                 return $question;
-            })->flatten();
+            })
+            ->flatten();
     }
 
     public function submit($code): JsonResponse
