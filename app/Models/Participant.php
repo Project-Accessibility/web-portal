@@ -35,7 +35,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Builder|Participant whereFinished($value)
  * @method static Builder|Participant whereQuestionnaireId($value)
  * @method static Builder|Participant whereUpdatedAt($value)
- * @property-read \App\Models\Questionnaire $questionnaire
+ * @property \App\Models\Questionnaire $questionnaire
  * @property-read Collection<int, \App\Models\Answer> $answers
  * @method static ParticipantFactory factory($count = null, $state = [])
  * @mixin Eloquent

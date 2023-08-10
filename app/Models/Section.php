@@ -38,7 +38,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \App\Models\Geofence|null $geofence
  * @property-read \App\Models\Questionnaire $questionnaire
  * @property string|null $location_description
- * @property-read Collection<int, \App\Models\Question> $questions
+ * @property Collection<int, \App\Models\Question> $questions
  * @method static SectionFactory factory($count = null, $state = [])
  * @method static Builder|Section whereLocationDescription($value)
  * @mixin Eloquent
