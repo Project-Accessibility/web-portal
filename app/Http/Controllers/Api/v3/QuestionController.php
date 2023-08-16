@@ -73,14 +73,8 @@ class QuestionController extends Controller
         $field = $request->get($apiKey);
         $file = $request->file($apiKey);
 
-        $fields = collect($field instanceof Arrayable
-            ? $field
-            : [$field]
-        );
-        $files = collect($file instanceof Arrayable
-            ? $file
-            : [$file]
-        );
+        $fields = collect($field instanceof Arrayable ? $field : [$field]);
+        $files = collect($file instanceof Arrayable ? $file : [$file]);
 
         return $fields->merge($files);
     }
@@ -111,7 +105,7 @@ class QuestionController extends Controller
         $answer = $this->getAnswerForParticipant($option, $participant);
 
         if ($files->isEmpty()) {
-            if (! empty($answer->values)) {
+            if (!empty($answer->values)) {
                 $this->removeFiles(collect($answer->values));
             }
 
@@ -151,7 +145,7 @@ class QuestionController extends Controller
             QuestionOptionType::IMAGE => 'images',
             QuestionOptionType::VIDEO => 'videos',
             QuestionOptionType::VOICE => 'audios',
-            default => null
+            default => null,
         };
     }
 
