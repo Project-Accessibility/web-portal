@@ -10,6 +10,7 @@ use App\Models\Participant;
 use App\Models\Question;
 use App\Models\QuestionOption;
 use ErrorException;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
@@ -69,8 +70,17 @@ class QuestionController extends Controller
         StoreAnswerRequest $request,
         string $apiKey,
     ): Collection {
-        $fields = collect($request->get($apiKey));
-        $files = collect($request->file($apiKey));
+        $field = $request->get($apiKey);
+        $file = $request->file($apiKey);
+
+        $fields = collect($field instanceof Arrayable
+            ? $field
+            : [$field]
+        );
+        $files = collect($file instanceof Arrayable
+            ? $file
+            : [$file]
+        );
 
         return $fields->merge($files);
     }
@@ -101,7 +111,7 @@ class QuestionController extends Controller
         $answer = $this->getAnswerForParticipant($option, $participant);
 
         if ($files->isEmpty()) {
-            if ($answer->values) {
+            if (! empty($answer->values)) {
                 $this->removeFiles(collect($answer->values));
             }
 
