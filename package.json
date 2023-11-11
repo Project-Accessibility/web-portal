@@ -17,7 +17,7 @@
         "@prettier/plugin-php": "^0.18.3",
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",
-        "axios": "^0.25",
+        "axios": "^1.6",
         "bootstrap": "^5.2.3",
         "husky": "^7.0.4",
         "laravel-mix": "^6.0.6",
